@@ -4,7 +4,7 @@ import * as React from "react"
 import { useTheme } from "next-themes"
 
 import { Button } from "@/components/ui/button"
-import { Icons } from "@/components/icons"
+import { Icons } from "@/components/ui/icons"
 
 export function ThemeToggle() {
   const { setTheme, theme } = useTheme()

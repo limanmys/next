@@ -1,9 +1,10 @@
+import Link from "next/link"
 import { Bell, Eye, Globe2, Key, LogOut } from "lucide-react"
 
 import { Button, buttonVariants } from "@/components/ui/button"
-import { MainNav } from "@/components/main-nav"
 import { ThemeToggle } from "@/components/theme-toggle"
 
+import CommandMenu from "./navigation/command-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import {
   DropdownMenu,
@@ -13,13 +14,23 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu"
+import { Icons } from "./ui/icons"
 
 export function SiteHeader() {
   return (
     <header className="top-0 z-40 w-full border-b bg-background">
       <div className="flex h-16 items-center space-x-4 px-6 sm:justify-between sm:space-x-0">
-        <MainNav />
-        <div className="flex flex-1 items-center justify-end space-x-4">
+        <div className="flex gap-6 md:gap-10">
+          <Link href="/dashboard" className="flex items-center space-x-2">
+            <Icons.logo className="w-18 h-6 dark:fill-white" />
+          </Link>
+        </div>
+
+        <div className="flex">
+          <CommandMenu />
+        </div>
+
+        <div className="flex items-center justify-end space-x-4">
           <nav className="flex items-center space-x-1">
             <ThemeToggle />
 

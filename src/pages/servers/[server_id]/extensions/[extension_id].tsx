@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 
-import ExtensionRender from "@/components/ext-renderer"
+import ExtensionRender from "@/components/extension/extension-render"
 
 export default function ExtensionPage() {
   const [content, setContent] = useState("")

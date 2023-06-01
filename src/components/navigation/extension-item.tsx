@@ -49,7 +49,7 @@ export default function ExtensionItem({
       <CollapsibleTrigger className="w-full">
         {!router.asPath.includes(extension.id) ? (
           <Link
-            href={`/extension/${server_id}/${extension.id}${
+            href={`/servers/${server_id}/extensions/${extension.id}${
               extension.menus && extension.menus.length > 0
                 ? extension.menus[0].url
                 : ""

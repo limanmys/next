@@ -14,8 +14,8 @@ import {
 import { IExtension, IServer } from "@/types/server"
 import { cn } from "@/lib/utils"
 
-import { Icons } from "../icons"
 import { Button } from "../ui/button"
+import { Icons } from "../ui/icons"
 import Loading from "../ui/loading"
 import ExtensionItem from "./extension-item"
 

@@ -12,6 +12,7 @@ export interface IServer {
   key_port: number
   shared_key: number
   is_online: boolean
+  extension_count: number
   extensions: IExtension[]
 }
 

@@ -2,8 +2,8 @@ import { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 
+import { Icons } from "@/components/ui/icons"
 import { UserAuthForm } from "@/components/ui/user-auth-form"
-import { Icons } from "@/components/icons"
 
 export const metadata: Metadata = {
   title: "Authentication",

@@ -25,7 +25,7 @@ import { IServer } from "@/types/server"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
-import { Icons } from "../icons"
+import { Icons } from "../ui/icons"
 import { Input } from "../ui/input"
 import Loading from "../ui/loading"
 import SidebarSelected from "./sidebar-selected"
@@ -71,10 +71,7 @@ export function Sidebar({ className }: any) {
     >
       <div className="space-y-4 py-4">
         <div className="px-4 py-2" ref={parent}>
-          <div className="relative mb-6 px-2">
-            <Input type="text" placeholder="Arama..." />
-            <Search className="absolute right-5 top-3 h-4 w-4" />
-          </div>
+          <div></div>
           {!selected ? (
             <>
               <h2 className="mb-2 px-2 text-lg font-semibold tracking-tight">
