@@ -1,32 +1,16 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import Link from "next/link"
 import { useRouter } from "next/router"
+import { apiService } from "@/services"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
-import {
-  Book,
-  ChevronDown,
-  ChevronLeft,
-  ChevronRight,
-  CircleDot,
-  FileClock,
-  MonitorSmartphone,
-  Network,
-  PackageOpen,
-  PackageSearch,
-  Search,
-  ServerCog,
-  ToyBrick,
-  TrendingUp,
-} from "lucide-react"
+import { ChevronLeft, ChevronRight, Star } from "lucide-react"
 
 import { IServer } from "@/types/server"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
 import { Icons } from "../ui/icons"
-import { Input } from "../ui/input"
 import Loading from "../ui/loading"
 import SidebarSelected from "./sidebar-selected"
 
@@ -41,15 +25,11 @@ export function Sidebar({ className }: any) {
   const [sub] = useAutoAnimate()
 
   useEffect(() => {
-    fetch("https://liman.io/api/servers", {
-      headers: {
-        "liman-token":
-          "P53xvcLDByZeEf9Tb7Ksjfd2COrYTxK8JfCtct2UPOTSTMRKaTOIMoOlxJUceQYj",
-      },
-    })
-      .then((res) => res.json())
+    apiService
+      .getInstance()
+      .get("/menu/servers")
       .then((res) => {
-        setServers(res)
+        setServers(res.data)
         setLoading(false)
       })
   }, [])
@@ -97,7 +77,12 @@ export function Sidebar({ className }: any) {
                         <Icons.windows className="mr-2 h-4 w-4" />
                       )}
                       {server.name}
-                      <ChevronRight className="ml-auto h-4 w-4" />
+                      <div className="ml-auto flex">
+                        {server.is_favorite && (
+                          <Star className="mr-1 h-4 w-4" />
+                        )}
+                        <ChevronRight className="h-4 w-4" />
+                      </div>
                     </Button>
                   ))
                 )}

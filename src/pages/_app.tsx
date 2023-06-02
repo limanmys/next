@@ -1,14 +1,12 @@
 import "@/styles/globals.css"
 import { AppType } from "next/app"
-import Head from "next/head"
 import { useRouter } from "next/router"
-import Script from "next/script"
 
 import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Sidebar } from "@/components/navigation/sidebar"
-import { SiteHeader } from "@/components/site-header"
+import { SiteHeader } from "@/components/navigation/site-header"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
 
@@ -24,8 +22,8 @@ const RootLayout: AppType = ({ Component, pageProps }) => {
             fontSans.variable
           )}
         >
-          {router.asPath !== "/" && <SiteHeader />}
-          {router.asPath !== "/" ? (
+          {!router.asPath.includes("/auth/login") && <SiteHeader />}
+          {!router.asPath.includes("/auth/login") ? (
             <div className="grid grid-cols-6">
               <Sidebar />
               <ScrollArea

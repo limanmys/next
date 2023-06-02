@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
+import { apiService } from "@/services"
 
 import ExtensionRender from "@/components/extension/extension-render"
 
@@ -8,18 +9,14 @@ export default function ExtensionPage() {
   const router = useRouter()
   useEffect(() => {
     if (!router.query.extension_id || !router.query.server_id) return
-    fetch(
-      `https://liman.io/api/servers/${router.query.server_id}/extensions/${router.query.extension_id}`,
-      {
-        headers: {
-          "liman-token":
-            "P53xvcLDByZeEf9Tb7Ksjfd2COrYTxK8JfCtct2UPOTSTMRKaTOIMoOlxJUceQYj",
-        },
-      }
-    )
-      .then((res) => res.json())
+
+    apiService
+      .getInstance()
+      .post(
+        `/servers/${router.query.server_id}/extensions/${router.query.extension_id}`
+      )
       .then((res) => {
-        setContent(res.html)
+        setContent(res.data.html)
       })
   }, [router.query.extension_id, router.query.server_id])
 

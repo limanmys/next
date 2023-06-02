@@ -86,6 +86,7 @@ export function DataTable<TData, TValue>({
         table.getSelectedRowModel().flatRows.map((row) => row.original)
       )
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rowSelection])
 
   return (

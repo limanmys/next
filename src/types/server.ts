@@ -14,6 +14,7 @@ export interface IServer {
   is_online: boolean
   extension_count: number
   extensions: IExtension[]
+  is_favorite: boolean
 }
 
 export interface IExtension {

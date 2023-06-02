@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
+import { apiService } from "@/services"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
 import {
   CircleDot,
@@ -28,15 +29,11 @@ export default function SidebarSelected({ serverId }: { serverId: string }) {
   const [selected, setSelected] = useState("")
 
   useEffect(() => {
-    fetch(`https://liman.io/api/servers/${serverId}`, {
-      headers: {
-        "liman-token":
-          "P53xvcLDByZeEf9Tb7Ksjfd2COrYTxK8JfCtct2UPOTSTMRKaTOIMoOlxJUceQYj",
-      },
-    })
-      .then((res) => res.json())
+    apiService
+      .getInstance()
+      .get(`/menu/servers/${serverId}`)
       .then((res) => {
-        setData(res)
+        setData(res.data)
         setLoading(false)
       })
   }, [serverId])

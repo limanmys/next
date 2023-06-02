@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react"
+import { Dispatch, useEffect, useState } from "react"
+import { apiService } from "@/services"
 import { CommandLoading } from "cmdk"
 import { Search } from "lucide-react"
 
@@ -15,6 +16,24 @@ import {
 import { Input } from "../ui/input"
 import Loading from "../ui/loading"
 
+const search = (
+  query: string,
+  setLoading: Dispatch<any>,
+  setResults: Dispatch<any>
+) => {
+  setResults({})
+  setLoading(true)
+  apiService
+    .getInstance()
+    .post("/search", {
+      query: "",
+    })
+    .then((res) => {
+      setLoading(false)
+      setResults(res.data)
+    })
+}
+
 export default function CommandMenu() {
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState("")
@@ -22,24 +41,7 @@ export default function CommandMenu() {
   const [results, setResults] = useState({} as any)
 
   useEffect(() => {
-    setResults({})
-    setLoading(true)
-    fetch(`https://liman.io/api/search`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "liman-token":
-          "P53xvcLDByZeEf9Tb7Ksjfd2COrYTxK8JfCtct2UPOTSTMRKaTOIMoOlxJUceQYj",
-      },
-      body: JSON.stringify({
-        query: "",
-      }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        setResults(res)
-        setLoading(false)
-      })
+    search("", setLoading, setResults)
 
     const down = (e: KeyboardEvent) => {
       setTimeout(() => {
@@ -53,24 +55,7 @@ export default function CommandMenu() {
   }, [])
 
   const changeText = useDebounce((text: string) => {
-    setResults({})
-    setLoading(true)
-    fetch(`https://liman.io/api/search`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "liman-token":
-          "P53xvcLDByZeEf9Tb7Ksjfd2COrYTxK8JfCtct2UPOTSTMRKaTOIMoOlxJUceQYj",
-      },
-      body: JSON.stringify({
-        query: text,
-      }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        setResults(res)
-        setLoading(false)
-      })
+    search(text, setLoading, setResults)
   }, 500)
 
   return (
@@ -82,7 +67,7 @@ export default function CommandMenu() {
         </kbd>
         <Search className="absolute right-5 top-3 h-4 w-4" />
       </div>
-      <CommandDialog open={open} onOpenChange={setOpen} shouldFilter={false}>
+      <CommandDialog open={open} onOpenChange={setOpen}>
         <CommandInput
           placeholder="Arama yapın..."
           value={value}

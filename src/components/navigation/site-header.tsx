@@ -1,11 +1,12 @@
 import Link from "next/link"
+import { useRouter } from "next/router"
 import { Bell, Eye, Globe2, Key, LogOut } from "lucide-react"
 
+import { useLogout } from "@/hooks/auth/useLogout"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
 
-import CommandMenu from "./navigation/command-menu"
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -13,15 +14,19 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu"
-import { Icons } from "./ui/icons"
+} from "../ui/dropdown-menu"
+import { Icons } from "../ui/icons"
+import CommandMenu from "./command-menu"
 
 export function SiteHeader() {
+  const router = useRouter()
+  const { logout } = useLogout()
+
   return (
     <header className="top-0 z-40 w-full border-b bg-background">
       <div className="flex h-16 items-center space-x-4 px-6 sm:justify-between sm:space-x-0">
         <div className="flex gap-6 md:gap-10">
-          <Link href="/dashboard" className="flex items-center space-x-2">
+          <Link href="/" className="flex items-center space-x-2">
             <Icons.logo className="w-18 h-6 dark:fill-white" />
           </Link>
         </div>
@@ -154,7 +159,14 @@ export function SiteHeader() {
                   <Button className="w-full" variant="ghost">
                     <Key className="mr-2 h-4 w-4" /> Yetki Talepleri
                   </Button>
-                  <Button className="w-full" variant="secondary">
+                  <Button
+                    className="w-full"
+                    variant="secondary"
+                    onClick={() => {
+                      logout()
+                      router.replace("/auth/login")
+                    }}
+                  >
                     <LogOut className="mr-2 h-4 w-4" /> Çıkış Yap
                   </Button>
                 </div>

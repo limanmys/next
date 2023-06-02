@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { apiService } from "@/services"
 
 import { IServer } from "@/types/server"
 import { DivergentColumn } from "@/types/table"
@@ -68,15 +69,12 @@ export default function Servers() {
 
   useEffect(() => {
     setLoading(true)
-    fetch(`https://liman.io/api/servers`, {
-      headers: {
-        "liman-token":
-          "P53xvcLDByZeEf9Tb7Ksjfd2COrYTxK8JfCtct2UPOTSTMRKaTOIMoOlxJUceQYj",
-      },
-    })
-      .then((res) => res.json())
+
+    apiService
+      .getInstance()
+      .get(`/servers`)
       .then((res) => {
-        setData(res)
+        setData(res.data)
         setLoading(false)
       })
   }, [])
