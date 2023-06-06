@@ -53,7 +53,7 @@ const Iframe = (props: IIframeProps) => {
         ref={writeHTML}
         className="border-0"
         style={{
-          height: "calc(100vh - 4rem - 1px)",
+          height: "var(--container-height)",
         }}
       />
     </>

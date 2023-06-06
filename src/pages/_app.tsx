@@ -1,6 +1,8 @@
 import "@/styles/globals.css"
+import "@/styles/nprogress.css"
 import { AppType } from "next/app"
-import { useRouter } from "next/router"
+import { Router, useRouter } from "next/router"
+import NProgress from "nprogress"
 
 import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
@@ -12,6 +14,12 @@ import { ThemeProvider } from "@/components/theme-provider"
 
 const RootLayout: AppType = ({ Component, pageProps }) => {
   const router = useRouter()
+
+  Router.events.on("routeChangeStart", () => NProgress.start())
+  Router.events.on("routeChangeComplete", () => {
+    NProgress.done()
+  })
+  Router.events.on("routeChangeError", () => NProgress.done())
 
   return (
     <>
@@ -29,7 +37,7 @@ const RootLayout: AppType = ({ Component, pageProps }) => {
               <ScrollArea
                 className="col-span-5"
                 style={{
-                  height: "calc(100vh - 4rem - 1px)",
+                  height: "var(--container-height)",
                 }}
               >
                 <main>

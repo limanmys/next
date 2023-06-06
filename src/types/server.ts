@@ -41,3 +41,39 @@ export interface IMenu {
   name: string
   url: string
 }
+
+export interface IServerDetails {
+  hostname: string
+  os: string
+  services: number
+  processes: string
+  uptime: string
+  user: string
+}
+
+export interface IServerStats {
+  cpu: number
+  ram: number
+  io: number
+  network: IServerNetworkStats
+  time: number
+}
+
+export interface IServerNetworkStats {
+  download: number
+  upload: number
+}
+
+export interface IServerCpuUsage {
+  pid: string
+  percent: string
+  user: string
+  cmd: string
+}
+
+export interface IServerDiskUsage {
+  percent: string
+  source: string
+  size: string
+  used: string
+}

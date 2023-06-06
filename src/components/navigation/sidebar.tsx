@@ -1,10 +1,11 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import Link from "next/link"
 import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
-import { ChevronLeft, ChevronRight, Star } from "lucide-react"
+import { ChevronLeft, ChevronRight, Server, Star } from "lucide-react"
 
 import { IServer } from "@/types/server"
 import { Button } from "@/components/ui/button"
@@ -46,7 +47,7 @@ export function Sidebar({ className }: any) {
     <ScrollArea
       className="border border-y-0 border-l-0"
       style={{
-        height: "calc(100vh - 4rem - 1px)",
+        height: "var(--container-height)",
       }}
     >
       <div className="space-y-4 py-4">
@@ -63,28 +64,40 @@ export function Sidebar({ className }: any) {
                     <Loading />
                   </div>
                 ) : (
-                  servers.map((server: IServer) => (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="w-full justify-start"
-                      onClick={() => setSelected(server.id)}
-                      key={server.id}
-                    >
-                      {server.os === "linux" ? (
-                        <Icons.linux className="mr-2 h-4 w-4" />
-                      ) : (
-                        <Icons.windows className="mr-2 h-4 w-4" />
-                      )}
-                      {server.name}
-                      <div className="ml-auto flex">
-                        {server.is_favorite && (
-                          <Star className="mr-1 h-4 w-4" />
+                  <>
+                    {servers.map((server: IServer) => (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="w-full justify-start"
+                        onClick={() => setSelected(server.id)}
+                        key={server.id}
+                      >
+                        {server.os === "linux" ? (
+                          <Icons.linux className="mr-2 h-4 w-4" />
+                        ) : (
+                          <Icons.windows className="mr-2 h-4 w-4" />
                         )}
-                        <ChevronRight className="h-4 w-4" />
-                      </div>
-                    </Button>
-                  ))
+                        {server.name}
+                        <div className="ml-auto flex">
+                          {server.is_favorite && (
+                            <Star className="mr-1 h-4 w-4" />
+                          )}
+                          <ChevronRight className="h-4 w-4" />
+                        </div>
+                      </Button>
+                    ))}
+                    <Link href="/servers">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="mt-1 w-full justify-start"
+                      >
+                        <Server className="mr-2 h-4 w-4" />
+                        Tüm sunucuları gör
+                      </Button>
+                    </Link>
+                  </>
                 )}
               </div>
             </>

@@ -9,6 +9,7 @@ export default function ExtensionPage() {
   const router = useRouter()
   useEffect(() => {
     if (!router.query.extension_id || !router.query.server_id) return
+    setContent("")
 
     apiService
       .getInstance()

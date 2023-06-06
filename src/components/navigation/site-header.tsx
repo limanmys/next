@@ -1,7 +1,10 @@
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
+import Cookies from "js-cookie"
 import { Bell, Eye, Globe2, Key, LogOut } from "lucide-react"
 
+import { IUser } from "@/types/user"
 import { useLogout } from "@/hooks/auth/useLogout"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
@@ -20,6 +23,14 @@ import CommandMenu from "./command-menu"
 
 export function SiteHeader() {
   const router = useRouter()
+  const [user, setUser] = useState({} as IUser)
+  useEffect(() => {
+    const currentUser = Cookies.get("currentUser")
+    if (currentUser) {
+      setUser(JSON.parse(currentUser).user)
+    }
+  }, [])
+
   const { logout } = useLogout()
 
   return (
@@ -108,52 +119,51 @@ export function SiteHeader() {
                   })}
                 >
                   <Avatar className="h-6 w-6">
-                    <AvatarImage src="https://github.com/dogukanoksuz.png" />
-                    <AvatarFallback>DÖ</AvatarFallback>
+                    <AvatarFallback>
+                      {Object.keys(user).length > 0 && user.name[0]}
+                    </AvatarFallback>
                   </Avatar>
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="mr-5 w-[420px]">
-                <DropdownMenuLabel>
-                  Doğukan Öksüz
-                  <br />
-                  <span className="text-xs text-slate-400">
-                    doksuz@havelsan.com.tr
-                  </span>
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <div className="flex">
-                  <div className="avatar mr-2 p-2">
-                    <Avatar className="h-12 w-12">
-                      <AvatarImage src="https://github.com/dogukanoksuz.png" />
-                      <AvatarFallback>DÖ</AvatarFallback>
-                    </Avatar>
-                  </div>
+                {Object.keys(user).length > 0 && (
+                  <>
+                    <DropdownMenuLabel>
+                      {user.name}
+                      <br />
+                      <span className="text-xs text-slate-400">
+                        {user.email}
+                      </span>
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <div className="flex">
+                      <div className="avatar mr-2 p-2">
+                        <Avatar className="h-12 w-12">
+                          <AvatarFallback>
+                            {user && user.name[0]}
+                          </AvatarFallback>
+                        </Avatar>
+                      </div>
 
-                  <div className="my-2 flex flex-col gap-[6px]">
-                    <div className="text-sm">
-                      <span className="font-semibold">Son Giriş Tarihi: </span>{" "}
-                      23 Haziran 2023 14:00:15
-                    </div>
+                      <div className="my-2 flex flex-col gap-[6px]">
+                        <div className="text-sm">
+                          <span className="font-semibold">
+                            Son Giriş Tarihi:{" "}
+                          </span>{" "}
+                          {user.last_login_at}
+                        </div>
 
-                    <div className="text-sm">
-                      <span className="font-semibold">
-                        Giriş Yapılan Son IP:{" "}
-                      </span>{" "}
-                      127.0.0.1
+                        <div className="text-sm">
+                          <span className="font-semibold">
+                            Giriş Yapılan Son IP:{" "}
+                          </span>{" "}
+                          {user.last_login_ip}
+                        </div>
+                      </div>
                     </div>
+                  </>
+                )}
 
-                    <div className="text-sm">
-                      <span className="font-semibold">Bağlı Liman: </span>{" "}
-                      limanmys
-                    </div>
-
-                    <div className="text-sm">
-                      <span className="font-semibold">Liman ID: </span>{" "}
-                      20c46b6f850f2e08446eabf939b33c14
-                    </div>
-                  </div>
-                </div>
                 <DropdownMenuSeparator />
                 <div className="flex gap-1">
                   <Button className="w-full" variant="ghost">

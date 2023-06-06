@@ -18,7 +18,9 @@ export function middleware(request: NextRequest) {
 
   if (currentUser && Date.now() > JSON.parse(currentUser).expired_at) {
     request.cookies.delete("currentUser")
-    return NextResponse.redirect(new URL("/auth/login", request.url))
+    const response = NextResponse.redirect(new URL("/auth/login", request.url))
+    response.cookies.delete("currentUser")
+    return response
   }
 
   if (currentUser && authRoutes.includes(request.nextUrl.pathname)) {

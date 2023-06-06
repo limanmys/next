@@ -10,6 +10,7 @@ import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-col
 export default function Servers() {
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IServer[]>([])
+  const [selected, setSelected] = useState<IServer[]>([])
 
   const columns: DivergentColumn<IServer>[] = [
     {
@@ -88,7 +89,7 @@ export default function Servers() {
           data={data}
           loading={loading}
           selectable={true}
-          onSelectedRowsChange={(rows) => console.log(rows)}
+          onSelectedRowsChange={(rows) => setSelected(rows)}
         />
       </div>
     </>

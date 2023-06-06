@@ -34,6 +34,8 @@
     --ring: 215 20.2% 65.1%;
 
     --radius: 1.2rem;
+
+    --container-height: calc(100vh - 4rem - 1px);
   }
 
   .dark {
@@ -65,6 +67,8 @@
     --destructive-foreground: 210 40% 98%;
 
     --ring: 215 20.2% 65.1%;
+
+    --container-height: calc(100vh - 4rem - 1px);
   }
 }
 
@@ -98,4 +102,12 @@
 .\[\&_\[cmdk-item\]\]\:py-3 [cmdk-item] {
   padding-top: 0.375rem !important;
   padding-bottom: 0.375rem !important;
+}
+
+.container-height {
+  height: var(--container-height);
+}
+
+.resource-charts .apexcharts-svg {
+  border-radius: 0 0 18px 18px !important;
 }

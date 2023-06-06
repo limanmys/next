@@ -47,7 +47,8 @@ export default function ExtensionItem({
   return (
     <Collapsible open={router.asPath.includes(extension.id)}>
       <CollapsibleTrigger className="w-full">
-        {!router.asPath.includes(extension.id) ? (
+        {!router.asPath.includes(extension.id) ||
+        !router.asPath.includes(server_id) ? (
           <Link
             href={`/servers/${server_id}/extensions/${extension.id}${
               extension.menus && extension.menus.length > 0
@@ -58,7 +59,10 @@ export default function ExtensionItem({
           >
             <Button
               variant={
-                router.asPath.includes(extension.id) ? "secondary" : "ghost"
+                router.asPath.includes(extension.id) &&
+                router.asPath.includes(server_id)
+                  ? "secondary"
+                  : "ghost"
               }
               size="sm"
               className="w-full justify-start"
@@ -85,23 +89,26 @@ export default function ExtensionItem({
           </a>
         )}
       </CollapsibleTrigger>
-      {extension.menus && extension.menus.length > 0 && (
-        <>
-          <CollapsibleContent className="mb-1 rounded-md border p-1">
-            {extension.menus.map((menu: IMenu) => (
-              <a href={menu.url} key={menu.url}>
-                <Button
-                  variant={hash.includes(menu.url) ? "secondary" : "ghost"}
-                  size="sm"
-                  className="w-full justify-start"
-                >
-                  {menu.name}
-                </Button>
-              </a>
-            ))}
-          </CollapsibleContent>
-        </>
-      )}
+      {router.asPath.includes(extension.id) &&
+        router.asPath.includes(server_id) &&
+        extension.menus &&
+        extension.menus.length > 0 && (
+          <>
+            <CollapsibleContent className="mb-1 rounded-md border p-1">
+              {extension.menus.map((menu: IMenu) => (
+                <a href={menu.url} key={menu.url}>
+                  <Button
+                    variant={hash.includes(menu.url) ? "secondary" : "ghost"}
+                    size="sm"
+                    className="w-full justify-start"
+                  >
+                    {menu.name}
+                  </Button>
+                </a>
+              ))}
+            </CollapsibleContent>
+          </>
+        )}
     </Collapsible>
   )
 }

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import Link from "next/link"
 import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
@@ -66,10 +67,20 @@ export default function SidebarSelected({ serverId }: { serverId: string }) {
             />
           </div>
           <div className="space-y-1">
-            <Button variant="ghost" size="sm" className="w-full justify-start">
-              <TrendingUp className="mr-2 h-4 w-4" />
-              Sistem Durumu
-            </Button>
+            <Link href={`/servers/${serverId}`}>
+              <Button
+                variant={
+                  router.asPath === `/servers/${serverId}`
+                    ? "secondary"
+                    : "ghost"
+                }
+                size="sm"
+                className="w-full justify-start"
+              >
+                <TrendingUp className="mr-2 h-4 w-4" />
+                Sistem Durumu
+              </Button>
+            </Link>
             <Button variant="ghost" size="sm" className="w-full justify-start">
               <ToyBrick className="mr-2 h-4 w-4" />
               Eklentiler
