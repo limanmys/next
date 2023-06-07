@@ -35,7 +35,7 @@ export default function DiskTable() {
         })
 
     f()
-    const timer = setInterval(f, 10000)
+    const timer = setInterval(f, 20000)
 
     return () => clearInterval(timer)
   }, [router.query.server_id])

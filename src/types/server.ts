@@ -77,3 +77,10 @@ export interface IServerDiskUsage {
   size: string
   used: string
 }
+
+export interface IServerSpecs {
+  cpu: string
+  ram: string
+  model: string
+  manufacturer: string
+}

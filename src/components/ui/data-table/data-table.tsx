@@ -29,6 +29,7 @@ import {
 } from "@/components/ui/table"
 
 import { Icons } from "../icons"
+import { Skeleton } from "../skeleton"
 import { DataTableToolbar } from "./data-table-toolbar"
 
 interface DataTableProps<TData, TValue> {
@@ -37,15 +38,19 @@ interface DataTableProps<TData, TValue> {
   loading: boolean
   selectable?: boolean
   onSelectedRowsChange?: (rows: TData[]) => void
+  children?: React.ReactNode
+  tableRef?: any
 }
 
-export function DataTable<TData, TValue>({
+const DataTable = <TData, TValue>({
   columns,
   data,
   loading,
   selectable,
   onSelectedRowsChange,
-}: DataTableProps<TData, TValue>) {
+  children,
+  tableRef,
+}: DataTableProps<TData, TValue>) => {
   const [rowSelection, setRowSelection] = React.useState({})
   const [globalFilter, setGlobalFilter] = React.useState<string>("")
   const [columnVisibility, setColumnVisibility] =
@@ -79,6 +84,9 @@ export function DataTable<TData, TValue>({
     getFacetedUniqueValues: getFacetedUniqueValues(),
     onGlobalFilterChange: setGlobalFilter,
   })
+  if (tableRef) {
+    tableRef.current = table
+  }
 
   React.useEffect(() => {
     if (onSelectedRowsChange) {
@@ -90,14 +98,18 @@ export function DataTable<TData, TValue>({
   }, [rowSelection])
 
   return (
-    <div className="space-y-4">
-      <DataTableToolbar
-        table={table}
-        columns={columns}
-        globalFilter={globalFilter}
-        setGlobalFilter={setGlobalFilter}
-      />
-      <div className="rounded-md border">
+    <div className="data-table space-y-4">
+      <div className="flex items-center justify-between">
+        <div className="pl-8">{children}</div>
+        <DataTableToolbar
+          table={table}
+          columns={columns}
+          globalFilter={globalFilter}
+          setGlobalFilter={setGlobalFilter}
+        />
+      </div>
+
+      <div className="border-y">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -119,14 +131,17 @@ export function DataTable<TData, TValue>({
           </TableHeader>
           <TableBody>
             {loading && (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-72 text-center"
-                >
-                  <Icons.spinner className="mx-auto h-12 w-12 animate-spin" />
-                </TableCell>
-              </TableRow>
+              <>
+                {[...Array(10)].map((_, i) => (
+                  <TableRow key={i}>
+                    {[...Array(columns.length)].map((_, t) => (
+                      <TableCell key={t}>
+                        <Skeleton className="h-[20px] w-full" />
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))}
+              </>
             )}
             {!loading && (
               <>
@@ -166,3 +181,5 @@ export function DataTable<TData, TValue>({
     </div>
   )
 }
+
+export default DataTable

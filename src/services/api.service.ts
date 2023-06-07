@@ -15,11 +15,24 @@ export class ApiService {
         ...getAuthorizationHeader(),
       },
     })
+
+    this.instance.interceptors.response.use(
+      (response) => {
+        return response
+      },
+      (error) => {
+        if (error.response.status === 401) {
+          window.location.href = "/auth/login"
+        }
+        return Promise.reject(error)
+      }
+    )
   }
 
   getInstance = () => {
     this.instance.defaults.headers.authorization = getAuthorizationHeader()
       .Authorization as string
+
     return this.instance
   }
 }

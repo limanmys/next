@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
+import { useSidebarContext } from "@/providers/sidebar-provider"
 import { apiService } from "@/services"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { ChevronLeft, ChevronRight, Server, Star } from "lucide-react"
@@ -16,12 +17,10 @@ import Loading from "../ui/loading"
 import SidebarSelected from "./sidebar-selected"
 
 export function Sidebar({ className }: any) {
-  const router = useRouter()
-
   const [loading, setLoading] = useState(true)
   const [servers, setServers] = useState<IServer[]>([])
 
-  const [selected, setSelected] = useState("")
+  const [selected, setSelected] = useSidebarContext()
   const [parent] = useAutoAnimate()
   const [sub] = useAutoAnimate()
 
@@ -34,14 +33,6 @@ export function Sidebar({ className }: any) {
         setLoading(false)
       })
   }, [])
-
-  useEffect(() => {
-    if (router.query.server_id) {
-      setSelected(router.query.server_id as string)
-    } else {
-      setSelected("")
-    }
-  }, [router.query.server_id])
 
   return (
     <ScrollArea
@@ -112,7 +103,7 @@ export function Sidebar({ className }: any) {
                 <ChevronLeft className="mr-2 h-4 w-4" />
                 Sunucular
               </Button>
-              <SidebarSelected serverId={selected} />
+              <SidebarSelected />
             </>
           )}
         </div>

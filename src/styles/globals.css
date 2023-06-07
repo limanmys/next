@@ -111,3 +111,13 @@
 .resource-charts .apexcharts-svg {
   border-radius: 0 0 18px 18px !important;
 }
+
+.data-table td:first-of-type,
+.data-table th:first-of-type {
+  padding-left: 32px;
+}
+
+.data-table td:last-of-type,
+.data-table th:last-of-type {
+  padding-right: 32px;
+}

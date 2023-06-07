@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
+import { useSidebarContext } from "@/providers/sidebar-provider"
 import { apiService } from "@/services"
-import { useAutoAnimate } from "@formkit/auto-animate/react"
 import {
   CircleDot,
   FileClock,
@@ -21,70 +21,88 @@ import { Icons } from "../ui/icons"
 import Loading from "../ui/loading"
 import ExtensionItem from "./extension-item"
 
-export default function SidebarSelected({ serverId }: { serverId: string }) {
+export default function SidebarSelected() {
   const router = useRouter()
-  const [parent] = useAutoAnimate()
-
-  const [loading, setLoading] = useState(true)
-  const [data, setData] = useState<IServer>({} as IServer)
-  const [selected, setSelected] = useState("")
+  const [
+    selected,
+    setSelected,
+    selectedData,
+    setSelectedData,
+    selectedLoading,
+    setSelectedLoading,
+  ] = useSidebarContext()
 
   useEffect(() => {
+    setSelectedLoading(true)
     apiService
       .getInstance()
-      .get(`/menu/servers/${serverId}`)
+      .get(`/menu/servers/${selected}`)
       .then((res) => {
-        setData(res.data)
-        setLoading(false)
+        setSelectedData(res.data)
+        setSelectedLoading(false)
       })
-  }, [serverId])
+  }, [selected])
 
   return (
     <>
-      {loading ? (
+      {selectedLoading ? (
         <div className="flex h-[50vh] w-full items-center justify-center">
           <Loading />
         </div>
       ) : (
         <>
           <div className="relative mb-3 flex px-2">
-            {data.os === "linux" ? (
+            {selectedData.os === "linux" ? (
               <Icons.linux className="h-8 w-8" />
             ) : (
               <Icons.windows className="h-8 w-8" />
             )}
             <div className="pl-3">
               <h2 className="-my-1 text-lg font-semibold tracking-tight">
-                {data.name}
+                {selectedData.name}
               </h2>
-              <span className="text-xs text-slate-500">{data.ip_address}</span>
+              <span className="text-xs text-slate-500">
+                {selectedData.ip_address}
+              </span>
             </div>
             <CircleDot
               className={cn(
                 "absolute right-0 top-[1px] h-4 w-4",
-                data.is_online ? "text-green-500" : "text-red-500"
+                selectedData.is_online ? "text-green-500" : "text-red-500"
               )}
             />
           </div>
           <div className="space-y-1">
-            <Link href={`/servers/${serverId}`}>
+            <Link href={`/servers/${selected}`}>
               <Button
                 variant={
-                  router.asPath === `/servers/${serverId}`
+                  router.asPath === `/servers/${selected}`
+                    ? "secondary"
+                    : "ghost"
+                }
+                size="sm"
+                className="mb-1 w-full justify-start"
+              >
+                <TrendingUp className="mr-2 h-4 w-4" />
+                Sistem Durumu
+              </Button>
+            </Link>
+
+            <Link href={`/servers/${selected}/extensions`}>
+              <Button
+                variant={
+                  router.asPath === `/servers/${selected}/extensions`
                     ? "secondary"
                     : "ghost"
                 }
                 size="sm"
                 className="w-full justify-start"
               >
-                <TrendingUp className="mr-2 h-4 w-4" />
-                Sistem Durumu
+                <ToyBrick className="mr-2 h-4 w-4" />
+                Eklentiler
               </Button>
             </Link>
-            <Button variant="ghost" size="sm" className="w-full justify-start">
-              <ToyBrick className="mr-2 h-4 w-4" />
-              Eklentiler
-            </Button>
+
             <Button variant="ghost" size="sm" className="w-full justify-start">
               <ServerCog className="mr-2 h-4 w-4" />
               Servisler
@@ -103,17 +121,17 @@ export default function SidebarSelected({ serverId }: { serverId: string }) {
             </Button>
           </div>
 
-          {data.extensions && data.extensions.length > 0 && (
+          {selectedData.extensions && selectedData.extensions.length > 0 && (
             <>
               <h2 className="mb-2 mt-5 px-2 text-lg font-semibold tracking-tight">
                 Eklentiler
               </h2>
               <div className="space-y-1">
-                {data.extensions.map((extension: IExtension) => (
+                {selectedData.extensions.map((extension: IExtension) => (
                   <ExtensionItem
                     key={extension.id}
                     extension={extension}
-                    server_id={serverId}
+                    server_id={selected}
                   />
                 ))}
               </div>

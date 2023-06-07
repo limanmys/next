@@ -8,6 +8,7 @@ import ServerDetails from "@/components/server/details"
 import DiskTable from "@/components/server/disk-table"
 import RamTable from "@/components/server/ram-table"
 import ResourceUsage from "@/components/server/resource-usage"
+import ServerSpecs from "@/components/server/specs"
 
 interface IDetails {
   server: IServer
@@ -39,6 +40,7 @@ export default function ServerStatus() {
           <ServerDetails loading={loading} data={data} />
         </>
         <div className="col-span-4 flex flex-col">
+          <ServerSpecs />
           {data.server && data.server.os === "linux" && <ResourceUsage />}
           <div className="flex flex-[2] divide-x border-t">
             <div className="w-1/3">

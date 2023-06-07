@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
 import { apiService } from "@/services"
+import { Server, UploadCloud } from "lucide-react"
 
 import { IServer } from "@/types/server"
 import { DivergentColumn } from "@/types/table"
+import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
-import { DataTable } from "@/components/ui/data-table/data-table"
+import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
 
 export default function Servers() {
@@ -82,16 +84,30 @@ export default function Servers() {
 
   return (
     <>
-      <div className="p-[24px]">
-        <h2 className="mb-5 text-3xl font-bold tracking-tight">Sunucular</h2>
-        <DataTable
-          columns={columns}
-          data={data}
-          loading={loading}
-          selectable={true}
-          onSelectedRowsChange={(rows) => setSelected(rows)}
-        />
+      <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
+        <div className="flex items-center justify-between space-y-2">
+          <div>
+            <h2 className="text-2xl font-bold tracking-tight">Sunucular</h2>
+            <p className="text-muted-foreground">
+              Liman Merkezi Yönetim Sistemine bağlı sunucularınızı bu sayfa
+              üzerinden yönetebilirsiniz.
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <Button className="rounded-full">
+              <Server className="mr-2 h-4 w-4" />
+              Sunucu Oluştur
+            </Button>
+          </div>
+        </div>
       </div>
+      <DataTable
+        columns={columns}
+        data={data}
+        loading={loading}
+        selectable={true}
+        onSelectedRowsChange={(rows) => setSelected(rows)}
+      />
     </>
   )
 }

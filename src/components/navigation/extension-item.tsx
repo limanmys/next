@@ -68,7 +68,10 @@ export default function ExtensionItem({
               className="w-full justify-start"
             >
               {extension.display_name}
-              <ChevronRight className="absolute right-6 h-4 w-4" />
+
+              {extension.menus && extension.menus.length > 0 && (
+                <ChevronRight className="absolute right-6 h-4 w-4" />
+              )}
             </Button>
           </Link>
         ) : (
@@ -84,7 +87,9 @@ export default function ExtensionItem({
               )}
             >
               {extension.display_name}
-              <ChevronDown className="absolute right-6 h-4 w-4" />
+              {extension.menus && extension.menus.length > 0 && (
+                <ChevronDown className="absolute right-6 h-4 w-4" />
+              )}
             </Button>
           </a>
         )}

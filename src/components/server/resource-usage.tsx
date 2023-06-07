@@ -88,7 +88,7 @@ export default function ResourceUsage() {
         })
 
     f()
-    const timer = setInterval(f, 3000)
+    const timer = setInterval(f, 5000)
 
     return () => clearInterval(timer)
     // eslint-disable-next-line react-hooks/exhaustive-deps

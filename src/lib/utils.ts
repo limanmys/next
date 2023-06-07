@@ -16,3 +16,13 @@ export function getAuthorizationHeader() {
     }`,
   }
 }
+
+export function compareNumericString(rowA: any, rowB: any, id: any) {
+  let a = Number.parseFloat(rowA.original[id])
+  let b = Number.parseFloat(rowB.original[id])
+  if (Number.isNaN(a)) a = 0
+  if (Number.isNaN(b)) b = 0
+  if (a > b) return 1
+  if (a < b) return -1
+  return 0
+}
