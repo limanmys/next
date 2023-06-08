@@ -138,16 +138,26 @@ export default function SidebarSelected() {
                     : "ghost"
                 }
                 size="sm"
-                className="w-full justify-start"
+                className="mb-1 w-full justify-start"
               >
                 <PackageSearch className="mr-2 h-4 w-4" />
                 Güncellemeler
               </Button>
             </Link>
-            <Button variant="ghost" size="sm" className="w-full justify-start">
-              <FileClock className="mr-2 h-4 w-4" />
-              Erişim Kayıtları
-            </Button>
+            <Link href={`/servers/${selected}/access_logs`}>
+              <Button
+                variant={
+                  router.asPath === `/servers/${selected}/access_logs`
+                    ? "secondary"
+                    : "ghost"
+                }
+                size="sm"
+                className="w-full justify-start"
+              >
+                <FileClock className="mr-2 h-4 w-4" />
+                Erişim Kayıtları
+              </Button>
+            </Link>
           </div>
 
           {selectedData.extensions && selectedData.extensions.length > 0 && (

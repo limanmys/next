@@ -116,7 +116,11 @@ export default function AssignExtension({
 
         <SheetFooter>
           <SheetClose asChild>
-            <Button onClick={() => onAssign(selected)} type="submit">
+            <Button
+              onClick={() => onAssign(selected)}
+              type="submit"
+              className="rounded-full"
+            >
               <PlusCircle className="mr-2 h-4 w-4" /> Ekle
             </Button>
           </SheetClose>

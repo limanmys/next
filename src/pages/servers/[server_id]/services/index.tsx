@@ -77,8 +77,8 @@ export default function ServerExtensionPage() {
       title: "Servis Adı",
       cell: ({ row }) => (
         <div className="flex items-center gap-2">
-          {row.original.name}
           <ServiceStatusWindow name={row.original.name} />
+          {row.original.name}
         </div>
       ),
     },
