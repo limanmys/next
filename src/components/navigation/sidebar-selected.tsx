@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { useSidebarContext } from "@/providers/sidebar-provider"
@@ -13,7 +13,7 @@ import {
   TrendingUp,
 } from "lucide-react"
 
-import { IExtension, IServer } from "@/types/server"
+import { IExtension } from "@/types/extension"
 import { cn } from "@/lib/utils"
 
 import { Button } from "../ui/button"
@@ -96,17 +96,26 @@ export default function SidebarSelected() {
                     : "ghost"
                 }
                 size="sm"
-                className="w-full justify-start"
+                className="mb-1 w-full justify-start"
               >
                 <ToyBrick className="mr-2 h-4 w-4" />
                 Eklentiler
               </Button>
             </Link>
-
-            <Button variant="ghost" size="sm" className="w-full justify-start">
-              <ServerCog className="mr-2 h-4 w-4" />
-              Servisler
-            </Button>
+            <Link href={`/servers/${selected}/services`}>
+              <Button
+                variant={
+                  router.asPath === `/servers/${selected}/services`
+                    ? "secondary"
+                    : "ghost"
+                }
+                size="sm"
+                className="mb-1 w-full justify-start"
+              >
+                <ServerCog className="mr-2 h-4 w-4" />
+                Servisler
+              </Button>
+            </Link>
             <Button variant="ghost" size="sm" className="w-full justify-start">
               <PackageOpen className="mr-2 h-4 w-4" />
               Paketler
