@@ -20,9 +20,7 @@ export default function Servers() {
       header: ({ table }) => (
         <Checkbox
           checked={table.getIsAllPageRowsSelected()}
-          onCheckedChange={(value: any) =>
-            table.toggleAllPageRowsSelected(!!value)
-          }
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
           aria-label="Select all"
           className="translate-y-[2px]"
         />
@@ -30,7 +28,7 @@ export default function Servers() {
       cell: ({ row }) => (
         <Checkbox
           checked={row.getIsSelected()}
-          onCheckedChange={(value: any) => row.toggleSelected(!!value)}
+          onCheckedChange={(value) => row.toggleSelected(!!value)}
           aria-label="Select row"
           className="translate-y-[2px]"
         />

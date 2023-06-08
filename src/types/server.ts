@@ -1,3 +1,5 @@
+import { IExtension } from "./extension"
+
 export interface IServer {
   id: string
   name: string
@@ -15,26 +17,6 @@ export interface IServer {
   extension_count: number
   extensions: IExtension[]
   is_favorite: boolean
-}
-
-export interface IExtension {
-  id: string
-  name: string
-  version: string
-  icon: string
-  service?: string
-  created_at: string
-  updated_at: string
-  order: number
-  sslPorts: any
-  issuer: string
-  language: string
-  support: string
-  displays: any
-  status: string
-  require_key: string
-  display_name: string
-  menus: IMenu[]
 }
 
 export interface IMenu {

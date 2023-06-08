@@ -2,6 +2,7 @@ import { useState } from "react"
 import { apiService } from "@/services"
 import { PlusCircle } from "lucide-react"
 
+import { IExtension } from "@/types/extension"
 import { DivergentColumn } from "@/types/table"
 import {
   Sheet,
@@ -24,11 +25,11 @@ export default function AssignExtension({
   onAssign,
 }: {
   serverId: string
-  onAssign: (extensions: any) => void
+  onAssign: (extensions: IExtension[]) => void
 }) {
   const [loading, setLoading] = useState<boolean>(true)
-  const [data, setData] = useState<any[]>([])
-  const [selected, setSelected] = useState<any[]>([])
+  const [data, setData] = useState<IExtension[]>([])
+  const [selected, setSelected] = useState<IExtension[]>([])
 
   const fetchData = () => {
     setLoading(true)
@@ -45,15 +46,13 @@ export default function AssignExtension({
       })
   }
 
-  const columns: DivergentColumn<any, string>[] = [
+  const columns: DivergentColumn<IExtension, string>[] = [
     {
       id: "select",
       header: ({ table }) => (
         <Checkbox
           checked={table.getIsAllPageRowsSelected()}
-          onCheckedChange={(value: any) =>
-            table.toggleAllPageRowsSelected(!!value)
-          }
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
           aria-label="Select all"
           className="translate-y-[2px]"
         />
@@ -61,7 +60,7 @@ export default function AssignExtension({
       cell: ({ row }) => (
         <Checkbox
           checked={row.getIsSelected()}
-          onCheckedChange={(value: any) => row.toggleSelected(!!value)}
+          onCheckedChange={(value) => row.toggleSelected(!!value)}
           aria-label="Select row"
           className="translate-y-[2px]"
         />

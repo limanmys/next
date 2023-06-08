@@ -14,6 +14,7 @@ import {
   UploadCloud,
 } from "lucide-react"
 
+import { IExtension } from "@/types/extension"
 import { DivergentColumn } from "@/types/table"
 import { compareNumericString } from "@/lib/utils"
 import {
@@ -37,21 +38,19 @@ import AssignExtension from "@/components/server/assign-extension"
 export default function ServerExtensionPage() {
   const router = useRouter()
   const [loading, setLoading] = useState<boolean>(true)
-  const [data, setData] = useState<any[]>([])
-  const [selected, setSelected] = useState<any[]>([])
+  const [data, setData] = useState<IExtension[]>([])
+  const [selected, setSelected] = useState<IExtension[]>([])
   const tableRef = useRef<any>()
   const sidebarCtx = useSidebarContext()
   const { toast } = useToast()
 
-  const columns: DivergentColumn<any, string>[] = [
+  const columns: DivergentColumn<IExtension, string>[] = [
     {
       id: "select",
       header: ({ table }) => (
         <Checkbox
           checked={table.getIsAllPageRowsSelected()}
-          onCheckedChange={(value: any) =>
-            table.toggleAllPageRowsSelected(!!value)
-          }
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
           aria-label="Select all"
           className="translate-y-[2px]"
         />
@@ -59,7 +58,7 @@ export default function ServerExtensionPage() {
       cell: ({ row }) => (
         <Checkbox
           checked={row.getIsSelected()}
-          onCheckedChange={(value: any) => row.toggleSelected(!!value)}
+          onCheckedChange={(value) => row.toggleSelected(!!value)}
           aria-label="Select row"
           className="translate-y-[2px]"
         />
@@ -126,7 +125,7 @@ export default function ServerExtensionPage() {
     fetchData()
   }, [router.query.server_id])
 
-  const onAssignExtension = (extensions: any[]) => {
+  const onAssignExtension = (extensions: IExtension[]) => {
     const values = extensions.map((i) => i.id)
 
     apiService
@@ -144,7 +143,7 @@ export default function ServerExtensionPage() {
       })
   }
 
-  const onUnassignExtension = (extensions: any[]) => {
+  const onUnassignExtension = (extensions: IExtension[]) => {
     const values = extensions.map((i) => i.id)
 
     apiService

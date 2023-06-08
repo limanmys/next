@@ -16,7 +16,7 @@ import { Icons } from "../ui/icons"
 import Loading from "../ui/loading"
 import SidebarSelected from "./sidebar-selected"
 
-export function Sidebar({ className }: any) {
+export function Sidebar({ className }: { className?: string }) {
   const [loading, setLoading] = useState(true)
   const [servers, setServers] = useState<IServer[]>([])
 
