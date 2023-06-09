@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
+import Link from "next/link"
 import { apiService } from "@/services"
-import { Server, UploadCloud } from "lucide-react"
+import { Link2, Server } from "lucide-react"
 
 import { IServer } from "@/types/server"
 import { DivergentColumn } from "@/types/table"
@@ -44,6 +45,12 @@ export default function Servers() {
       title: "Sunucu Adı",
       enableSorting: true,
       enableHiding: true,
+      cell: ({ row }) => (
+        <Link href={`/servers/${row.original.id}`}>
+          {row.original.name}
+          <Link2 className="ml-2 inline-block h-4 w-4" />
+        </Link>
+      ),
     },
     {
       accessorKey: "ip_address",

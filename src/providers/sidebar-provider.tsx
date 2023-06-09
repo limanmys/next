@@ -15,6 +15,7 @@ export function SidebarProvider({
   const [selected, setSelected] = React.useState<string>("")
   const [selectedLoading, setSelectedLoading] = React.useState<boolean>(true)
   const [selectedData, setSelectedData] = React.useState<IServer>({} as IServer)
+  const [settingsActive, setSettingsActive] = React.useState<boolean>(false)
 
   React.useEffect(() => {
     if (router.query.server_id) {
@@ -23,6 +24,15 @@ export function SidebarProvider({
       setSelected("")
     }
   }, [router.query.server_id])
+
+  React.useEffect(() => {
+    if (router.asPath.includes("/settings")) {
+      setSettingsActive(true)
+      setSelected("")
+    } else {
+      setSettingsActive(false)
+    }
+  }, [router.asPath])
 
   const refreshSelected = () => {
     apiService
@@ -43,6 +53,8 @@ export function SidebarProvider({
         selectedLoading,
         setSelectedLoading,
         refreshSelected,
+        settingsActive,
+        setSettingsActive,
       ]}
     >
       {children}
@@ -62,4 +74,6 @@ export const SIDEBARCTX_STATES = {
   selectedLoading: 4,
   setSelectedLoading: 5,
   refreshSelected: 6,
+  settingsActive: 7,
+  setSettingsActive: 8,
 }

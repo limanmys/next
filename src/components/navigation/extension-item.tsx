@@ -3,7 +3,8 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { ChevronDown, ChevronRight, MonitorSmartphone } from "lucide-react"
 
-import { IMenu, type IExtension } from "@/types/server"
+import { IExtension } from "@/types/extension"
+import { IMenu } from "@/types/server"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 

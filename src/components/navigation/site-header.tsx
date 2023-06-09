@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import Cookies from "js-cookie"
-import { Bell, Eye, Globe2, Key, LogOut } from "lucide-react"
+import { Bell, Eye, Globe2, Key, LogOut, Settings, User } from "lucide-react"
 
 import { IUser } from "@/types/user"
 import { useLogout } from "@/hooks/auth/useLogout"
@@ -110,6 +110,20 @@ export function SiteHeader() {
               </DropdownMenuContent>
             </DropdownMenu>
 
+            <Link href="/settings">
+              <div
+                className={buttonVariants({
+                  size: "sm",
+                  variant: router.asPath.includes("/settings")
+                    ? "secondary"
+                    : "ghost",
+                })}
+              >
+                <Settings className="h-5 w-5" />
+                <span className="sr-only">Settings</span>
+              </div>
+            </Link>
+
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <div
@@ -167,7 +181,7 @@ export function SiteHeader() {
                 <DropdownMenuSeparator />
                 <div className="flex gap-1">
                   <Button className="w-full" variant="ghost">
-                    <Key className="mr-2 h-4 w-4" /> Yetki Talepleri
+                    <User className="mr-2 h-4 w-4" /> Profil
                   </Button>
                   <Button
                     className="w-full"
