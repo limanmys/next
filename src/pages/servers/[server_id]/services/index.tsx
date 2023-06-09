@@ -109,9 +109,7 @@ export default function ServerExtensionPage() {
               : "Çalışmıyor"}
           </Badge>
 
-          <Badge
-            variant={row.original.status.active ? "default" : "destructive"}
-          >
+          <Badge variant={row.original.status.active ? "default" : "secondary"}>
             {row.original.status.active ? "Etkin" : "Etkin Değil"}
           </Badge>
         </div>

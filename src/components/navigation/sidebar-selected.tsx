@@ -6,11 +6,13 @@ import { apiService } from "@/services"
 import {
   CircleDot,
   FileClock,
+  Network,
   PackageOpen,
   PackageSearch,
   ServerCog,
   ToyBrick,
   TrendingUp,
+  Users,
 } from "lucide-react"
 
 import { IExtension } from "@/types/extension"
@@ -20,6 +22,7 @@ import { Button } from "../ui/button"
 import { Icons } from "../ui/icons"
 import Loading from "../ui/loading"
 import ExtensionItem from "./extension-item"
+import ServerItem, { DropdownServerItem } from "./server-item"
 
 export default function SidebarSelected() {
   const router = useRouter()
@@ -72,92 +75,59 @@ export default function SidebarSelected() {
               )}
             />
           </div>
-          <div className="space-y-1">
-            <Link href={`/servers/${selected}`}>
-              <Button
-                variant={
-                  router.asPath === `/servers/${selected}`
-                    ? "secondary"
-                    : "ghost"
-                }
-                size="sm"
-                className="mb-1 w-full justify-start"
+          <div>
+            <ServerItem link={`/servers/${selected}`} exact={true}>
+              <TrendingUp className="mr-2 h-4 w-4" />
+              Sistem Durumu
+            </ServerItem>
+            <ServerItem link={`/servers/${selected}/extensions`} exact={true}>
+              <ToyBrick className="mr-2 h-4 w-4" />
+              Eklentiler
+            </ServerItem>
+            <ServerItem link={`/servers/${selected}/services`}>
+              <ServerCog className="mr-2 h-4 w-4" />
+              Servisler
+            </ServerItem>
+            <ServerItem link={`/servers/${selected}/packages`}>
+              <PackageOpen className="mr-2 h-4 w-4" />
+              Paketler
+            </ServerItem>
+            <ServerItem link={`/servers/${selected}/updates`}>
+              <PackageSearch className="mr-2 h-4 w-4" />
+              Güncellemeler
+            </ServerItem>
+            <div className="mb-1">
+              <DropdownServerItem
+                items={[
+                  {
+                    link: `/servers/${selected}/users/local`,
+                    name: "Yerel Kullanıcılar",
+                    exact: true,
+                  },
+                  {
+                    link: `/servers/${selected}/users/groups`,
+                    name: "Yerel Gruplar",
+                    exact: true,
+                  },
+                  {
+                    link: `/servers/${selected}/users/sudoers`,
+                    name: "Yetkili Kullanıcılar",
+                    exact: true,
+                  },
+                ]}
               >
-                <TrendingUp className="mr-2 h-4 w-4" />
-                Sistem Durumu
-              </Button>
-            </Link>
-
-            <Link href={`/servers/${selected}/extensions`}>
-              <Button
-                variant={
-                  router.asPath === `/servers/${selected}/extensions`
-                    ? "secondary"
-                    : "ghost"
-                }
-                size="sm"
-                className="mb-1 w-full justify-start"
-              >
-                <ToyBrick className="mr-2 h-4 w-4" />
-                Eklentiler
-              </Button>
-            </Link>
-            <Link href={`/servers/${selected}/services`}>
-              <Button
-                variant={
-                  router.asPath === `/servers/${selected}/services`
-                    ? "secondary"
-                    : "ghost"
-                }
-                size="sm"
-                className="mb-1 w-full justify-start"
-              >
-                <ServerCog className="mr-2 h-4 w-4" />
-                Servisler
-              </Button>
-            </Link>
-            <Link href={`/servers/${selected}/packages`}>
-              <Button
-                variant={
-                  router.asPath === `/servers/${selected}/packages`
-                    ? "secondary"
-                    : "ghost"
-                }
-                size="sm"
-                className="mb-1 w-full justify-start"
-              >
-                <PackageOpen className="mr-2 h-4 w-4" />
-                Paketler
-              </Button>
-            </Link>
-            <Link href={`/servers/${selected}/updates`}>
-              <Button
-                variant={
-                  router.asPath === `/servers/${selected}/updates`
-                    ? "secondary"
-                    : "ghost"
-                }
-                size="sm"
-                className="mb-1 w-full justify-start"
-              >
-                <PackageSearch className="mr-2 h-4 w-4" />
-                Güncellemeler
-              </Button>
-            </Link>
-            <Link href={`/servers/${selected}/access_logs`}>
-              <Button
-                variant={
-                  router.asPath === `/servers/${selected}/access_logs`
-                    ? "secondary"
-                    : "ghost"
-                }
-                size="sm"
-                className="w-full justify-start"
-              >
-                <FileClock className="mr-2 h-4 w-4" />
-                Erişim Kayıtları
-              </Button>
-            </Link>
+                <Users className="mr-2 h-4 w-4" />
+                Kullanıcı İşlemleri
+              </DropdownServerItem>
+            </div>
+            <ServerItem link={`/servers/${selected}/open_ports`}>
+              <Network className="mr-2 h-4 w-4" />
+              Açık Portlar
+            </ServerItem>
+            <ServerItem link={`/servers/${selected}/access_logs`}>
+              <FileClock className="mr-2 h-4 w-4" />
+              Erişim Kayıtları
+            </ServerItem>
           </div>
 
           {selectedData.extensions && selectedData.extensions.length > 0 && (
