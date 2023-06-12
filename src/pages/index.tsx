@@ -1,5 +1,3 @@
-import { useSidebarContext } from "@/providers/sidebar-provider"
-
 import DashboardCards from "@/components/dashboard/cards"
 
 export default function IndexPage() {

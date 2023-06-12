@@ -18,7 +18,7 @@ export default function ResourceUsage() {
   let tempData = useRef([] as IServerStats[])
   const chartOptions = {
     chart: {
-      fontFamily: "Inter",
+      fontFamily: "Inter, var(--font-sans)",
       type: "area",
       sparkline: {
         enabled: true,
@@ -96,7 +96,7 @@ export default function ResourceUsage() {
 
   return (
     <div className="p-[24px]">
-      <h2 className="mb-5 text-3xl font-bold tracking-tight">
+      <h2 className="mb-5 text-2xl font-bold tracking-tight">
         Kaynak Kullanımı
       </h2>
       <div className="grid grid-cols-4 gap-5">

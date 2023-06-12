@@ -18,14 +18,6 @@ export function SidebarProvider({
   const [settingsActive, setSettingsActive] = React.useState<boolean>(false)
 
   React.useEffect(() => {
-    if (router.query.server_id) {
-      setSelected(router.query.server_id as string)
-    } else {
-      setSelected("")
-    }
-  }, [router.query.server_id])
-
-  React.useEffect(() => {
     if (router.asPath.includes("/settings")) {
       setSettingsActive(true)
       setSelected("")
@@ -33,6 +25,14 @@ export function SidebarProvider({
       setSettingsActive(false)
     }
   }, [router.asPath])
+
+  React.useEffect(() => {
+    if (router.query.server_id) {
+      setSelected(router.query.server_id as string)
+    } else {
+      setSelected("")
+    }
+  }, [router.query.server_id])
 
   const refreshSelected = () => {
     apiService

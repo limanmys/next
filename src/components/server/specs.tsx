@@ -27,7 +27,7 @@ export default function ServerSpecs() {
 
   return (
     <div className="border-b p-[24px]">
-      <h2 className="mb-5 text-3xl font-bold tracking-tight">
+      <h2 className="mb-5 text-2xl font-bold tracking-tight">
         Sunucu Özellikleri
       </h2>
       <div className="grid grid-cols-4 gap-5">

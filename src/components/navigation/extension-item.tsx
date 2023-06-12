@@ -17,9 +17,11 @@ import {
 export default function ExtensionItem({
   extension,
   server_id,
+  disabled,
 }: {
   extension: IExtension
   server_id: string
+  disabled?: boolean
 }) {
   const router = useRouter()
   const [hash, setHash] = useState<string>("")
@@ -56,7 +58,13 @@ export default function ExtensionItem({
                 ? extension.menus[0].url
                 : ""
             }`}
-            onClick={() => setHash("")}
+            onClick={(e) => {
+              if (disabled) {
+                e.preventDefault()
+              } else {
+                setHash("")
+              }
+            }}
           >
             <Button
               variant={
@@ -67,6 +75,7 @@ export default function ExtensionItem({
               }
               size="sm"
               className="w-full justify-start"
+              disabled={disabled}
             >
               {extension.display_name}
 
@@ -86,6 +95,7 @@ export default function ExtensionItem({
                 "w-full justify-start",
                 extension.menus && extension.menus.length > 0 && "mb-1"
               )}
+              disabled={disabled}
             >
               {extension.display_name}
               {extension.menus && extension.menus.length > 0 && (

@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { useRouter } from "next/router"
 import {
   SIDEBARCTX_STATES,
   useSidebarContext,
@@ -17,7 +16,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 
 import { Icons } from "../ui/icons"
 import Loading from "../ui/loading"
-import { Separator } from "../ui/separator"
+import { Skeleton } from "../ui/skeleton"
 import SidebarSelected from "./sidebar-selected"
 import SidebarSettings from "./sidebar-settings"
 
@@ -62,8 +61,13 @@ export function Sidebar({ className }: { className?: string }) {
                     </h2>
                     <div className="space-y-1" ref={sub}>
                       {loading ? (
-                        <div className="flex h-[50vh] w-full items-center justify-center">
-                          <Loading />
+                        <div className="p-2 space-y-1">
+                          {[...Array(12)].map((_, i) => (
+                            <Skeleton
+                              className="rounded-full h-9 w-full"
+                              key={i}
+                            />
+                          ))}
                         </div>
                       ) : (
                         <>
@@ -114,6 +118,7 @@ export function Sidebar({ className }: { className?: string }) {
                       <ChevronLeft className="mr-2 h-4 w-4" />
                       Sunucular
                     </Button>
+
                     <SidebarSelected />
                   </>
                 )}

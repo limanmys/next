@@ -1,13 +1,4 @@
-import {
-  Activity,
-  ArrowRight,
-  Cog,
-  CreditCard,
-  DollarSign,
-  Server,
-  ToyBrick,
-  Users,
-} from "lucide-react"
+import { ArrowRight, Cog, Server, ToyBrick, Users } from "lucide-react"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
@@ -17,11 +8,11 @@ export default function DashboardCards() {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Sunucu Sayısı</CardTitle>
-          <Server className="h-4 w-4 text-muted-foreground" />
+          <Server className="text-muted-foreground h-4 w-4" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">28</div>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-muted-foreground text-xs">
             Tüm sunucuları gör <ArrowRight className="inline-block h-4 w-4" />
           </p>
         </CardContent>
@@ -29,11 +20,11 @@ export default function DashboardCards() {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Eklenti Sayısı</CardTitle>
-          <ToyBrick className="h-4 w-4 text-muted-foreground" />
+          <ToyBrick className="text-muted-foreground h-4 w-4" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">24</div>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-muted-foreground text-xs">
             Tüm eklentileri gör <ArrowRight className="inline-block h-4 w-4" />
           </p>
         </CardContent>
@@ -43,11 +34,11 @@ export default function DashboardCards() {
           <CardTitle className="text-sm font-medium">
             Kullanıcı Sayısı
           </CardTitle>
-          <Users className="h-4 w-4 text-muted-foreground" />
+          <Users className="text-muted-foreground h-4 w-4" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">19</div>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-muted-foreground text-xs">
             Tüm kullanıcıları gör{" "}
             <ArrowRight className="inline-block h-4 w-4" />
           </p>
@@ -56,11 +47,11 @@ export default function DashboardCards() {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Liman Versiyonu</CardTitle>
-          <Cog className="h-4 w-4 text-muted-foreground" />
+          <Cog className="text-muted-foreground h-4 w-4" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">2.0</div>
-          <p className="text-xs text-muted-foreground">Build: 1000</p>
+          <p className="text-muted-foreground text-xs">Build: 1000</p>
         </CardContent>
       </Card>
     </div>

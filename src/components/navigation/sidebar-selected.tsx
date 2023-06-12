@@ -1,5 +1,4 @@
 import { useEffect } from "react"
-import Link from "next/link"
 import { useRouter } from "next/router"
 import { useSidebarContext } from "@/providers/sidebar-provider"
 import { apiService } from "@/services"
@@ -18,9 +17,9 @@ import {
 import { IExtension } from "@/types/extension"
 import { cn } from "@/lib/utils"
 
-import { Button } from "../ui/button"
 import { Icons } from "../ui/icons"
 import Loading from "../ui/loading"
+import { Skeleton } from "../ui/skeleton"
 import ExtensionItem from "./extension-item"
 import ServerItem, { DropdownServerItem } from "./server-item"
 
@@ -49,8 +48,32 @@ export default function SidebarSelected() {
   return (
     <>
       {selectedLoading ? (
-        <div className="flex h-[50vh] w-full items-center justify-center">
-          <Loading />
+        <div>
+          <div className="relative mb-3 flex px-2">
+            <Skeleton className="w-8 h-8 rounded" />
+            <div className="pl-3">
+              <h2 className="text-lg font-semibold tracking-tight">
+                <Skeleton className="w-36 h-6 rounded" />
+              </h2>
+              <span className="text-xs text-slate-500">
+                <Skeleton className="w-24 h-3 rounded mt-1" />
+              </span>
+            </div>
+            <Skeleton className="absolute right-0 top-0 w-4 h-4 rounded-full" />
+          </div>
+          <div className="p-2 space-y-1">
+            {[...Array(8)].map((_, i) => (
+              <Skeleton className="rounded-full h-9 w-full" key={i} />
+            ))}
+          </div>
+          <h2 className="mb-2 mt-5 px-2 text-lg font-semibold tracking-tight">
+            Eklentiler
+          </h2>
+          <div className="p-2 space-y-1">
+            {[...Array(3)].map((_, i) => (
+              <Skeleton className="rounded-full h-9 w-full" key={i} />
+            ))}
+          </div>
         </div>
       ) : (
         <>
@@ -76,7 +99,11 @@ export default function SidebarSelected() {
             />
           </div>
           <div>
-            <ServerItem link={`/servers/${selected}`} exact={true}>
+            <ServerItem
+              link={`/servers/${selected}`}
+              exact={true}
+              disabled={!selectedData.is_online}
+            >
               <TrendingUp className="mr-2 h-4 w-4" />
               Sistem Durumu
             </ServerItem>
@@ -84,15 +111,24 @@ export default function SidebarSelected() {
               <ToyBrick className="mr-2 h-4 w-4" />
               Eklentiler
             </ServerItem>
-            <ServerItem link={`/servers/${selected}/services`}>
+            <ServerItem
+              link={`/servers/${selected}/services`}
+              disabled={!selectedData.is_online}
+            >
               <ServerCog className="mr-2 h-4 w-4" />
               Servisler
             </ServerItem>
-            <ServerItem link={`/servers/${selected}/packages`}>
+            <ServerItem
+              link={`/servers/${selected}/packages`}
+              disabled={!selectedData.is_online}
+            >
               <PackageOpen className="mr-2 h-4 w-4" />
               Paketler
             </ServerItem>
-            <ServerItem link={`/servers/${selected}/updates`}>
+            <ServerItem
+              link={`/servers/${selected}/updates`}
+              disabled={!selectedData.is_online}
+            >
               <PackageSearch className="mr-2 h-4 w-4" />
               Güncellemeler
             </ServerItem>
@@ -115,12 +151,16 @@ export default function SidebarSelected() {
                     exact: true,
                   },
                 ]}
+                disabled={!selectedData.is_online}
               >
                 <Users className="mr-2 h-4 w-4" />
                 Kullanıcı İşlemleri
               </DropdownServerItem>
             </div>
-            <ServerItem link={`/servers/${selected}/open_ports`}>
+            <ServerItem
+              link={`/servers/${selected}/open_ports`}
+              disabled={!selectedData.is_online}
+            >
               <Network className="mr-2 h-4 w-4" />
               Açık Portlar
             </ServerItem>
@@ -141,6 +181,7 @@ export default function SidebarSelected() {
                     key={extension.id}
                     extension={extension}
                     server_id={selected}
+                    disabled={!selectedData.is_online}
                   />
                 ))}
               </div>

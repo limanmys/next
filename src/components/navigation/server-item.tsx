@@ -11,8 +11,6 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
 
@@ -21,15 +19,22 @@ export default function ServerItem({
   exact,
   children,
   classNames,
+  disabled,
 }: {
   link: string
   exact?: boolean
   children: React.ReactNode
   classNames?: string
+  disabled?: boolean
 }) {
   const router = useRouter()
   return (
-    <Link href={link}>
+    <Link
+      href={link}
+      onClick={(e) => {
+        disabled && e.preventDefault()
+      }}
+    >
       <Button
         variant={
           (exact ? router.asPath === link : router.asPath.includes(link))
@@ -38,6 +43,7 @@ export default function ServerItem({
         }
         size="sm"
         className={cn("mb-1 w-full justify-start", classNames)}
+        disabled={disabled}
       >
         {children}
       </Button>
@@ -49,6 +55,7 @@ export function DropdownServerItem({
   exact,
   children,
   items,
+  disabled,
 }: {
   exact?: boolean
   children: React.ReactNode
@@ -57,6 +64,7 @@ export function DropdownServerItem({
     exact?: boolean
     name: string
   }[]
+  disabled?: boolean
 }) {
   const router = useRouter()
 
@@ -87,6 +95,7 @@ export function DropdownServerItem({
           variant={checkIfActive() ? "secondary" : "ghost"}
           size="sm"
           className="w-full justify-between"
+          disabled={disabled}
         >
           <div className="flex items-center">{children}</div>
           <ChevronRight className="h-4 w-4" />

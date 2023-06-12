@@ -24,6 +24,9 @@ export class ApiService {
         if (error.response.status === 401) {
           window.location.href = "/auth/login"
         }
+        if (error.response.status === 504) {
+          window.location.href = "/504"
+        }
         return Promise.reject(error)
       }
     )

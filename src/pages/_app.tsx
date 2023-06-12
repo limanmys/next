@@ -29,7 +29,7 @@ const RootLayout: AppType = ({ Component, pageProps }) => {
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <div
           className={cn(
-            "h-screen bg-background font-sans antialiased",
+            "bg-background h-screen font-sans antialiased",
             fontSans.variable
           )}
         >

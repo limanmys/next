@@ -36,26 +36,24 @@ export default function ServerStatus() {
   return (
     <>
       <div className="grid grid-cols-5">
-        <>
-          <ServerDetails loading={loading} data={data} />
-        </>
+        <ServerDetails loading={loading} data={data} />
         <div className="col-span-4 flex flex-col">
           <ServerSpecs />
           {data.server && data.server.os === "linux" && <ResourceUsage />}
           <div className="flex flex-[2] divide-x border-t">
-            <div className="w-1/3">
+            <div className="w-1/3 pb-[24px]">
               <h2 className="p-[24px] text-xl font-bold tracking-tight">
                 CPU Kullanımı
               </h2>
               <CpuTable />
             </div>
-            <div className="w-1/3">
+            <div className="w-1/3 pb-[24px]">
               <h2 className="p-[24px] text-xl font-bold tracking-tight">
                 Bellek Kullanımı
               </h2>
               <RamTable />
             </div>
-            <div className="w-1/3">
+            <div className="w-1/3 pb-[24px]">
               <h2 className="p-[24px] text-xl font-bold tracking-tight">
                 Disk Durumu
               </h2>

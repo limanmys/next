@@ -1,7 +1,9 @@
 import { Server } from "lucide-react"
 
+import { Settings } from "@/lib/settings"
+
 import { Button } from "../ui/button"
-import { Separator } from "../ui/separator"
+import SettingsItem from "./settings-item"
 
 export default function SidebarSettings() {
   return (
@@ -13,71 +15,17 @@ export default function SidebarSettings() {
         Kullanıcı Ayarları
       </h3>
       <div className="space-y-1">
-        <Button variant="ghost" size="sm" className="mt-1 w-full justify-start">
-          <Server className="mr-2 h-4 w-4" />
-          Tüm sunucuları gör
-        </Button>
-        <Button variant="ghost" size="sm" className="mt-1 w-full justify-start">
-          <Server className="mr-2 h-4 w-4" />
-          Tüm sunucuları gör
-        </Button>
-        <Button variant="ghost" size="sm" className="mt-1 w-full justify-start">
-          <Server className="mr-2 h-4 w-4" />
-          Tüm sunucuları gör
-        </Button>
-        <Button variant="ghost" size="sm" className="mt-1 w-full justify-start">
-          <Server className="mr-2 h-4 w-4" />
-          Tüm sunucuları gör
-        </Button>
-        <Button variant="ghost" size="sm" className="mt-1 w-full justify-start">
-          <Server className="mr-2 h-4 w-4" />
-          Tüm sunucuları gör
-        </Button>
+        {Settings.user.map((setting) => (
+          <SettingsItem {...setting} key={setting.href} />
+        ))}
       </div>
       <h3 className="mb-2 mt-6 px-2 text-base font-semibold tracking-tight">
         Sistem Ayarları
       </h3>
       <div className="space-y-1">
-        <Button variant="ghost" size="sm" className="mt-1 w-full justify-start">
-          <Server className="mr-2 h-4 w-4" />
-          Tüm sunucuları gör
-        </Button>
-        <Button variant="ghost" size="sm" className="mt-1 w-full justify-start">
-          <Server className="mr-2 h-4 w-4" />
-          Tüm sunucuları gör
-        </Button>
-        <Button variant="ghost" size="sm" className="mt-1 w-full justify-start">
-          <Server className="mr-2 h-4 w-4" />
-          Tüm sunucuları gör
-        </Button>
-        <Button variant="ghost" size="sm" className="mt-1 w-full justify-start">
-          <Server className="mr-2 h-4 w-4" />
-          Tüm sunucuları gör
-        </Button>
-        <Button variant="ghost" size="sm" className="mt-1 w-full justify-start">
-          <Server className="mr-2 h-4 w-4" />
-          Tüm sunucuları gör
-        </Button>
-        <Button variant="ghost" size="sm" className="mt-1 w-full justify-start">
-          <Server className="mr-2 h-4 w-4" />
-          Tüm sunucuları gör
-        </Button>
-        <Button variant="ghost" size="sm" className="mt-1 w-full justify-start">
-          <Server className="mr-2 h-4 w-4" />
-          Tüm sunucuları gör
-        </Button>
-        <Button variant="ghost" size="sm" className="mt-1 w-full justify-start">
-          <Server className="mr-2 h-4 w-4" />
-          Tüm sunucuları gör
-        </Button>
-        <Button variant="ghost" size="sm" className="mt-1 w-full justify-start">
-          <Server className="mr-2 h-4 w-4" />
-          Tüm sunucuları gör
-        </Button>
-        <Button variant="ghost" size="sm" className="mt-1 w-full justify-start">
-          <Server className="mr-2 h-4 w-4" />
-          Tüm sunucuları gör
-        </Button>
+        {Settings.system.map((setting) => (
+          <SettingsItem {...setting} key={setting.href} />
+        ))}
       </div>
     </>
   )
