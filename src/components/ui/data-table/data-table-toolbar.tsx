@@ -30,14 +30,14 @@ export function DataTableToolbar<TData, TValue>({
         <div className="flex flex-1 items-center space-x-2">
           {isFiltered && (
             <Button
-              variant="ghost"
+              variant="outline"
               onClick={() => {
                 table.resetColumnFilters()
                 table.resetGlobalFilter()
               }}
               className="h-8 px-2 lg:px-3"
             >
-              Temizle
+              Filtreleri Temizle
               <X className="ml-2 h-4 w-4" />
             </Button>
           )}

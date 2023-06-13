@@ -23,7 +23,13 @@ export function DataTableColumnHeader<TData, TValue>({
   column,
   title,
   className,
-}: DataTableColumnHeaderProps<TData, TValue>) {
+  filterPresets,
+}: DataTableColumnHeaderProps<TData, TValue> & {
+  filterPresets?: {
+    key: string
+    value: string
+  }[]
+}) {
   if (!column.getCanSort()) {
     return <div className={cn(className)}>{title}</div>
   }
@@ -61,11 +67,29 @@ export function DataTableColumnHeader<TData, TValue>({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <Input
-        className="mb-3 h-8"
-        value={(column.getFilterValue() as string) ?? ""}
-        onChange={(e) => column.setFilterValue(e.target.value)}
-      />
+      {!filterPresets && (
+        <Input
+          className="mb-3 h-8"
+          value={(column.getFilterValue() as string) ?? ""}
+          onChange={(e) => column.setFilterValue(e.target.value)}
+        />
+      )}
+      {filterPresets && (
+        <div className="mb-3 flex gap-2">
+          {filterPresets.map((preset) => (
+            <Button
+              key={preset.key}
+              variant={
+                column.getFilterValue() === preset.value ? "default" : "outline"
+              }
+              onClick={() => column.setFilterValue(preset.value)}
+              className="h-8"
+            >
+              {preset.key}
+            </Button>
+          ))}
+        </div>
+      )}
     </>
   )
 }

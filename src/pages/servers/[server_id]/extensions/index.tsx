@@ -175,10 +175,12 @@ export default function ServerExtensionPage() {
             </p>
           </div>
           <div className="flex gap-2">
-            <Button className="rounded-full">
-              <UploadCloud className="mr-2 h-4 w-4" />
-              Eklenti Yükle
-            </Button>
+            <Link href="/settings/extensions">
+              <Button className="rounded-full">
+                <UploadCloud className="mr-2 h-4 w-4" />
+                Eklenti Yükle
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

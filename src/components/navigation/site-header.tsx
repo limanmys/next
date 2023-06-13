@@ -164,7 +164,16 @@ export function SiteHeader() {
                           <span className="font-semibold">
                             Son Giriş Tarihi:{" "}
                           </span>{" "}
-                          {user.last_login_at}
+                          {new Date(user.last_login_at).toLocaleDateString(
+                            "tr-TR",
+                            {
+                              day: "2-digit",
+                              month: "long",
+                              year: "numeric",
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            }
+                          )}
                         </div>
 
                         <div className="text-sm">

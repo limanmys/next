@@ -13,11 +13,11 @@ interface ISettingCardProps {
 export default function SettingCard(props: ISettingCardProps) {
   return (
     <Link href={props.href}>
-      <Card className="hover:scale-[102%] ease-in duration-100">
+      <Card className="duration-100 ease-in hover:scale-[102%] active:scale-100">
         <CardContent className="pt-6">
           <div className="flex gap-6">
-            <div className="icon bg-secondary dark:bg-secondary/10 self-start rounded-md p-3">
-              <props.icon className="text-secondary-foreground/70 h-6 w-6 dark:text-white/70" />
+            <div className="icon self-start rounded-md bg-secondary p-3 dark:bg-secondary/10">
+              <props.icon className="h-6 w-6 text-secondary-foreground/70 dark:text-white/70" />
             </div>
             <div className="content">
               <h3 className="text-lg font-semibold tracking-tight">

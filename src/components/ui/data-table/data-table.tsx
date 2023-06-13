@@ -167,7 +167,7 @@ const DataTable = <TData, TValue>({
                       colSpan={columns.length}
                       className="h-72 text-center"
                     >
-                      <FolderOpen className="mx-auto mb-2 h-12 w-12 text-black/50" />
+                      <FolderOpen className="mx-auto mb-2 h-12 w-12 text-black/50 dark:text-white/80" />
                       Kayıt bulunamadı.
                     </TableCell>
                   </TableRow>

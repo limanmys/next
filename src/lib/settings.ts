@@ -83,7 +83,7 @@ export const Settings = {
     {
       title: "Erişim",
       description:
-        "Giriş yapılabilecek auth gatewayleri ayarlamanızı sağlar. Keycloak ve LDAP gibi auth gatewayleri bu sayfa üzerinden ayarlayabilirsiniz.",
+        "Giriş yapılabilecek giriş araçlarını ayarlamanızı sağlar. Keycloak ve LDAP girişlerini bu sayfa üzerinden ayarlayabilirsiniz.",
       icon: SquareAsterisk,
       href: "/settings/auth_gateway",
     },

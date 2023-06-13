@@ -4,7 +4,7 @@ import SettingCard from "@/components/settings/setting-card"
 export default function SettingsPage() {
   return (
     <div className="hidden h-full flex-1 flex-col p-8 md:flex">
-      <div className="flex items-center justify-between space-y-2 mb-8">
+      <div className="mb-8 flex items-center justify-between space-y-2">
         <div>
           <h2 className="text-2xl font-bold tracking-tight">Ayarlar</h2>
           <p className="text-muted-foreground">
@@ -14,10 +14,10 @@ export default function SettingsPage() {
         </div>
       </div>
 
-      <h2 className="text-xl font-bold tracking-tight mb-3">
+      <h2 className="mb-3 text-xl font-bold tracking-tight">
         Kullanıcı Ayarları
       </h2>
-      <div className="grid grid-cols-3 gap-8 mb-8">
+      <div className="mb-8 grid grid-cols-3 gap-8">
         {Settings.user.map((setting) => (
           <SettingCard
             href={setting.href}
@@ -28,7 +28,7 @@ export default function SettingsPage() {
           />
         ))}
       </div>
-      <h2 className="text-xl font-bold tracking-tight mb-3">Sistem Ayarları</h2>
+      <h2 className="mb-3 text-xl font-bold tracking-tight">Sistem Ayarları</h2>
       <div className="grid grid-cols-3 gap-8">
         {Settings.system.map((setting) => (
           <SettingCard

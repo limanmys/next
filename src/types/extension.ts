@@ -19,4 +19,5 @@ export interface IExtension {
   display_name: string
   menus: IMenu[]
   updated: number
+  licensed: boolean
 }
