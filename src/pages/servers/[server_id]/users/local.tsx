@@ -44,14 +44,7 @@ const formSchema = z
       .max(50, {
         message: "Şifre en fazla 50 karakter olmalıdır.",
       }),
-    password_confirmation: z
-      .string()
-      .min(8, {
-        message: "Şifre en az 8 karakter olmalıdır.",
-      })
-      .max(50, {
-        message: "Şifre en fazla 50 karakter olmalıdır.",
-      }),
+    password_confirmation: z.string(),
   })
   .refine((data) => data.password === data.password_confirmation, {
     message: "Şifreler eşleşmiyor.",
@@ -91,9 +84,12 @@ export default function LocalUsersPage() {
     fetchData()
   }, [router.query.server_id])
 
-  emitter.on("REFETCH_LOCAL_USERS", () => {
-    fetchData()
-  })
+  useEffect(() => {
+    emitter.on("REFETCH_LOCAL_USERS", () => {
+      fetchData()
+    })
+    return () => emitter.off("REFETCH_LOCAL_USERS")
+  }, [])
 
   return (
     <>

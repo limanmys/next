@@ -116,9 +116,12 @@ export default function ExtensionSettingsPage() {
     fetchData()
   }, [])
 
-  emitter.on("REFETCH_EXTENSIONS", () => {
-    fetchData()
-  })
+  useEffect(() => {
+    emitter.on("REFETCH_EXTENSIONS", () => {
+      fetchData()
+    })
+    return () => emitter.off("REFETCH_EXTENSIONS")
+  }, [])
 
   return (
     <>

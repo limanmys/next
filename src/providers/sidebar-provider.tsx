@@ -16,6 +16,8 @@ export function SidebarProvider({
   const [selectedLoading, setSelectedLoading] = React.useState<boolean>(true)
   const [selectedData, setSelectedData] = React.useState<IServer>({} as IServer)
   const [settingsActive, setSettingsActive] = React.useState<boolean>(false)
+  const [serversLoading, setServersLoading] = React.useState<boolean>(true)
+  const [servers, setServers] = React.useState<IServer[]>([])
 
   React.useEffect(() => {
     if (router.asPath.includes("/settings")) {
@@ -43,6 +45,16 @@ export function SidebarProvider({
       })
   }
 
+  const refreshServers = () => {
+    apiService
+      .getInstance()
+      .get("/menu/servers")
+      .then((res) => {
+        setServers(res.data)
+        setServersLoading(false)
+      })
+  }
+
   return (
     <Context.Provider
       value={[
@@ -55,6 +67,11 @@ export function SidebarProvider({
         refreshSelected,
         settingsActive,
         setSettingsActive,
+        serversLoading,
+        setServersLoading,
+        servers,
+        setServers,
+        refreshServers,
       ]}
     >
       {children}
@@ -76,4 +93,9 @@ export const SIDEBARCTX_STATES = {
   refreshSelected: 6,
   settingsActive: 7,
   setSettingsActive: 8,
+  serversLoading: 9,
+  setServersLoading: 10,
+  servers: 11,
+  setServers: 12,
+  refreshServers: 13,
 }

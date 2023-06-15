@@ -21,22 +21,13 @@ import SidebarSelected from "./sidebar-selected"
 import SidebarSettings from "./sidebar-settings"
 
 export function Sidebar({ className }: { className?: string }) {
-  const [loading, setLoading] = useState(true)
-  const [servers, setServers] = useState<IServer[]>([])
-
   const [selected, setSelected] = useSidebarContext()
   const sidebarCtx = useSidebarContext()
   const [parent] = useAutoAnimate()
   const [sub] = useAutoAnimate()
 
   useEffect(() => {
-    apiService
-      .getInstance()
-      .get("/menu/servers")
-      .then((res) => {
-        setServers(res.data)
-        setLoading(false)
-      })
+    sidebarCtx[SIDEBARCTX_STATES.refreshServers]()
   }, [])
 
   return (
@@ -60,39 +51,41 @@ export function Sidebar({ className }: { className?: string }) {
                       Sunucular
                     </h2>
                     <div className="space-y-1" ref={sub}>
-                      {loading ? (
-                        <div className="p-2 space-y-1">
+                      {sidebarCtx[SIDEBARCTX_STATES.serversLoading] ? (
+                        <div className="space-y-1 p-2">
                           {[...Array(12)].map((_, i) => (
                             <Skeleton
-                              className="rounded-full h-9 w-full"
+                              className="h-9 w-full rounded-full"
                               key={i}
                             />
                           ))}
                         </div>
                       ) : (
                         <>
-                          {servers.map((server: IServer) => (
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              className="w-full justify-start"
-                              onClick={() => setSelected(server.id)}
-                              key={server.id}
-                            >
-                              {server.os === "linux" ? (
-                                <Icons.linux className="mr-2 h-4 w-4" />
-                              ) : (
-                                <Icons.windows className="mr-2 h-4 w-4" />
-                              )}
-                              {server.name}
-                              <div className="ml-auto flex">
-                                {server.is_favorite && (
-                                  <Star className="mr-1 h-4 w-4" />
+                          {sidebarCtx[SIDEBARCTX_STATES.servers].map(
+                            (server: IServer) => (
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="w-full justify-start"
+                                onClick={() => setSelected(server.id)}
+                                key={server.id}
+                              >
+                                {server.os === "linux" ? (
+                                  <Icons.linux className="mr-2 h-4 w-4" />
+                                ) : (
+                                  <Icons.windows className="mr-2 h-4 w-4" />
                                 )}
-                                <ChevronRight className="h-4 w-4" />
-                              </div>
-                            </Button>
-                          ))}
+                                {server.name}
+                                <div className="ml-auto flex">
+                                  {server.is_favorite && (
+                                    <Star className="mr-1 h-4 w-4" />
+                                  )}
+                                  <ChevronRight className="h-4 w-4" />
+                                </div>
+                              </Button>
+                            )
+                          )}
                           <Link href="/servers">
                             <Button
                               variant="ghost"

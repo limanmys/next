@@ -99,10 +99,12 @@ export default function Servers() {
             </p>
           </div>
           <div className="flex gap-2">
-            <Button className="rounded-full">
-              <Server className="mr-2 h-4 w-4" />
-              Sunucu Oluştur
-            </Button>
+            <Link href="/servers/create">
+              <Button className="rounded-full">
+                <Server className="mr-2 h-4 w-4" />
+                Sunucu Ekle
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

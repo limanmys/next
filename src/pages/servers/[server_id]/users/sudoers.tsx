@@ -113,9 +113,12 @@ export default function Sudoers() {
     fetchData()
   }, [router.query.server_id])
 
-  emitter.on("REFETCH_SUDOERS", () => {
-    fetchData()
-  })
+  useEffect(() => {
+    emitter.on("REFETCH_SUDOERS", () => {
+      fetchData()
+    })
+    return () => emitter.off("REFETCH_SUDOERS")
+  }, [])
 
   const deleteSelected = () => {
     if (!selected?.length) return

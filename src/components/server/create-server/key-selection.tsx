@@ -1,0 +1,196 @@
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Ban, FileKey2, Key, Network } from "lucide-react"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+
+import { Icons } from "@/components/ui/icons"
+import { Label } from "@/components/ui/label"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/form/form"
+
+const keySchema = z.object({
+  key_type: z.string().nonempty("Lütfen bir anahtar türü seçiniz."),
+})
+
+export default function KeySelection({
+  formRef,
+  data,
+}: {
+  formRef: any
+  data: any
+}) {
+  const form = useForm<z.infer<typeof keySchema>>({
+    resolver: zodResolver(keySchema),
+    defaultValues: {
+      key_type: "",
+      ...data,
+    },
+    mode: "onChange",
+  })
+  formRef.current = form
+
+  return (
+    <div className="space-y-8 divide-y divide-foreground/10 sm:space-y-5">
+      <div>
+        <div>
+          <h3 className="text-lg font-medium leading-6 text-foreground">
+            Anahtar Seçimi
+          </h3>
+          <p className="mt-1 max-w-2xl text-sm text-foreground/60">
+            Sunucunuza bağlantı kurulabilmesi için bir anahtar türü seçiniz.
+          </p>
+        </div>
+        <Form {...form}>
+          <form>
+            <FormField
+              control={form.control}
+              name="key_type"
+              render={({ field }) => (
+                <div className="mt-6 space-y-6 sm:mt-5 sm:space-y-5">
+                  <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-foreground/10 sm:pt-5">
+                    <Label htmlFor="key_type" className="sm:mt-px sm:pt-2">
+                      Anahtar Türü
+                    </Label>
+                    <div className="mt-1 space-y-8 sm:col-span-2 sm:mt-0">
+                      <RadioGroup
+                        className="grid grid-cols-3 gap-8 pt-2"
+                        id="key_type"
+                        value={field.value}
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormItem>
+                          <FormLabel className="relative [&:has([data-state=checked])>div]:border-primary">
+                            <FormControl>
+                              <RadioGroupItem value="ssh" className="sr-only" />
+                            </FormControl>
+                            <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent">
+                              <div className="flex flex-col gap-8 p-4">
+                                <span>SSH (Şifreli)</span>
+                                <div className="details flex justify-between">
+                                  <div className="icons">
+                                    <Key className="h-4 w-4" />
+                                  </div>
+                                  <div className="icons flex gap-2">
+                                    <Icons.windows className="h-4 w-4" />
+                                    <Icons.linux className="h-4 w-4" />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </FormLabel>
+                        </FormItem>
+
+                        <FormItem>
+                          <FormLabel className="relative [&:has([data-state=checked])>div]:border-primary">
+                            <FormControl>
+                              <RadioGroupItem
+                                value="ssh_certificate"
+                                className="sr-only"
+                              />
+                            </FormControl>
+                            <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent">
+                              <div className="flex flex-col gap-8 p-4">
+                                <span>SSH (Sertifikalı)</span>
+                                <div className="details flex justify-between">
+                                  <div className="icons">
+                                    <FileKey2 className="h-4 w-4" />
+                                  </div>
+                                  <div className="icons flex gap-2">
+                                    <Icons.windows className="h-4 w-4" />
+                                    <Icons.linux className="h-4 w-4" />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </FormLabel>
+                        </FormItem>
+
+                        <FormItem>
+                          <FormLabel className="relative [&:has([data-state=checked])>div]:border-primary">
+                            <FormControl>
+                              <RadioGroupItem
+                                value="winrm"
+                                className="sr-only"
+                              />
+                            </FormControl>
+                            <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent">
+                              <div className="flex flex-col gap-8 p-4">
+                                <span>WinRM</span>
+                                <div className="details flex justify-between">
+                                  <div className="icons">
+                                    <Key className="h-4 w-4" />
+                                  </div>
+                                  <div className="icons flex gap-2">
+                                    <Icons.windows className="h-4 w-4" />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </FormLabel>
+                        </FormItem>
+
+                        <FormItem>
+                          <FormLabel className="relative [&:has([data-state=checked])>div]:border-primary">
+                            <FormControl>
+                              <RadioGroupItem
+                                value="winrm_insecure"
+                                className="sr-only"
+                              />
+                            </FormControl>
+                            <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent">
+                              <div className="flex flex-col gap-8 p-4">
+                                <span>WinRM (Güvensiz)</span>
+                                <div className="details flex justify-between">
+                                  <div className="icons">
+                                    <Key className="h-4 w-4" />
+                                  </div>
+                                  <div className="icons flex gap-2">
+                                    <Icons.windows className="h-4 w-4" />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </FormLabel>
+                        </FormItem>
+
+                        <FormItem>
+                          <FormLabel className="relative [&:has([data-state=checked])>div]:border-primary">
+                            <FormControl>
+                              <RadioGroupItem
+                                value="no_key"
+                                className="sr-only"
+                              />
+                            </FormControl>
+                            <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent">
+                              <div className="flex flex-col gap-8 p-4">
+                                <span>Anahtarsız Giriş</span>
+                                <div className="details flex justify-between">
+                                  <div className="icons">
+                                    <Ban className="h-4 w-4" />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </FormLabel>
+                        </FormItem>
+                      </RadioGroup>
+                      <FormMessage />
+                    </div>
+                  </div>
+                </div>
+              )}
+            />
+          </form>
+        </Form>
+      </div>
+    </div>
+  )
+}

@@ -70,9 +70,12 @@ export default function LocalGroups() {
     fetchData()
   }, [router.query.server_id])
 
-  emitter.on("REFETCH_LOCAL_GROUPS", () => {
-    fetchData()
-  })
+  useEffect(() => {
+    emitter.on("REFETCH_LOCAL_GROUPS", () => {
+      fetchData()
+    })
+    return () => emitter.off("REFETCH_LOCAL_GROUPS")
+  }, [])
 
   return (
     <>
