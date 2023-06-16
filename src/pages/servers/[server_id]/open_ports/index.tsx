@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { apiService } from "@/services"
-import { UploadCloud } from "lucide-react"
 
 import { IPort } from "@/types/port"
 import { DivergentColumn } from "@/types/table"
-import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
 
@@ -70,7 +68,7 @@ export default function ServerExtensionPage() {
 
   return (
     <>
-      <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
+      <div className="h-full flex-1 flex-col space-y-8 p-8 md:flex">
         <div className="flex items-center justify-between space-y-2">
           <div>
             <h2 className="text-2xl font-bold tracking-tight">Açık Portlar</h2>

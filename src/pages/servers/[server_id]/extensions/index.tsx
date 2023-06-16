@@ -6,13 +6,7 @@ import {
   useSidebarContext,
 } from "@/providers/sidebar-provider"
 import { apiService } from "@/services"
-import {
-  Link2,
-  MinusCircle,
-  PlusCircle,
-  Upload,
-  UploadCloud,
-} from "lucide-react"
+import { Link2, MinusCircle, UploadCloud } from "lucide-react"
 
 import { IExtension } from "@/types/extension"
 import { DivergentColumn } from "@/types/table"
@@ -165,7 +159,7 @@ export default function ServerExtensionPage() {
 
   return (
     <>
-      <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
+      <div className="h-full flex-1 flex-col space-y-8 p-8 md:flex">
         <div className="flex items-center justify-between space-y-2">
           <div>
             <h2 className="text-2xl font-bold tracking-tight">Eklentiler</h2>
@@ -203,7 +197,7 @@ export default function ServerExtensionPage() {
               <Button
                 variant="outline"
                 size="sm"
-                className="ml-auto hidden h-8 lg:flex"
+                className="ml-auto h-8 lg:flex"
                 disabled={selected.length === 0}
               >
                 <MinusCircle className="mr-2 h-4 w-4" />

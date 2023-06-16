@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { ChevronDown, ChevronRight, MonitorSmartphone } from "lucide-react"
+import { ChevronDown, ChevronRight } from "lucide-react"
 
 import { IExtension } from "@/types/extension"
 import { IMenu } from "@/types/server"
@@ -13,6 +13,10 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "../ui/collapsible"
+
+function truncate(str: string, n: number) {
+  return str.length > n ? str.slice(0, n - 1) + "..." : str
+}
 
 export default function ExtensionItem({
   extension,
@@ -77,8 +81,7 @@ export default function ExtensionItem({
               className="w-full justify-start"
               disabled={disabled}
             >
-              {extension.display_name}
-
+              {truncate(extension.display_name, 25)}
               {extension.menus && extension.menus.length > 0 && (
                 <ChevronRight className="absolute right-6 h-4 w-4" />
               )}
@@ -97,7 +100,7 @@ export default function ExtensionItem({
               )}
               disabled={disabled}
             >
-              {extension.display_name}
+              {truncate(extension.display_name, 25)}
               {extension.menus && extension.menus.length > 0 && (
                 <ChevronDown className="absolute right-6 h-4 w-4" />
               )}

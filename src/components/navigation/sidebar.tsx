@@ -1,21 +1,20 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import Link from "next/link"
 import {
   SIDEBARCTX_STATES,
   useSidebarContext,
 } from "@/providers/sidebar-provider"
-import { apiService } from "@/services"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { ChevronLeft, ChevronRight, Server, Star } from "lucide-react"
 
 import { IServer } from "@/types/server"
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
 import { Icons } from "../ui/icons"
-import Loading from "../ui/loading"
 import { Skeleton } from "../ui/skeleton"
 import SidebarSelected from "./sidebar-selected"
 import SidebarSettings from "./sidebar-settings"
@@ -31,9 +30,13 @@ export function Sidebar({ className }: { className?: string }) {
   }, [])
 
   return (
-    <div>
+    <div
+      className={cn(
+        "fixed z-30 w-full shrink-0 overflow-y-auto bg-background md:sticky md:block",
+        sidebarCtx[SIDEBARCTX_STATES.collapsed] && "hidden border-r"
+      )}
+    >
       <ScrollArea
-        className="border border-y-0 border-l-0"
         style={{
           height: "calc(var(--container-height) - 65px)",
         }}
@@ -120,7 +123,7 @@ export function Sidebar({ className }: { className?: string }) {
           </div>
         </div>
       </ScrollArea>
-      <div className="aciklab flex items-center justify-center border-r border-t py-4">
+      <div className="aciklab flex items-center justify-center border-t py-4">
         <Icons.aciklab className="h-[2rem] w-[12rem] opacity-80" />
       </div>
     </div>

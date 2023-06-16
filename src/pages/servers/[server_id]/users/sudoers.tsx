@@ -158,7 +158,7 @@ export default function Sudoers() {
 
   return (
     <>
-      <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
+      <div className="h-full flex-1 flex-col space-y-8 p-8 md:flex">
         <div className="flex items-center justify-between space-y-2">
           <div>
             <h2 className="text-2xl font-bold tracking-tight">
@@ -187,7 +187,7 @@ export default function Sudoers() {
               <Button
                 variant="outline"
                 size="sm"
-                className="ml-auto hidden h-8 lg:flex"
+                className="ml-auto h-8 lg:flex"
                 disabled={!selected?.length}
               >
                 <MinusCircle className="mr-2 h-4 w-4" />
@@ -262,11 +262,7 @@ function CreateSudoers() {
   return (
     <Dialog onOpenChange={(open) => setOpen(open)} open={open}>
       <DialogTrigger asChild>
-        <Button
-          variant="outline"
-          size="sm"
-          className="ml-auto hidden h-8 lg:flex"
-        >
+        <Button variant="outline" size="sm" className="ml-auto h-8 lg:flex">
           <PlusCircle className="mr-2 h-4 w-4" />
           Ekle
         </Button>

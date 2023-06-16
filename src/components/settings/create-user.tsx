@@ -8,7 +8,6 @@ import { z } from "zod"
 import { useEmitter } from "@/hooks/useEmitter"
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
   SheetFooter,
@@ -110,11 +109,7 @@ export default function CreateUser() {
   return (
     <Sheet open={open} onOpenChange={(o) => setOpen(o)}>
       <SheetTrigger asChild>
-        <Button
-          variant="outline"
-          size="sm"
-          className="ml-auto hidden h-8 lg:flex"
-        >
+        <Button variant="outline" size="sm" className="ml-auto h-8 lg:flex">
           <PlusCircle className="mr-2 h-4 w-4" />
           Ekle
         </Button>

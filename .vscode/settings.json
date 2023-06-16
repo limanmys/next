@@ -7,5 +7,10 @@
   "editor.formatOnType": true,
   "eslint.format.enable": true,
   "eslint.packageManager": "pnpm",
-  "eslint.problems.shortenToSingleLine": true
+  "eslint.problems.shortenToSingleLine": true,
+  "editor.codeActionsOnSave": {
+    "eslint.executeAutofix": true,
+    "source.organizeImports": true,
+    "source.fixAll.eslint": true
+  }
 }

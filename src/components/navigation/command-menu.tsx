@@ -6,7 +6,6 @@ import { Search } from "lucide-react"
 import { useDebounce } from "@/lib/debounce"
 import {
   CommandDialog,
-  CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
@@ -60,7 +59,10 @@ export default function CommandMenu() {
 
   return (
     <>
-      <div className="relative w-[500px] px-2" onClick={() => setOpen(true)}>
+      <div
+        className="relative px-2 sm:w-[250px] lg:w-[500px] "
+        onClick={() => setOpen(true)}
+      >
         <Input type="text" placeholder="Arama..." />
         <kbd className="pointer-events-none absolute right-11 top-[11px] inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
           <span className="text-xs">⌘</span>K

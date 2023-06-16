@@ -106,11 +106,7 @@ export default function UploadExtension() {
   return (
     <Dialog onOpenChange={(open) => setOpen(open)} open={open}>
       <DialogTrigger asChild>
-        <Button
-          variant="default"
-          size="sm"
-          className="ml-auto hidden h-8 lg:flex"
-        >
+        <Button variant="default" size="sm" className="ml-auto h-8 lg:flex">
           <UploadCloud className="mr-2 h-4 w-4" />
           Yükle
         </Button>

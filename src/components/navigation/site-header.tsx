@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
+import {
+  SIDEBARCTX_STATES,
+  useSidebarContext,
+} from "@/providers/sidebar-provider"
 import Cookies from "js-cookie"
-import { Bell, Eye, Globe2, Key, LogOut, Settings, User } from "lucide-react"
+import { Bell, Eye, Globe2, LogOut, Menu, Settings, User } from "lucide-react"
 
 import { IUser } from "@/types/user"
 import { useLogout } from "@/hooks/auth/useLogout"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
 
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
+import { Avatar, AvatarFallback } from "../ui/avatar"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -23,6 +27,8 @@ import CommandMenu from "./command-menu"
 
 export function SiteHeader() {
   const router = useRouter()
+  const sidebarCtx = useSidebarContext()
+
   const [user, setUser] = useState({} as IUser)
   useEffect(() => {
     const currentUser = Cookies.get("currentUser")
@@ -36,7 +42,16 @@ export function SiteHeader() {
   return (
     <header className="top-0 z-40 w-full border-b bg-background">
       <div className="flex h-16 items-center space-x-4 px-6 sm:justify-between sm:space-x-0">
-        <div className="flex gap-6 md:gap-10">
+        <div className="flex">
+          <div className="md:hidden">
+            <Button
+              variant="ghost"
+              className="mr-3 p-0"
+              onClick={() => sidebarCtx[SIDEBARCTX_STATES.toggleSidebar]()}
+            >
+              <Menu className="h-6 w-6" />
+            </Button>
+          </div>
           <Link href="/" className="flex items-center space-x-2">
             <Icons.logo className="w-18 h-6 dark:fill-white" />
           </Link>

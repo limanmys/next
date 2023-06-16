@@ -18,7 +18,6 @@ import { IExtension } from "@/types/extension"
 import { cn } from "@/lib/utils"
 
 import { Icons } from "../ui/icons"
-import Loading from "../ui/loading"
 import { Skeleton } from "../ui/skeleton"
 import ExtensionItem from "./extension-item"
 import ServerItem, { DropdownServerItem } from "./server-item"
@@ -50,28 +49,28 @@ export default function SidebarSelected() {
       {selectedLoading ? (
         <div>
           <div className="relative mb-3 flex px-2">
-            <Skeleton className="w-8 h-8 rounded" />
+            <Skeleton className="h-8 w-8 rounded" />
             <div className="pl-3">
               <h2 className="text-lg font-semibold tracking-tight">
-                <Skeleton className="w-36 h-6 rounded" />
+                <Skeleton className="h-6 w-36 rounded" />
               </h2>
               <span className="text-xs text-slate-500">
-                <Skeleton className="w-24 h-3 rounded mt-1" />
+                <Skeleton className="mt-1 h-3 w-24 rounded" />
               </span>
             </div>
-            <Skeleton className="absolute right-0 top-0 w-4 h-4 rounded-full" />
+            <Skeleton className="absolute right-0 top-0 h-4 w-4 rounded-full" />
           </div>
-          <div className="p-2 space-y-1">
+          <div className="space-y-1 p-2">
             {[...Array(8)].map((_, i) => (
-              <Skeleton className="rounded-full h-9 w-full" key={i} />
+              <Skeleton className="h-9 w-full rounded-full" key={i} />
             ))}
           </div>
           <h2 className="mb-2 mt-5 px-2 text-lg font-semibold tracking-tight">
             Eklentiler
           </h2>
-          <div className="p-2 space-y-1">
+          <div className="space-y-1 p-2">
             {[...Array(3)].map((_, i) => (
-              <Skeleton className="rounded-full h-9 w-full" key={i} />
+              <Skeleton className="h-9 w-full rounded-full" key={i} />
             ))}
           </div>
         </div>

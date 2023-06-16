@@ -3,7 +3,7 @@ import SettingCard from "@/components/settings/setting-card"
 
 export default function SettingsPage() {
   return (
-    <div className="hidden h-full flex-1 flex-col p-8 md:flex">
+    <div className="h-full flex-1 flex-col p-8 md:flex">
       <div className="mb-8 flex items-center justify-between space-y-2">
         <div>
           <h2 className="text-2xl font-bold tracking-tight">Ayarlar</h2>

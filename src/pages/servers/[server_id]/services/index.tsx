@@ -156,7 +156,7 @@ export default function ServerExtensionPage() {
 
   return (
     <>
-      <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
+      <div className="h-full flex-1 flex-col space-y-8 p-8 md:flex">
         <div className="flex items-center justify-between space-y-2">
           <div>
             <h2 className="text-2xl font-bold tracking-tight">Servisler</h2>
@@ -180,7 +180,7 @@ export default function ServerExtensionPage() {
             <Button
               variant="outline"
               size="sm"
-              className="ml-auto hidden h-8 lg:flex"
+              className="ml-auto h-8 lg:flex"
               disabled={!selected.length}
             >
               <PlayCircle className="mr-2 h-4 w-4" />
@@ -191,7 +191,7 @@ export default function ServerExtensionPage() {
             <Button
               variant="outline"
               size="sm"
-              className="ml-auto hidden h-8 lg:flex"
+              className="ml-auto h-8 lg:flex"
               disabled={!selected.length}
             >
               <StopCircle className="mr-2 h-4 w-4" />
@@ -202,7 +202,7 @@ export default function ServerExtensionPage() {
             <Button
               variant="outline"
               size="sm"
-              className="ml-auto hidden h-8 lg:flex"
+              className="ml-auto h-8 lg:flex"
               disabled={!selected.length}
             >
               <ListRestart className="mr-2 h-4 w-4" />
@@ -213,7 +213,7 @@ export default function ServerExtensionPage() {
             <Button
               variant="outline"
               size="sm"
-              className="ml-auto hidden h-8 lg:flex"
+              className="ml-auto h-8 lg:flex"
               disabled={!selected.length}
             >
               <CheckCircle className="mr-2 h-4 w-4" />
@@ -224,7 +224,7 @@ export default function ServerExtensionPage() {
             <Button
               variant="outline"
               size="sm"
-              className="ml-auto hidden h-8 lg:flex"
+              className="ml-auto h-8 lg:flex"
               disabled={!selected.length}
             >
               <X className="mr-2 h-4 w-4" />

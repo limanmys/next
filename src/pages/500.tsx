@@ -6,10 +6,10 @@ export default function InternalServerError() {
         height: "var(--container-height)",
       }}
     >
-      <h2 className="text-3xl font-bold tracking-tight border-r p-[24px]">
+      <h2 className="border-r p-[24px] text-3xl font-bold tracking-tight">
         500
       </h2>
-      <h2 className="text-xl tracking-tight p-[24px]">Sunucu Hatası</h2>
+      <h2 className="p-[24px] text-xl tracking-tight">Sunucu Hatası</h2>
     </div>
   )
 }

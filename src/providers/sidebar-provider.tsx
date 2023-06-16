@@ -18,6 +18,7 @@ export function SidebarProvider({
   const [settingsActive, setSettingsActive] = React.useState<boolean>(false)
   const [serversLoading, setServersLoading] = React.useState<boolean>(true)
   const [servers, setServers] = React.useState<IServer[]>([])
+  const [collapsed, setCollapsed] = React.useState<boolean>(false)
 
   React.useEffect(() => {
     if (router.asPath.includes("/settings")) {
@@ -55,6 +56,10 @@ export function SidebarProvider({
       })
   }
 
+  const toggleSidebar = () => {
+    setCollapsed(!collapsed)
+  }
+
   return (
     <Context.Provider
       value={[
@@ -72,6 +77,9 @@ export function SidebarProvider({
         servers,
         setServers,
         refreshServers,
+        collapsed,
+        setCollapsed,
+        toggleSidebar,
       ]}
     >
       {children}
@@ -98,4 +106,7 @@ export const SIDEBARCTX_STATES = {
   servers: 11,
   setServers: 12,
   refreshServers: 13,
+  collapsed: 14,
+  setCollapsed: 15,
+  toggleSidebar: 16,
 }

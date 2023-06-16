@@ -1,4 +1,3 @@
-import * as React from "react"
 import { Column } from "@tanstack/react-table"
 import { Check, LucideIcon, PlusCircle } from "lucide-react"
 
@@ -54,7 +53,7 @@ export function DataTableFacetedFilter<TData, TValue>({
               >
                 {selectedValues.size}
               </Badge>
-              <div className="hidden space-x-1 lg:flex">
+              <div className="space-x-1 lg:flex">
                 {selectedValues.size > 2 ? (
                   <Badge
                     variant="secondary"
