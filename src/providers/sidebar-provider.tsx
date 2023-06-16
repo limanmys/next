@@ -18,7 +18,7 @@ export function SidebarProvider({
   const [settingsActive, setSettingsActive] = React.useState<boolean>(false)
   const [serversLoading, setServersLoading] = React.useState<boolean>(true)
   const [servers, setServers] = React.useState<IServer[]>([])
-  const [collapsed, setCollapsed] = React.useState<boolean>(false)
+  const [collapsed, setCollapsed] = React.useState<boolean>(true)
 
   React.useEffect(() => {
     if (router.asPath.includes("/settings")) {

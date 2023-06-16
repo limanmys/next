@@ -1,3 +1,4 @@
+import { ReactNode } from "react"
 import { Router, useRouter } from "next/router"
 import {
   SIDEBARCTX_STATES,
@@ -20,6 +21,8 @@ const Layout = ({ Component, pageProps }: any) => {
   })
   Router.events.on("routeChangeError", () => nProgress.done())
 
+  const getLayout = Component.getLayout ?? ((page: ReactNode) => page)
+
   return (
     <>
       <SiteHeader />
@@ -33,7 +36,7 @@ const Layout = ({ Component, pageProps }: any) => {
             }}
           >
             <main>
-              <Component {...pageProps} key={router.route} />
+              {getLayout(<Component {...pageProps} key={router.route} />)}
             </main>
           </ScrollArea>
         </div>
