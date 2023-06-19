@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { PlusCircle } from "lucide-react"
@@ -25,6 +26,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useToast } from "@/components/ui/use-toast"
 import { Form, FormField, FormMessage } from "@/components/form/form"
+import { RoleRowActions } from "@/components/settings/role-actions"
 
 export default function RoleSettingsPage() {
   const [loading, setLoading] = useState<boolean>(true)
@@ -56,6 +58,14 @@ export default function RoleSettingsPage() {
       ),
       title: "Güncellenme Tarihi",
       sortingFn: compareNumericString,
+    },
+    {
+      id: "actions",
+      cell: ({ row }) => (
+        <div className="flex justify-center">
+          <RoleRowActions row={row} />
+        </div>
+      ),
     },
   ]
 
@@ -112,6 +122,7 @@ const formSchema = z.object({
 function CreateRole() {
   const { toast } = useToast()
   const emitter = useEmitter()
+  const router = useRouter()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -131,9 +142,10 @@ function CreateRole() {
             title: "Başarılı",
             description: "Rol başarıyla oluşturuldu.",
           })
-          emitter.emit("REFETCH_ROLES")
           setOpen(false)
           form.reset()
+
+          router.push(`/settings/roles/${res.data.id}/users`)
         } else {
           toast({
             title: "Hata",
