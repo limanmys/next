@@ -14,7 +14,7 @@ export default function AuthenticationPage() {
             }}
           />
           <div className="relative z-20 flex items-center text-lg font-medium">
-            <Icons.logo className="w-18 h-6 fill-white" />
+            <Icons.dugumluLogo className="h-10 w-24 fill-white" />
           </div>
           <div className="relative z-20 mt-auto">
             <Icons.aciklab className="h-[3rem] w-[16rem] fill-white" />

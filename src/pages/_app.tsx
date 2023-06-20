@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils"
 import { Toaster } from "@/components/ui/toaster"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 
-import Layout from "./_layout"
+import Layout from "../components/_layout/app_layout"
 
 const RootLayout: AppType = ({ Component, pageProps }: AppPropsWithLayout) => {
   const router = useRouter()

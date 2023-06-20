@@ -8,10 +8,10 @@ export default function ServerOffline() {
         height: "var(--container-height)",
       }}
     >
-      <h2 className="text-3xl font-bold tracking-tight border-r p-[24px]">
-        <Unlink className="inline-block w-12 h-12" />
+      <h2 className="border-r p-[24px] text-3xl font-bold tracking-tight">
+        <Unlink className="inline-block h-12 w-12" />
       </h2>
-      <h2 className="text-xl tracking-tight p-[24px]">
+      <h2 className="p-[24px] text-xl tracking-tight">
         Sunucuya erişilemiyor.
       </h2>
     </div>

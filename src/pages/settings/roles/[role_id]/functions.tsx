@@ -27,7 +27,7 @@ import { useToast } from "@/components/ui/use-toast"
 import AssignFunction from "@/components/settings/assign-function"
 import { FunctionExtensionActions } from "@/components/settings/function-extension-actions"
 
-import RoleLayout from "./_layout"
+import RoleLayout from "../../../../components/_layout/role_layout"
 
 const RoleFunctionsList: NextPageWithLayout = () => {
   const [loading, setLoading] = useState<boolean>(true)

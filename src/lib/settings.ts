@@ -85,7 +85,7 @@ export const Settings = {
       description:
         "Giriş yapılabilecek giriş araçlarını ayarlamanızı sağlar. Keycloak ve LDAP girişlerini bu sayfa üzerinden ayarlayabilirsiniz.",
       icon: SquareAsterisk,
-      href: "/settings/auth_gateway",
+      href: "/settings/access/ldap",
     },
     {
       title: "Sağlık Durumu",

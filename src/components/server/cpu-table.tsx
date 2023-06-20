@@ -75,7 +75,10 @@ export default function CpuTable() {
                 <TableCell>{item.cmd}</TableCell>
                 <TableCell>
                   <div className="flex items-center gap-2">
-                    <Progress value={item.percent} className="h-[10px]" />
+                    <Progress
+                      value={Number(item.percent)}
+                      className="h-[10px]"
+                    />
                     <span>%{item.percent}</span>
                   </div>
                 </TableCell>

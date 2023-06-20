@@ -9,7 +9,7 @@ import PageHeader from "@/components/ui/page-header"
 import TransferList from "@/components/ui/transfer-list"
 import { useToast } from "@/components/ui/use-toast"
 
-import RoleLayout from "./_layout"
+import RoleLayout from "../../../../components/_layout/role_layout"
 
 const RoleExtensionList: NextPageWithLayout = () => {
   const router = useRouter()

@@ -40,7 +40,7 @@ import PageHeader from "@/components/ui/page-header"
 import { useToast } from "@/components/ui/use-toast"
 import { Form, FormField, FormMessage } from "@/components/form/form"
 
-import RoleLayout from "./_layout"
+import RoleLayout from "../../../../components/_layout/role_layout"
 
 const RoleVariablesList: NextPageWithLayout = () => {
   const [loading, setLoading] = useState<boolean>(true)
