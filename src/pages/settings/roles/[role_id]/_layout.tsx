@@ -71,8 +71,6 @@ export default function RoleLayout({
   ]
   const [role, setRole] = useState<IRole>()
   const fetchData = (id?: string) => {
-    if (!router.query.role_id) return
-
     apiService
       .getInstance()
       .get(`/settings/roles/${id ? id : router.query.role_id}`)

@@ -1,11 +1,12 @@
 import { useState } from "react"
+import { useRouter } from "next/router"
 import { apiService } from "@/services"
-import { Check, ChevronsUpDown, PlusCircle } from "lucide-react"
+import { PlusCircle } from "lucide-react"
 
 import { IExtension } from "@/types/extension"
-import { IFunction } from "@/types/function"
+import { IMiniFunction } from "@/types/function"
 import { DivergentColumn } from "@/types/table"
-import { cn } from "@/lib/utils"
+import { useEmitter } from "@/hooks/useEmitter"
 import {
   Sheet,
   SheetClose,
@@ -19,28 +20,53 @@ import {
 
 import { Button } from "../ui/button"
 import { Checkbox } from "../ui/checkbox"
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from "../ui/command"
 import DataTable from "../ui/data-table/data-table"
 import { DataTableColumnHeader } from "../ui/data-table/data-table-column-header"
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
+import { Label } from "../ui/label"
+import { ScrollArea } from "../ui/scroll-area"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select"
+import { useToast } from "../ui/use-toast"
 
 export default function AssignFunction() {
+  const router = useRouter()
+  const emitter = useEmitter()
+  const { toast } = useToast()
   const [loading, setLoading] = useState<boolean>(true)
-  const [data, setData] = useState<IFunction[]>([])
-  const [selected, setSelected] = useState<IFunction[]>([])
+  const [data, setData] = useState<IMiniFunction[]>([])
+  const [extensions, setExtensions] = useState<IExtension[]>([])
+  const [selectedExtension, setSelectedExtension] = useState<string>()
+  const [selected, setSelected] = useState<IMiniFunction[]>([])
 
-  const fetchData = () => {
+  const fetchExtensionList = () => {
     setLoading(true)
 
     apiService
       .getInstance()
-      .get(`/extensions`)
+      .get(`/settings/roles/${router.query.role_id}/extensions`)
+      .then((res) => {
+        setExtensions(res.data.selected)
+      })
+      .finally(() => {
+        setLoading(false)
+        setSelected([])
+      })
+  }
+
+  const fetchFunctionList = (extension: string) => {
+    setLoading(true)
+    setSelectedExtension(extension)
+
+    apiService
+      .getInstance()
+      .get(`/settings/extensions/${extension}/functions`)
       .then((res) => {
         setData(res.data)
       })
@@ -50,7 +76,7 @@ export default function AssignFunction() {
       })
   }
 
-  const columns: DivergentColumn<IFunction, string>[] = [
+  const columns: DivergentColumn<IMiniFunction, string>[] = [
     {
       id: "select",
       header: ({ table }) => (
@@ -73,20 +99,37 @@ export default function AssignFunction() {
       enableHiding: false,
     },
     {
-      accessorKey: "name",
+      accessorKey: "description",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Eklenti Adı" />
+        <DataTableColumnHeader column={column} title="İzin" />
       ),
-      title: "Eklenti Adı",
-    },
-    {
-      accessorKey: "version",
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Versiyon" />
-      ),
-      title: "Versiyon",
+      title: "İzin",
     },
   ]
+
+  const handleAddPermission = () => {
+    apiService
+      .getInstance()
+      .post(`/settings/roles/${router.query.role_id}/functions`, {
+        functions: selected.map((item) => item.name),
+        extension_id: selectedExtension,
+      })
+      .then((res) => {
+        toast({
+          title: "Başarılı",
+          description: "İzinler başarıyla eklendi.",
+        })
+        emitter.emit("REFETCH_FUNCTIONS", router.query.role_id)
+        emitter.emit("REFETCH_ROLE", router.query.role_id)
+      })
+      .catch((err) => {
+        toast({
+          title: "Hata",
+          description: "İzinler eklenirken bir hata oluştu.",
+          variant: "destructive",
+        })
+      })
+  }
 
   return (
     <Sheet>
@@ -95,7 +138,7 @@ export default function AssignFunction() {
           variant="outline"
           size="sm"
           className="ml-auto h-8 lg:flex"
-          onClick={fetchData}
+          onClick={fetchExtensionList}
         >
           <PlusCircle className="mr-2 h-4 w-4" />
           Ekle
@@ -108,7 +151,27 @@ export default function AssignFunction() {
             Bu pencereyi kullanarak fonksiyon izinlerini ekleyebilirsiniz.
           </SheetDescription>
         </SheetHeader>
-        <ComboboxDemo entries={data} />
+        <div className="mt-5 flex flex-col gap-3">
+          <Label>Eklenti Seçimi</Label>
+          <Select onValueChange={(value) => fetchFunctionList(value)}>
+            <SelectTrigger className="mb-3 h-8 w-full ">
+              <SelectValue placeholder="Fonksiyonları görmek için seçim yapınız..." />
+            </SelectTrigger>
+            <SelectContent>
+              <ScrollArea className="h-48">
+                <SelectGroup>
+                  <SelectLabel>Eklentiler</SelectLabel>
+                  {extensions.map((extension) => (
+                    <SelectItem key={extension.id} value={extension.id}>
+                      {extension.display_name}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </ScrollArea>
+            </SelectContent>
+          </Select>
+        </div>
+
         <div className="-mx-6 my-8">
           <DataTable
             columns={columns}
@@ -121,60 +184,16 @@ export default function AssignFunction() {
 
         <SheetFooter>
           <SheetClose asChild>
-            <Button type="submit" className="rounded-full">
+            <Button
+              type="submit"
+              className="rounded-full"
+              onClick={() => handleAddPermission()}
+            >
               <PlusCircle className="mr-2 h-4 w-4" /> Ekle
             </Button>
           </SheetClose>
         </SheetFooter>
       </SheetContent>
     </Sheet>
-  )
-}
-
-export function ComboboxDemo({ entries }: { entries: IExtension[] }) {
-  const [open, setOpen] = useState(false)
-  const [value, setValue] = useState("")
-
-  return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="w-[200px] justify-between"
-        >
-          {value
-            ? entries.find((extension) => extension.id === value)?.display_name
-            : "Select extension..."}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
-        <Command>
-          <CommandInput placeholder="Search extension..." />
-          <CommandEmpty>No extension found.</CommandEmpty>
-          <CommandGroup>
-            {entries.map((extension) => (
-              <CommandItem
-                key={extension.id}
-                onSelect={(currentValue) => {
-                  setValue(currentValue)
-                  setOpen(false)
-                }}
-              >
-                <Check
-                  className={cn(
-                    "mr-2 h-4 w-4",
-                    value === extension.id ? "opacity-100" : "opacity-0"
-                  )}
-                />
-                {extension.display_name}
-              </CommandItem>
-            ))}
-          </CommandGroup>
-        </Command>
-      </PopoverContent>
-    </Popover>
   )
 }

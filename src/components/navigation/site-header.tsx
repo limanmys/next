@@ -53,7 +53,7 @@ export function SiteHeader() {
             </Button>
           </div>
           <Link href="/" className="flex items-center space-x-2">
-            <Icons.logo className="w-18 h-6 dark:fill-white" />
+            <Icons.dugumluLogo className="w-18 h-8 dark:fill-white" />
           </Link>
         </div>
 

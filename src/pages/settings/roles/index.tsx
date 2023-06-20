@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { PlusCircle } from "lucide-react"
+import { Link2, PlusCircle } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -29,6 +29,7 @@ import { Form, FormField, FormMessage } from "@/components/form/form"
 import { RoleRowActions } from "@/components/settings/role-actions"
 
 export default function RoleSettingsPage() {
+  const router = useRouter()
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IRole[]>([])
 
@@ -41,6 +42,16 @@ export default function RoleSettingsPage() {
         <DataTableColumnHeader column={column} title="Rol Adı" />
       ),
       title: "Rol Adı",
+      cell: ({ row }) => (
+        <div
+          className="flex cursor-pointer items-center gap-2"
+          onClick={() =>
+            router.push(`/settings/roles/${row.original.id}/users`)
+          }
+        >
+          {row.original.name} <Link2 className="h-4 w-4"></Link2>
+        </div>
+      ),
     },
     {
       accessorKey: "updated_at",

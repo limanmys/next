@@ -130,7 +130,7 @@ function AccessLogDetailsWindow({ id }: { id: string }) {
       .getInstance()
       .get(`/servers/${router.query.server_id}/access_logs/${id}`)
       .then((response) => {
-        setData(response.data.message)
+        setData(response.data)
         setLoading(false)
       })
   }

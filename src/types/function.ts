@@ -12,3 +12,8 @@ export interface IFunction {
   display_name: string
   description: string
 }
+
+export interface IMiniFunction {
+  name: string
+  description: string
+}
