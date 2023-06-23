@@ -3,6 +3,7 @@ import { ThemeProvider } from "@/providers/theme-provider"
 
 import "@/styles/globals.css"
 import "@/styles/nprogress.css"
+import "@/styles/radial-progress.css"
 import { ReactElement, ReactNode } from "react"
 import { NextPage } from "next"
 import { AppProps, AppType } from "next/app"
@@ -10,7 +11,6 @@ import { useRouter } from "next/router"
 
 import { cn } from "@/lib/utils"
 import { Toaster } from "@/components/ui/toaster"
-import { TailwindIndicator } from "@/components/tailwind-indicator"
 
 import Layout from "../components/_layout/app_layout"
 
@@ -30,7 +30,7 @@ const RootLayout: AppType = ({ Component, pageProps }: AppPropsWithLayout) => {
           )}
         </div>
         <Toaster />
-        <TailwindIndicator />
+        {/*<TailwindIndicator />*/}
       </ThemeProvider>
     </>
   )

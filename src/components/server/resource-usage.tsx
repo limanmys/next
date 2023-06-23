@@ -222,12 +222,15 @@ export default function ResourceUsage() {
             </Card>
             <Card>
               <CardHeader>
-                <CardTitle>Network Kullanımı</CardTitle>
+                <CardTitle className="flex items-end justify-between">
+                  Network Kullanımı{" "}
+                  <small className="text-foreground/50">kb/s</small>
+                </CardTitle>
                 <div className="flex items-center">
                   <Download className="mr-2 h-4 w-4" />{" "}
-                  {data[0]?.network.download} kb/s
+                  {data[0]?.network.download}
                   <Upload className="ml-3 mr-2 h-4 w-4" />{" "}
-                  {data[0]?.network.upload} kb/s
+                  {data[0]?.network.upload}
                 </div>
               </CardHeader>
               <CardContent
