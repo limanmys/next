@@ -4,6 +4,8 @@
 
 @layer base {
   body {
+    font-family: Inter, "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+      "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -129,4 +131,27 @@
 .data-table td:last-of-type,
 .data-table th:last-of-type {
   padding-right: 32px;
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url(../assets/fonts/Inter-roman.var.woff2) format("woff2");
+  font-named-instance: "Regular";
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url(../assets/fonts/Inter-italic.var.woff2) format("woff2");
+  font-named-instance: "Italic";
+}
+
+.font-inter {
+  font-family: Inter, "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
 }

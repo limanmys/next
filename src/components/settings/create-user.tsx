@@ -114,7 +114,7 @@ export default function CreateUser() {
           Ekle
         </Button>
       </SheetTrigger>
-      <SheetContent position="right" size="default">
+      <SheetContent side="right">
         <SheetHeader className="mb-8">
           <SheetTitle>Kullanıcı Oluştur</SheetTitle>
           <SheetDescription>

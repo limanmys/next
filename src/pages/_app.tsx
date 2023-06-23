@@ -8,7 +8,6 @@ import { NextPage } from "next"
 import { AppProps, AppType } from "next/app"
 import { useRouter } from "next/router"
 
-import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import { Toaster } from "@/components/ui/toaster"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
@@ -21,12 +20,7 @@ const RootLayout: AppType = ({ Component, pageProps }: AppPropsWithLayout) => {
   return (
     <>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <div
-          className={cn(
-            "h-screen bg-background font-sans antialiased",
-            fontSans.variable
-          )}
-        >
+        <div className={cn("font-inter h-screen bg-background antialiased")}>
           {!router.asPath.includes("/auth/login") ? (
             <SidebarProvider>
               <Layout Component={Component} pageProps={pageProps} />

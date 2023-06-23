@@ -144,7 +144,7 @@ export default function AssignFunction() {
           Ekle
         </Button>
       </SheetTrigger>
-      <SheetContent position="right" size="lg">
+      <SheetContent side="right" className="sm:w-[800px] sm:max-w-full">
         <SheetHeader>
           <SheetTitle>İzin Ekle</SheetTitle>
           <SheetDescription>

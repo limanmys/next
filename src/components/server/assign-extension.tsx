@@ -97,7 +97,7 @@ export default function AssignExtension({
           Ekle
         </Button>
       </SheetTrigger>
-      <SheetContent position="right" size="lg">
+      <SheetContent side="right" className="sm:w-[800px] sm:max-w-full">
         <SheetHeader>
           <SheetTitle>Eklenti Ekle</SheetTitle>
           <SheetDescription>
