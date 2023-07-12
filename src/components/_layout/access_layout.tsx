@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import { BookKey, FolderGit2 } from "lucide-react"
+import { BookKey, FolderGit2, ScanFace } from "lucide-react"
 
 import AccessCard from "../settings/access-card"
 
@@ -17,6 +17,14 @@ export default function AccessLayout({
       description:
         "Liman'a giriş yaparken LDAP bağlantısı kullanabilir ve detaylı şekilde erişim yetkilerini konfigüre edebilirsiniz.",
       href: `/settings/access/ldap`,
+    },
+    {
+      id: "permissions_ldap",
+      icon: ScanFace,
+      title: "LDAP Erişim İzinleri",
+      description:
+        "Hangi LDAP gruplarının ve kullanıcılarının Liman'a giriş yapabileceğini veya yapamayacağını bu sayfa aracılığıyla detaylı şekilde ayarlayabilirsiniz.",
+      href: `/settings/access/permissions_ldap`,
     },
     {
       id: "keycloak",

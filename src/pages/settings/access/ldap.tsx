@@ -157,10 +157,12 @@ const AccessLdapPage: NextPageWithLayout = () => {
               )}
             />
 
-            <Button type="submit">
-              <Save className="mr-2 h-4 w-4" />
-              Oluştur
-            </Button>
+            <div className="flex justify-end">
+              <Button type="submit">
+                <Save className="mr-2 h-4 w-4" />
+                Kaydet
+              </Button>
+            </div>
           </form>
         </Form>
       </div>
