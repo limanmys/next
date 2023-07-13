@@ -1,5 +1,7 @@
-import { ReactElement } from "react"
+import { ReactElement, useEffect } from "react"
+import Head from "next/head"
 import { NextPageWithLayout } from "@/pages/_app"
+import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Fingerprint, Mail, Save, Server, UserCheck2 } from "lucide-react"
 import { useForm } from "react-hook-form"
@@ -10,6 +12,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import PageHeader from "@/components/ui/page-header"
 import { Switch } from "@/components/ui/switch"
+import { useToast } from "@/components/ui/use-toast"
 import AccessLayout from "@/components/_layout/access_layout"
 import {
   Form,
@@ -35,16 +38,47 @@ const formSchema = z.object({
 })
 
 const AccessLdapPage: NextPageWithLayout = () => {
+  const { toast } = useToast()
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   })
 
   const handleSave = (data: z.infer<typeof formSchema>) => {
-    console.log(data)
+    apiService
+      .getInstance()
+      .post("/settings/access/ldap/configuration", data)
+      .then(() => {
+        toast({
+          title: "Başarılı",
+          description: "LDAP bağlantısı ayarları başarıyla kaydedildi.",
+        })
+      })
+      .catch(() => {
+        toast({
+          title: "Hata",
+          description:
+            "LDAP bağlantısı ayarları kaydedilirken bir hata oluştu.",
+          variant: "destructive",
+        })
+      })
   }
+
+  useEffect(() => {
+    apiService
+      .getInstance()
+      .get("/settings/access/ldap/configuration")
+      .then((res) => {
+        form.reset(res.data)
+      })
+  }, [])
 
   return (
     <>
+      <Head>
+        <title>LDAP Bağlantısı | Liman</title>
+      </Head>
+
       <PageHeader
         title="LDAP Bağlantısı"
         description="Liman'a giriş yaparken LDAP bağlantısı kullanabilir ve detaylı şekilde erişim yetkilerini konfigüre edebilirsiniz."
@@ -142,8 +176,8 @@ const AccessLdapPage: NextPageWithLayout = () => {
                       <FormLabel>Entegrasyonu aktifleştir</FormLabel>
                       <FormDescription>
                         Entegrasyonu aktifleştirdiğinizde izin tanımladığınız
-                        LDAP kullanıcıları Liman'a kullanıcı adlarını kullanarak
-                        giriş yapabilirler.
+                        LDAP kullanıcıları Liman&apos;a kullanıcı adlarını
+                        kullanarak giriş yapabilirler.
                       </FormDescription>
                     </div>
                   </div>

@@ -13,7 +13,7 @@ interface ISettingCardProps {
 export default function SettingCard(props: ISettingCardProps) {
   return (
     <Link href={props.href}>
-      <Card className="duration-100 ease-in hover:scale-[102%] active:scale-100">
+      <Card className="duration-100 ease-in hover:scale-[102%] active:scale-100 h-full">
         <CardContent className="pt-6">
           <div className="flex gap-6">
             <div className="icon self-start rounded-md bg-secondary p-3 dark:bg-secondary/10">

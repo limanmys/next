@@ -1,8 +1,8 @@
-import { ReactElement, useState } from "react"
+import { ReactElement, useEffect, useState } from "react"
 import { NextPageWithLayout } from "@/pages/_app"
 import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { KeyRound, LogIn, User2 } from "lucide-react"
+import { KeyRound, LogIn, User2, Users2 } from "lucide-react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
@@ -11,9 +11,11 @@ import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import PageHeader from "@/components/ui/page-header"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useToast } from "@/components/ui/use-toast"
 import AccessLayout from "@/components/_layout/access_layout"
 import { Form, FormField, FormMessage } from "@/components/form/form"
+import AsyncTransferList from "@/components/settings/async-transfer-list"
 
 const loginSchema = z.object({
   username: z.string({
@@ -30,12 +32,11 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
     resolver: zodResolver(loginSchema),
   })
 
-  const loginData = {
+  const [loggedIn, setLoggedIn] = useState(false)
+  const [loginData, setLoginData] = useState({
     username: "",
     password: "",
-  }
-
-  const [loggedIn, setLoggedIn] = useState(false)
+  })
 
   const handleLogin = (data: z.infer<typeof loginSchema>) => {
     apiService
@@ -50,13 +51,144 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
             description:
               "Giriş başarılı, işlemlerinizi gerçekleştirebilirsiniz.",
           })
-          loginData.username = data.username
-          loginData.password = data.password
+          setLoginData({
+            ...loginData,
+            username: data.username,
+            password: data.password,
+          })
           setLoggedIn(true)
         } else {
           toast({
             title: "Hata",
             description: "Giriş başarısız, lütfen bilgilerinizi kontrol edin.",
+            variant: "destructive",
+          })
+        }
+      })
+  }
+
+  const [userListLoading, setUserListLoading] = useState(true)
+  const [userList, setUserList] = useState([])
+  const [selectedUserList, setSelectedUserList] = useState([])
+  const fetchUsersList = (param?: string) => {
+    apiService
+      .getInstance()
+      .get("settings/access/ldap/permissions/users", {
+        params: {
+          username: loginData.username,
+          password: loginData.password,
+          search_query: param,
+        },
+      })
+      .then((res) => {
+        setUserList(
+          res.data.items.map((it: string) => {
+            return {
+              id: it,
+              name: it,
+            }
+          })
+        )
+        setSelectedUserList(
+          res.data.selected.map((it: string) => {
+            return {
+              id: it,
+              name: it,
+            }
+          })
+        )
+        setUserListLoading(false)
+      })
+  }
+
+  useEffect(() => {
+    if (loggedIn) {
+      fetchUsersList()
+    }
+  }, [loggedIn])
+
+  const handleUserListSave = (users: any[]) => {
+    apiService
+      .getInstance()
+      .post("settings/access/ldap/permissions/users", {
+        username: loginData.username,
+        password: loginData.password,
+        users: users.map((it) => it.id),
+      })
+      .then((res) => {
+        if (res.data.status) {
+          toast({
+            title: "Başarılı",
+            description: "Kullanıcı listesi başarıyla güncellendi.",
+          })
+        } else {
+          toast({
+            title: "Hata",
+            description: "Kullanıcı listesi güncellenemedi.",
+            variant: "destructive",
+          })
+        }
+      })
+  }
+
+  const [groupListLoading, setGroupListLoading] = useState(true)
+  const [groupList, setGroupList] = useState([])
+  const [selectedGroupList, setSelectedGroupList] = useState([])
+  const fetchGroupsList = (param?: string) => {
+    apiService
+      .getInstance()
+      .get("settings/access/ldap/permissions/groups", {
+        params: {
+          username: loginData.username,
+          password: loginData.password,
+          search_query: param,
+        },
+      })
+      .then((res) => {
+        setGroupList(
+          res.data.items.map((it: string) => {
+            return {
+              id: it,
+              name: it,
+            }
+          })
+        )
+        setSelectedGroupList(
+          res.data.selected.map((it: string) => {
+            return {
+              id: it,
+              name: it,
+            }
+          })
+        )
+        setGroupListLoading(false)
+      })
+  }
+
+  useEffect(() => {
+    if (loggedIn) {
+      fetchGroupsList()
+    }
+  }, [loggedIn])
+
+  const handleGroupListSave = (groups: any[]) => {
+    apiService
+      .getInstance()
+      .post("settings/access/ldap/permissions/groups", {
+        username: loginData.username,
+        password: loginData.password,
+        groups: groups.map((it) => it.id),
+      })
+      .then((res) => {
+        if (res.data.status) {
+          toast({
+            title: "Başarılı",
+            description: "Grup listesi başarıyla güncellendi.",
+          })
+        } else {
+          toast({
+            title: "Hata",
+            description: "Grup listesi güncellenemedi.",
             variant: "destructive",
           })
         }
@@ -140,6 +272,44 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
                 </form>
               </Form>
             </Card>
+          </div>
+        )}
+        {loggedIn && (
+          <div className="flex flex-col w-full">
+            <Tabs defaultValue="users" className="w-full">
+              <TabsList className="w-full">
+                <TabsTrigger value="users" className="w-full">
+                  <User2 className="mr-2 h-4 w-4" />
+                  Kullanıcı İzinleri
+                </TabsTrigger>
+                <TabsTrigger value="groups" className="w-full">
+                  <Users2 className="mr-2 h-4 w-4" />
+                  Grup İzinleri
+                </TabsTrigger>
+              </TabsList>
+              <TabsContent value="users">
+                <AsyncTransferList
+                  loading={userListLoading}
+                  leftTitle="Seçilebilir Kullanıcılar"
+                  rightTitle="Giriş Yapabilen Kullanıcılar"
+                  items={userList}
+                  selected={selectedUserList}
+                  onSave={handleUserListSave}
+                  onSearch={(v: string) => fetchUsersList(v)}
+                />
+              </TabsContent>
+              <TabsContent value="groups">
+                <AsyncTransferList
+                  loading={groupListLoading}
+                  leftTitle="Seçilebilir Gruplar"
+                  rightTitle="Giriş Yapabilen Gruplar"
+                  items={groupList}
+                  selected={selectedGroupList}
+                  onSave={handleGroupListSave}
+                  onSearch={(v: string) => fetchGroupsList(v)}
+                />
+              </TabsContent>
+            </Tabs>
           </div>
         )}
       </div>

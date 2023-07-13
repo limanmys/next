@@ -1,4 +1,5 @@
-import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
+import { apiService } from "@/services"
 import { BookKey, FolderGit2, ScanFace } from "lucide-react"
 
 import AccessCard from "../settings/access-card"
@@ -8,7 +9,8 @@ export default function AccessLayout({
 }: {
   children: React.ReactNode
 }) {
-  const router = useRouter()
+  const [enabled, setEnabled] = useState(false)
+
   const access = [
     {
       id: "ldap",
@@ -17,6 +19,7 @@ export default function AccessLayout({
       description:
         "Liman'a giriş yaparken LDAP bağlantısı kullanabilir ve detaylı şekilde erişim yetkilerini konfigüre edebilirsiniz.",
       href: `/settings/access/ldap`,
+      enabled: true,
     },
     {
       id: "permissions_ldap",
@@ -25,6 +28,7 @@ export default function AccessLayout({
       description:
         "Hangi LDAP gruplarının ve kullanıcılarının Liman'a giriş yapabileceğini veya yapamayacağını bu sayfa aracılığıyla detaylı şekilde ayarlayabilirsiniz.",
       href: `/settings/access/permissions_ldap`,
+      enabled: enabled,
     },
     {
       id: "keycloak",
@@ -33,8 +37,20 @@ export default function AccessLayout({
       description:
         "Keycloak auth gatewayini kullanarak Liman üzerine kullanıcı girişi yapılmasını sağlayabilirsiniz.",
       href: `/settings/access/keycloak`,
+      enabled: true,
     },
   ]
+
+  useEffect(() => {
+    apiService
+      .getInstance()
+      .get("/settings/access/ldap/configuration")
+      .then((res) => {
+        if (res.data.active) {
+          setEnabled(true)
+        }
+      })
+  }, [])
 
   return (
     <div
@@ -54,6 +70,7 @@ export default function AccessLayout({
             icon={r.icon}
             href={r.href}
             key={r.id}
+            enabled={r.enabled}
           />
         ))}
       </div>

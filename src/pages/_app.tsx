@@ -7,6 +7,7 @@ import "@/styles/radial-progress.css"
 import { ReactElement, ReactNode } from "react"
 import { NextPage } from "next"
 import { AppProps, AppType } from "next/app"
+import Head from "next/head"
 import { useRouter } from "next/router"
 
 import { cn } from "@/lib/utils"
@@ -19,6 +20,11 @@ const RootLayout: AppType = ({ Component, pageProps }: AppPropsWithLayout) => {
 
   return (
     <>
+      <Head>
+        <title>Liman Merkezi Yönetim Sistemi</title>
+        <link rel="icon" type="image/png" href="/favicon.png"></link>
+      </Head>
+
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <div className={cn("font-inter h-screen bg-background antialiased")}>
           {!router.asPath.includes("/auth/login") ? (
@@ -30,7 +36,6 @@ const RootLayout: AppType = ({ Component, pageProps }: AppPropsWithLayout) => {
           )}
         </div>
         <Toaster />
-        {/*<TailwindIndicator />*/}
       </ThemeProvider>
     </>
   )

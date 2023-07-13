@@ -1,5 +1,7 @@
-import { ReactElement } from "react"
+import { ReactElement, useEffect } from "react"
+import Head from "next/head"
 import { NextPageWithLayout } from "@/pages/_app"
+import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Save, UserCheck2 } from "lucide-react"
 import { useForm } from "react-hook-form"
@@ -10,6 +12,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import PageHeader from "@/components/ui/page-header"
 import { Switch } from "@/components/ui/switch"
+import { useToast } from "@/components/ui/use-toast"
 import AccessLayout from "@/components/_layout/access_layout"
 import {
   Form,
@@ -41,16 +44,46 @@ const formSchema = z.object({
 })
 
 const AccessKeycloakPage: NextPageWithLayout = () => {
+  const { toast } = useToast()
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   })
 
   const handleSave = (data: z.infer<typeof formSchema>) => {
-    console.log(data)
+    apiService
+      .getInstance()
+      .post("/settings/access/keycloak/configuration", data)
+      .then(() => {
+        toast({
+          title: "Başarılı",
+          description: "Keycloak ayarları başarıyla kaydedildi.",
+        })
+      })
+      .catch(() => {
+        toast({
+          title: "Hata",
+          description: "Keycloak ayarları kaydedilirken bir hata oluştu.",
+          variant: "destructive",
+        })
+      })
   }
+
+  useEffect(() => {
+    apiService
+      .getInstance()
+      .get("/settings/access/keycloak/configuration")
+      .then((res) => {
+        form.reset(res.data)
+      })
+  }, [])
 
   return (
     <>
+      <Head>
+        <title>Keycloak | Liman</title>
+      </Head>
+
       <PageHeader
         title="Keycloak"
         description="Keycloak auth gatewayini kullanarak Liman üzerine kullanıcı girişi yapılmasını sağlayabilirsiniz."
@@ -117,9 +150,9 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
                       {...field}
                     />
                     <small className="italic text-muted-foreground">
-                      Redirect URI değeri Liman URL'niz /keycloak/callback
+                      Redirect URI değeri Liman URL&apos;niz /keycloak/callback
                       şeklinde olmalıdır ve bu değeri clientinizde de izin
-                      verilen redirect uri'lar kısmında belirtmelisiniz.
+                      verilen redirect uri&apos;lar kısmında belirtmelisiniz.
                     </small>
                   </div>
                   <FormMessage />
@@ -140,7 +173,7 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
                       {...field}
                     />
                     <small className="italic text-muted-foreground">
-                      Base URL değeri Keycloak URL'nizdir.
+                      Base URL değeri Keycloak URL&apos;nizdir.
                     </small>
                   </div>
                   <FormMessage />
@@ -177,7 +210,8 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
                       <FormLabel>Entegrasyonu aktifleştir</FormLabel>
                       <FormDescription>
                         Entegrasyonu aktifleştirdiğinizde Keycloak sunucunuz
-                        üzerindeki kullanıcılar Liman'a giriş yapabilecektir.
+                        üzerindeki kullanıcılar Liman&apos;a giriş
+                        yapabilecektir.
                       </FormDescription>
                     </div>
                   </div>
