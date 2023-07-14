@@ -1,45 +1,88 @@
-import { Settings } from "@/lib/settings"
-import SettingCard from "@/components/settings/setting-card"
+import { useEffect, useState } from "react"
+import { apiService } from "@/services"
 
-export default function SettingsPage() {
+import { DivergentColumn } from "@/types/table"
+import { IVault } from "@/types/vault"
+import { useEmitter } from "@/hooks/useEmitter"
+import DataTable from "@/components/ui/data-table/data-table"
+import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
+import CreateUser from "@/components/settings/create-user"
+import { VaultRowActions } from "@/components/settings/vault-actions"
+
+export default function VaultPage() {
+  const [loading, setLoading] = useState<boolean>(true)
+  const [data, setData] = useState<IVault[]>([])
+
+  const emitter = useEmitter()
+
+  const columns: DivergentColumn<IVault, string>[] = [
+    {
+      accessorKey: "name",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Veri Adı" />
+      ),
+      title: "Veri Adı",
+    },
+    {
+      accessorKey: "server_name",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Sunucu Adı" />
+      ),
+      title: "Sunucu Adı",
+    },
+    {
+      id: "actions",
+      cell: ({ row }) => (
+        <div className="flex justify-center">
+          <VaultRowActions row={row} />
+        </div>
+      ),
+    },
+  ]
+
+  const fetchData = () => {
+    apiService
+      .getInstance()
+      .get(`/settings/vault`)
+      .then((res) => {
+        setData(res.data)
+        setLoading(false)
+      })
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  useEffect(() => {
+    emitter.on("REFETCH_VAULT", () => {
+      fetchData()
+    })
+    return () => emitter.off("REFETCH_VAULT")
+  }, [])
+
   return (
-    <div className="h-full flex-1 flex-col p-8 md:flex">
-      <div className="mb-8 flex items-center justify-between space-y-2">
-        <div>
-          <h2 className="text-2xl font-bold tracking-tight">Ayarlar</h2>
-          <p className="text-muted-foreground">
-            Bu sayfa aracılığıyla kişisel ayarlarınızı ve Liman MYS&apos;nin
-            sistem ayarlarını yapabilirsiniz.
-          </p>
+    <>
+      <div className="h-full flex-1 flex-col space-y-8 p-8 md:flex">
+        <div className="flex items-center justify-between space-y-2">
+          <div>
+            <h2 className="text-2xl font-bold tracking-tight">Kasa</h2>
+            <p className="text-muted-foreground">
+              Sunucular üzerindeki eklenti ayarlarını, şifrelerinizi ve
+              yöneticiyseniz diğer kullanıcıların girdiği değerleri
+              değiştirebilirsiniz.
+            </p>
+          </div>
         </div>
       </div>
-
-      <h2 className="mb-3 text-xl font-bold tracking-tight">
-        Kullanıcı Ayarları
-      </h2>
-      <div className="mb-8 grid grid-cols-3 gap-8">
-        {Settings.user.map((setting) => (
-          <SettingCard
-            href={setting.href}
-            icon={setting.icon}
-            title={setting.title}
-            description={setting.description}
-            key={setting.href}
-          />
-        ))}
-      </div>
-      <h2 className="mb-3 text-xl font-bold tracking-tight">Sistem Ayarları</h2>
-      <div className="grid grid-cols-3 gap-8">
-        {Settings.system.map((setting) => (
-          <SettingCard
-            href={setting.href}
-            icon={setting.icon}
-            title={setting.title}
-            description={setting.description}
-            key={setting.href}
-          />
-        ))}
-      </div>
-    </div>
+      <DataTable
+        columns={columns}
+        data={data}
+        loading={loading}
+        selectable={false}
+      >
+        <CreateUser />
+      </DataTable>
+    </>
   )
 }

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Link2, PlusCircle } from "lucide-react"
+import { Footprints, Link2, PlusCircle } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -120,7 +120,18 @@ export default function RoleSettingsPage() {
         loading={loading}
         selectable={false}
       >
-        <CreateRole />
+        <div className="flex gap-3">
+          <CreateRole />
+          <Button
+            variant="outline"
+            size="sm"
+            className="ml-auto h-8 lg:flex"
+            onClick={() => router.push("/settings/roles/details")}
+          >
+            <Footprints className="mr-2 h-4 w-4" />
+            Detaylı görüntüleme
+          </Button>
+        </div>
       </DataTable>
     </>
   )
