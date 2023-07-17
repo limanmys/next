@@ -18,12 +18,8 @@ import { Form, FormField, FormMessage } from "@/components/form/form"
 import AsyncTransferList from "@/components/settings/async-transfer-list"
 
 const loginSchema = z.object({
-  username: z.string({
-    required_error: "Kullanıcı adı alanı boş bırakılamaz.",
-  }),
-  password: z.string({
-    required_error: "Şifre alanı boş bırakılamaz.",
-  }),
+  username: z.string().nonempty("Kullanıcı adı alanı boş bırakılamaz."),
+  password: z.string().nonempty("Şifre alanı boş bırakılamaz."),
 })
 
 const AccessKeycloakPage: NextPageWithLayout = () => {

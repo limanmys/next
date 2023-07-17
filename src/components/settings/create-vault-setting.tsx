@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { PlusCircle } from "lucide-react"
+import { PlusCircle, Settings } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -17,54 +17,28 @@ import {
 } from "@/components/ui/sheet"
 import { Form, FormField, FormMessage } from "@/components/form/form"
 
+import { SelectServer } from "../selectbox/server-select"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select"
 import { useToast } from "../ui/use-toast"
 
-const formSchema = z
-  .object({
-    name: z.string(),
-    username: z.string(),
-    email: z.string().email({
-      message: "Geçerli bir e-posta adresi giriniz.",
-    }),
-    status: z.string(),
-    password: z
-      .string()
-      .min(8, {
-        message: "Şifre en az 8 karakter olmalıdır.",
-      })
-      .max(50, {
-        message: "Şifre en fazla 50 karakter olmalıdır.",
-      }),
-    password_confirmation: z.string(),
-  })
-  .refine((data) => data.password === data.password_confirmation, {
-    message: "Şifreler eşleşmiyor.",
-    path: ["password_confirmation"],
-  })
+const formSchema = z.object({
+  server_id: z.string().nonempty("Sunucu seçimi yapmalısınız."),
+  name: z.string().nonempty("İsim alanı boş bırakılamaz."),
+  value: z.string().nonempty("Değer alanı boş bırakılamaz."),
+})
 
-export default function CreateVaultSetting() {
+export default function CreateVaultSetting({ userId }: { userId: string }) {
   const { toast } = useToast()
   const emitter = useEmitter()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      server_id: "",
       name: "",
-      username: "",
-      email: "",
-      status: "0",
-      password: "",
-      password_confirmation: "",
+      value: "",
     },
   })
 
@@ -72,20 +46,23 @@ export default function CreateVaultSetting() {
   const handleCreate = (values: z.infer<typeof formSchema>) => {
     apiService
       .getInstance()
-      .post(`/settings/users`, values)
+      .post(`/settings/vault`, {
+        ...values,
+        user_id: userId,
+      })
       .then((res) => {
         if (res.status === 200) {
           toast({
             title: "Başarılı",
-            description: "Kullanıcı başarıyla oluşturuldu.",
+            description: "Ayar oluşturuldu.",
           })
-          emitter.emit("REFETCH_USERS")
+          emitter.emit("REFETCH_VAULT")
           setOpen(false)
           form.reset()
         } else {
           toast({
             title: "Hata",
-            description: "Kullanıcı oluşturulurken bir hata oluştu.",
+            description: "Ayar oluşturulurken bir hata oluştu.",
             variant: "destructive",
           })
         }
@@ -93,7 +70,7 @@ export default function CreateVaultSetting() {
       .catch(() => {
         toast({
           title: "Hata",
-          description: "Kullanıcı oluşturulurken bir hata oluştu.",
+          description: "Ayar oluşturulurken bir hata oluştu.",
           variant: "destructive",
         })
       })
@@ -103,15 +80,16 @@ export default function CreateVaultSetting() {
     <Sheet open={open} onOpenChange={(o) => setOpen(o)}>
       <SheetTrigger asChild>
         <Button variant="outline" size="sm" className="ml-auto h-8 lg:flex">
-          <PlusCircle className="mr-2 h-4 w-4" />
-          Ekle
+          <Settings className="mr-2 h-4 w-4" />
+          Ayar Ekle
         </Button>
       </SheetTrigger>
-      <SheetContent side="right">
+      <SheetContent side="right" className="sm:w-[600px] sm:max-w-full">
         <SheetHeader className="mb-8">
-          <SheetTitle>Kullanıcı Oluştur</SheetTitle>
+          <SheetTitle>Ayar Ekle</SheetTitle>
           <SheetDescription>
-            Bu pencereyi kullanarak yeni bir kullanıcı oluşturabilirsiniz.
+            Bu pencereyi kullanarak seçilmiş olan kullanıcıya ait ayar
+            ekleyebilirsiniz.
           </SheetDescription>
         </SheetHeader>
 
@@ -122,22 +100,14 @@ export default function CreateVaultSetting() {
           >
             <FormField
               control={form.control}
-              name="status"
+              name="server_id"
               render={({ field }) => (
                 <div className="flex flex-col gap-2">
-                  <Label htmlFor="status">Kullanıcı Türü</Label>
-                  <Select
+                  <Label htmlFor="server_id">Sunucu</Label>
+                  <SelectServer
                     onValueChange={field.onChange}
                     defaultValue={field.value}
-                  >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="0">Kullanıcı</SelectItem>
-                      <SelectItem value="1">Yönetici</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  />
                   <FormMessage className="mt-1" />
                 </div>
               )}
@@ -147,69 +117,19 @@ export default function CreateVaultSetting() {
               name="name"
               render={({ field }) => (
                 <div className="flex flex-col gap-2">
-                  <Label htmlFor="name">İsim Soyisim</Label>
-                  <Input id="name" placeholder="Liman Kullanıcısı" {...field} />
+                  <Label htmlFor="name">Anahtar</Label>
+                  <Input id="name" {...field} />
                   <FormMessage className="mt-1" />
                 </div>
               )}
             />
             <FormField
               control={form.control}
-              name="username"
+              name="value"
               render={({ field }) => (
                 <div className="flex flex-col gap-2">
-                  <Label htmlFor="username">Kullanıcı Adı</Label>
-                  <Input id="username" placeholder="limanuser" {...field} />
-                  <FormMessage className="mt-1" />
-                </div>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <div className="flex flex-col gap-2">
-                  <Label htmlFor="email">E-Posta</Label>
-                  <Input
-                    id="email"
-                    placeholder="user@liman.dev"
-                    {...field}
-                    type="email"
-                  />
-                  <FormMessage className="mt-1" />
-                </div>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <div className="flex flex-col gap-2">
-                  <Label htmlFor="password">Şifre</Label>
-                  <Input
-                    id="password"
-                    {...field}
-                    className="col-span-3"
-                    type="password"
-                  />
-                  <FormMessage className="mt-1" />
-                </div>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="password_confirmation"
-              render={({ field }) => (
-                <div className="flex flex-col gap-2">
-                  <Label htmlFor="password_confirmation">Şifreyi Onayla</Label>
-                  <Input
-                    id="password_confirmation"
-                    {...field}
-                    className="col-span-3"
-                    type="password"
-                  />
+                  <Label htmlFor="value">Değer</Label>
+                  <Input id="value" {...field} />
                   <FormMessage className="mt-1" />
                 </div>
               )}

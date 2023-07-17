@@ -25,15 +25,11 @@ import {
 } from "@/components/form/form"
 
 const formSchema = z.object({
-  server_address: z.string({
-    required_error: "LDAP sunucu adresi boş bırakılamaz.",
-  }),
-  objectguid: z.string({
-    required_error: "LDAP şemanızdaki objectguid alanının adını yazınız.",
-  }),
-  mail: z.string({
-    required_error: "LDAP şemanızdaki mail alanının adını yazınız.",
-  }),
+  server_address: z.string().nonempty("LDAP sunucu adresi boş bırakılamaz."),
+  objectguid: z
+    .string()
+    .nonempty("LDAP şemanızdaki objectguid alanının adını yazınız."),
+  mail: z.string().nonempty("LDAP şemanızdaki mail alanının adını yazınız."),
   active: z.boolean(),
 })
 

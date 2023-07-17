@@ -161,7 +161,7 @@ function EditVaultKey({
 
     apiService
       .getInstance()
-      .post(`/settings/vault`, { value: data, setting_id: vault.id })
+      .patch(`/settings/vault`, { value: data, setting_id: vault.id })
       .then(() => {
         toast({
           title: "Başarılı",
