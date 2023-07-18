@@ -52,7 +52,11 @@ export function SiteHeader() {
               <Menu className="h-6 w-6" />
             </Button>
           </div>
-          <Link href="/" className="flex items-center space-x-2">
+          <Link
+            href="/"
+            className="flex items-center space-x-2"
+            onClick={() => sidebarCtx[SIDEBARCTX_STATES.setSelected]("")}
+          >
             <Icons.dugumluLogo className="w-18 h-8 dark:fill-white" />
           </Link>
         </div>

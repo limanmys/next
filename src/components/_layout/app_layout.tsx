@@ -10,6 +10,8 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Sidebar } from "@/components/navigation/sidebar"
 import { SiteHeader } from "@/components/navigation/site-header"
 
+import GradientSvg from "../bg/gradient"
+
 const Layout = ({ Component, pageProps }: any) => {
   const router = useRouter()
   const sidebarCtx = useSidebarContext()
@@ -36,7 +38,11 @@ const Layout = ({ Component, pageProps }: any) => {
             }}
           >
             <main>
-              {getLayout(<Component {...pageProps} key={router.route} />)}
+              <div className="relative z-10">
+                {getLayout(<Component {...pageProps} key={router.route} />)}
+              </div>
+
+              <GradientSvg className="-mt-18 pointer-events-none absolute top-0 z-0 h-auto w-full rotate-180 opacity-25 dark:opacity-60" />
             </main>
           </ScrollArea>
         </div>

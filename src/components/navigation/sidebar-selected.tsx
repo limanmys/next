@@ -1,6 +1,9 @@
 import { useEffect } from "react"
 import { useRouter } from "next/router"
-import { useSidebarContext } from "@/providers/sidebar-provider"
+import {
+  SIDEBARCTX_STATES,
+  useSidebarContext,
+} from "@/providers/sidebar-provider"
 import { apiService } from "@/services"
 import {
   CircleDot,
@@ -9,12 +12,14 @@ import {
   PackageOpen,
   PackageSearch,
   ServerCog,
+  Star,
   ToyBrick,
   TrendingUp,
   Users,
 } from "lucide-react"
 
 import { IExtension } from "@/types/extension"
+import { IServer } from "@/types/server"
 import { cn } from "@/lib/utils"
 
 import { Icons } from "../ui/icons"
@@ -32,6 +37,7 @@ export default function SidebarSelected() {
     selectedLoading,
     setSelectedLoading,
   ] = useSidebarContext()
+  const sidebarCtx = useSidebarContext()
 
   useEffect(() => {
     setSelectedLoading(true)
@@ -43,6 +49,21 @@ export default function SidebarSelected() {
         setSelectedLoading(false)
       })
   }, [selected])
+
+  const toggleFavorite = (id: string) => {
+    apiService
+      .getInstance()
+      .post(`/servers/${id}/favorites`)
+      .then(() => {
+        sidebarCtx[SIDEBARCTX_STATES.refreshServers]()
+        setSelectedData((prev: IServer) => {
+          return {
+            ...prev,
+            is_favorite: !prev.is_favorite,
+          }
+        })
+      })
+  }
 
   return (
     <>
@@ -95,6 +116,13 @@ export default function SidebarSelected() {
                 "absolute right-0 top-[1px] h-4 w-4",
                 selectedData.is_online ? "text-green-500" : "text-red-500"
               )}
+            />
+            <Star
+              className={cn(
+                "absolute right-0 top-6 h-4 w-4",
+                selectedData.is_favorite ? "text-yellow-500" : "text-gray-500"
+              )}
+              onClick={() => toggleFavorite(selectedData.id)}
             />
           </div>
           <div>
