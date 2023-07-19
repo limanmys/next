@@ -1,4 +1,5 @@
 import { Dispatch, useEffect, useState } from "react"
+import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { CommandLoading } from "cmdk"
 import { Search } from "lucide-react"
@@ -6,6 +7,7 @@ import { Search } from "lucide-react"
 import { useDebounce } from "@/lib/debounce"
 import {
   CommandDialog,
+  CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
@@ -34,6 +36,8 @@ const search = (
 }
 
 export default function CommandMenu() {
+  const router = useRouter()
+
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState("")
   const [loading, setLoading] = useState(false)
@@ -87,12 +91,21 @@ export default function CommandMenu() {
             </CommandLoading>
           )}
 
+          <CommandEmpty>Sonuç bulunamadı.</CommandEmpty>
+
           {Object.keys(results).map((key: any, i: number) => {
             return (
               <CommandGroup heading={key} key={key + 1}>
                 {results[key].map((item: any) => {
                   return (
-                    <CommandItem key={item.name} value={item.name + i}>
+                    <CommandItem
+                      key={item.name}
+                      value={item.name + i}
+                      onSelect={() => {
+                        router.push(item.url)
+                        setOpen(false)
+                      }}
+                    >
                       {item.name}
                     </CommandItem>
                   )
