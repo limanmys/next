@@ -1,6 +1,7 @@
 import { SidebarProvider } from "@/providers/sidebar-provider"
 import { ThemeProvider } from "@/providers/theme-provider"
 
+import "@/styles/fontawesome.css"
 import "@/styles/globals.css"
 import "@/styles/nprogress.css"
 import "@/styles/radial-progress.css"
