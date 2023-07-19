@@ -192,7 +192,7 @@ function CreateLocalUser() {
                     Kullanıcı Adı
                   </Label>
                   <div className="col-span-3">
-                    <Input id="username" placeholder="root" {...field} />
+                    <Input id="username" {...field} />
                     <FormMessage className="mt-1" />
                   </div>
                 </div>

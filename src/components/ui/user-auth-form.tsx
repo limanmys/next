@@ -26,18 +26,20 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     e.preventDefault()
     setIsLoading(true)
     if (!name || !password) {
-      alert("Please enter information")
+      setError("Kullanıcı adı veya şifre boş olamaz.")
+      setIsLoading(false)
     } else {
       login(name, password)
-        .then((res) => {
+        .then(() => {
           setTimeout(() => {
-            setIsLoading(false)
             router.push("/")
           }, 1000)
         })
         .catch((e) => {
-          setIsLoading(false)
           setError(e.response.data.message)
+        })
+        .finally(() => {
+          setIsLoading(false)
         })
     }
   }

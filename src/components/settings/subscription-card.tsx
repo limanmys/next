@@ -46,6 +46,9 @@ export default function SubscriptionCard({
       .then((response) => {
         setData(response.data)
       })
+      .catch(() => {
+        setData({} as ISubscription)
+      })
       .finally(() => {
         setLoading(false)
       })
@@ -92,7 +95,11 @@ export default function SubscriptionCard({
           <DropdownMenuContent className="w-56">
             <DropdownMenuLabel>Abonelik Seçenekleri</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() =>
+                window.open("mailto:aciklab@havelsan.com.tr", "_blank")
+              }
+            >
               <Send className="mr-2 h-4 w-4" /> Aboneliği Yenile
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => setLicenseDialog(true)}>

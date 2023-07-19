@@ -288,7 +288,7 @@ function CreateSudoers() {
                     Kullanıcı Adı
                   </Label>
                   <div className="col-span-3">
-                    <Input id="name" placeholder="root" {...field} />
+                    <Input id="name" {...field} />
                     <FormMessage className="mt-1" />
                   </div>
                 </div>
