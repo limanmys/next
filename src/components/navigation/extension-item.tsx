@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { ChevronDown, ChevronRight } from "lucide-react"
+import { ChevronDown, ChevronRight, ToyBrick } from "lucide-react"
 
 import { IExtension } from "@/types/extension"
 import { IMenu } from "@/types/server"
@@ -81,7 +81,16 @@ export default function ExtensionItem({
               className="w-full justify-start"
               disabled={disabled}
             >
-              {truncate(extension.display_name, 25)}
+              <div className="flex gap-2 items-center">
+                <div className="flex w-[18px] justify-center items-center">
+                  {extension.icon ? (
+                    <i className={`fa-solid fa-${extension.icon} fa-fw`}></i>
+                  ) : (
+                    <ToyBrick className="h-4 w-4" />
+                  )}
+                </div>
+                <span>{truncate(extension.display_name, 25)}</span>
+              </div>
               {extension.menus && extension.menus.length > 0 && (
                 <ChevronRight className="absolute right-6 h-4 w-4" />
               )}
@@ -100,7 +109,16 @@ export default function ExtensionItem({
               )}
               disabled={disabled}
             >
-              {truncate(extension.display_name, 25)}
+              <div className="flex gap-2 items-center">
+                <div className="flex w-[18px] justify-center items-center">
+                  {extension.icon ? (
+                    <i className={`fa-solid fa-${extension.icon} fa-fw`}></i>
+                  ) : (
+                    <ToyBrick className="h-4 w-4" />
+                  )}
+                </div>
+                <span>{truncate(extension.display_name, 25)}</span>
+              </div>
               {extension.menus && extension.menus.length > 0 && (
                 <ChevronDown className="absolute right-6 h-4 w-4" />
               )}

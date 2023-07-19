@@ -6,37 +6,14 @@ import { Link2, Server } from "lucide-react"
 import { IServer } from "@/types/server"
 import { DivergentColumn } from "@/types/table"
 import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
 import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
 
 export default function Servers() {
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IServer[]>([])
-  const [selected, setSelected] = useState<IServer[]>([])
 
   const columns: DivergentColumn<IServer>[] = [
-    {
-      id: "select",
-      header: ({ table }) => (
-        <Checkbox
-          checked={table.getIsAllPageRowsSelected()}
-          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-          aria-label="Select all"
-          className="translate-y-[2px]"
-        />
-      ),
-      cell: ({ row }) => (
-        <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
-          aria-label="Select row"
-          className="translate-y-[2px]"
-        />
-      ),
-      enableSorting: false,
-      enableHiding: false,
-    },
     {
       accessorKey: "name",
       header: ({ column }) => (
@@ -108,13 +85,7 @@ export default function Servers() {
           </div>
         </div>
       </div>
-      <DataTable
-        columns={columns}
-        data={data}
-        loading={loading}
-        selectable={true}
-        onSelectedRowsChange={(rows) => setSelected(rows)}
-      />
+      <DataTable columns={columns} data={data} loading={loading} />
     </>
   )
 }

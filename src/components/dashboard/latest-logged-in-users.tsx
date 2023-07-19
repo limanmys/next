@@ -4,6 +4,7 @@ import { apiService } from "@/services"
 import { IUser } from "@/types/user"
 
 import { Avatar, AvatarFallback } from "../ui/avatar"
+import { Skeleton } from "../ui/skeleton"
 
 export default function LatestLoggedInUsers() {
   const [loading, setLoading] = useState<Boolean>(true)
@@ -39,7 +40,9 @@ export default function LatestLoggedInUsers() {
                 </div>
 
                 <div className="flex flex-col gap-[6px]">
-                  <h5 className="font-semibold">{item.name}</h5>
+                  <h5 className="font-semibold">
+                    {item.name} {item.status == 1 && "(Yönetici)"}
+                  </h5>
 
                   <div className="text-sm">
                     <span className="font-medium text-muted-foreground">
@@ -83,24 +86,20 @@ export default function LatestLoggedInUsers() {
                   </Avatar>
                 </div>
 
-                <div className="flex flex-col gap-[6px]">
-                  <h5 className="font-semibold">Yükleniyor...</h5>
+                <div className="flex flex-col gap-[6px] w-full">
+                  <h5 className="font-semibold">
+                    <Skeleton className="h-5" />
+                  </h5>
 
                   <div className="text-sm">
-                    <span className="font-medium text-muted-foreground">
-                      Son Giriş Tarihi:{" "}
-                    </span>{" "}
-                    <span className="text-muted-foreground/80">
-                      Yükleniyor...
+                    <span className="font-medium text-muted-foreground flex items-center gap-[6px]">
+                      Son Giriş Tarihi: <Skeleton className="h-4 w-[50%]" />
                     </span>
                   </div>
 
                   <div className="text-sm">
-                    <span className="font-medium text-muted-foreground">
-                      Giriş Yapılan Son IP:{" "}
-                    </span>{" "}
-                    <span className="text-muted-foreground/80">
-                      Yükleniyor...
+                    <span className="font-medium text-muted-foreground flex items-center gap-[6px]">
+                      Giriş Yapılan Son IP: <Skeleton className="h-4 w-[50%]" />
                     </span>
                   </div>
                 </div>

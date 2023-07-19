@@ -3,6 +3,7 @@ import dynamic from "next/dynamic"
 import DashboardCards from "@/components/dashboard/cards"
 import FavoriteServers from "@/components/dashboard/favorite-servers"
 import LatestLoggedInUsers from "@/components/dashboard/latest-logged-in-users"
+import MostUsedExtensions from "@/components/dashboard/most-used-extensions"
 
 const DateTimeView = dynamic(() => import("@/components/dashboard/date-time"), {
   ssr: false,
@@ -25,15 +26,15 @@ export default function IndexPage() {
 
       <DashboardCards />
 
-      <div className="flex w-full flex-[2] divide-x">
-        <div className="w-1/3">
+      <div className="flex w-full flex-[2] divide-x flex-col xl:flex-row">
+        <div className="w-full lg:w-1/3">
+          <MostUsedExtensions />
+        </div>
+        <div className="w-full lg:w-1/3">
           <LatestLoggedInUsers />
         </div>
-        <div className="w-1/3">
+        <div className="w-full lg:w-1/3">
           <FavoriteServers />
-        </div>
-        <div className="w-1/3 p-8">
-          <h3 className="text-lg font-semibold">Sık Kullanılan Eklentiler</h3>
         </div>
       </div>
     </div>
