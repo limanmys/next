@@ -24,7 +24,6 @@ export default function SubscriptionPage() {
       .then((response) => {
         if (response.status === 200) {
           setData(response.data)
-          setSubscriptionStatus(true)
         }
       })
       .catch((err) => {
@@ -43,6 +42,10 @@ export default function SubscriptionPage() {
       .get("/settings/subscriptions/liman")
       .then((response) => {
         setLimanSubscription(response.data)
+        setSubscriptionStatus(true)
+      })
+      .catch((err) => {
+        // Do nothing
       })
   }, [])
 
@@ -52,8 +55,7 @@ export default function SubscriptionPage() {
       (1000 * 60 * 60 * 24)
     const usedDays =
       (Date.now() - limanSubscription.coverage_start) / (1000 * 60 * 60 * 24)
-
-    return (usedDays / totalDays) * 100
+    return (totalDays / (totalDays - usedDays)) * 100
   }
 
   return (
@@ -73,7 +75,7 @@ export default function SubscriptionPage() {
       </h3>
 
       <Card className="mb-10">
-        {!subscriptionStatus && (
+        {subscriptionStatus && (
           <div className="flex items-center gap-16">
             <div className="flex flex-col gap-5 p-6">
               <div className="item">
@@ -118,7 +120,7 @@ export default function SubscriptionPage() {
                 style={
                   {
                     "--value": getPercentageOfUsedDays(),
-                    color: getPercentageOfUsedDays() < 6 ? "red" : "black",
+                    color: getPercentageOfUsedDays() < 6 && "red",
                     "--size": "180px",
                   } as any
                 }
@@ -158,7 +160,7 @@ export default function SubscriptionPage() {
             </div>
           </div>
         )}
-        {subscriptionStatus && (
+        {!subscriptionStatus && (
           <div className="my-16 flex flex-col items-center justify-center gap-4">
             <CheckCircle className="h-12 w-12 text-green-500" />
             <h5 className="mb-1 font-semibold tracking-tight">

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
 import { apiService } from "@/services"
-import { MoreHorizontal, PlusCircle, Send, XCircle } from "lucide-react"
+import { MoreHorizontal, PlusCircle, Send, Server, XCircle } from "lucide-react"
 
 import { IExtension } from "@/types/extension"
+import { IServer } from "@/types/server"
 import { ISubscription } from "@/types/subscription"
 
 import { Button, buttonVariants } from "../ui/button"
@@ -24,6 +25,15 @@ import {
 } from "../ui/dropdown-menu"
 import { Icons } from "../ui/icons"
 import { Label } from "../ui/label"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select"
 import { Skeleton } from "../ui/skeleton"
 import { Textarea } from "../ui/textarea"
 import { useToast } from "../ui/use-toast"
@@ -36,13 +46,16 @@ export default function SubscriptionCard({
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<ISubscription>({} as ISubscription)
   const [licenseDialog, setLicenseDialog] = useState<boolean>(false)
+  const [servers, setServers] = useState<IServer[]>()
+  const [selectedServer, setSelectedServer] = useState<string>("")
+  const [serverLoading, setServerLoading] = useState<boolean>(true)
 
-  const fetchData = () => {
+  const fetchData = (server_id: string) => {
     setLoading(true)
 
     apiService
       .getInstance()
-      .get(`/settings/subscriptions/${extension.id}`)
+      .get(`/settings/subscriptions/${extension.id}/${server_id}`)
       .then((response) => {
         setData(response.data)
       })
@@ -73,40 +86,96 @@ export default function SubscriptionCard({
   }
 
   useEffect(() => {
-    if (extension && extension.id) fetchData()
-  }, [extension])
+    setServerLoading(true)
+
+    apiService
+      .getInstance()
+      .get<IServer[]>(`/settings/subscriptions/${extension.id}/servers`)
+      .then((res) => {
+        setServers(res.data)
+        res.data[0] && setSelectedServer(res.data[0].id)
+        if (!res.data[0]) {
+          setData({ valid: false } as ISubscription)
+          setLoading(false)
+        }
+        setTimeout(() => {
+          setServerLoading(false)
+        }, 500)
+      })
+      .catch(() => {
+        setServers([])
+      })
+  }, [])
+
+  useEffect(() => {
+    if (extension && extension.id && selectedServer) {
+      fetchData(selectedServer)
+    }
+  }, [extension, selectedServer])
 
   return (
     <Card>
       <CardHeader className="-mt-3 flex flex-row items-center justify-between">
         <CardTitle>{extension.display_name}</CardTitle>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <div
-              className={buttonVariants({
-                size: "sm",
-                variant: "ghost",
-              })}
-            >
-              <MoreHorizontal className="h-5 w-5" />
-              <span className="sr-only">Abonelik Seçenekleri</span>
-            </div>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56">
-            <DropdownMenuLabel>Abonelik Seçenekleri</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() =>
-                window.open("mailto:aciklab@havelsan.com.tr", "_blank")
-              }
-            >
-              <Send className="mr-2 h-4 w-4" /> Aboneliği Yenile
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setLicenseDialog(true)}>
-              <PlusCircle className="mr-2 h-4 w-4" /> Lisans Ekle
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="flex gap-5">
+          {!serverLoading && (
+            <>
+              {servers && servers.length > 0 && (
+                <Select
+                  onValueChange={(value) => setSelectedServer(value)}
+                  defaultValue={selectedServer}
+                >
+                  <SelectTrigger className="w-[200px] h-18">
+                    <Server className="w-4 h-4 text-muted-foreground" />
+                    <SelectValue placeholder="Sunucu seçiniz..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Seçilebilir sunucular</SelectLabel>
+                      {servers &&
+                        servers.length > 0 &&
+                        servers.map((server) => (
+                          <SelectItem key={server.id} value={server.id}>
+                            {server.name}
+                          </SelectItem>
+                        ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              )}
+            </>
+          )}
+          {serverLoading && (
+            <Skeleton className="w-[200px] h-18 rounded-full" />
+          )}
+          <DropdownMenu>
+            <DropdownMenuTrigger disabled={!selectedServer} asChild>
+              <div
+                className={buttonVariants({
+                  size: "sm",
+                  variant: "ghost",
+                })}
+              >
+                <MoreHorizontal className="h-5 w-5" />
+                <span className="sr-only">Abonelik Seçenekleri</span>
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56">
+              <DropdownMenuLabel>Abonelik Seçenekleri</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={() =>
+                  window.open("mailto:aciklab@havelsan.com.tr", "_blank")
+                }
+              >
+                <Send className="mr-2 h-4 w-4" /> Aboneliği Yenile
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setLicenseDialog(true)}>
+                <PlusCircle className="mr-2 h-4 w-4" /> Lisans Ekle
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </CardHeader>
       <CardContent>
         <>
@@ -155,14 +224,13 @@ export default function SubscriptionCard({
                     </h5>
                     <div className="flex items-center gap-5">
                       <div
-                        className="radial-progress"
+                        className="radial-progress "
                         style={
                           {
                             "--value": calculateRemaining(data.timestamp),
                             color:
-                              calculateRemaining(data.timestamp) < 6
-                                ? "red"
-                                : "black",
+                              calculateRemaining(data.timestamp) < 6 &&
+                              "red!important",
                           } as any
                         }
                       >
@@ -213,6 +281,7 @@ export default function SubscriptionCard({
         open={licenseDialog}
         setOpen={setLicenseDialog}
         extension={extension}
+        server={selectedServer}
       />
     </Card>
   )
@@ -222,10 +291,12 @@ function License({
   open,
   setOpen,
   extension,
+  server,
 }: {
   open: boolean
   setOpen: (open: boolean) => void
   extension: IExtension
+  server: string
 }) {
   const { toast } = useToast()
   const [loading, setLoading] = useState(false)
@@ -236,7 +307,10 @@ function License({
 
     apiService
       .getInstance()
-      .post(`/settings/extensions/${extension.id}/license`, { license: data })
+      .post(`/settings/extensions/${extension.id}/license`, {
+        license: data,
+        server_id: server,
+      })
       .then(() => {
         toast({
           title: "Başarılı",
