@@ -97,6 +97,9 @@ dependencies:
   js-cookie:
     specifier: ^3.0.5
     version: 3.0.5
+  laravel-echo:
+    specifier: ^1.15.2
+    version: 1.15.2
   lucide-react:
     specifier: ^0.242.0
     version: 0.242.0(react@18.2.0)
@@ -115,6 +118,9 @@ dependencies:
   nprogress:
     specifier: ^0.2.0
     version: 0.2.0
+  pusher-js:
+    specifier: ^8.3.0
+    version: 8.3.0
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -3405,6 +3411,11 @@ packages:
       language-subtag-registry: 0.3.22
     dev: true
 
+  /laravel-echo@1.15.2:
+    resolution: {integrity: sha512-FpbYv4hnAE/ck1ow2aLlx3wBuDRMNWBcSCpFmh9EkUxxBYZoaRt8rB4pKPnfAESvcaguohEesQ1naNM81zCWPQ==}
+    engines: {node: '>=10'}
+    dev: false
+
   /levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
@@ -3908,6 +3919,12 @@ packages:
     resolution: {integrity: sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==}
     engines: {node: '>=6'}
     dev: true
+
+  /pusher-js@8.3.0:
+    resolution: {integrity: sha512-6GohP06WlVeomAQQe9qWh1IDzd3+InluWt+ZUOcecVK1SEQkg6a8uYVsvxSJm7cbccfmHhE0jDkmhKIhue8vmA==}
+    dependencies:
+      tweetnacl: 1.0.3
+    dev: false
 
   /queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
@@ -4522,6 +4539,10 @@ packages:
     resolution: {integrity: sha512-McnNiV1l8RYeY8tBgEpuodCC1mLUdbSN+CYBL7kJsJNInOP8UjDDEwdk6Mw60vdLLrr5NHKZhMAOSrR2NZuQ+w==}
     dependencies:
       safe-buffer: 5.2.1
+    dev: false
+
+  /tweetnacl@1.0.3:
+    resolution: {integrity: sha512-6rt+RN7aOi1nGMyC4Xa5DdYiukl2UWCbcJft7YhxReBGQD7OAM8Pbxw6YMo4r2diNEA8FEmu32YOn9rhaiE5yw==}
     dev: false
 
   /type-check@0.4.0:

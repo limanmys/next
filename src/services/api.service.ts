@@ -36,6 +36,9 @@ export class ApiService {
     this.instance.defaults.headers.authorization = getAuthorizationHeader()
       .Authorization as string
 
+    this.instance.defaults.headers["x-language"] =
+      localStorage.getItem("LANGUAGE") || "tr"
+
     return this.instance
   }
 }

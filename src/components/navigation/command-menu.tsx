@@ -27,7 +27,7 @@ const search = (
   apiService
     .getInstance()
     .post("/search", {
-      query: "",
+      query: query,
     })
     .then((res) => {
       setLoading(false)

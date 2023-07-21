@@ -4,21 +4,15 @@ import {
   SIDEBARCTX_STATES,
   useSidebarContext,
 } from "@/providers/sidebar-provider"
-import { Bell, Eye, Menu, Settings } from "lucide-react"
+import { Menu, Settings } from "lucide-react"
 
 import { Button, buttonVariants } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu"
 import { Icons } from "../ui/icons"
 import CommandMenu from "./command-menu"
 import LanguageSelector from "./language-selector"
+import Notifications from "./notifications"
 import ProfileDropdown from "./profile-dropdown"
 
 export function SiteHeader() {
@@ -57,42 +51,7 @@ export function SiteHeader() {
 
             <LanguageSelector />
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <div
-                  className={buttonVariants({
-                    size: "sm",
-                    variant: "ghost",
-                  })}
-                >
-                  <Bell className="h-5 w-5" />
-                  <span className="sr-only">Notifications</span>
-                </div>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="mr-5 w-[300px]">
-                <DropdownMenuLabel>Bildirimler</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <div className="p-2">
-                  <h3 className="font-semibold">Yeni sunucu eklendi.</h3>
-                  <span className="text-sm text-slate-500">6 gün önce</span>
-                </div>
-                <DropdownMenuSeparator />
-                <div className="p-2">
-                  <h3 className="font-semibold">Yeni sunucu eklendi.</h3>
-                  <span className="text-sm text-slate-500">6 gün önce</span>
-                </div>
-                <DropdownMenuSeparator />
-                <div className="p-2">
-                  <h3 className="font-semibold">Yeni sunucu eklendi.</h3>
-                  <span className="text-sm text-slate-500">6 gün önce</span>
-                </div>
-                <DropdownMenuSeparator />
-                <DropdownMenuLabel>
-                  <Eye className="float-left mr-2 mt-[2px] h-4 w-4" /> Tümünü
-                  Okundu İşaretle
-                </DropdownMenuLabel>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <Notifications />
 
             <Link href="/settings">
               <div
