@@ -17,6 +17,7 @@ import { useTranslation } from "react-i18next"
 
 import { IUser } from "@/types/user"
 import { cn } from "@/lib/utils"
+import { NotificationCreator } from "@/components/ui/notificationcreator"
 import { Toaster } from "@/components/ui/toaster"
 
 import Layout from "../components/_layout/app_layout"
@@ -62,6 +63,7 @@ const RootLayout: AppType = ({ Component, pageProps }: AppPropsWithLayout) => {
           )}
         </div>
         <Toaster />
+        <NotificationCreator />
       </ThemeProvider>
     </>
   )

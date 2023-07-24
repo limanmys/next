@@ -1,17 +1,14 @@
 // Inspired by react-hot-toast library
 import * as React from "react"
 
-import type { ToastActionElement, ToastProps } from "@/components/ui/toast"
+import { INotification } from "@/types/notification"
+
+import { NotificationProps } from "./notification"
 
 const TOAST_LIMIT = 3
 const TOAST_REMOVE_DELAY = 50000
 
-type ToasterToast = ToastProps & {
-  id: string
-  title?: React.ReactNode
-  description?: React.ReactNode
-  action?: ToastActionElement
-}
+type ToasterToast = NotificationProps & INotification
 
 const actionTypes = {
   ADD_TOAST: "ADD_TOAST",
@@ -137,7 +134,7 @@ function dispatch(action: Action) {
 
 type Toast = Omit<ToasterToast, "id">
 
-function toast({ ...props }: Toast) {
+function sendNotification({ ...props }: Toast) {
   const id = genId()
 
   const update = (props: ToasterToast) =>
@@ -166,7 +163,7 @@ function toast({ ...props }: Toast) {
   }
 }
 
-function useToast() {
+function useNotification() {
   const [state, setState] = React.useState<State>(memoryState)
 
   React.useEffect(() => {
@@ -181,9 +178,9 @@ function useToast() {
 
   return {
     ...state,
-    toast,
+    sendNotification,
     dismiss: (toastId?: string) => dispatch({ type: "DISMISS_TOAST", toastId }),
   }
 }
 
-export { toast, useToast }
+export { sendNotification, useNotification }

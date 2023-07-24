@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import {
@@ -12,8 +13,9 @@ import { ThemeToggle } from "@/components/theme-toggle"
 import { Icons } from "../ui/icons"
 import CommandMenu from "./command-menu"
 import LanguageSelector from "./language-selector"
-import Notifications from "./notifications"
 import ProfileDropdown from "./profile-dropdown"
+
+const Notifications = dynamic(import("./notifications"), { ssr: false })
 
 export function SiteHeader() {
   const router = useRouter()
