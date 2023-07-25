@@ -9,3 +9,12 @@ export interface INotification {
   read_at: any
   seen_at: any
 }
+
+export interface IExternalNotification {
+  id: string
+  name: string
+  ip: string
+  last_used: string
+  created_at: string
+  updated_at: string
+}

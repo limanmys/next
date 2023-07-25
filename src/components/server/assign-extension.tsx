@@ -69,7 +69,7 @@ export default function AssignExtension({
       enableHiding: false,
     },
     {
-      accessorKey: "name",
+      accessorKey: "display_name",
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Eklenti Adı" />
       ),

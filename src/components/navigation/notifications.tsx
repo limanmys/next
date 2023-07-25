@@ -73,7 +73,7 @@ export default function Notifications() {
       broadcaster: "pusher",
       key: "liman-key",
       cluster: "eu",
-      wsHost: "10.151.43.11",
+      wsHost: "liman.io",
       wssPort: 443,
       disableStats: true,
       encrypted: true,
@@ -95,8 +95,6 @@ export default function Notifications() {
     echo
       .private(`App.User.${JSON.parse(currentUser).user.id}`)
       .notification((notification: INotification) => {
-        markAsSeen([notification])
-
         setNotifications([notification, ...tempNotifications])
 
         tempNotifications = JSON.parse(
@@ -106,6 +104,8 @@ export default function Notifications() {
         beep()
 
         sendNotification(notification)
+
+        markAsSeen([notification])
       })
 
     return () => {
@@ -215,27 +215,23 @@ export default function Notifications() {
             </div>
           </>
         )}
-        {notifications.length > 0 && (
-          <>
-            <DropdownMenuSeparator />
-            <div className="p-3 flex items-center justify-between">
-              <Link href="/settings/notifications">
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  className="text-muted-foreground -ml-1"
-                >
-                  Bildirimleri Yönet
-                </Button>
-              </Link>
-              <Link href="/notifications">
-                <Button size="sm" className="rounded-[8px]">
-                  Tüm Bildirimleri Görüntüle
-                </Button>
-              </Link>
-            </div>
-          </>
-        )}
+        <DropdownMenuSeparator />
+        <div className="p-3 flex items-center justify-between">
+          <Link href="/settings/notifications">
+            <Button
+              size="sm"
+              variant="ghost"
+              className="text-muted-foreground -ml-1"
+            >
+              Bildirimleri Yönet
+            </Button>
+          </Link>
+          <Link href="/notifications">
+            <Button size="sm" className="rounded-[8px]">
+              Tüm Bildirimleri Görüntüle
+            </Button>
+          </Link>
+        </div>
       </DropdownMenuContent>
     </DropdownMenu>
   )

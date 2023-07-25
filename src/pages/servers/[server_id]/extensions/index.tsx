@@ -61,7 +61,7 @@ export default function ServerExtensionPage() {
       enableHiding: false,
     },
     {
-      accessorKey: "name",
+      accessorKey: "display_name",
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Eklenti Adı" />
       ),
@@ -72,7 +72,7 @@ export default function ServerExtensionPage() {
             sidebarCtx[SIDEBARCTX_STATES.selected]
           }/extensions/${row.original.id}`}
         >
-          {row.original.name}
+          {row.original.display_name}
           <Link2 className="ml-2 inline-block h-4 w-4" />
         </Link>
       ),

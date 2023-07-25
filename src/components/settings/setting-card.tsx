@@ -19,7 +19,7 @@ export default function SettingCard(props: ISettingCardProps) {
             <div className="icon self-start rounded-md bg-secondary p-3 dark:bg-secondary/10">
               <props.icon className="h-6 w-6 text-secondary-foreground/70 dark:text-white/70" />
             </div>
-            <div className="content">
+            <div className="content w-full">
               <h3 className="text-lg font-semibold tracking-tight">
                 {props.title}
               </h3>

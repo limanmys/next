@@ -20,7 +20,7 @@ export default function ExtensionSettingsPage() {
 
   const columns: DivergentColumn<IExtension, string>[] = [
     {
-      accessorKey: "name",
+      accessorKey: "display_name",
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Eklenti Adı" />
       ),

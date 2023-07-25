@@ -29,7 +29,7 @@ export default function RoleCard(props: IRoleCardProps) {
         <div className="icon self-start rounded-md bg-secondary p-3 dark:bg-secondary/10">
           <props.icon className="h-5 w-5 text-secondary-foreground/70 dark:text-white/70" />
         </div>
-        <div className="content">
+        <div className="content w-full">
           <div className="mb-1 flex justify-between">
             <h3 className="font-semibold tracking-tight">{props.title}</h3>
             <Badge variant="secondary">{props.count}</Badge>
