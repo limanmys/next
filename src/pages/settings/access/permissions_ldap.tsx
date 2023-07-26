@@ -41,7 +41,7 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
         ...data,
       })
       .then((res) => {
-        if (res.data.status) {
+        if (res.status === 200) {
           toast({
             title: "Başarılı",
             description:
@@ -200,7 +200,7 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
 
       <div className="px-8">
         {!loggedIn && (
-          <div className="container w-full items-center justify-center flex h-[60vh]">
+          <div className="container flex h-[60vh] w-full items-center justify-center">
             <Card className="w-[55%] ">
               <Form {...form}>
                 <form
@@ -208,7 +208,7 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
                   className="space-y-5 p-5"
                 >
                   <div>
-                    <h3 className="text-lg leading-6 font-medium">
+                    <h3 className="text-lg font-medium leading-6">
                       Giriş yapın
                     </h3>
                     <p className="mt-1 text-sm text-muted-foreground">
@@ -218,7 +218,7 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
                     </p>
                   </div>
 
-                  <h3 className="text-muted-foreground font-medium"></h3>
+                  <h3 className="font-medium text-muted-foreground"></h3>
                   <FormField
                     control={form.control}
                     name="username"
@@ -232,7 +232,7 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
                             className="pl-10"
                             {...field}
                           />
-                          <User2 className="absolute left-3 top-3 h-4 w-4 text-muted-foreground pointer-events-none" />
+                          <User2 className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                         </div>
                         <FormMessage />
                       </div>
@@ -252,7 +252,7 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
                             {...field}
                             type="password"
                           />
-                          <KeyRound className="absolute left-3 top-3 h-4 w-4 text-muted-foreground pointer-events-none" />
+                          <KeyRound className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                         </div>
                         <FormMessage />
                       </div>
@@ -271,7 +271,7 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
           </div>
         )}
         {loggedIn && (
-          <div className="flex flex-col w-full">
+          <div className="flex w-full flex-col">
             <Tabs defaultValue="users" className="w-full">
               <TabsList className="w-full">
                 <TabsTrigger value="users" className="w-full">

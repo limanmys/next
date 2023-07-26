@@ -21,7 +21,7 @@ export function SidebarProvider({
   const [collapsed, setCollapsed] = React.useState<boolean>(true)
 
   React.useEffect(() => {
-    if (router.asPath.includes("/settings")) {
+    if (router.asPath.startsWith("/settings")) {
       setSettingsActive(true)
       setSelected("")
     } else {

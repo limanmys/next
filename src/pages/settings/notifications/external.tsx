@@ -199,7 +199,7 @@ function CreateExternalNotification() {
             <AlertTitle>Dış Uygulama Tokeniniz</AlertTitle>
             <AlertDescription>
               Bu tokeni güvenmediğiniz kimse ile paylaşmayınız. Dış
-              uygulamalarınız bu tokeni kullanarak Liman'a bildirim
+              uygulamalarınız bu tokeni kullanarak Liman&apos;a bildirim
               gönderebilir.
               <br />
               <br />
@@ -246,7 +246,7 @@ function CreateExternalNotification() {
                   <div className="grid grid-cols-4">
                     <div></div>
                     <div className="col-span-3">
-                      <small className="text-muted-foreground text-sm">
+                      <small className="text-sm text-muted-foreground">
                         Bu bölüme izin vermek istediğiniz bir subnet adresini ya
                         da IP adresini yazarak erişimi kısıtlayabilirsiniz.
                         <br />
