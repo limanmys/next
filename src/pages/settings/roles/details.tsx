@@ -9,6 +9,7 @@ import { useDownloadFile } from "@/hooks/useDownloadFile"
 import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
+import PageHeader from "@/components/ui/page-header"
 import { useToast } from "@/components/ui/use-toast"
 
 export default function RoleDetailsPage() {
@@ -112,19 +113,11 @@ export default function RoleDetailsPage() {
 
   return (
     <>
-      <div className="h-full flex-1 flex-col space-y-8 p-8 md:flex">
-        <div className="flex items-center justify-between space-y-2">
-          <div>
-            <h2 className="text-2xl font-bold tracking-tight">
-              Detaylı Rol Listesi
-            </h2>
-            <p className="text-muted-foreground">
-              Veritabanı üzerinde oluşturulmuş tüm rol ve izinleri detaylı
-              filtrelemeler yaparak görüntüleyebilirsiniz.
-            </p>
-          </div>
-        </div>
-      </div>
+      <PageHeader
+        title="Detaylı Rol Listesi"
+        description="Veritabanı üzerinde oluşturulmuş tüm rol ve izinleri detaylı filtrelemeler yaparak görüntüleyebilirsiniz."
+      />
+
       <DataTable
         columns={columns}
         data={data}

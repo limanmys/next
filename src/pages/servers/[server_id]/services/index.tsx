@@ -36,6 +36,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import PageHeader from "@/components/ui/page-header"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useToast } from "@/components/ui/use-toast"
 
@@ -156,17 +157,11 @@ export default function ServerExtensionPage() {
 
   return (
     <>
-      <div className="h-full flex-1 flex-col space-y-8 p-8 md:flex">
-        <div className="flex items-center justify-between space-y-2">
-          <div>
-            <h2 className="text-2xl font-bold tracking-tight">Servisler</h2>
-            <p className="text-muted-foreground">
-              Sunucunuzda üzerinde çalışan servisleri başlatma, durdurma gibi
-              işlemleri yapabilirsiniz.
-            </p>
-          </div>
-        </div>
-      </div>
+      <PageHeader
+        title="Servisler"
+        description="Sunucunuzda üzerinde çalışan servisleri başlatma, durdurma gibi işlemleri yapabilirsiniz."
+      />
+
       <DataTable
         tableRef={tableRef}
         columns={columns}

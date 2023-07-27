@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import PageHeader from "@/components/ui/page-header"
 import { useToast } from "@/components/ui/use-toast"
 import { Form, FormField, FormMessage } from "@/components/form/form"
 import { RoleRowActions } from "@/components/settings/role-actions"
@@ -103,17 +104,11 @@ export default function RoleSettingsPage() {
 
   return (
     <>
-      <div className="h-full flex-1 flex-col space-y-8 p-8 md:flex">
-        <div className="flex items-center justify-between space-y-2">
-          <div>
-            <h2 className="text-2xl font-bold tracking-tight">Roller</h2>
-            <p className="text-muted-foreground">
-              Kullanıcıların erişim yetki seviyelerini detaylı şekilde gruplar
-              ve kişiler bazında düzenleyebilirsiniz.
-            </p>
-          </div>
-        </div>
-      </div>
+      <PageHeader
+        title="Roller"
+        description="Kullanıcıların erişim yetki seviyelerini detaylı şekilde gruplar ve kişiler bazında düzenleyebilirsiniz."
+      />
+
       <DataTable
         columns={columns}
         data={data}

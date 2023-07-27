@@ -35,6 +35,7 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import PageHeader from "@/components/ui/page-header"
 import { useToast } from "@/components/ui/use-toast"
 import { Form, FormField, FormMessage } from "@/components/form/form"
 
@@ -158,19 +159,11 @@ export default function Sudoers() {
 
   return (
     <>
-      <div className="h-full flex-1 flex-col space-y-8 p-8 md:flex">
-        <div className="flex items-center justify-between space-y-2">
-          <div>
-            <h2 className="text-2xl font-bold tracking-tight">
-              Yetkili Kullanıcılar
-            </h2>
-            <p className="text-muted-foreground">
-              Sunucunuzda mevcut bulunan yetkili kullanıcı izinlerini
-              görüntüleyebilir ve ekleme, çıkartma işlemleri yapabilirsiniz.
-            </p>
-          </div>
-        </div>
-      </div>
+      <PageHeader
+        title="Yetkili Kullanıcılar"
+        description="Sunucunuzda mevcut bulunan yetkili kullanıcı izinlerini görüntüleyebilir ve ekleme, çıkartma işlemleri yapabilirsiniz."
+      />
+
       <DataTable
         columns={columns}
         data={data}

@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { apiService } from "@/services"
-import { Link2, Server } from "lucide-react"
+import { Link2 } from "lucide-react"
 
 import { IServer } from "@/types/server"
 import { DivergentColumn } from "@/types/table"
-import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
+import PageHeader from "@/components/ui/page-header"
 
 export default function Servers() {
   const [loading, setLoading] = useState<boolean>(true)
@@ -66,25 +66,11 @@ export default function Servers() {
 
   return (
     <>
-      <div className="h-full flex-1 flex-col space-y-8 p-8 md:flex">
-        <div className="flex items-center justify-between space-y-2">
-          <div>
-            <h2 className="text-2xl font-bold tracking-tight">Sunucular</h2>
-            <p className="text-muted-foreground">
-              Liman Merkezi Yönetim Sistemine bağlı sunucularınızı bu sayfa
-              üzerinden yönetebilirsiniz.
-            </p>
-          </div>
-          <div className="flex gap-2">
-            <Link href="/servers/create">
-              <Button className="rounded-full">
-                <Server className="mr-2 h-4 w-4" />
-                Sunucu Ekle
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </div>
+      <PageHeader
+        title="Sunucular"
+        description="Liman Merkezi Yönetim Sistemine bağlı sunucularınızı bu sayfa üzerinden yönetebilirsiniz."
+      />
+
       <DataTable columns={columns} data={data} loading={loading} />
     </>
   )

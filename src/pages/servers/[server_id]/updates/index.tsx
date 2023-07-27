@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import Head from "next/head"
 import { useRouter } from "next/router"
 import { apiService } from "@/services"
 
@@ -63,6 +64,10 @@ export default function ServerExtensionPage() {
 
   return (
     <>
+      <Head>
+        <title>Güncellemeler | Liman</title>
+      </Head>
+
       <div className="h-full flex-1 flex-col space-y-8 p-8 md:flex">
         <div className="flex items-center justify-between space-y-2">
           <div>

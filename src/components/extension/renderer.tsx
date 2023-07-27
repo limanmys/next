@@ -40,6 +40,8 @@ export default function ExtensionRenderer() {
           `/servers/${router.query.server_id}/extensions/${router.query.extension_id}`
         )
         .then((res) => {
+          deleteAllIframes(container.current)
+
           const iframeElement = document.createElement("iframe")
           container.current!.appendChild(iframeElement)
           iframeElement.style.width = "0px"

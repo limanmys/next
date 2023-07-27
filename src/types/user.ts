@@ -20,3 +20,12 @@ export interface IAccessToken {
   expires_in: number
   user: IUser
 }
+
+export interface IAuthLog {
+  id: string
+  user_id: string
+  ip_address: string
+  user_agent: string
+  created_at: string
+  updated_at: string
+}

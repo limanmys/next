@@ -26,6 +26,7 @@ import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
+import PageHeader from "@/components/ui/page-header"
 import { useToast } from "@/components/ui/use-toast"
 import AssignExtension from "@/components/server/assign-extension"
 
@@ -159,25 +160,19 @@ export default function ServerExtensionPage() {
 
   return (
     <>
-      <div className="h-full flex-1 flex-col space-y-8 p-8 md:flex">
-        <div className="flex items-center justify-between space-y-2">
-          <div>
-            <h2 className="text-2xl font-bold tracking-tight">Eklentiler</h2>
-            <p className="text-muted-foreground">
-              Sunucunuzda kullanılan eklentileri bu sayfa aracılığı ile
-              yönetebilirsiniz.
-            </p>
-          </div>
-          <div className="flex gap-2">
-            <Link href="/settings/extensions">
-              <Button className="rounded-full">
-                <UploadCloud className="mr-2 h-4 w-4" />
-                Eklenti Yükle
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </div>
+      <PageHeader
+        title="Eklentiler"
+        description="Sunucunuzda kullanılan eklentileri bu sayfa aracılığı ile yönetebilirsiniz."
+        rightSide={
+          <Link href="/settings/extensions">
+            <Button className="rounded-full">
+              <UploadCloud className="mr-2 h-4 w-4" />
+              Eklenti Yükle
+            </Button>
+          </Link>
+        }
+      />
+
       <DataTable
         tableRef={tableRef}
         columns={columns}

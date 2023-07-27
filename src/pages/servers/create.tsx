@@ -12,6 +12,7 @@ import { ChevronLeft, ChevronRight, PlusCircle, Server } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Icons } from "@/components/ui/icons"
+import PageHeader from "@/components/ui/page-header"
 import Steps from "@/components/ui/steps"
 import { useToast } from "@/components/ui/use-toast"
 import ConnectionInformation from "@/components/server/create-server/connection-information"
@@ -213,25 +214,18 @@ export default function ServerCreatePage() {
 
   return (
     <>
-      <div className="h-full flex-1 flex-col space-y-8 p-8 md:flex">
-        <div className="flex items-center justify-between space-y-2">
-          <div>
-            <h2 className="text-2xl font-bold tracking-tight">Sunucu Ekle</h2>
-            <p className="text-muted-foreground">
-              Liman Merkezi Yönetim Sistemine halihazırda kurmuş olduğunuz
-              Windows ve Linux sunucularınızı ekleyebilirsiniz.
-            </p>
-          </div>
-          <div className="flex gap-2">
-            <Link href="/servers">
-              <Button className="rounded-full">
-                <Server className="mr-2 h-4 w-4" />
-                Sunucular
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </div>
+      <PageHeader
+        title="Sunucu Ekle"
+        description="Liman Merkezi Yönetim Sistemine halihazırda kurmuş olduğunuz Windows ve Linux sunucularınızı ekleyebilirsiniz."
+        rightSide={
+          <Link href="/servers">
+            <Button className="rounded-full">
+              <Server className="mr-2 h-4 w-4" />
+              Sunucular
+            </Button>
+          </Link>
+        }
+      />
       <div className="mt-8 grid grid-cols-4 gap-8 px-8">
         <Steps steps={steps} current={step} />
         <div className="col-span-3 space-y-8">

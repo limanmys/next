@@ -41,8 +41,13 @@ const Layout = ({ Component, pageProps }: any) => {
               <div className="relative z-10">
                 {getLayout(<Component {...pageProps} key={router.route} />)}
               </div>
-
-              <GradientSvg className="-mt-18 pointer-events-none absolute top-0 z-0 h-auto w-full rotate-180 opacity-25 dark:opacity-60" />
+              <div className="flex absolute top-0 rotate-90 -ml-48 h-[2px] w-96 mt-40 pointer-events-none z-10">
+                <div className="w-full flex-none blur-sm gradient"></div>
+                <div className="-ml-[100%] w-full flex-none blur-[1px] gradient"></div>
+                <div className="-ml-[100%] w-full flex-none blur-sm gradient"></div>
+                <div className="-ml-[100%] w-full flex-none blur-[1px] gradient"></div>
+              </div>
+              <GradientSvg className="-mt-18 pointer-events-none absolute top-0 z-0 h-auto w-full rotate-180 opacity-30 dark:opacity-60" />
             </main>
           </ScrollArea>
         </div>

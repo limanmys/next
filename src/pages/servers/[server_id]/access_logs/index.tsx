@@ -24,6 +24,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import PageHeader from "@/components/ui/page-header"
 import { Skeleton } from "@/components/ui/skeleton"
 
 export default function ServerExtensionPage() {
@@ -96,19 +97,10 @@ export default function ServerExtensionPage() {
 
   return (
     <>
-      <div className="h-full flex-1 flex-col space-y-8 p-8 md:flex">
-        <div className="flex items-center justify-between space-y-2">
-          <div>
-            <h2 className="text-2xl font-bold tracking-tight">
-              Erişim Kayıtları
-            </h2>
-            <p className="text-muted-foreground">
-              Liman üzerinden sunucunuza yapılan son 500 isteği bu sayfa
-              üzerinden görüntüleyebilir, detaylı şekilde inceleyebilirsiniz.
-            </p>
-          </div>
-        </div>
-      </div>
+      <PageHeader
+        title="Erişim Kayıtları"
+        description="Liman üzerinden sunucunuza yapılan son 500 isteği bu sayfa üzerinden görüntüleyebilir, detaylı şekilde inceleyebilirsiniz."
+      />
       <DataTable
         columns={columns}
         data={data}

@@ -9,6 +9,7 @@ import { useEmitter } from "@/hooks/useEmitter"
 import { Badge } from "@/components/ui/badge"
 import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
+import PageHeader from "@/components/ui/page-header"
 import { ExtensionRowActions } from "@/components/settings/extension-actions"
 import UploadExtension from "@/components/settings/upload-extension"
 
@@ -125,17 +126,11 @@ export default function ExtensionSettingsPage() {
 
   return (
     <>
-      <div className="h-full flex-1 flex-col space-y-8 p-8 md:flex">
-        <div className="flex items-center justify-between space-y-2">
-          <div>
-            <h2 className="text-2xl font-bold tracking-tight">Eklentiler</h2>
-            <p className="text-muted-foreground">
-              Bu sayfa aracılığıyla sisteminizdeki eklentileri yönetebilir,
-              sürümlerini güncelleyebilir ve yeni eklentiler yükleyebilirsiniz.
-            </p>
-          </div>
-        </div>
-      </div>
+      <PageHeader
+        title="Eklentiler"
+        description="Bu sayfa aracılığıyla sisteminizdeki eklentileri yönetebilir, sürümlerini güncelleyebilir ve yeni eklentiler yükleyebilirsiniz."
+      />
+
       <DataTable
         columns={columns}
         data={data}
