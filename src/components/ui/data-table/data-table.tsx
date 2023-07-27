@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import {
-  ColumnDef,
   ColumnFiltersState,
   SortingState,
   VisibilityState,
@@ -28,7 +27,6 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-import { Icons } from "../icons"
 import { Skeleton } from "../skeleton"
 import { DataTableToolbar } from "./data-table-toolbar"
 

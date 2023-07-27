@@ -56,9 +56,10 @@ export function DataTablePagination<TData>({
             </SelectContent>
           </Select>
         </div>
-        <div className="flex w-[100px] items-center justify-center text-sm font-medium">
+        <div className="flex w-[220px] items-center justify-center text-sm font-medium">
           Sayfa {table.getState().pagination.pageIndex + 1} /{" "}
-          {table.getPageCount() || 1}
+          {table.getPageCount() || 1}, Toplam{" "}
+          {table.getFilteredRowModel().rows.length} kayıt
         </div>
         <div className="flex items-center space-x-2">
           <Button
