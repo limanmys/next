@@ -34,13 +34,23 @@ export default function ExtensionRenderer() {
       container.current &&
       container.current.querySelectorAll("iframe").length === 0
     ) {
+      let slug = ""
+      if (router.query.slug) {
+        // check if router.query.slug is array
+        if (Array.isArray(router.query.slug)) {
+          slug = router.query.slug.join("/")
+        } else {
+          slug = router.query.slug
+        }
+      }
+
       apiService
         .getInstance()
         .post(
-          `/servers/${router.query.server_id}/extensions/${router.query.extension_id}`
+          `/servers/${router.query.server_id}/extensions/${router.query.extension_id}/${slug}`
         )
         .then((res) => {
-          deleteAllIframes(container.current)
+          deleteAllIframes(container.current as HTMLDivElement)
 
           const iframeElement = document.createElement("iframe")
           container.current!.appendChild(iframeElement)
