@@ -16,7 +16,15 @@ export class AuthService {
     })
   }
 
-  login = (email: string, password: string) => {
+  login = (email: string, password: string, newPassword?: string) => {
+    if (newPassword) {
+      return this.instance.post("/change_password", {
+        email,
+        password,
+        new_password: newPassword,
+      })
+    }
+
     return this.instance.post("/login", {
       email,
       password,

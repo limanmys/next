@@ -20,6 +20,9 @@ const changeLanguage = (i18n: any, language: any) => {
   apiService
     .getInstance()
     .post("/locale", { locale: language })
+    .then(() => {
+      window.location.reload()
+    })
     .catch(() => {
       // Do nothing
     })

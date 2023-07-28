@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
+import md5 from "blueimp-md5"
 import Cookies from "js-cookie"
 import { LogOut, User } from "lucide-react"
 
@@ -7,7 +8,7 @@ import { IUser } from "@/types/user"
 import { useLogout } from "@/hooks/auth/useLogout"
 import { Button, buttonVariants } from "@/components/ui/button"
 
-import { Avatar, AvatarFallback } from "../ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -39,6 +40,10 @@ export default function ProfileDropdown() {
           })}
         >
           <Avatar className="h-6 w-6">
+            <AvatarImage
+              src={`https://gravatar.com/avatar/${md5(user.email)}?d=404`}
+              alt={user.name}
+            />
             <AvatarFallback>
               {Object.keys(user).length > 0 && user.name[0]}
             </AvatarFallback>
@@ -57,6 +62,10 @@ export default function ProfileDropdown() {
             <div className="flex">
               <div className="avatar mr-2 p-2">
                 <Avatar className="h-12 w-12">
+                  <AvatarImage
+                    src={`https://gravatar.com/avatar/${md5(user.email)}?d=404`}
+                    alt={user.name}
+                  />
                   <AvatarFallback>{user && user.name[0]}</AvatarFallback>
                 </Avatar>
               </div>

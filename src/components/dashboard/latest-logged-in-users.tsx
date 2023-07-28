@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import { apiService } from "@/services"
+import { AvatarImage } from "@radix-ui/react-avatar"
+import md5 from "blueimp-md5"
 
 import { IUser } from "@/types/user"
 
@@ -35,6 +37,12 @@ export default function LatestLoggedInUsers() {
               <div className="flex px-8 py-4">
                 <div className="avatar mr-5">
                   <Avatar className="h-12 w-12">
+                    <AvatarImage
+                      src={`https://gravatar.com/avatar/${md5(
+                        item.email
+                      )}?d=404`}
+                      alt={item.name}
+                    />
                     <AvatarFallback>{item && item.name[0]}</AvatarFallback>
                   </Avatar>
                 </div>
@@ -86,19 +94,19 @@ export default function LatestLoggedInUsers() {
                   </Avatar>
                 </div>
 
-                <div className="flex flex-col gap-[6px] w-full">
+                <div className="flex w-full flex-col gap-[6px]">
                   <h5 className="font-semibold">
                     <Skeleton className="h-5" />
                   </h5>
 
                   <div className="text-sm">
-                    <span className="font-medium text-muted-foreground flex items-center gap-[6px]">
+                    <span className="flex items-center gap-[6px] font-medium text-muted-foreground">
                       Son Giriş Tarihi: <Skeleton className="h-4 w-[50%]" />
                     </span>
                   </div>
 
                   <div className="text-sm">
-                    <span className="font-medium text-muted-foreground flex items-center gap-[6px]">
+                    <span className="flex items-center gap-[6px] font-medium text-muted-foreground">
                       Giriş Yapılan Son IP: <Skeleton className="h-4 w-[50%]" />
                     </span>
                   </div>

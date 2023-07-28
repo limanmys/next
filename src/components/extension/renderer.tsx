@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { ArrowLeft } from "lucide-react"
+import { useTheme } from "next-themes"
 
 import { Button } from "../ui/button"
 import { Icons } from "../ui/icons"
@@ -12,6 +13,7 @@ export default function ExtensionRenderer() {
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<any>()
   const container = useRef<HTMLDivElement>(null)
+  const { theme } = useTheme()
 
   const deleteAllIframes = (node: HTMLDivElement) => {
     const iframes = node.querySelectorAll("iframe")
@@ -56,11 +58,29 @@ export default function ExtensionRenderer() {
           container.current!.appendChild(iframeElement)
           iframeElement.style.width = "0px"
           iframeElement.style.height = "0px"
+          iframeElement.setAttribute("allowtransparency", "true")
+          iframeElement.setAttribute("allowTransparency", "true")
+          iframeElement.style.backgroundColor = "transparent"
           const iframeDoc = iframeElement.contentDocument
           if (iframeDoc) {
             iframeDoc.open()
             iframeDoc.write(res.data.html)
             iframeDoc.close()
+
+            const colorSchemeMeta = document.createElement("meta")
+            colorSchemeMeta.setAttribute("name", "color-scheme")
+            colorSchemeMeta.setAttribute("content", theme ? theme : "light")
+
+            iframeDoc.head.appendChild(colorSchemeMeta)
+
+            const themeColor = document.createElement("meta")
+            themeColor.setAttribute("name", "theme-color")
+            themeColor.setAttribute(
+              "content",
+              theme ? (theme === "dark" ? "#030711" : "#ffffff") : "#ffffff"
+            )
+
+            iframeDoc.head.appendChild(themeColor)
           }
 
           iframeElement.onload = () => {
@@ -97,6 +117,35 @@ export default function ExtensionRenderer() {
     router.query.slug,
     container.current,
   ])
+
+  useEffect(() => {
+    if (container.current) {
+      const iframes = container.current.querySelectorAll("iframe")
+      iframes.forEach((iframe) => {
+        if (iframe.contentDocument) {
+          iframe.contentDocument
+            .querySelector("[name='color-scheme']")
+            ?.remove()
+          iframe.contentDocument.querySelector("[name='theme-color']")?.remove()
+
+          const colorSchemeMeta = document.createElement("meta")
+          colorSchemeMeta.setAttribute("name", "color-scheme")
+          colorSchemeMeta.setAttribute("content", theme ? theme : "light")
+
+          iframe.contentDocument.head.appendChild(colorSchemeMeta)
+
+          const themeColor = document.createElement("meta")
+          themeColor.setAttribute("name", "theme-color")
+          themeColor.setAttribute(
+            "content",
+            theme ? (theme === "dark" ? "#030711" : "#ffffff") : "#ffffff"
+          )
+
+          iframe.contentDocument.head.appendChild(themeColor)
+        }
+      })
+    }
+  }, [theme])
 
   return (
     <div

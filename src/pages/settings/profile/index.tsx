@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react"
 import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
+import md5 from "blueimp-md5"
 import { Save } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { IUser } from "@/types/user"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -104,11 +105,15 @@ export default function ProfilePage() {
           <>
             <Card className="relative">
               <Avatar
-                className="h-16 w-16 absolute -top-8"
+                className="absolute -top-8 h-16 w-16"
                 style={{
                   left: "calc(50% - 32px)",
                 }}
               >
+                <AvatarImage
+                  src={`https://gravatar.com/avatar/${md5(user.email)}?d=404`}
+                  alt={user.name}
+                />
                 <AvatarFallback>{user.name[0]}</AvatarFallback>
               </Avatar>
 
@@ -118,11 +123,11 @@ export default function ProfilePage() {
                 </CardTitle>
               </CardHeader>
             </Card>
-            <Card className="overflow-hidden mt-8">
+            <Card className="mt-8 overflow-hidden">
               <div className="grid grid-cols-4">
                 <div className="bg-foreground/5 p-5">
                   <h3 className="font-semibold">Profil Bilgileri</h3>
-                  <p className="text-sm text-muted-foreground mt-5">
+                  <p className="mt-5 text-sm text-muted-foreground">
                     Kullanıcı adınızı, e-posta adresinizi ve şifrenizi bu
                     kısımdan güncelleyebilirsiniz.
                   </p>
@@ -131,7 +136,7 @@ export default function ProfilePage() {
                   <Form {...form}>
                     <form
                       onSubmit={form.handleSubmit(handleSave)}
-                      className="space-y-5 mt-1"
+                      className="mt-1 space-y-5"
                     >
                       <FormField
                         control={form.control}
@@ -220,11 +225,11 @@ export default function ProfilePage() {
                 </div>
               </div>
             </Card>
-            <Card className="overflow-hidden mt-8">
+            <Card className="mt-8 overflow-hidden">
               <div className="grid grid-cols-4">
                 <div className="bg-foreground/5 p-5">
                   <h3 className="font-semibold">Giriş Kayıtları</h3>
-                  <p className="text-sm text-muted-foreground mt-5">
+                  <p className="mt-5 text-sm text-muted-foreground">
                     Hesabınıza yapılmış olan giriş kayıtlarını IP adresleri ile
                     birlikte bu kısımdan görüntüleyebilirsiniz.
                   </p>

@@ -29,7 +29,7 @@ export default function IndexPage() {
 
       <DashboardCards />
 
-      <div className="flex w-full flex-[2] divide-x flex-col xl:flex-row">
+      <div className="flex w-full flex-[2] flex-col divide-x xl:flex-row">
         <div className="w-full lg:w-1/3">
           <MostUsedExtensions />
         </div>

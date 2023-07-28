@@ -73,6 +73,9 @@ dependencies:
   axios:
     specifier: ^1.4.0
     version: 1.4.0
+  blueimp-md5:
+    specifier: ^2.19.0
+    version: 2.19.0
   class-variance-authority:
     specifier: ^0.6.1
     version: 0.6.1
@@ -153,6 +156,9 @@ devDependencies:
   '@ianvs/prettier-plugin-sort-imports':
     specifier: ^3.7.2
     version: 3.7.2(prettier@2.8.8)
+  '@types/blueimp-md5':
+    specifier: ^2.18.0
+    version: 2.18.0
   '@types/node':
     specifier: ^17.0.45
     version: 17.0.45
@@ -1851,6 +1857,10 @@ packages:
     engines: {node: '>=12'}
     dev: false
 
+  /@types/blueimp-md5@2.18.0:
+    resolution: {integrity: sha512-f4A+++lGZGJvVSgeyMkqA7BEf2BVQli6F+qEykKb49c5ieWQBkfpn6CP5c1IZr2Yi2Ofl6Fj+v0e1fN18Z8Cnw==}
+    dev: true
+
   /@types/json5@0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
     dev: true
@@ -2157,6 +2167,10 @@ packages:
       buffer: 5.7.1
       inherits: 2.0.4
       readable-stream: 3.6.2
+    dev: false
+
+  /blueimp-md5@2.19.0:
+    resolution: {integrity: sha512-DRQrD6gJyy8FbiE4s+bDoXS9hiW3Vbx5uCdwvcCf3zLHL+Iv7LtGHLpr+GZV8rHG8tK766FGYBwRbu8pELTt+w==}
     dev: false
 
   /brace-expansion@1.1.11:

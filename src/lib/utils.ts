@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { clsx, type ClassValue } from "clsx"
 import Cookies from "js-cookie"
 import { twMerge } from "tailwind-merge"
