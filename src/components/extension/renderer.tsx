@@ -107,6 +107,13 @@ export default function ExtensionRenderer() {
         .catch((err) => {
           deleteAllIframes(container.current as HTMLDivElement)
 
+          if (err.response.status === 406) {
+            router.push(
+              `/servers/${router.query.server_id}/extensions/${router.query.extension_id}/settings/`
+            )
+            return
+          }
+
           setError(err.response.data)
           setLoading(false)
         })

@@ -6,7 +6,7 @@ import {
   useSidebarContext,
 } from "@/providers/sidebar-provider"
 import { apiService } from "@/services"
-import { Link2, MinusCircle, UploadCloud } from "lucide-react"
+import { Link2, MinusCircle, Sliders, UploadCloud } from "lucide-react"
 
 import { IExtension } from "@/types/extension"
 import { DivergentColumn } from "@/types/table"
@@ -68,14 +68,23 @@ export default function ServerExtensionPage() {
       ),
       title: "Eklenti Adı",
       cell: ({ row }) => (
-        <Link
-          href={`/servers/${
-            sidebarCtx[SIDEBARCTX_STATES.selected]
-          }/extensions/${row.original.id}`}
-        >
-          {row.original.display_name}
-          <Link2 className="ml-2 inline-block h-4 w-4" />
-        </Link>
+        <>
+          <Link
+            href={`/servers/${
+              sidebarCtx[SIDEBARCTX_STATES.selected]
+            }/extensions/${row.original.id}`}
+          >
+            {row.original.display_name}
+            <Link2 className="ml-2 inline-block h-4 w-4" />
+          </Link>
+          <Link
+            href={`/servers/${
+              sidebarCtx[SIDEBARCTX_STATES.selected]
+            }/extensions/${row.original.id}/settings`}
+          >
+            <Sliders className="ml-2 inline-block h-4 w-4" />
+          </Link>
+        </>
       ),
     },
     {

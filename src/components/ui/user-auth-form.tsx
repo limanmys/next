@@ -97,7 +97,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             <Input
               id="email"
               placeholder="example@liman.dev"
-              type="email"
               autoCapitalize="none"
               autoComplete="email"
               autoCorrect="off"

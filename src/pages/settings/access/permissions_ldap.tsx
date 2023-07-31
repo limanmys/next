@@ -111,19 +111,18 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
         password: loginData.password,
         users: users.map((it) => it.id),
       })
-      .then((res) => {
-        if (res.data.status) {
-          toast({
-            title: "Başarılı",
-            description: "Kullanıcı listesi başarıyla güncellendi.",
-          })
-        } else {
-          toast({
-            title: "Hata",
-            description: "Kullanıcı listesi güncellenemedi.",
-            variant: "destructive",
-          })
-        }
+      .then(() => {
+        toast({
+          title: "Başarılı",
+          description: "Kullanıcı listesi başarıyla güncellendi.",
+        })
+      })
+      .catch(() => {
+        toast({
+          title: "Hata",
+          description: "Kullanıcı listesi güncellenemedi.",
+          variant: "destructive",
+        })
       })
   }
 

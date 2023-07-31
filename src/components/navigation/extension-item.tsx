@@ -81,8 +81,8 @@ export default function ExtensionItem({
               className="w-full justify-start"
               disabled={disabled}
             >
-              <div className="flex gap-2 items-center">
-                <div className="flex w-[18px] justify-center items-center">
+              <div className="flex items-center gap-2">
+                <div className="flex w-[18px] items-center justify-center">
                   {extension.icon ? (
                     <i className={`fa-solid fa-${extension.icon} fa-fw`}></i>
                   ) : (
@@ -109,8 +109,8 @@ export default function ExtensionItem({
               )}
               disabled={disabled}
             >
-              <div className="flex gap-2 items-center">
-                <div className="flex w-[18px] justify-center items-center">
+              <div className="flex items-center gap-2">
+                <div className="flex w-[18px] items-center justify-center">
                   {extension.icon ? (
                     <i className={`fa-solid fa-${extension.icon} fa-fw`}></i>
                   ) : (

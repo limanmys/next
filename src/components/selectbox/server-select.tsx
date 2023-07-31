@@ -64,7 +64,7 @@ export function SelectServer({
           className="w-full justify-between px-3 font-normal"
           disabled={loading}
         >
-          <div className="flex gap-2 items-center">
+          <div className="flex items-center gap-2">
             <Server className="h-4 w-4 shrink-0" />
             {value ? (
               servers.find((server) => server.id === value)?.name
@@ -79,11 +79,11 @@ export function SelectServer({
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           )}
           {loading && (
-            <Icons.spinner className="ml-2 h-4 w-4 shrink-0 opacity-50 animate-spin" />
+            <Icons.spinner className="ml-2 h-4 w-4 shrink-0 animate-spin opacity-50" />
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[550px] p-0">
+      <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
         <Command>
           <CommandInput placeholder="Sunucu ara..." />
           <CommandEmpty>Sunucu bulunamadı.</CommandEmpty>

@@ -21,3 +21,24 @@ export interface IExtension {
   updated: number
   licensed: boolean
 }
+
+export interface IExtensionSetting {
+  required: IExtensionVariable[]
+  advanced: IExtensionVariable[]
+  has_global_variables: boolean
+  values: {
+    [key: string]: string
+  }
+}
+
+type IExtensionVariableTypes = "text" | "password" | "server" | "extension"
+
+export interface IExtensionVariable {
+  variable: string
+  type: IExtensionVariableTypes
+  name: string
+  required: boolean
+  global: boolean
+  writable: boolean
+  value: string
+}

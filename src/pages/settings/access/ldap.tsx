@@ -96,7 +96,7 @@ const AccessLdapPage: NextPageWithLayout = () => {
                       placeholder="ldaps.fabrikam.com"
                       {...field}
                     />
-                    <Server className="absolute left-3 top-3 h-4 w-4 text-muted-foreground pointer-events-none" />
+                    <Server className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                     <small className="italic text-muted-foreground">
                       Aktif dizin, Samba veya kullandığınız LDAP sağlayıcının
                       bağlantı adresini giriniz. Bu bağlantı adresi Liman
@@ -121,7 +121,7 @@ const AccessLdapPage: NextPageWithLayout = () => {
                       placeholder="objectguid"
                       {...field}
                     />
-                    <Fingerprint className="absolute left-3 top-3 h-4 w-4 text-muted-foreground pointer-events-none" />
+                    <Fingerprint className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                     <small className="italic text-muted-foreground">
                       LDAP şemanızda aktif şekilde kullanımda olan objectguid
                       alanının adını yazınız. Bu alanın değeri standart olarak
@@ -148,7 +148,7 @@ const AccessLdapPage: NextPageWithLayout = () => {
                       placeholder="mail"
                       {...field}
                     />
-                    <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground pointer-events-none" />
+                    <Mail className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                     <small className="italic text-muted-foreground">
                       LDAP şemanızda aktif şekilde kullanımda olan mail alanının
                       adını yazınız. Bu alanın değeri standart olarak mail
@@ -166,7 +166,7 @@ const AccessLdapPage: NextPageWithLayout = () => {
               name="active"
               render={({ field }) => (
                 <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4 shadow-sm">
-                  <div className="space-y-0.5 space-x-3 flex">
+                  <div className="flex space-x-3 space-y-0.5">
                     <UserCheck2 className="h-6 w-6 text-muted-foreground" />
                     <div className="flex flex-col space-y-0.5">
                       <FormLabel>Entegrasyonu aktifleştir</FormLabel>
