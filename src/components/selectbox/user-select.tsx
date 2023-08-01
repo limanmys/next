@@ -84,7 +84,7 @@ export function SelectUser({
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
+      <PopoverContent className="w-[var(--radix-popover-trigger-width)] min-w-[300px] p-0">
         <Command>
           <CommandInput placeholder="Kullanıcı ara..." />
           <CommandEmpty>Kullanıcı bulunamadı.</CommandEmpty>

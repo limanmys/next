@@ -1,6 +1,5 @@
-import { ReactElement, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import Head from "next/head"
-import { NextPageWithLayout } from "@/pages/_app"
 import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FileWarning, PlusCircle } from "lucide-react"
@@ -27,11 +26,10 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import PageHeader from "@/components/ui/page-header"
 import { useToast } from "@/components/ui/use-toast"
-import NotificationLayout from "@/components/_layout/notifications_layout"
 import { Form, FormField, FormMessage } from "@/components/form/form"
 import { ExternalNotificationActions } from "@/components/settings/external-notification-actions"
 
-const ExternalNotificationPage: NextPageWithLayout = () => {
+export default function ExternalNotificationPage() {
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IExternalNotification[]>([])
 
@@ -269,9 +267,3 @@ function CreateExternalNotification() {
     </Dialog>
   )
 }
-
-ExternalNotificationPage.getLayout = function getLayout(page: ReactElement) {
-  return <NotificationLayout>{page}</NotificationLayout>
-}
-
-export default ExternalNotificationPage

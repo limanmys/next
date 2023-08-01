@@ -92,7 +92,7 @@ export function SelectServer({
 
             This issue persists on radix-ui right now so we are gonna wait.
           */}
-          <CommandGroup>
+          <CommandGroup className="max-h-[500px] overflow-y-scroll">
             {servers.map((server) => (
               <CommandItem
                 key={server.id}

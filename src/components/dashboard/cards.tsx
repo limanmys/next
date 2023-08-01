@@ -1,9 +1,34 @@
+import { useEffect, useState } from "react"
 import Link from "next/link"
+import { apiService } from "@/services"
 import { ArrowRight, Cog, Server, ToyBrick, Users } from "lucide-react"
 
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
+import { Skeleton } from "../ui/skeleton"
+
+interface IDashboardInformation {
+  server_count: number
+  user_count: number
+  extension_count: number
+  version: string
+  version_code: number
+}
+
 export default function DashboardCards() {
+  const [loading, setLoading] = useState<boolean>(true)
+  const [data, setData] = useState<IDashboardInformation>()
+
+  useEffect(() => {
+    apiService
+      .getInstance()
+      .get<IDashboardInformation>("/dashboard/information")
+      .then((response) => {
+        setData(response.data)
+        setLoading(false)
+      })
+  }, [])
+
   return (
     <div className="grid divide-x border-y md:grid-cols-2 lg:grid-cols-4">
       <div className="p-2">
@@ -14,7 +39,13 @@ export default function DashboardCards() {
           <Server className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-semibold">28</div>
+          <div className="text-2xl font-semibold">
+            {loading ? (
+              <Skeleton className="mb-2 h-6 w-16" />
+            ) : (
+              data?.server_count
+            )}
+          </div>
           <Link
             href="/servers"
             className="flex items-center gap-1 text-xs text-muted-foreground transition-all hover:gap-3"
@@ -31,7 +62,13 @@ export default function DashboardCards() {
           <ToyBrick className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-semibold">24</div>
+          <div className="text-2xl font-semibold">
+            {loading ? (
+              <Skeleton className="mb-2 h-6 w-16" />
+            ) : (
+              data?.extension_count
+            )}
+          </div>
           <Link
             className="flex items-center gap-1 text-xs text-muted-foreground transition-all hover:gap-3"
             href="/settings/extensions"
@@ -48,7 +85,13 @@ export default function DashboardCards() {
           <Users className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-semibold">19</div>
+          <div className="text-2xl font-semibold">
+            {loading ? (
+              <Skeleton className="mb-2 h-6 w-16" />
+            ) : (
+              data?.user_count
+            )}
+          </div>
           <Link
             href="/settings/users"
             className="flex items-center gap-1 text-xs text-muted-foreground transition-all hover:gap-3"
@@ -66,9 +109,11 @@ export default function DashboardCards() {
           <Cog className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-semibold">2.0</div>
+          <div className="text-2xl font-semibold">
+            {loading ? <Skeleton className="mb-2 h-6 w-16" /> : data?.version}
+          </div>
           <p className="flex items-center gap-1 text-xs text-muted-foreground transition-all hover:gap-3">
-            Build: 1000
+            Build: {data?.version_code}
           </p>
         </CardContent>
       </div>

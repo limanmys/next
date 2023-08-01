@@ -67,11 +67,11 @@ export const Settings = {
       href: "/settings/mail",
     },
     {
-      title: "Bildirimler",
+      title: "Dış Bildirimler",
       description:
-        "Sisteme gönderilen bildirimlerin kaynaklarını ve gönderim zamanlamalarını bu sayfa üzerinden düzenleyebilirsiniz.",
+        "Eklenti sunucularının ve dış uygulamaların Liman'a bildirim göndermesini IP kısıtı koyarak sağlayabilirsiniz.",
       icon: Bell,
-      href: "/settings/notifications",
+      href: "/settings/external_notifications",
     },
     {
       title: "Abonelikler",

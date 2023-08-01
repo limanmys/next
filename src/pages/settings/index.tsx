@@ -10,7 +10,7 @@ export default function SettingsPage() {
         description="Bu sayfa aracılığıyla kişisel ayarlarınızı ve Liman MYS'nin sistem ayarlarını yapabilirsiniz."
       />
 
-      <div className="h-full flex-1 flex-col p-8 md:flex pt-2">
+      <div className="h-full flex-1 flex-col p-8 pt-2 md:flex">
         <h2 className="mb-3 text-xl font-bold tracking-tight">
           Kullanıcı Ayarları
         </h2>
