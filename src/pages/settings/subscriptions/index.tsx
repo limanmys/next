@@ -170,9 +170,11 @@ export default function SubscriptionPage() {
         )}
       </Card>
 
-      <h3 className="mb-5 text-xl font-bold tracking-tight">
-        Eklenti Abonelikleri
-      </h3>
+      {data.length > 0 && (
+        <h3 className="mb-5 text-xl font-bold tracking-tight">
+          Eklenti Abonelikleri
+        </h3>
+      )}
       <div className="grid grid-cols-2 gap-8">
         {loading && <Skeleton />}
         {!loading &&

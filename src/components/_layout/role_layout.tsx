@@ -32,7 +32,7 @@ export default function RoleLayout({
     },
     {
       id: "liman",
-      icon: Icons.logo,
+      icon: Icons.dugumluLogo,
       title: "Liman İzinleri",
       description: "Liman üzerinde gerçekleştirilen fonksiyonlara yetki verin.",
       href: `/settings/roles/${router.query.role_id}/liman`,

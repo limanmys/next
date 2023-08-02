@@ -61,6 +61,13 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
           })
         }
       })
+      .catch(() => {
+        toast({
+          title: "Hata",
+          description: "Giriş başarısız, lütfen bilgilerinizi kontrol edin.",
+          variant: "destructive",
+        })
+      })
   }
 
   const [userListLoading, setUserListLoading] = useState(true)
