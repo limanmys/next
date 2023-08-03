@@ -1,4 +1,4 @@
-name: Device Manager Extension CI/CD
+name: Liman UI Build Pipeline
 on: [push]
 jobs:
   build:
@@ -19,6 +19,16 @@ jobs:
           key: npm-${{ hashFiles('package-lock.json') }}
           restore-keys: npm-
 
+      - name: Cache next build
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.npm
+            ${{ github.workspace }}/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.[jt]s', '**/*.[jt]sx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+
       - name: Install dependencies
         run: sudo apt install jq -y
 
@@ -38,7 +48,8 @@ jobs:
 
       - name: Create zip
         run: |
-          zip -r /tmp/ui-${{ env.UI_BRANCH }}-${{ github.run_number }}.zip ./.next/standalone
+          cd .next/standalone
+          zip -r /tmp/ui-${{ env.UI_BRANCH }}-${{ github.run_number }}.zip .
 
       - name: Release 🚀
         id: create_release
