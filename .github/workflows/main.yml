@@ -1,0 +1,52 @@
+name: Device Manager Extension CI/CD
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install checkout
+        uses: actions/checkout@v2
+
+      - name: Install node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: npm-
+
+      - name: Install dependencies
+        run: sudo apt install jq -y
+
+      - name: Build Next application
+        run: |
+          npm ci --ignore-scripts
+          npm run build
+
+          [ "$GITHUB_REF" == "refs/heads/master" ] && PRERELEASE=false || PRERELEASE=true
+          echo "PRERELEASE=$(echo $PRERELEASE)" >> $GITHUB_ENV
+          echo "UI_BRANCH=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+
+      - name: Move Next standalone files
+        run: |
+          cp -r public/ .next/standalone/
+          cp -r .next/static .next/standalone/.next/
+
+      - name: Create zip
+        run: |
+          zip -r /tmp/ui-${{ env.UI_BRANCH }}-${{ github.run_number }}.zip ./.next/standalone
+
+      - name: Release 🚀
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+        with:
+          files: /tmp/ui-${{ env.UI_BRANCH }}-${{ github.run_number }}.zip
+          name: "Release ${{ env.UI_BRANCH }} ${{ github.run_number }}"
+          tag_name: "release.${{ env.UI_BRANCH }}.${{ github.run_number }}"
+          prerelease: ${{ env.PRERELEASE }}
