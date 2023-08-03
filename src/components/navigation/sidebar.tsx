@@ -116,8 +116,8 @@ export function Sidebar({ className }: { className?: string }) {
                               <ArrowUp className="h-8 w-8 mx-auto animate-bounce block" />
 
                               <span className="text-sm font-medium p-3 block">
-                                Liman'ı aktif şekilde kullanmaya başlamak için
-                                yukarıdan sunucu ekleyin.
+                                Liman&apos;ı aktif şekilde kullanmaya başlamak
+                                için yukarıdan sunucu ekleyin.
                               </span>
                             </>
                           )}
