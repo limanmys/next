@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { apiService } from "@/services"
 import { AvatarImage } from "@radix-ui/react-avatar"
 import md5 from "blueimp-md5"
+import { FolderX } from "lucide-react"
 
 import { IUser } from "@/types/user"
 
@@ -116,6 +117,20 @@ export default function LatestLoggedInUsers() {
           </>
         )}
       </div>
+
+      {!loading && data.length === 0 && (
+        <div className="flex h-[50%] w-full flex-col items-center justify-center gap-3">
+          <FolderX className="h-8 w-8 text-muted-foreground" />
+          <div className="flex flex-col items-center justify-center gap-1">
+            <h5 className="font-semibold text-muted-foreground">
+              Kullanıcı yok
+            </h5>
+            <span className="text-sm font-medium text-muted-foreground">
+              Yeni kullanıcılar oluşturdukça bu alan dolacaktır.
+            </span>
+          </div>
+        </div>
+      )}
     </>
   )
 }

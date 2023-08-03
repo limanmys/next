@@ -73,7 +73,7 @@ export default function Notifications() {
       broadcaster: "pusher",
       key: "liman-key",
       cluster: "eu",
-      wsHost: window.location.origin,
+      wsHost: window.location.host,
       wssPort: 443,
       disableStats: true,
       encrypted: true,

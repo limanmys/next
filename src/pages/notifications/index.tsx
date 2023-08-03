@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { apiService } from "@/services"
+import { BellOff } from "lucide-react"
 
 import { INotification } from "@/types/notification"
 import PageHeader from "@/components/ui/page-header"
@@ -32,6 +33,20 @@ export default function NotificationsPage() {
             />
           ))}
         </ol>
+
+        {notifications.length === 0 && (
+          <div className="flex h-[50vh] w-full flex-col items-center justify-center gap-3">
+            <BellOff className="h-10 w-10 text-muted-foreground" />
+            <div className="flex flex-col items-center justify-center gap-1">
+              <h5 className="font-semibold text-muted-foreground">
+                Bildirim yok
+              </h5>
+              <span className="text-sm font-medium text-muted-foreground">
+                Sistemde yeni bildirim bulunamadı.
+              </span>
+            </div>
+          </div>
+        )}
       </div>
     </>
   )

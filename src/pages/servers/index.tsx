@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { apiService } from "@/services"
-import { Link2 } from "lucide-react"
+import { Link2, Server } from "lucide-react"
 
 import { IServer } from "@/types/server"
 import { DivergentColumn } from "@/types/table"
+import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
 import PageHeader from "@/components/ui/page-header"
@@ -69,6 +70,14 @@ export default function Servers() {
       <PageHeader
         title="Sunucular"
         description="Liman Merkezi Yönetim Sistemine bağlı sunucularınızı bu sayfa üzerinden yönetebilirsiniz."
+        rightSide={
+          <Link href="/servers/create">
+            <Button className="rounded-full">
+              <Server className="mr-2 h-4 w-4" />
+              Sunucu Oluştur
+            </Button>
+          </Link>
+        }
       />
 
       <DataTable columns={columns} data={data} loading={loading} />

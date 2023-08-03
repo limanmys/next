@@ -7,7 +7,7 @@ import {
   useSidebarContext,
 } from "@/providers/sidebar-provider"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
-import { ChevronLeft, ChevronRight, Server, Star } from "lucide-react"
+import { ArrowUp, ChevronLeft, ChevronRight, Server, Star } from "lucide-react"
 
 import { IServer } from "@/types/server"
 import { cn } from "@/lib/utils"
@@ -89,16 +89,38 @@ export function Sidebar({ className }: { className?: string }) {
                               </Button>
                             )
                           )}
-                          <Link href="/servers">
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              className="mt-1 w-full justify-start"
-                            >
-                              <Server className="mr-2 h-4 w-4" />
-                              Tüm sunucuları gör
-                            </Button>
-                          </Link>
+                          {sidebarCtx[SIDEBARCTX_STATES.servers].length > 0 ? (
+                            <Link href="/servers">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="mt-1 w-full justify-start"
+                              >
+                                <Server className="mr-2 h-4 w-4" />
+                                Tüm sunucuları gör
+                              </Button>
+                            </Link>
+                          ) : (
+                            <>
+                              <Link href="/servers/create">
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="mt-1 w-full justify-start mb-4"
+                                >
+                                  <Server className="mr-2 h-4 w-4" />
+                                  Yeni sunucu ekle
+                                </Button>
+                              </Link>
+
+                              <ArrowUp className="h-8 w-8 mx-auto animate-bounce block" />
+
+                              <span className="text-sm font-medium p-3 block">
+                                Liman'ı aktif şekilde kullanmaya başlamak için
+                                yukarıdan sunucu ekleyin.
+                              </span>
+                            </>
+                          )}
                         </>
                       )}
                     </div>

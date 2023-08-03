@@ -58,7 +58,7 @@ export default function UploadExtension() {
           if (res.status === 200) {
             toast({
               title: "Başarılı",
-              description: res.data,
+              description: res.data.message,
             })
             emitter.emit("REFETCH_EXTENSIONS")
             setOpen(false)
@@ -69,7 +69,7 @@ export default function UploadExtension() {
             } else {
               toast({
                 title: "Hata",
-                description: res.data,
+                description: JSON.stringify(res.data),
                 variant: "destructive",
               })
               reject(res.status)
@@ -79,7 +79,7 @@ export default function UploadExtension() {
         .catch((error) => {
           toast({
             title: "Hata",
-            description: error.response.data,
+            description: JSON.stringify(error.response.data),
             variant: "destructive",
           })
           reject(500)

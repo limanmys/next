@@ -4,6 +4,7 @@ import {
   useSidebarContext,
 } from "@/providers/sidebar-provider"
 import { apiService } from "@/services"
+import { FolderX } from "lucide-react"
 
 import { IServer } from "@/types/server"
 
@@ -52,6 +53,18 @@ export default function FavoriteServers() {
             <Skeleton key={i} className="w-full h-[146px]" />
           ))}
       </div>
+
+      {!loading && data.length === 0 && (
+        <div className="flex h-[50%] w-full flex-col items-center justify-center gap-3">
+          <FolderX className="h-8 w-8 text-muted-foreground" />
+          <div className="flex flex-col items-center justify-center gap-1">
+            <h5 className="font-semibold text-muted-foreground">Sunucu yok</h5>
+            <span className="text-sm font-medium text-muted-foreground">
+              Henüz sunucu eklememişsiniz. Ekledikçe bu alan dolacaktır.
+            </span>
+          </div>
+        </div>
+      )}
     </>
   )
 }

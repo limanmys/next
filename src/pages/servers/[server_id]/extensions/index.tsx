@@ -134,7 +134,8 @@ export default function ServerExtensionPage() {
 
     apiService
       .getInstance()
-      .post(`extensions/assign?server_id=${router.query.server_id}`, {
+      .post(`extensions/assign`, {
+        server_id: router.query.server_id,
         extensions: values,
       })
       .then(() => {
@@ -152,7 +153,8 @@ export default function ServerExtensionPage() {
 
     apiService
       .getInstance()
-      .post(`extensions/unassign?server_id=${router.query.server_id}`, {
+      .post(`extensions/unassign`, {
+        server_id: router.query.server_id,
         extensions: values,
       })
       .then(() => {
