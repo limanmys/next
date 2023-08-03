@@ -73,7 +73,7 @@ export default function Notifications() {
       broadcaster: "pusher",
       key: "liman-key",
       cluster: "eu",
-      wsHost: "liman.io",
+      wsHost: window.location.origin,
       wssPort: 443,
       disableStats: true,
       encrypted: true,
@@ -137,43 +137,43 @@ export default function Notifications() {
         >
           <Bell className="h-5 w-5" />
           <span className="sr-only">Notifications</span>
-          <Badge className="px-[4px] py-[2px] rounded-full text-[11px] leading-[11px] absolute top-0 right-0">
+          <Badge className="absolute right-0 top-0 rounded-full px-[4px] py-[2px] text-[11px] leading-[11px]">
             {getNotSeenNotificationCount()}
           </Badge>
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-5 w-[500px]">
         <div className="flex items-center justify-between p-4">
-          <h3 className="tracking-tight font-semibold text-lg">
+          <h3 className="text-lg font-semibold tracking-tight">
             Bildirimleriniz
           </h3>
           <Button
             variant="ghost"
             size="sm"
-            className="text-sm text-blue-500 -mr-2"
+            className="-mr-2 text-sm text-blue-500"
             disabled={notifications.length === 0}
             onClick={() => handleMarkAsRead()}
           >
-            <CheckCheck className="h-5 w-5 mr-2" /> Tümünü Okundu Olarak
+            <CheckCheck className="mr-2 h-5 w-5" /> Tümünü Okundu Olarak
             İşaretle
           </Button>
         </div>
-        <div className="p-2 flex flex-col gap-3">
+        <div className="flex flex-col gap-3 p-2">
           {notifications.map((notification) => (
             <Link
               href={`/notifications#notification-${notification.notification_id}`}
               key={notification.notification_id}
             >
-              <div className="p-2 hover:bg-accent/50 hover:text-accent-foreground transition-all rounded gap-1 flex flex-col relative">
-                <h3 className="font-semibold text-[15px] tracking-tight">
+              <div className="relative flex flex-col gap-1 rounded p-2 transition-all hover:bg-accent/50 hover:text-accent-foreground">
+                <h3 className="text-[15px] font-semibold tracking-tight">
                   {notification.title}
                 </h3>
 
-                <p className="text-sm text-slate-700 dark:text-slate-300 font-medium">
+                <p className="text-sm font-medium text-slate-700 dark:text-slate-300">
                   {notification.content}
                 </p>
 
-                <div className="absolute top-1 right-2">
+                <div className="absolute right-2 top-1">
                   <StatusBadge status={notification.level as Status} />
                 </div>
 
@@ -202,26 +202,26 @@ export default function Notifications() {
 
         {notifications.length === 0 && (
           <>
-            <div className="p-2 py-8 items-center justify-center flex flex-col">
-              <BellOff className="h-8 w-8 text-slate-800 dark:text-slate-300 mb-5" />
+            <div className="flex flex-col items-center justify-center p-2 py-8">
+              <BellOff className="mb-5 h-8 w-8 text-slate-800 dark:text-slate-300" />
 
-              <h3 className="font-semibold text-md tracking-tight mb-1">
+              <h3 className="text-md mb-1 font-semibold tracking-tight">
                 Bildirim Yok
               </h3>
 
-              <p className="text-sm text-slate-700 dark:text-slate-300 mb-[3px]">
+              <p className="mb-[3px] text-sm text-slate-700 dark:text-slate-300">
                 Bildirimleriniz burada görünecektir.
               </p>
             </div>
           </>
         )}
         <DropdownMenuSeparator />
-        <div className="p-3 flex items-center justify-between">
+        <div className="flex items-center justify-between p-3">
           <Link href="/settings/notifications">
             <Button
               size="sm"
               variant="ghost"
-              className="text-muted-foreground -ml-1"
+              className="-ml-1 text-muted-foreground"
             >
               Bildirimleri Yönet
             </Button>
