@@ -48,7 +48,7 @@ jobs:
 
       - name: Build Next application
         run: |
-          pnpm install --shamefully-hoist
+          pnpm install
           pnpm build
 
           [ "$GITHUB_REF" == "refs/heads/master" ] && PRERELEASE=false || PRERELEASE=true
@@ -63,6 +63,7 @@ jobs:
       - name: Create zip
         run: |
           cd .next/standalone
+          rm -rf node_modules/.pnpm
           zip -r /tmp/ui-${{ env.UI_BRANCH }}-${{ github.run_number }}.zip .
 
       - name: Release 🚀
