@@ -5,3 +5,14 @@ export interface ICertificate {
   created_at: string
   updated_at: string
 }
+
+export interface ICertificateDetails {
+  ip_address: string
+  port: number
+  valid_to: string
+  valid_from: string
+  issuer_cn: string
+  issuer_dc: string
+  authority_key_identifier: string
+  subject_key_identifier: string
+}

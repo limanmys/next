@@ -34,13 +34,13 @@ const AdvancedDnsSettingsPage: NextPageWithLayout = () => {
       .then(() => {
         toast({
           title: "Başarılı",
-          description: "Keycloak ayarları başarıyla kaydedildi.",
+          description: "DNS ayarları başarıyla kaydedildi.",
         })
       })
       .catch(() => {
         toast({
           title: "Hata",
-          description: "Keycloak ayarları kaydedilirken bir hata oluştu.",
+          description: "DNS ayarları kaydedilirken bir hata oluştu.",
           variant: "destructive",
         })
       })

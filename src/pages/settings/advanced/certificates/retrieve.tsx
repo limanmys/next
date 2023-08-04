@@ -1,28 +1,33 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useRouter } from "next/router"
 import { apiService } from "@/services"
+import { DownloadCloudIcon, Save } from "lucide-react"
 
 import { ICertificateDetails } from "@/types/certificate"
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import PageHeader from "@/components/ui/page-header"
 import { useToast } from "@/components/ui/use-toast"
 
 export default function CertificateInformation() {
-  const router = useRouter()
   const { toast } = useToast()
+  const router = useRouter()
 
-  const [loading, setLoading] = useState<boolean>(true)
+  const [loading, setLoading] = useState<boolean>(false)
   const [data, setData] = useState<ICertificateDetails>()
+  const [ipAddress, setIpAddress] = useState<string>("")
+  const [port, setPort] = useState<string>("")
 
-  useEffect(() => {
-    if (!router.query.id) return
+  const fetchDetails = async () => {
+    setLoading(true)
 
     apiService
       .getInstance()
-      .get<ICertificateDetails>(
-        `/settings/advanced/certificates/${router.query.id}/information`
-      )
+      .post<ICertificateDetails>(`/settings/advanced/certificates/retrieve`, {
+        hostname: ipAddress,
+        port: port,
+      })
       .then((res) => {
         setData(res.data)
       })
@@ -36,13 +41,43 @@ export default function CertificateInformation() {
       .finally(() => {
         setLoading(false)
       })
-  }, [router.query.id])
+  }
+
+  const createCertificate = async () => {
+    setLoading(true)
+
+    apiService
+      .getInstance()
+      .post<ICertificateDetails>(`/settings/advanced/certificates`, {
+        hostname: ipAddress,
+        port: port,
+      })
+      .then((res) => {
+        toast({
+          title: "Başarılı",
+          description: "Sertifika başarıyla oluşturuldu.",
+        })
+        setTimeout(() => {
+          router.push("/settings/advanced/certificates")
+        }, 1000)
+      })
+      .catch(() => {
+        toast({
+          title: "Hata",
+          description: "Sertifika oluşturulurken bir hata oluştu.",
+          variant: "destructive",
+        })
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }
 
   return (
     <>
       <PageHeader
-        title="Sertifika Detayları"
-        description="Seçtiğiniz sertifikaya ait detaylı bilgileri görüntüleyebilirsiniz."
+        title="Sertifika Ekle"
+        description="Hostname ve port bilgisini sağladığınız sunucunun sertifikası Liman sistemine aktarılacaktır."
       />
 
       <div className="p-8 pt-0">
@@ -52,11 +87,18 @@ export default function CertificateInformation() {
               İstemci Detayları
             </h2>
             <Label>IP Adresi</Label>
-            <Input value={data?.ip_address} disabled />
+            <Input
+              value={ipAddress}
+              onChange={(e) => setIpAddress(e.target.value)}
+            />
+            <Button onClick={fetchDetails} className="mb-10" disabled={loading}>
+              <DownloadCloudIcon className="h-4 w-4 mr-2" /> Sertifika
+              Detaylarını Getir
+            </Button>
           </div>
           <div className="space-y-2 pt-[40px]">
             <Label>Port</Label>
-            <Input value={data?.port} disabled />
+            <Input value={port} onChange={(e) => setPort(e.target.value)} />
           </div>
 
           <div className="space-y-2">
@@ -88,6 +130,14 @@ export default function CertificateInformation() {
           <div className="space-y-2">
             <Label>İstemci Parmak İzi</Label>
             <Input value={data?.subject_key_identifier} disabled />
+
+            <Button
+              onClick={createCertificate}
+              className="mb-10"
+              disabled={loading || !data || Object.keys(data).length == 0}
+            >
+              <Save className="h-4 w-4 mr-2" /> Kaydet
+            </Button>
           </div>
 
           <div className="space-y-2">

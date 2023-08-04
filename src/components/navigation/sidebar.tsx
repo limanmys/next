@@ -32,7 +32,7 @@ export function Sidebar({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "fixed z-30 w-full shrink-0 overflow-y-auto bg-background md:sticky md:block",
+        "fixed z-30 w-full shrink-0 overflow-y-auto bg-background md:sticky md:block print:hidden",
         sidebarCtx[SIDEBARCTX_STATES.collapsed] && "hidden border-r"
       )}
     >

@@ -1,10 +1,13 @@
 import { ReactElement, useEffect, useState } from "react"
+import { useRouter } from "next/router"
 import { NextPageWithLayout } from "@/pages/_app"
 import { apiService } from "@/services"
+import { PlusCircle } from "lucide-react"
 
 import { ICertificate } from "@/types/certificate"
 import { DivergentColumn } from "@/types/table"
 import { useEmitter } from "@/hooks/useEmitter"
+import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
 import PageHeader from "@/components/ui/page-header"
@@ -12,6 +15,8 @@ import AdvancedLayout from "@/components/_layout/advanced_layout"
 import { CertificateActions } from "@/components/settings/certificate-actions"
 
 const AdvancedCertificateSettingsPage: NextPageWithLayout = () => {
+  const router = useRouter()
+
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<ICertificate[]>([])
 
@@ -95,7 +100,19 @@ const AdvancedCertificateSettingsPage: NextPageWithLayout = () => {
         data={data}
         loading={loading}
         selectable={false}
-      ></DataTable>
+      >
+        <Button
+          variant="outline"
+          size="sm"
+          className="ml-auto h-8 lg:flex"
+          onClick={() =>
+            router.push("/settings/advanced/certificates/retrieve")
+          }
+        >
+          <PlusCircle className="mr-2 h-4 w-4" />
+          Ekle
+        </Button>
+      </DataTable>
     </>
   )
 }
