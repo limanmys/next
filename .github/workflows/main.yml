@@ -48,7 +48,7 @@ jobs:
 
       - name: Build Next application
         run: |
-          pnpm install
+          pnpm install --shamefully-hoist
           pnpm build
 
           [ "$GITHUB_REF" == "refs/heads/master" ] && PRERELEASE=false || PRERELEASE=true
