@@ -10,6 +10,7 @@ import Loading from "../ui/loading"
 
 export default function ExtensionRenderer() {
   const router = useRouter()
+  const [keyval, setKeyval] = useState<number>(0)
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<any>()
   const container = useRef<HTMLDivElement>(null)
@@ -95,6 +96,22 @@ export default function ExtensionRenderer() {
             }
           }
 
+          if (iframeElement.contentWindow) {
+            iframeElement.contentWindow.addEventListener(
+              "beforeunload",
+              (e) => {
+                debugger
+                e.preventDefault()
+                e.stopPropagation()
+                e.stopImmediatePropagation()
+                setKeyval((prevState) => {
+                  return prevState + 1
+                })
+                return
+              }
+            )
+          }
+
           const onHashChanged = () => {
             iframeElement &&
               iframeElement.contentWindow &&
@@ -123,6 +140,7 @@ export default function ExtensionRenderer() {
     router.query.extension_id,
     router.query.slug,
     container.current,
+    keyval,
   ])
 
   useEffect(() => {
@@ -158,7 +176,7 @@ export default function ExtensionRenderer() {
     <div
       id="iframe-container"
       ref={container}
-      key={`${router.query.server_id} + ${router.query.extension_id}`}
+      key={`${router.query.server_id} + ${router.query.extension_id} + ${keyval}`}
     >
       {loading && (
         <div

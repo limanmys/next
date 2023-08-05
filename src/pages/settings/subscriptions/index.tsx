@@ -55,7 +55,9 @@ export default function SubscriptionPage() {
       (1000 * 60 * 60 * 24)
     const usedDays =
       (Date.now() - limanSubscription.coverage_start) / (1000 * 60 * 60 * 24)
-    return (totalDays / (totalDays - usedDays)) * 100
+
+    // Calculate how much days spent
+    return 100 - (usedDays / totalDays) * 100
   }
 
   return (
