@@ -22,3 +22,10 @@ Liman allows you to centrally manage all servers in your IT processes remotely, 
 pnpm i
 pnpm dev
 ```
+
+### Used Tools and Libraries
+- ReactJS
+- NextJS
+- TailwindCSS
+- Shadcn UI
+- Radix UI
