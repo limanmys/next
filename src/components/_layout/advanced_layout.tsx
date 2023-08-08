@@ -1,4 +1,4 @@
-import { Award, CloudCog } from "lucide-react"
+import { Award, CloudCog, ScrollText } from "lucide-react"
 
 import AccessCard from "../settings/access-card"
 
@@ -24,6 +24,15 @@ export default function AdvancedLayout({
       description:
         "Liman'ın bağlanacağı uçları ve aktif dizin sunucuları çözmesini sağlayan DNS ayarlarını buradan yapabilirsiniz.",
       href: `/settings/advanced/dns`,
+      enabled: true,
+    },
+    {
+      id: "log_rotation",
+      icon: ScrollText,
+      title: "Log Yönlendirme",
+      description:
+        "Liman'ın önemli sistem loglarını ve mesajlarını rsyslog aracılığı ile yönlendirmenizi sağlar.",
+      href: `/settings/advanced/log_rotation`,
       enabled: true,
     },
   ]

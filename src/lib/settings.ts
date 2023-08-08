@@ -34,7 +34,7 @@ export const Settings = {
       description:
         "Kişisel erişim anahtarları oluşturarak Liman MYS'nin sağladığı dış API uçlarını kullanabilirsiniz.",
       icon: KeySquare,
-      href: "/settings/access_tokens",
+      href: "/settings/tokens",
     },
   ],
   system: [

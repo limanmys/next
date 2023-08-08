@@ -5,14 +5,14 @@ import { Button } from "@/components/ui/button"
 import { Icons } from "@/components/ui/icons"
 import PageHeader from "@/components/ui/page-header"
 
-export default function HealthPage() {
+export default function TokensPage() {
   const router = useRouter()
 
   return (
     <>
       <PageHeader
-        title="Sağlık Durumu"
-        description="Liman Merkezi Yönetim Sistemi'nin sağlık durumunu görüntüleyebilir, güvenlik geliştirme önerilerini kolayca uygulayabilirsiniz."
+        title="Kişisel Erişim Anahtarları"
+        description="Kişisel erişim anahtarları oluşturarak Liman MYS'nin sağladığı dış API uçlarını kullanabilirsiniz."
       />
 
       <div
