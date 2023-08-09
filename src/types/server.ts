@@ -17,6 +17,7 @@ export interface IServer {
   extension_count: number
   extensions: IExtension[]
   is_favorite: boolean
+  can_run_command: boolean
 }
 
 export interface IMenu {

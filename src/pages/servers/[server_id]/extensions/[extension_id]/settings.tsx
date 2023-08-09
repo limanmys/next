@@ -187,6 +187,28 @@ function ExtensionSettings({
           )
         }
 
+        if (input.type === "number") {
+          return (
+            <div className="space-y-1">
+              <Label htmlFor={input.variable}>
+                {input.name}{" "}
+                {input.required && <span className="text-red-500">*</span>}
+              </Label>
+              <Input
+                name={input.variable}
+                type={input.type}
+                id={input.variable}
+                key={input.variable}
+                value={values[input.variable]}
+                onChange={(e) =>
+                  setValues({ ...values, [input.variable]: e.target.value })
+                }
+                required={input.required}
+              />
+            </div>
+          )
+        }
+
         if (input.type === "password") {
           return (
             <div className="space-y-1">

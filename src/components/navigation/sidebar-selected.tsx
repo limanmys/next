@@ -65,6 +65,10 @@ export default function SidebarSelected() {
       })
   }
 
+  const elementIsActive = (server: IServer): boolean => {
+    return !server.is_online || !server.can_run_command
+  }
+
   return (
     <>
       {selectedLoading ? (
@@ -129,32 +133,36 @@ export default function SidebarSelected() {
             <ServerItem
               link={`/servers/${selected}`}
               exact={true}
-              disabled={!selectedData.is_online}
+              disabled={elementIsActive(selectedData)}
             >
               <TrendingUp className="mr-2 h-4 w-4" />
               Sistem Durumu
             </ServerItem>
-            <ServerItem link={`/servers/${selected}/extensions`} exact={true}>
+            <ServerItem
+              link={`/servers/${selected}/extensions`}
+              exact={true}
+              disabled={!selectedData.is_online}
+            >
               <ToyBrick className="mr-2 h-4 w-4" />
               Eklentiler
             </ServerItem>
             <ServerItem
               link={`/servers/${selected}/services`}
-              disabled={!selectedData.is_online}
+              disabled={elementIsActive(selectedData)}
             >
               <ServerCog className="mr-2 h-4 w-4" />
               Servisler
             </ServerItem>
             <ServerItem
               link={`/servers/${selected}/packages`}
-              disabled={!selectedData.is_online}
+              disabled={elementIsActive(selectedData)}
             >
               <PackageOpen className="mr-2 h-4 w-4" />
               Paketler
             </ServerItem>
             <ServerItem
               link={`/servers/${selected}/updates`}
-              disabled={!selectedData.is_online}
+              disabled={elementIsActive(selectedData)}
             >
               <PackageSearch className="mr-2 h-4 w-4" />
               Güncellemeler
@@ -178,7 +186,7 @@ export default function SidebarSelected() {
                     exact: true,
                   },
                 ]}
-                disabled={!selectedData.is_online}
+                disabled={elementIsActive(selectedData)}
               >
                 <Users className="mr-2 h-4 w-4" />
                 Kullanıcı İşlemleri
@@ -186,12 +194,15 @@ export default function SidebarSelected() {
             </div>
             <ServerItem
               link={`/servers/${selected}/open_ports`}
-              disabled={!selectedData.is_online}
+              disabled={elementIsActive(selectedData)}
             >
               <Network className="mr-2 h-4 w-4" />
               Açık Portlar
             </ServerItem>
-            <ServerItem link={`/servers/${selected}/access_logs`}>
+            <ServerItem
+              link={`/servers/${selected}/access_logs`}
+              disabled={!selectedData.is_online}
+            >
               <FileClock className="mr-2 h-4 w-4" />
               Erişim Kayıtları
             </ServerItem>

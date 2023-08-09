@@ -31,7 +31,12 @@ export interface IExtensionSetting {
   }
 }
 
-type IExtensionVariableTypes = "text" | "password" | "server" | "extension"
+type IExtensionVariableTypes =
+  | "text"
+  | "password"
+  | "server"
+  | "extension"
+  | "number"
 
 export interface IExtensionVariable {
   variable: string
