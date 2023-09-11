@@ -1,11 +1,24 @@
 import { useEffect, useState } from "react"
 import { apiService } from "@/services"
-import { CheckCircle } from "lucide-react"
+import { CheckCircle, Plus, PlusCircle } from "lucide-react"
 
 import { IExtension } from "@/types/extension"
 import { ILimanSubscription } from "@/types/subscription"
+import { useEmitter } from "@/hooks/useEmitter"
+import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+import { Icons } from "@/components/ui/icons"
+import { Label } from "@/components/ui/label"
 import { Skeleton } from "@/components/ui/skeleton"
+import { Textarea } from "@/components/ui/textarea"
+import { useToast } from "@/components/ui/use-toast"
 import SubscriptionCard from "@/components/settings/subscription-card"
 
 export default function SubscriptionPage() {
@@ -14,6 +27,21 @@ export default function SubscriptionPage() {
   const [subscriptionStatus, setSubscriptionStatus] = useState<boolean>(false)
   const [limanSubscription, setLimanSubscription] =
     useState<ILimanSubscription>({} as ILimanSubscription)
+  const [open, setOpen] = useState<boolean>(false)
+  const emitter = useEmitter()
+
+  const fetchLimanSubscription = () => {
+    apiService
+      .getInstance()
+      .get("/settings/subscriptions/liman")
+      .then((response) => {
+        setLimanSubscription(response.data)
+        setSubscriptionStatus(true)
+      })
+      .catch((err) => {
+        // Do nothing
+      })
+  }
 
   const fetchData = () => {
     setLoading(true)
@@ -36,17 +64,15 @@ export default function SubscriptionPage() {
 
   useEffect(() => {
     fetchData()
+    fetchLimanSubscription()
 
-    apiService
-      .getInstance()
-      .get("/settings/subscriptions/liman")
-      .then((response) => {
-        setLimanSubscription(response.data)
-        setSubscriptionStatus(true)
-      })
-      .catch((err) => {
-        // Do nothing
-      })
+    emitter.on("LIMAN_SUBSCRIPTION_REFRESH", () => {
+      fetchLimanSubscription()
+    })
+
+    return () => {
+      emitter.off("LIMAN_SUBSCRIPTION_REFRESH")
+    }
   }, [])
 
   const getPercentageOfUsedDays = () => {
@@ -168,6 +194,10 @@ export default function SubscriptionPage() {
             <h5 className="mb-1 font-semibold tracking-tight">
               Açık kaynak destek paketini kullanıyorsunuz.
             </h5>
+            <Button onClick={() => setOpen(true)}>
+              <Plus className="mr-2 h-4 w-4" /> Lisans Ekle
+            </Button>
+            <LimanLicense open={open} setOpen={setOpen} />
           </div>
         )}
       </Card>
@@ -185,5 +215,83 @@ export default function SubscriptionPage() {
           ))}
       </div>
     </div>
+  )
+}
+
+function LimanLicense({
+  open,
+  setOpen,
+}: {
+  open: boolean
+  setOpen: (open: boolean) => void
+}) {
+  const { toast } = useToast()
+  const [loading, setLoading] = useState(false)
+  const [data, setData] = useState<string>("")
+  const emitter = useEmitter()
+
+  const handleCreate = () => {
+    setLoading(true)
+
+    apiService
+      .getInstance()
+      .post(`/settings/subscriptions/liman`, {
+        license: data,
+      })
+      .then(() => {
+        emitter.emit("LIMAN_SUBSCRIPTION_REFRESH")
+        toast({
+          title: "Başarılı",
+          description: "Lisans başarıyla eklendi.",
+        })
+        setOpen(false)
+      })
+      .catch(() => {
+        toast({
+          title: "Hata",
+          description: "Lisans eklenirken hata oluştu.",
+          variant: "destructive",
+        })
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }
+
+  return (
+    <Dialog onOpenChange={(open) => setOpen(open)} open={open}>
+      <DialogContent className="sm:max-w-[525px]">
+        <DialogHeader>
+          <DialogTitle>Lisans Ekle</DialogTitle>
+          <DialogDescription>
+            Liman için size HAVELSAN A.Ş. tarafından verilen lisansı bu kısma
+            giriniz.
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="mt-3 grid w-full items-center gap-1.5">
+          <Label htmlFor="license">Lisans Bilgisi</Label>
+          <Textarea id="license" onChange={(e) => setData(e.target.value)} />
+        </div>
+
+        <div className="mt-6 flex justify-end">
+          <Button
+            variant="outline"
+            onClick={() => setOpen(false)}
+            className="mr-2"
+          >
+            İptal
+          </Button>
+          <Button disabled={loading} onClick={() => handleCreate()}>
+            {!loading ? (
+              <PlusCircle className="mr-2 h-4 w-4" />
+            ) : (
+              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            )}
+            Ekle
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
   )
 }
