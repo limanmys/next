@@ -1,6 +1,5 @@
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { LucideIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
@@ -9,7 +8,7 @@ import { Badge } from "../ui/badge"
 interface IRoleCardProps {
   title: string
   description: string
-  icon: LucideIcon
+  icon: any
   href: string
   count: number
 }
