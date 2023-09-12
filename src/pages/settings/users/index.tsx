@@ -1,14 +1,23 @@
 import { useEffect, useState } from "react"
+import { useRouter } from "next/router"
 import { apiService } from "@/services"
-import { User2, UserCog2 } from "lucide-react"
+import { Footprints, User2, UserCog2 } from "lucide-react"
 
 import { DivergentColumn } from "@/types/table"
-import { IUser } from "@/types/user"
+import { IAuthLog, IUser } from "@/types/user"
 import { useEmitter } from "@/hooks/useEmitter"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
+import { Dialog, DialogContent } from "@/components/ui/dialog"
 import PageHeader from "@/components/ui/page-header"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 import CreateUser from "@/components/settings/create-user"
 import { UserRowActions } from "@/components/settings/user-actions"
 
@@ -28,7 +37,7 @@ const getType = (type: string) => {
 export default function UserSettingsPage() {
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IUser[]>([])
-
+  const router = useRouter()
   const emitter = useEmitter()
 
   const columns: DivergentColumn<IUser, string>[] = [
@@ -164,8 +173,115 @@ export default function UserSettingsPage() {
         loading={loading}
         selectable={false}
       >
-        <CreateUser />
+        <div className="flex gap-3">
+          <CreateUser />
+          <AuthLogDialog />
+          <Button
+            variant="outline"
+            size="sm"
+            className="ml-auto h-8 lg:flex"
+            onClick={() => router.push("/settings/users/auth_logs")}
+          >
+            <Footprints className="mr-2 h-4 w-4" />
+            Giriş kayıtları
+          </Button>
+        </div>
       </DataTable>
     </>
+  )
+}
+
+function AuthLogDialog() {
+  const [open, setOpen] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(true)
+  const [data, setData] = useState<IAuthLog[]>([])
+  const emitter = useEmitter()
+
+  const columns: DivergentColumn<IAuthLog, string>[] = [
+    {
+      accessorKey: "ip_address",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Giriş Yapan IP Adresi" />
+      ),
+      title: "Giriş Yapan IP Adresi",
+    },
+    {
+      accessorKey: "user_agent",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Tarayıcı Bilgileri" />
+      ),
+      title: "Tarayıcı Bilgileri",
+      cell: ({ row }) => (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <span className="cursor-pointer text-blue-500">
+                {row.original.user_agent.substring(0, 30) + "..."}
+              </span>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{row.original.user_agent}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      ),
+    },
+    {
+      accessorKey: "created_at",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Giriş Tarihi" />
+      ),
+      title: "Giriş Tarihi",
+      cell: ({ row }) => (
+        <>
+          {row.original.created_at
+            ? new Date(row.original.created_at).toLocaleDateString("tr-TR", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+              })
+            : "Bilinmiyor"}
+        </>
+      ),
+    },
+  ]
+
+  emitter.on("AUTH_LOG_DIALOG", (user_id) => {
+    setLoading(true)
+    setOpen(true)
+
+    apiService
+      .getInstance()
+      .get(`/settings/users/auth_logs/${user_id}`)
+      .then((res) => {
+        setData(res.data)
+        setLoading(false)
+      })
+  })
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent className="max-w-[75vw] p-0">
+        <div className="grid grid-cols-4">
+          <div className="rounded-lg rounded-r-none bg-foreground/5 p-5">
+            <h3 className="font-semibold">Giriş Kayıtları</h3>
+            <p className="mt-5 text-sm text-muted-foreground">
+              Kullanıcıya ait giriş kayıtlarını detaylı şekilde
+              görüntüleyebilirsiniz.
+            </p>
+          </div>
+          <div className="col-span-3 py-5">
+            <DataTable
+              columns={columns}
+              data={data}
+              loading={loading}
+              selectable={false}
+            ></DataTable>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
   )
 }

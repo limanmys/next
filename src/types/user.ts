@@ -28,4 +28,5 @@ export interface IAuthLog {
   user_agent: string
   created_at: string
   updated_at: string
+  user: IUser
 }

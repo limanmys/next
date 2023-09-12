@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { apiService } from "@/services"
 import { Row } from "@tanstack/react-table"
-import { MoreHorizontal, Trash } from "lucide-react"
+import { Footprints, MoreHorizontal, Trash } from "lucide-react"
 
 import { IUser } from "@/types/user"
 import { useEmitter } from "@/hooks/useEmitter"
@@ -29,6 +29,7 @@ import { useToast } from "../ui/use-toast"
 export function UserRowActions({ row }: { row: Row<IUser> }) {
   const user = row.original
   const [deleteDialog, setDeleteDialog] = useState(false)
+  const emitter = useEmitter()
 
   return (
     <>
@@ -43,6 +44,12 @@ export function UserRowActions({ row }: { row: Row<IUser> }) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
+          <DropdownMenuItem
+            onClick={() => emitter.emit("AUTH_LOG_DIALOG", user.id)}
+          >
+            <Footprints className="mr-2 h-3.5 w-3.5" />
+            Giriş Kayıtları
+          </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setDeleteDialog(true)}>
             <Trash className="mr-2 h-3.5 w-3.5" />
             Sil
