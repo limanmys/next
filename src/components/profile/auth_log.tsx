@@ -35,7 +35,7 @@ export default function AuthLog() {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
-              <span className="text-blue-500 cursor-pointer">
+              <span className="cursor-pointer text-blue-500">
                 {row.original.user_agent.substring(0, 30) + "..."}
               </span>
             </TooltipTrigger>

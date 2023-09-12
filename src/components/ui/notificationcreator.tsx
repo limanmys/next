@@ -18,12 +18,12 @@ export function NotificationCreator() {
       {toasts.map(function (props: INotification) {
         return (
           <Notification key={props.notification_id}>
-            <div className="w-full gap-1 flex flex-col relative">
-              <h3 className="font-semibold text-[15px] tracking-tight">
+            <div className="relative flex w-full flex-col gap-1">
+              <h3 className="text-[15px] font-semibold tracking-tight">
                 {props.title}
               </h3>
 
-              <p className="text-sm text-slate-700 dark:text-slate-300 font-medium">
+              <p className="text-sm font-medium text-slate-700 dark:text-slate-300">
                 {props.content}
               </p>
 

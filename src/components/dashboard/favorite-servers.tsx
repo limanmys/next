@@ -50,7 +50,7 @@ export default function FavoriteServers() {
 
         {loading &&
           [...Array(6)].map((_, i) => (
-            <Skeleton key={i} className="w-full h-[146px]" />
+            <Skeleton key={i} className="h-[146px] w-full" />
           ))}
       </div>
 

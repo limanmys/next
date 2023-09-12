@@ -24,7 +24,7 @@ export default function NotificationsPage() {
         title="Bildirimler"
         description="Geçmişe dönük okuduğunuz tüm bildirimleri bu sayfa aracılığı ile görüntüleyebilirsiniz."
       />
-      <div className="pt-2 p-8 ml-3">
+      <div className="ml-3 p-8 pt-2">
         <ol className="relative border-l">
           {notifications.map((notification) => (
             <NotificationItem
@@ -58,7 +58,7 @@ function NotificationItem({ notification }: { notification: INotification }) {
       className="mb-10 ml-6"
       id={`notification-${notification.notification_id}`}
     >
-      <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-4 ring-white dark:ring-gray-900 dark:bg-blue-900"></span>
+      <span className="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 ring-4 ring-white dark:bg-blue-900 dark:ring-gray-900"></span>
       <time className="text-sm font-normal leading-none text-muted-foreground">
         {new Date(notification.send_at).toLocaleDateString("tr-TR", {
           day: "2-digit",
@@ -68,13 +68,13 @@ function NotificationItem({ notification }: { notification: INotification }) {
           minute: "2-digit",
         })}
       </time>
-      <div className="items-end justify-between p-4 bg-background border rounded-lg shadow-sm sm:flex mt-4">
+      <div className="mt-4 items-end justify-between rounded-lg border bg-background p-4 shadow-sm sm:flex">
         <time className="mb-1 text-xs font-normal text-gray-400 sm:order-last sm:mb-0">
           <StatusBadge status={notification.level as Status} />{" "}
           {notification.send_at_humanized}
         </time>
         <div className="">
-          <h3 className="font-semibold tracking-tight mb-2">
+          <h3 className="mb-2 font-semibold tracking-tight">
             {notification.title}
           </h3>
 

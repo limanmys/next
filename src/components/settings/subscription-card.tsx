@@ -125,8 +125,8 @@ export default function SubscriptionCard({
                   onValueChange={(value) => setSelectedServer(value)}
                   defaultValue={selectedServer}
                 >
-                  <SelectTrigger className="w-[200px] h-18">
-                    <Server className="w-4 h-4 text-muted-foreground" />
+                  <SelectTrigger className="h-18 w-[200px]">
+                    <Server className="h-4 w-4 text-muted-foreground" />
                     <SelectValue placeholder="Sunucu seçiniz..." />
                   </SelectTrigger>
                   <SelectContent>
@@ -146,7 +146,7 @@ export default function SubscriptionCard({
             </>
           )}
           {serverLoading && (
-            <Skeleton className="w-[200px] h-18 rounded-full" />
+            <Skeleton className="h-18 w-[200px] rounded-full" />
           )}
           <DropdownMenu>
             <DropdownMenuTrigger disabled={!selectedServer} asChild>

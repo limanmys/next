@@ -32,7 +32,7 @@ export function Sidebar({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "fixed z-30 w-full shrink-0 overflow-y-auto bg-background md:sticky md:block print:hidden",
+        "fixed z-30 w-full shrink-0 overflow-y-auto bg-background print:hidden md:sticky md:block",
         sidebarCtx[SIDEBARCTX_STATES.collapsed] && "hidden border-r"
       )}
     >
@@ -106,16 +106,16 @@ export function Sidebar({ className }: { className?: string }) {
                                 <Button
                                   variant="ghost"
                                   size="sm"
-                                  className="mt-1 w-full justify-start mb-4"
+                                  className="mb-4 mt-1 w-full justify-start"
                                 >
                                   <Server className="mr-2 h-4 w-4" />
                                   Yeni sunucu ekle
                                 </Button>
                               </Link>
 
-                              <ArrowUp className="h-8 w-8 mx-auto animate-bounce block" />
+                              <ArrowUp className="mx-auto block h-8 w-8 animate-bounce" />
 
-                              <span className="text-sm font-medium p-3 block">
+                              <span className="block p-3 text-sm font-medium">
                                 Liman&apos;ı aktif şekilde kullanmaya başlamak
                                 için yukarıdan sunucu ekleyin.
                               </span>

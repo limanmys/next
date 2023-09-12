@@ -186,9 +186,11 @@ const TransferList = <T extends ITransferListItem>(
                         htmlFor={value.id}
                         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                       >
-                        {props.renderName
-                          ? value[props.renderName]
-                          : value.name}
+                        {
+                          (props.renderName
+                            ? value[props.renderName]
+                            : value.name) as any
+                        }
                       </Label>
                     </div>
                   )

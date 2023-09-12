@@ -48,7 +48,7 @@ export default function CertificateInformation() {
       <div className="p-8 pt-0">
         <div className="grid grid-cols-2 gap-6">
           <div className="space-y-2">
-            <h2 className="border-b w-full font-semibold text-lg mb-3">
+            <h2 className="mb-3 w-full border-b text-lg font-semibold">
               İstemci Detayları
             </h2>
             <Label>IP Adresi</Label>
@@ -60,7 +60,7 @@ export default function CertificateInformation() {
           </div>
 
           <div className="space-y-2">
-            <h2 className="border-b w-full font-semibold text-lg mb-3">
+            <h2 className="mb-3 w-full border-b text-lg font-semibold">
               Geçerlilik Süresi
             </h2>
             <Label>Başlangıç</Label>
@@ -73,7 +73,7 @@ export default function CertificateInformation() {
           </div>
 
           <div className="space-y-2">
-            <h2 className="border-b w-full font-semibold text-lg mb-3">
+            <h2 className="mb-3 w-full border-b text-lg font-semibold">
               Genel Detaylar
             </h2>
             <Label>İstemci</Label>
