@@ -212,7 +212,7 @@ function AuthLogDialog() {
       ),
       title: "Tarayıcı Bilgileri",
       cell: ({ row }) => (
-        <TooltipProvider>
+        <TooltipProvider delayDuration={200}>
           <Tooltip>
             <TooltipTrigger>
               <span className="cursor-pointer text-blue-500">

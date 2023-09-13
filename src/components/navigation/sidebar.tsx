@@ -7,10 +7,18 @@ import {
   useSidebarContext,
 } from "@/providers/sidebar-provider"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
-import { ArrowUp, ChevronLeft, ChevronRight, Server, Star } from "lucide-react"
+import {
+  AlertTriangle,
+  ArrowUp,
+  ChevronLeft,
+  ChevronRight,
+  Server,
+  Star,
+} from "lucide-react"
 
 import { IServer } from "@/types/server"
 import { cn } from "@/lib/utils"
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
@@ -24,6 +32,7 @@ export function Sidebar({ className }: { className?: string }) {
   const sidebarCtx = useSidebarContext()
   const [parent] = useAutoAnimate()
   const [sub] = useAutoAnimate()
+  const user = useCurrentUser()
 
   useEffect(() => {
     sidebarCtx[SIDEBARCTX_STATES.refreshServers]()
@@ -102,23 +111,37 @@ export function Sidebar({ className }: { className?: string }) {
                             </Link>
                           ) : (
                             <>
-                              <Link href="/servers/create">
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  className="mb-4 mt-1 w-full justify-start"
-                                >
-                                  <Server className="mr-2 h-4 w-4" />
-                                  Yeni sunucu ekle
-                                </Button>
-                              </Link>
+                              {user.status === 1 ? (
+                                <>
+                                  <Link href="/servers/create">
+                                    <Button
+                                      variant="ghost"
+                                      size="sm"
+                                      className="mb-4 mt-1 w-full justify-start"
+                                    >
+                                      <Server className="mr-2 h-4 w-4" />
+                                      Yeni sunucu ekle
+                                    </Button>
+                                  </Link>
 
-                              <ArrowUp className="mx-auto block h-8 w-8 animate-bounce" />
+                                  <ArrowUp className="mx-auto block h-8 w-8 animate-bounce" />
 
-                              <span className="block p-3 text-sm font-medium">
-                                Liman&apos;ı aktif şekilde kullanmaya başlamak
-                                için yukarıdan sunucu ekleyin.
-                              </span>
+                                  <span className="block p-3 text-sm font-medium">
+                                    Liman&apos;ı aktif şekilde kullanmaya
+                                    başlamak için yukarıdan sunucu ekleyin.
+                                  </span>
+                                </>
+                              ) : (
+                                <>
+                                  <AlertTriangle className="mx-auto block h-8 w-8" />
+
+                                  <span className="block p-2 text-sm font-medium">
+                                    Liman&apos;ı aktif şekilde kullanmaya
+                                    başlamak için sistem yöneticinizden size rol
+                                    tanımlamasını talep ediniz.
+                                  </span>
+                                </>
+                              )}
                             </>
                           )}
                         </>

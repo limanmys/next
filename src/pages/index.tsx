@@ -1,6 +1,8 @@
 import dynamic from "next/dynamic"
 import { useTranslation } from "react-i18next"
 
+import { cn } from "@/lib/utils"
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 import DashboardCards from "@/components/dashboard/cards"
 import FavoriteServers from "@/components/dashboard/favorite-servers"
 import LatestLoggedInUsers from "@/components/dashboard/latest-logged-in-users"
@@ -12,6 +14,7 @@ const DateTimeView = dynamic(() => import("@/components/dashboard/date-time"), {
 
 export default function IndexPage() {
   const { t } = useTranslation("dashboard")
+  const user = useCurrentUser()
 
   return (
     <div
@@ -30,13 +33,24 @@ export default function IndexPage() {
       <DashboardCards />
 
       <div className="flex w-full flex-[2] flex-col divide-x xl:flex-row">
-        <div className="w-full lg:w-1/3">
+        <div
+          className={cn("w-full", user.status === 1 ? "lg:w-1/3" : "lg:w-1/2")}
+        >
           <MostUsedExtensions />
         </div>
-        <div className="w-full lg:w-1/3">
-          <LatestLoggedInUsers />
-        </div>
-        <div className="w-full lg:w-1/3">
+        {user.status === 1 && (
+          <div
+            className={cn(
+              "w-full",
+              user.status === 1 ? "lg:w-1/3" : "lg:w-1/2"
+            )}
+          >
+            <LatestLoggedInUsers />
+          </div>
+        )}
+        <div
+          className={cn("w-full", user.status === 1 ? "lg:w-1/3" : "lg:w-1/2")}
+        >
           <FavoriteServers />
         </div>
       </div>

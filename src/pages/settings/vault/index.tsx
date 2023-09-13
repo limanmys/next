@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 import { apiService } from "@/services"
-import Cookies from "js-cookie"
 
 import { DivergentColumn } from "@/types/table"
 import { IVault } from "@/types/vault"
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 import { useEmitter } from "@/hooks/useEmitter"
 import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
@@ -17,6 +17,7 @@ export default function VaultPage() {
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IVault[]>([])
   const [user, setUser] = useState<string>("")
+  const currentUser = useCurrentUser()
 
   const emitter = useEmitter()
 
@@ -60,9 +61,8 @@ export default function VaultPage() {
   }, [user])
 
   useEffect(() => {
-    const currentUser = Cookies.get("currentUser")
-    if (currentUser) {
-      setUser(JSON.parse(currentUser).user.id)
+    if (currentUser.status === 1 && currentUser.id !== undefined) {
+      setUser(currentUser.id)
     }
 
     emitter.on("REFETCH_VAULT", () => {
@@ -70,6 +70,14 @@ export default function VaultPage() {
     })
     return () => emitter.off("REFETCH_VAULT")
   }, [])
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (currentUser.status === 1 && currentUser.id !== undefined) {
+        setUser(currentUser.id)
+      }
+    }, 1000)
+  }, [currentUser])
 
   return (
     <>
@@ -85,10 +93,12 @@ export default function VaultPage() {
         selectable={false}
       >
         <div className="flex gap-3">
-          <SelectUser
-            onValueChange={(value: string) => setUser(value)}
-            defaultValue={user}
-          />
+          {currentUser.status === 1 && currentUser.id !== undefined && (
+            <SelectUser
+              onValueChange={(value: string) => setUser(value)}
+              defaultValue={user}
+            />
+          )}
 
           <CreateVaultSetting userId={user} />
           <CreateVaultKey userId={user} />

@@ -5,6 +5,7 @@ import { Link2, Server } from "lucide-react"
 
 import { IServer } from "@/types/server"
 import { DivergentColumn } from "@/types/table"
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
@@ -13,6 +14,7 @@ import PageHeader from "@/components/ui/page-header"
 export default function Servers() {
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IServer[]>([])
+  const user = useCurrentUser()
 
   const columns: DivergentColumn<IServer>[] = [
     {
@@ -71,12 +73,14 @@ export default function Servers() {
         title="Sunucular"
         description="Liman Merkezi Yönetim Sistemine bağlı sunucularınızı bu sayfa üzerinden yönetebilirsiniz."
         rightSide={
-          <Link href="/servers/create">
-            <Button className="rounded-full">
-              <Server className="mr-2 h-4 w-4" />
-              Sunucu Oluştur
-            </Button>
-          </Link>
+          user.permissions.add_server && (
+            <Link href="/servers/create">
+              <Button className="rounded-full">
+                <Server className="mr-2 h-4 w-4" />
+                Sunucu Oluştur
+              </Button>
+            </Link>
+          )
         }
       />
 

@@ -1,5 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server"
 
+import { IUser } from "./types/user"
+
 const authRoutes = ["/auth/login"]
 
 export function middleware(request: NextRequest) {
@@ -25,6 +27,22 @@ export function middleware(request: NextRequest) {
 
   if (currentUser && authRoutes.includes(request.nextUrl.pathname)) {
     return NextResponse.redirect(new URL("/", request.url))
+  }
+
+  if (currentUser) {
+    const parse = JSON.parse(currentUser || "") as { user: IUser }
+    const user: IUser = parse.user ? parse.user : ({ status: 0 } as IUser)
+
+    // Check if regular users settings page access is disabled
+    if (
+      user.status === 0 &&
+      request.nextUrl.pathname.includes("settings/") &&
+      !request.nextUrl.pathname.includes("profile") &&
+      !request.nextUrl.pathname.includes("vault") &&
+      !request.nextUrl.pathname.includes("tokens")
+    ) {
+      return NextResponse.redirect(new URL("/", request.url))
+    }
   }
 
   return NextResponse.next()

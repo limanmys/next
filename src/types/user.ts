@@ -12,6 +12,7 @@ export interface IUser {
   auth_type: string
   username: string
   locale: string
+  permissions: ILimanPermissions
 }
 
 export interface IAccessToken {
@@ -29,4 +30,12 @@ export interface IAuthLog {
   created_at: string
   updated_at: string
   user: IUser
+}
+
+export interface ILimanPermissions {
+  server_details: boolean
+  server_services: boolean
+  add_server: boolean
+  update_server: boolean
+  view_logs: boolean
 }

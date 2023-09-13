@@ -9,6 +9,7 @@ import Pusher from "pusher-js"
 
 import { INotification } from "@/types/notification"
 import { cn } from "@/lib/utils"
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 import { Button, buttonVariants } from "@/components/ui/button"
 
 import { Badge } from "../ui/badge"
@@ -24,6 +25,7 @@ import { useNotification } from "../ui/use-notification"
 export default function Notifications() {
   const router = useRouter()
   const { sendNotification } = useNotification()
+  const user = useCurrentUser()
 
   const snd = new Audio("/assets/sound/notification.mp3")
   function beep() {
@@ -217,15 +219,20 @@ export default function Notifications() {
         )}
         <DropdownMenuSeparator />
         <div className="flex items-center justify-between p-3">
-          <Link href="/settings/notifications">
-            <Button
-              size="sm"
-              variant="ghost"
-              className="-ml-1 text-muted-foreground"
-            >
-              Bildirimleri Yönet
-            </Button>
-          </Link>
+          {user.status === 1 ? (
+            <Link href="/settings/external_notifications">
+              <Button
+                size="sm"
+                variant="ghost"
+                className="-ml-1 text-muted-foreground"
+              >
+                Bildirimleri Yönet
+              </Button>
+            </Link>
+          ) : (
+            <div></div>
+          )}
+
           <Link href="/notifications">
             <Button size="sm" className="rounded-[8px]">
               Tüm Bildirimleri Görüntüle

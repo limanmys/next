@@ -21,6 +21,7 @@ import {
 import { IExtension } from "@/types/extension"
 import { IServer } from "@/types/server"
 import { cn } from "@/lib/utils"
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 
 import { Icons } from "../ui/icons"
 import { Skeleton } from "../ui/skeleton"
@@ -38,6 +39,7 @@ export default function SidebarSelected() {
     setSelectedLoading,
   ] = useSidebarContext()
   const sidebarCtx = useSidebarContext()
+  const user = useCurrentUser()
 
   useEffect(() => {
     setSelectedLoading(true)
@@ -130,82 +132,96 @@ export default function SidebarSelected() {
             />
           </div>
           <div>
-            <ServerItem
-              link={`/servers/${selected}`}
-              exact={true}
-              disabled={elementIsActive(selectedData)}
-            >
-              <TrendingUp className="mr-2 h-4 w-4" />
-              Sistem Durumu
-            </ServerItem>
-            <ServerItem
-              link={`/servers/${selected}/extensions`}
-              exact={true}
-              disabled={!selectedData.is_online}
-            >
-              <ToyBrick className="mr-2 h-4 w-4" />
-              Eklentiler
-            </ServerItem>
-            <ServerItem
-              link={`/servers/${selected}/services`}
-              disabled={elementIsActive(selectedData)}
-            >
-              <ServerCog className="mr-2 h-4 w-4" />
-              Servisler
-            </ServerItem>
-            <ServerItem
-              link={`/servers/${selected}/packages`}
-              disabled={elementIsActive(selectedData)}
-            >
-              <PackageOpen className="mr-2 h-4 w-4" />
-              Paketler
-            </ServerItem>
-            <ServerItem
-              link={`/servers/${selected}/updates`}
-              disabled={elementIsActive(selectedData)}
-            >
-              <PackageSearch className="mr-2 h-4 w-4" />
-              Güncellemeler
-            </ServerItem>
-            <div className="mb-1">
-              <DropdownServerItem
-                items={[
-                  {
-                    link: `/servers/${selected}/users/local`,
-                    name: "Yerel Kullanıcılar",
-                    exact: true,
-                  },
-                  {
-                    link: `/servers/${selected}/users/groups`,
-                    name: "Yerel Gruplar",
-                    exact: true,
-                  },
-                  {
-                    link: `/servers/${selected}/users/sudoers`,
-                    name: "Yetkili Kullanıcılar",
-                    exact: true,
-                  },
-                ]}
+            {user.permissions.server_details && (
+              <>
+                <ServerItem
+                  link={`/servers/${selected}`}
+                  exact={true}
+                  disabled={elementIsActive(selectedData)}
+                >
+                  <TrendingUp className="mr-2 h-4 w-4" />
+                  Sistem Durumu
+                </ServerItem>
+                <ServerItem
+                  link={`/servers/${selected}/extensions`}
+                  exact={true}
+                  disabled={!selectedData.is_online}
+                >
+                  <ToyBrick className="mr-2 h-4 w-4" />
+                  Eklentiler
+                </ServerItem>
+              </>
+            )}
+
+            {user.permissions.server_services && (
+              <ServerItem
+                link={`/servers/${selected}/services`}
                 disabled={elementIsActive(selectedData)}
               >
-                <Users className="mr-2 h-4 w-4" />
-                Kullanıcı İşlemleri
-              </DropdownServerItem>
-            </div>
-            <ServerItem
-              link={`/servers/${selected}/open_ports`}
-              disabled={elementIsActive(selectedData)}
-            >
-              <Network className="mr-2 h-4 w-4" />
-              Açık Portlar
-            </ServerItem>
-            <ServerItem
-              link={`/servers/${selected}/access_logs`}
-              disabled={!selectedData.is_online}
-            >
-              <FileClock className="mr-2 h-4 w-4" />
-              Erişim Kayıtları
-            </ServerItem>
+                <ServerCog className="mr-2 h-4 w-4" />
+                Servisler
+              </ServerItem>
+            )}
+            {user.permissions.server_details && (
+              <>
+                <ServerItem
+                  link={`/servers/${selected}/packages`}
+                  disabled={elementIsActive(selectedData)}
+                >
+                  <PackageOpen className="mr-2 h-4 w-4" />
+                  Paketler
+                </ServerItem>
+                <ServerItem
+                  link={`/servers/${selected}/updates`}
+                  disabled={elementIsActive(selectedData)}
+                >
+                  <PackageSearch className="mr-2 h-4 w-4" />
+                  Güncellemeler
+                </ServerItem>
+                <div className="mb-1">
+                  <DropdownServerItem
+                    items={[
+                      {
+                        link: `/servers/${selected}/users/local`,
+                        name: "Yerel Kullanıcılar",
+                        exact: true,
+                      },
+                      {
+                        link: `/servers/${selected}/users/groups`,
+                        name: "Yerel Gruplar",
+                        exact: true,
+                      },
+                      {
+                        link: `/servers/${selected}/users/sudoers`,
+                        name: "Yetkili Kullanıcılar",
+                        exact: true,
+                      },
+                    ]}
+                    disabled={elementIsActive(selectedData)}
+                  >
+                    <Users className="mr-2 h-4 w-4" />
+                    Kullanıcı İşlemleri
+                  </DropdownServerItem>
+                </div>
+                <ServerItem
+                  link={`/servers/${selected}/open_ports`}
+                  disabled={elementIsActive(selectedData)}
+                >
+                  <Network className="mr-2 h-4 w-4" />
+                  Açık Portlar
+                </ServerItem>
+              </>
+            )}
+
+            {user.permissions.view_logs && (
+              <ServerItem
+                link={`/servers/${selected}/access_logs`}
+                disabled={!selectedData.is_online}
+              >
+                <FileClock className="mr-2 h-4 w-4" />
+                Erişim Kayıtları
+              </ServerItem>
+            )}
           </div>
 
           {selectedData.extensions && selectedData.extensions.length > 0 && (
