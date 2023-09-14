@@ -47,7 +47,7 @@ export default function ServerExtensionPage() {
       ),
     },
     {
-      accessorKey: "request_details.lmntargetFunction",
+      accessorKey: "view",
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Çalıştırılan Fonksiyon" />
       ),
