@@ -27,9 +27,11 @@ export class ApiService {
         if (error.response.status === 504) {
           window.location.href = "/504"
         }
+        /*
         if (error.response.status === 403) {
           window.location.href = "/403"
         }
+        */
         return Promise.reject(error)
       }
     )
