@@ -1,4 +1,4 @@
-import { Award, CloudCog, ScrollText } from "lucide-react"
+import { Award, CloudCog, Cog, ScrollText } from "lucide-react"
 
 import AccessCard from "../settings/access-card"
 
@@ -33,6 +33,15 @@ export default function AdvancedLayout({
       description:
         "Liman'ın önemli sistem loglarını ve mesajlarını rsyslog aracılığı ile yönlendirmenizi sağlar.",
       href: `/settings/advanced/log_rotation`,
+      enabled: true,
+    },
+    {
+      id: "tweaks",
+      icon: Cog,
+      title: "İnce Ayarlar",
+      description:
+        "Liman ile ilgili ince ayarları bu sayfadan değiştirebilirsiniz.",
+      href: `/settings/advanced/tweaks`,
       enabled: true,
     },
   ]
