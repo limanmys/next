@@ -1,4 +1,5 @@
 import { ToastProvider } from "@radix-ui/react-toast"
+import { useTranslation } from "react-i18next"
 
 import { INotification } from "@/types/notification"
 import {
@@ -12,6 +13,7 @@ import { useNotification } from "./use-notification"
 
 export function NotificationCreator() {
   const { toasts } = useNotification()
+  const { i18n } = useTranslation()
 
   return (
     <ToastProvider>
@@ -29,7 +31,7 @@ export function NotificationCreator() {
 
               <div className="flex items-center justify-between">
                 <div className="text-xs text-slate-700 dark:text-slate-400">
-                  {new Date(props.send_at).toLocaleDateString("tr-TR", {
+                  {new Date(props.send_at).toLocaleDateString(i18n.language, {
                     day: "2-digit",
                     month: "long",
                     year: "numeric",

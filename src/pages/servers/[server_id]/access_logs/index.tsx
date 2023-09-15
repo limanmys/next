@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { ScrollText } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { IAccessLog } from "@/types/access_log"
 import { DivergentColumn } from "@/types/table"
@@ -31,6 +32,7 @@ export default function ServerExtensionPage() {
   const router = useRouter()
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IAccessLog[]>([])
+  const { i18n } = useTranslation()
 
   const columns: DivergentColumn<IAccessLog, string>[] = [
     {
@@ -63,7 +65,7 @@ export default function ServerExtensionPage() {
     {
       accessorKey: "ts",
       accessorFn: (row) => {
-        return new Date(row.ts * 1000).toLocaleDateString("tr-TR", {
+        return new Date(row.ts * 1000).toLocaleDateString(i18n.language, {
           day: "2-digit",
           month: "long",
           year: "numeric",

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { Footprints, User2, UserCog2 } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { DivergentColumn } from "@/types/table"
 import { IAuthLog, IUser } from "@/types/user"
@@ -39,6 +40,7 @@ export default function UserSettingsPage() {
   const [data, setData] = useState<IUser[]>([])
   const router = useRouter()
   const emitter = useEmitter()
+  const { i18n } = useTranslation()
 
   const columns: DivergentColumn<IUser, string>[] = [
     {
@@ -196,6 +198,7 @@ function AuthLogDialog() {
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IAuthLog[]>([])
   const emitter = useEmitter()
+  const { i18n } = useTranslation()
 
   const columns: DivergentColumn<IAuthLog, string>[] = [
     {
@@ -235,13 +238,16 @@ function AuthLogDialog() {
       cell: ({ row }) => (
         <>
           {row.original.created_at
-            ? new Date(row.original.created_at).toLocaleDateString("tr-TR", {
-                day: "2-digit",
-                month: "long",
-                year: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-              })
+            ? new Date(row.original.created_at).toLocaleDateString(
+                i18n.language,
+                {
+                  day: "2-digit",
+                  month: "long",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                }
+              )
             : "Bilinmiyor"}
         </>
       ),

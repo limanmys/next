@@ -1,3 +1,6 @@
 {
-    "title": "Dashboard"
+    "title": "Dashboard",
+    "cards": {
+        "server_count": "Server Count"
+    }
 }

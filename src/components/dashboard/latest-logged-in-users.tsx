@@ -3,6 +3,7 @@ import { apiService } from "@/services"
 import { AvatarImage } from "@radix-ui/react-avatar"
 import md5 from "blueimp-md5"
 import { FolderX } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { IUser } from "@/types/user"
 
@@ -10,6 +11,7 @@ import { Avatar, AvatarFallback } from "../ui/avatar"
 import { Skeleton } from "../ui/skeleton"
 
 export default function LatestLoggedInUsers() {
+  const { t, i18n } = useTranslation("dashboard")
   const [loading, setLoading] = useState<Boolean>(true)
   const [data, setData] = useState<IUser[]>([])
 
@@ -28,7 +30,7 @@ export default function LatestLoggedInUsers() {
   return (
     <>
       <h3 className="p-8 pb-3 text-lg font-semibold">
-        Son Giriş Yapan Kullanıcılar
+        {t("latest_logged_in_users.title")}
       </h3>
 
       <div className="flex flex-col divide-y">
@@ -55,11 +57,11 @@ export default function LatestLoggedInUsers() {
 
                   <div className="text-sm">
                     <span className="font-medium text-muted-foreground">
-                      Son Giriş Tarihi:{" "}
+                      {t("latest_logged_in_users.last_login_at")}:{" "}
                     </span>{" "}
                     <span className="text-muted-foreground/80">
                       {new Date(item.last_login_at).toLocaleDateString(
-                        "tr-TR",
+                        i18n.language,
                         {
                           day: "2-digit",
                           month: "long",
@@ -73,7 +75,7 @@ export default function LatestLoggedInUsers() {
 
                   <div className="text-sm">
                     <span className="font-medium text-muted-foreground">
-                      Giriş Yapılan Son IP:{" "}
+                      {t("latest_logged_in_users.last_login_ip")}:{" "}
                     </span>{" "}
                     <span className="text-muted-foreground/80">
                       {item.last_login_ip}
@@ -102,13 +104,15 @@ export default function LatestLoggedInUsers() {
 
                   <div className="text-sm">
                     <span className="flex items-center gap-[6px] font-medium text-muted-foreground">
-                      Son Giriş Tarihi: <Skeleton className="h-4 w-[50%]" />
+                      {t("latest_logged_in_users.last_login_at")}:{" "}
+                      <Skeleton className="h-4 w-[50%]" />
                     </span>
                   </div>
 
                   <div className="text-sm">
                     <span className="flex items-center gap-[6px] font-medium text-muted-foreground">
-                      Giriş Yapılan Son IP: <Skeleton className="h-4 w-[50%]" />
+                      {t("latest_logged_in_users.last_login_ip")}:{" "}
+                      <Skeleton className="h-4 w-[50%]" />
                     </span>
                   </div>
                 </div>
@@ -123,10 +127,10 @@ export default function LatestLoggedInUsers() {
           <FolderX className="h-8 w-8 text-muted-foreground" />
           <div className="flex flex-col items-center justify-center gap-1">
             <h5 className="font-semibold text-muted-foreground">
-              Kullanıcı yok
+              {t("latest_logged_in_users.empty_title")}
             </h5>
             <span className="text-sm font-medium text-muted-foreground">
-              Yeni kullanıcılar oluşturdukça bu alan dolacaktır.
+              {t("latest_logged_in_users.empty_description")}
             </span>
           </div>
         </div>

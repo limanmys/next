@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next"
+
 import { Settings } from "@/lib/settings"
 import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 import PageHeader from "@/components/ui/page-header"
@@ -5,25 +7,23 @@ import SettingCard from "@/components/settings/setting-card"
 
 export default function SettingsPage() {
   const user = useCurrentUser()
+  const { t } = useTranslation("settings")
 
   return (
     <>
-      <PageHeader
-        title="Ayarlar"
-        description="Bu sayfa aracılığıyla kişisel ayarlarınızı ve Liman MYS'nin sistem ayarlarını yapabilirsiniz."
-      />
+      <PageHeader title={t("title")} description={t("description")} />
 
       <div className="h-full flex-1 flex-col p-8 pt-2 md:flex">
         <h2 className="mb-3 text-xl font-bold tracking-tight">
-          Kullanıcı Ayarları
+          {t("user_settings")}
         </h2>
         <div className="mb-8 grid grid-cols-3 gap-8">
           {Settings.user.map((setting) => (
             <SettingCard
               href={setting.href}
               icon={setting.icon}
-              title={setting.title}
-              description={setting.description}
+              title={t(`${setting.id}.title`)}
+              description={t(`${setting.id}.description`)}
               key={setting.href}
             />
           ))}
@@ -31,15 +31,15 @@ export default function SettingsPage() {
         {user.status === 1 && (
           <>
             <h2 className="mb-3 text-xl font-bold tracking-tight">
-              Sistem Ayarları
+              {t("system_settings")}
             </h2>
             <div className="grid grid-cols-3 gap-8">
               {Settings.system.map((setting) => (
                 <SettingCard
                   href={setting.href}
                   icon={setting.icon}
-                  title={setting.title}
-                  description={setting.description}
+                  title={t(`${setting.id}.title`)}
+                  description={t(`${setting.id}.description`)}
                   key={setting.href}
                 />
               ))}

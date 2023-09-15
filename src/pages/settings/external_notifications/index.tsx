@@ -4,6 +4,7 @@ import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FileWarning, PlusCircle } from "lucide-react"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
 import { IExternalNotification } from "@/types/notification"
@@ -32,6 +33,7 @@ import { ExternalNotificationActions } from "@/components/settings/external-noti
 export default function ExternalNotificationPage() {
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IExternalNotification[]>([])
+  const { i18n } = useTranslation()
 
   const emitter = useEmitter()
 
@@ -59,13 +61,16 @@ export default function ExternalNotificationPage() {
       cell: ({ row }) => (
         <>
           {row.original.last_used
-            ? new Date(row.original.last_used).toLocaleDateString("tr-TR", {
-                day: "2-digit",
-                month: "long",
-                year: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-              })
+            ? new Date(row.original.last_used).toLocaleDateString(
+                i18n.language,
+                {
+                  day: "2-digit",
+                  month: "long",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                }
+              )
             : "Bilinmiyor"}
         </>
       ),

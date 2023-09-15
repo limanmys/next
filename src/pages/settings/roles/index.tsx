@@ -4,6 +4,7 @@ import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Footprints, Link2, PlusCircle } from "lucide-react"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
 import { IRole } from "@/types/role"
@@ -33,6 +34,7 @@ export default function RoleSettingsPage() {
   const router = useRouter()
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IRole[]>([])
+  const { i18n } = useTranslation()
 
   const emitter = useEmitter()
 
@@ -57,7 +59,7 @@ export default function RoleSettingsPage() {
     {
       accessorKey: "updated_at",
       accessorFn: (row) => {
-        return new Date(row.updated_at).toLocaleDateString("tr-TR", {
+        return new Date(row.updated_at).toLocaleDateString(i18n.language, {
           day: "2-digit",
           month: "long",
           year: "numeric",

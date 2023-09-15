@@ -5,6 +5,7 @@ import {
 } from "@/providers/sidebar-provider"
 import { apiService } from "@/services"
 import { FolderX } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { IServer } from "@/types/server"
 
@@ -12,6 +13,7 @@ import { Skeleton } from "../ui/skeleton"
 import ServerCard from "./server-card"
 
 export default function FavoriteServers() {
+  const { t } = useTranslation("dashboard")
   const [loading, setLoading] = useState<Boolean>(true)
   const [data, setData] = useState<IServer[]>([])
 
@@ -31,7 +33,9 @@ export default function FavoriteServers() {
 
   return (
     <>
-      <h3 className="p-8 pb-3 text-lg font-semibold">Favori Sunucular</h3>
+      <h3 className="p-8 pb-3 text-lg font-semibold">
+        {t("favorite_servers.title")}
+      </h3>
 
       <div className="grid grid-cols-2 gap-6 p-8 pt-3">
         {!loading &&
@@ -58,9 +62,11 @@ export default function FavoriteServers() {
         <div className="flex h-[50%] w-full flex-col items-center justify-center gap-3">
           <FolderX className="h-8 w-8 text-muted-foreground" />
           <div className="flex flex-col items-center justify-center gap-1">
-            <h5 className="font-semibold text-muted-foreground">Sunucu yok</h5>
+            <h5 className="font-semibold text-muted-foreground">
+              {t("favorite_servers.empty_title")}
+            </h5>
             <span className="text-sm font-medium text-muted-foreground">
-              Henüz sunucu eklememişsiniz. Ekledikçe bu alan dolacaktır.
+              {t("favorite_servers.empty_description")}
             </span>
           </div>
         </div>

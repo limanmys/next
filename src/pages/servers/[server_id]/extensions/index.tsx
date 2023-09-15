@@ -7,6 +7,7 @@ import {
 } from "@/providers/sidebar-provider"
 import { apiService } from "@/services"
 import { Link2, MinusCircle, Sliders, UploadCloud } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { IExtension } from "@/types/extension"
 import { DivergentColumn } from "@/types/table"
@@ -38,6 +39,7 @@ export default function ServerExtensionPage() {
   const tableRef = useRef<any>()
   const sidebarCtx = useSidebarContext()
   const { toast } = useToast()
+  const { i18n } = useTranslation()
 
   const columns: DivergentColumn<IExtension, string>[] = [
     {
@@ -97,7 +99,7 @@ export default function ServerExtensionPage() {
     {
       accessorKey: "updated",
       accessorFn: (row) => {
-        return new Date(row.updated).toLocaleDateString("tr-TR", {
+        return new Date(row.updated).toLocaleDateString(i18n.language, {
           day: "2-digit",
           month: "long",
           year: "numeric",

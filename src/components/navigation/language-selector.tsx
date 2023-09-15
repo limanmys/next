@@ -20,9 +20,6 @@ const changeLanguage = (i18n: any, language: any) => {
   apiService
     .getInstance()
     .post("/locale", { locale: language })
-    .then(() => {
-      window.location.reload()
-    })
     .catch(() => {
       // Do nothing
     })
@@ -35,7 +32,7 @@ const languages = [
 ]
 
 export default function LanguageSelector() {
-  const { t, i18n } = useTranslation()
+  const { t, i18n } = useTranslation("common")
 
   return (
     <DropdownMenu>
@@ -51,7 +48,7 @@ export default function LanguageSelector() {
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>Dil Seçimi</DropdownMenuLabel>
+        <DropdownMenuLabel>{t("language_selector.title")}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {languages.map((language) => (
           <DropdownMenuCheckboxItem

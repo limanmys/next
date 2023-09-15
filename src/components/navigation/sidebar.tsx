@@ -15,6 +15,7 @@ import {
   Server,
   Star,
 } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { IServer } from "@/types/server"
 import { cn } from "@/lib/utils"
@@ -33,6 +34,7 @@ export function Sidebar({ className }: { className?: string }) {
   const [parent] = useAutoAnimate()
   const [sub] = useAutoAnimate()
   const user = useCurrentUser()
+  const { t } = useTranslation("common")
 
   useEffect(() => {
     sidebarCtx[SIDEBARCTX_STATES.refreshServers]()
@@ -60,7 +62,7 @@ export function Sidebar({ className }: { className?: string }) {
                 {!selected ? (
                   <>
                     <h2 className="mb-2 px-2 text-lg font-semibold tracking-tight">
-                      Sunucular
+                      {t("sidebar.servers")}
                     </h2>
                     <div className="space-y-1" ref={sub}>
                       {sidebarCtx[SIDEBARCTX_STATES.serversLoading] ? (
@@ -106,7 +108,7 @@ export function Sidebar({ className }: { className?: string }) {
                                 className="mt-1 w-full justify-start"
                               >
                                 <Server className="mr-2 h-4 w-4" />
-                                Tüm sunucuları gör
+                                {t("sidebar.all_servers")}
                               </Button>
                             </Link>
                           ) : (
@@ -120,15 +122,14 @@ export function Sidebar({ className }: { className?: string }) {
                                       className="mb-4 mt-1 w-full justify-start"
                                     >
                                       <Server className="mr-2 h-4 w-4" />
-                                      Yeni sunucu ekle
+                                      {t("sidebar.add_server")}
                                     </Button>
                                   </Link>
 
                                   <ArrowUp className="mx-auto block h-8 w-8 animate-bounce" />
 
                                   <span className="block p-3 text-sm font-medium">
-                                    Liman&apos;ı aktif şekilde kullanmaya
-                                    başlamak için yukarıdan sunucu ekleyin.
+                                    {t("sidebar.admin_message")}
                                   </span>
                                 </>
                               ) : (
@@ -136,9 +137,7 @@ export function Sidebar({ className }: { className?: string }) {
                                   <AlertTriangle className="mx-auto block h-8 w-8" />
 
                                   <span className="block p-2 text-sm font-medium">
-                                    Liman&apos;ı aktif şekilde kullanmaya
-                                    başlamak için sistem yöneticinizden size rol
-                                    tanımlamasını talep ediniz.
+                                    {t("sidebar.user_message")}
                                   </span>
                                 </>
                               )}
@@ -157,7 +156,7 @@ export function Sidebar({ className }: { className?: string }) {
                       onClick={() => setSelected("")}
                     >
                       <ChevronLeft className="mr-2 h-4 w-4" />
-                      Sunucular
+                      {t("sidebar.servers")}
                     </Button>
 
                     <SidebarSelected />

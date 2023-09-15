@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { apiService } from "@/services"
 import { BellOff } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { INotification } from "@/types/notification"
 import PageHeader from "@/components/ui/page-header"
@@ -53,6 +54,8 @@ export default function NotificationsPage() {
 }
 
 function NotificationItem({ notification }: { notification: INotification }) {
+  const { i18n } = useTranslation()
+
   return (
     <li
       className="mb-10 ml-6"
@@ -60,7 +63,7 @@ function NotificationItem({ notification }: { notification: INotification }) {
     >
       <span className="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 ring-4 ring-white dark:bg-blue-900 dark:ring-gray-900"></span>
       <time className="text-sm font-normal leading-none text-muted-foreground">
-        {new Date(notification.send_at).toLocaleDateString("tr-TR", {
+        {new Date(notification.send_at).toLocaleDateString(i18n.language, {
           day: "2-digit",
           month: "long",
           year: "numeric",

@@ -1,0 +1,23 @@
+{
+    "table": {
+        "no_records": "Kayıt yok",
+        "pagination": {
+            "selected": "seçildi.",
+            "page_size": "Sayfa boyutu",
+            "page": "Sayfa",
+            "total": "Toplam",
+            "records": "kayıt"
+        },
+        "toolbar": {
+            "clear_filters": "Filtreleri Temizle",
+            "view": "Görüntüleme",
+            "columns": "Sütunlar",
+            "search_placeholder": "Arama..."
+        },
+        "column": {
+            "asc": "Artan",
+            "desc": "Azalan",
+            "hide": "Gizle"
+        }
+    }
+}

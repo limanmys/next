@@ -1,0 +1,78 @@
+{
+    "success": "Başarılı",
+    "error": "Hata",
+    "title": "Ayarlar",
+    "description": "Bu sayfa aracılığıyla kişisel ayarlarınızı ve Liman MYS'nin sistem ayarlarını yapabilirsiniz.",
+    "user_settings": "Kullanıcı Ayarları",
+    "system_settings": "Sistem Ayarları",
+    "profile": {
+        "title": "Profil",
+        "description": "Kullanıcı adınızı, e-posta adresinizi ve şifrenizi değiştirebilir ve en son giriş yaptığınız tarih ve IP adresi gibi detayları görüntüleyebilirsiniz.",
+        "validations": {
+            "name": "Ad soyad en az 3 karakter olmalıdır.",
+            "email": "Geçerli bir e-posta adresi giriniz.",
+            "password": "Şifreler eşleşmiyor."
+        },
+        "toasts": {
+            "success": 
+              "Bilgileriniz başarıyla düzenlendi. Değişikleri görmek için tekrardan giriş yapmanız gerekmektedir.",
+            "error": "Bilgileriniz düzenlenirken bir hata oluştu."
+        },
+        "form": {
+            "title": "Profil Bilgileri",
+            "description": "Kullanıcı adınızı, e-posta adresinizi ve şifrenizi bu kısımdan güncelleyebilirsiniz.",
+            "name": "İsim Soyisim",
+            "name_placeholder": "Liman Kullanıcısı",
+            "email": "E-Posta Adresi",
+            "email_placeholder": "dummy@liman.dev",
+            "old_password": "Eski Parolanız",
+            "password": "Parolanız",
+            "password_confirmation": "Parola Onayı",
+            "save": "Kaydet"
+        }
+    },
+    "vault": {
+        "title": "Kasa",
+        "description": "Sunucular üzerindeki eklenti ayarlarını, şifrelerinizi ve yöneticiyseniz diğer kullanıcıların girdiği değerleri değiştirebilirsiniz."
+    },
+    "tokens": {
+        "title": "Kişisel Erişim Anahtarları",
+        "description": "Kişisel erişim anahtarları oluşturarak Liman MYS'nin sağladığı dış API uçlarını kullanabilirsiniz."
+    },
+    "extensions": {
+        "title": "Eklentiler",
+        "description": "Bu sayfa aracılığıyla sisteminizdeki eklentileri yönetebilir, sürümlerini güncelleyebilir ve yeni eklentiler yükleyebilirsiniz."
+    },
+    "users": {
+        "title": "Kullanıcılar",
+        "description": "Bu sayfa aracılığıyla kullanıcılara roller ekleyebilir, kullanıcı profillerini düzenleyebilir ve yenilerini ekleyebilirsiniz."
+    },
+    "roles": {
+        "title": "Roller",
+        "description": "Kullanıcıların erişim yetki seviyelerini detaylı şekilde gruplar ve kişiler bazında düzenleyebilirsiniz."
+    },
+    "email": {
+        "title": "E-Posta",
+        "description": "Sistemin e-posta gönderim ayarlarını bu sayfa üzerinden detaylı şekilde ayarlayabilir ve test edebilirsiniz."
+    },
+    "external_notifications": {
+        "title": "Dış Bildirimler",
+        "description": "Eklenti sunucularının ve dış uygulamaların Liman'a bildirim göndermesini IP kısıtı koyarak sağlayabilirsiniz."
+    },
+    "subscriptions": {
+        "title": "Abonelikler",
+        "description": "Sistem ve eklenti aboneliklerinizi, yenilemelerinizi bu sayfa aracılığıyla gözlemleyebilirsiniz."
+    },
+    "access": {
+        "title": "Erişim",
+        "description": "Giriş yapılabilecek giriş araçlarını ayarlamanızı sağlar. Keycloak ve LDAP girişlerini bu sayfa üzerinden ayarlayabilirsiniz."
+    },
+    "health": {
+        "title": "Sağlık Durumu",
+        "description": "Liman Merkezi Yönetim Sistemi'nin sağlık durumunu görüntüleyebilir, güvenlik geliştirme önerilerini kolayca uygulayabilirsiniz."
+    },
+    "advanced": {
+        "title": "Gelişmiş Ayarlar",
+        "description": "Sistemin DNS ayarlarını, sertifika kurulumları ve log yönlendirme gibi değişiklikleri bu sayfa üzerinden yapabilirsiniz."
+    }
+}

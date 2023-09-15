@@ -3,6 +3,7 @@ import { useRouter } from "next/router"
 import { NextPageWithLayout } from "@/pages/_app"
 import { apiService } from "@/services"
 import { PlusCircle } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { ICertificate } from "@/types/certificate"
 import { DivergentColumn } from "@/types/table"
@@ -19,6 +20,7 @@ const AdvancedCertificateSettingsPage: NextPageWithLayout = () => {
 
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<ICertificate[]>([])
+  const { i18n } = useTranslation()
 
   const emitter = useEmitter()
 
@@ -46,13 +48,16 @@ const AdvancedCertificateSettingsPage: NextPageWithLayout = () => {
       cell: ({ row }) => (
         <>
           {row.original.updated_at
-            ? new Date(row.original.updated_at).toLocaleDateString("tr-TR", {
-                day: "2-digit",
-                month: "long",
-                year: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-              })
+            ? new Date(row.original.updated_at).toLocaleDateString(
+                i18n.language,
+                {
+                  day: "2-digit",
+                  month: "long",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                }
+              )
             : "Bilinmiyor"}
         </>
       ),

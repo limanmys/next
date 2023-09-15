@@ -16,6 +16,7 @@ import {
 export const Settings = {
   user: [
     {
+      id: "profile",
       title: "Profil",
       description:
         "Kullanıcı adınızı, e-posta adresinizi ve şifrenizi değiştirebilir ve en son giriş yaptığınız tarih ve IP adresi gibi detayları görüntüleyebilirsiniz.",
@@ -23,6 +24,7 @@ export const Settings = {
       href: "/settings/profile",
     },
     {
+      id: "vault",
       title: "Kasa",
       description:
         "Sunucular üzerindeki eklenti ayarlarını, şifrelerinizi ve yöneticiyseniz diğer kullanıcıların girdiği değerleri değiştirebilirsiniz.",
@@ -30,6 +32,7 @@ export const Settings = {
       href: "/settings/vault",
     },
     {
+      id: "tokens",
       title: "Kişisel Erişim Anahtarları",
       description:
         "Kişisel erişim anahtarları oluşturarak Liman MYS'nin sağladığı dış API uçlarını kullanabilirsiniz.",
@@ -39,6 +42,7 @@ export const Settings = {
   ],
   system: [
     {
+      id: "extensions",
       title: "Eklentiler",
       description:
         "Bu sayfa aracılığıyla sisteminizdeki eklentileri yönetebilir, sürümlerini güncelleyebilir ve yeni eklentiler yükleyebilirsiniz.",
@@ -46,6 +50,7 @@ export const Settings = {
       href: "/settings/extensions",
     },
     {
+      id: "users",
       title: "Kullanıcılar",
       description:
         "Bu sayfa aracılığıyla kullanıcılara roller ekleyebilir, kullanıcı profillerini düzenleyebilir ve yenilerini ekleyebilirsiniz.",
@@ -53,6 +58,7 @@ export const Settings = {
       href: "/settings/users",
     },
     {
+      id: "roles",
       title: "Roller",
       description:
         "Kullanıcıların erişim yetki seviyelerini detaylı şekilde gruplar ve kişiler bazında düzenleyebilirsiniz.",
@@ -60,6 +66,7 @@ export const Settings = {
       href: "/settings/roles",
     },
     {
+      id: "email",
       title: "E-Posta",
       description:
         "Sistemin e-posta gönderim ayarlarını bu sayfa üzerinden detaylı şekilde ayarlayabilir ve test edebilirsiniz.",
@@ -67,6 +74,7 @@ export const Settings = {
       href: "/settings/mail",
     },
     {
+      id: "external_notifications",
       title: "Dış Bildirimler",
       description:
         "Eklenti sunucularının ve dış uygulamaların Liman'a bildirim göndermesini IP kısıtı koyarak sağlayabilirsiniz.",
@@ -74,6 +82,7 @@ export const Settings = {
       href: "/settings/external_notifications",
     },
     {
+      id: "subscriptions",
       title: "Abonelikler",
       description:
         "Sistem ve eklenti aboneliklerinizi, yenilemelerinizi bu sayfa aracılığıyla gözlemleyebilirsiniz.",
@@ -81,6 +90,7 @@ export const Settings = {
       href: "/settings/subscriptions",
     },
     {
+      id: "access",
       title: "Erişim",
       description:
         "Giriş yapılabilecek giriş araçlarını ayarlamanızı sağlar. Keycloak ve LDAP girişlerini bu sayfa üzerinden ayarlayabilirsiniz.",
@@ -88,6 +98,7 @@ export const Settings = {
       href: "/settings/access",
     },
     {
+      id: "health",
       title: "Sağlık Durumu",
       description:
         "Liman Merkezi Yönetim Sistemi'nin sağlık durumunu görüntüleyebilir, güvenlik geliştirme önerilerini kolayca uygulayabilirsiniz.",
@@ -95,6 +106,7 @@ export const Settings = {
       href: "/settings/health",
     },
     {
+      id: "advanced",
       title: "Gelişmiş Ayarlar",
       description:
         "Sistemin DNS ayarlarını, sertifika kurulumları ve log yönlendirme gibi değişiklikleri bu sayfa üzerinden yapabilirsiniz.",

@@ -3,6 +3,7 @@ import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { CommandLoading } from "cmdk"
 import { Search } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { useDebounce } from "@/lib/debounce"
 import {
@@ -37,6 +38,7 @@ const search = (
 
 export default function CommandMenu() {
   const router = useRouter()
+  const { t } = useTranslation("common")
 
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState("")
@@ -67,7 +69,7 @@ export default function CommandMenu() {
         className="relative px-2 sm:w-[250px] lg:w-[500px] "
         onClick={() => setOpen(true)}
       >
-        <Input type="text" placeholder="Arama..." />
+        <Input type="text" placeholder={t("command_menu.search")} />
         <kbd className="pointer-events-none absolute right-11 top-[11px] inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
           <span className="text-xs">⌘</span>K
         </kbd>
@@ -75,7 +77,7 @@ export default function CommandMenu() {
       </div>
       <CommandDialog open={open} onOpenChange={setOpen}>
         <CommandInput
-          placeholder="Arama yapın..."
+          placeholder={t("command_menu.search_placeholder")}
           value={value}
           onValueChange={(text: string) => {
             changeText(text)
@@ -91,7 +93,7 @@ export default function CommandMenu() {
             </CommandLoading>
           )}
 
-          <CommandEmpty>Sonuç bulunamadı.</CommandEmpty>
+          <CommandEmpty>{t("command_menu.no_results")}</CommandEmpty>
 
           {Object.keys(results).map((key: any, i: number) => {
             return (

@@ -5,6 +5,7 @@ import {
   ChevronsLeft,
   ChevronsRight,
 } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -24,20 +25,25 @@ export function DataTablePagination<TData>({
   table,
   selectable,
 }: DataTablePaginationProps<TData>) {
+  const { t } = useTranslation("components")
+
   return (
     <div className="flex items-center justify-between px-8">
       <div className="flex-1 text-sm text-muted-foreground">
         {selectable && (
           <>
             {table.getFilteredSelectedRowModel().rows.length} /{" "}
-            {table.getFilteredRowModel().rows.length} seçildi.
+            {table.getFilteredRowModel().rows.length}{" "}
+            {t("table.pagination.selected")}
           </>
         )}
       </div>
 
       <div className="flex items-center space-x-6 lg:space-x-8">
         <div className="flex items-center space-x-2">
-          <p className="text-sm font-medium">Sayfa boyutu</p>
+          <p className="text-sm font-medium">
+            {t("table.pagination.page_size")}
+          </p>
           <Select
             value={`${table.getState().pagination.pageSize}`}
             onValueChange={(value: string) => {
@@ -57,9 +63,11 @@ export function DataTablePagination<TData>({
           </Select>
         </div>
         <div className="flex w-[220px] items-center justify-center text-sm font-medium">
-          Sayfa {table.getState().pagination.pageIndex + 1} /{" "}
-          {table.getPageCount() || 1}, Toplam{" "}
-          {table.getFilteredRowModel().rows.length} kayıt
+          {t("table.pagination.page")}{" "}
+          {table.getState().pagination.pageIndex + 1} /{" "}
+          {table.getPageCount() || 1}, {t("table.pagination.total")}{" "}
+          {table.getFilteredRowModel().rows.length}{" "}
+          {t("table.pagination.records")}
         </div>
         <div className="flex items-center space-x-2">
           <Button

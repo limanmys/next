@@ -17,6 +17,7 @@ import {
   TrendingUp,
   Users,
 } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { IExtension } from "@/types/extension"
 import { IServer } from "@/types/server"
@@ -40,6 +41,7 @@ export default function SidebarSelected() {
   ] = useSidebarContext()
   const sidebarCtx = useSidebarContext()
   const user = useCurrentUser()
+  const { t } = useTranslation("common")
 
   useEffect(() => {
     setSelectedLoading(true)
@@ -93,7 +95,7 @@ export default function SidebarSelected() {
             ))}
           </div>
           <h2 className="mb-2 mt-5 px-2 text-lg font-semibold tracking-tight">
-            Eklentiler
+            {t("sidebar.extensions")}
           </h2>
           <div className="space-y-1 p-2">
             {[...Array(3)].map((_, i) => (
@@ -140,7 +142,7 @@ export default function SidebarSelected() {
                   disabled={elementIsActive(selectedData)}
                 >
                   <TrendingUp className="mr-2 h-4 w-4" />
-                  Sistem Durumu
+                  {t("sidebar.system_status")}
                 </ServerItem>
                 <ServerItem
                   link={`/servers/${selected}/extensions`}
@@ -148,7 +150,7 @@ export default function SidebarSelected() {
                   disabled={!selectedData.is_online}
                 >
                   <ToyBrick className="mr-2 h-4 w-4" />
-                  Eklentiler
+                  {t("sidebar.extensions")}
                 </ServerItem>
               </>
             )}
@@ -159,7 +161,7 @@ export default function SidebarSelected() {
                 disabled={elementIsActive(selectedData)}
               >
                 <ServerCog className="mr-2 h-4 w-4" />
-                Servisler
+                {t("sidebar.services")}
               </ServerItem>
             )}
             {user.permissions.server_details && (
@@ -169,38 +171,38 @@ export default function SidebarSelected() {
                   disabled={elementIsActive(selectedData)}
                 >
                   <PackageOpen className="mr-2 h-4 w-4" />
-                  Paketler
+                  {t("sidebar.packages")}
                 </ServerItem>
                 <ServerItem
                   link={`/servers/${selected}/updates`}
                   disabled={elementIsActive(selectedData)}
                 >
                   <PackageSearch className="mr-2 h-4 w-4" />
-                  Güncellemeler
+                  {t("sidebar.updates")}
                 </ServerItem>
                 <div className="mb-1">
                   <DropdownServerItem
                     items={[
                       {
                         link: `/servers/${selected}/users/local`,
-                        name: "Yerel Kullanıcılar",
+                        name: t("sidebar.user_management.local_users"),
                         exact: true,
                       },
                       {
                         link: `/servers/${selected}/users/groups`,
-                        name: "Yerel Gruplar",
+                        name: t("sidebar.user_management.local_groups"),
                         exact: true,
                       },
                       {
                         link: `/servers/${selected}/users/sudoers`,
-                        name: "Yetkili Kullanıcılar",
+                        name: t("sidebar.user_management.sudoers"),
                         exact: true,
                       },
                     ]}
                     disabled={elementIsActive(selectedData)}
                   >
                     <Users className="mr-2 h-4 w-4" />
-                    Kullanıcı İşlemleri
+                    {t("sidebar.user_management.title")}
                   </DropdownServerItem>
                 </div>
                 <ServerItem
@@ -208,7 +210,7 @@ export default function SidebarSelected() {
                   disabled={elementIsActive(selectedData)}
                 >
                   <Network className="mr-2 h-4 w-4" />
-                  Açık Portlar
+                  {t("sidebar.open_ports")}
                 </ServerItem>
               </>
             )}
@@ -219,7 +221,7 @@ export default function SidebarSelected() {
                 disabled={!selectedData.is_online}
               >
                 <FileClock className="mr-2 h-4 w-4" />
-                Erişim Kayıtları
+                {t("sidebar.access_logs")}
               </ServerItem>
             )}
           </div>
@@ -227,7 +229,7 @@ export default function SidebarSelected() {
           {selectedData.extensions && selectedData.extensions.length > 0 && (
             <>
               <h2 className="mb-2 mt-5 px-2 text-lg font-semibold tracking-tight">
-                Eklentiler
+                {t("sidebar.extensions")}
               </h2>
               <div className="space-y-1">
                 {selectedData.extensions.map((extension: IExtension) => (

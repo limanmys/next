@@ -37,7 +37,7 @@ const RootLayout: AppType = ({ Component, pageProps }: AppPropsWithLayout) => {
 
   useSyncLanguage(locale || user.locale || "tr")
 
-  const { t } = useTranslation("common")
+  const { t, ready } = useTranslation("common")
 
   return (
     <>
@@ -50,7 +50,7 @@ const RootLayout: AppType = ({ Component, pageProps }: AppPropsWithLayout) => {
         <div className={cn("font-inter h-screen bg-background antialiased")}>
           {!router.asPath.includes("/auth/login") ? (
             <SidebarProvider>
-              <Layout Component={Component} pageProps={pageProps} />
+              {ready && <Layout Component={Component} pageProps={pageProps} />}
             </SidebarProvider>
           ) : (
             <Component {...pageProps} key={router.route} />

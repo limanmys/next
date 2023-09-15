@@ -1,3 +1,62 @@
 {
-    "page_title": "Liman Merkezi Yönetim Sistemi"
+    "page_title": "Liman Merkezi Yönetim Sistemi",
+    "command_menu": {
+        "search": "Arama...",
+        "search_placeholder": "Arama yapın...",
+        "no_results": "Sonuç bulunamadı."
+    },
+    "language_selector": {
+        "title": "Dil Seçimi"
+    },
+    "notifications": {
+        "title": "Bildirimleriniz",
+        "mark_all_as_read": "Tümünü Okundu Olarak İşaretle",
+        "empty": "Bildirim Yok",
+        "empty_message": "Bildirimleriniz burada görünecektir.",
+        "manage": "Bildirimleri Yönet",
+        "show_all": "Tüm Bildirimleri Görüntüle"
+    },
+    "profile_dropdown": {
+        "last_login_at": "Son Giriş Tarihi",
+        "last_login_ip": "Giriş Yapılan Son IP",
+        "profile": "Profil",
+        "logout": "Çıkış Yap"
+    },
+    "sidebar": {
+        "servers": "Sunucular",
+        "all_servers": "Tüm sunucuları gör",
+        "add_server": "Yeni sunucu ekle",
+        "admin_message": "Liman'ı aktif şekilde kullanmaya başlamak için yukarıdan sunucu ekleyin.",
+        "user_message": "Liman'ı aktif şekilde kullanmaya başlamak için sistem yöneticinizden size rol tanımlamasını talep ediniz.",
+        "extensions": "Eklentiler",
+        "system_status": "Sistem Durumu",
+        "services": "Servisler",
+        "packages": "Paketler",
+        "updates": "Güncellemeler",
+        "user_management": {
+            "title": "Kullanıcı İşlemleri",
+            "local_users": "Yerel Kullanıcılar",
+            "local_groups": "Yerel Gruplar",
+            "sudoers": "Yetkili Kullanıcılar"
+        },
+        "open_ports": "Açık Portlar",
+        "access_logs": "Erişim Kayıtları",
+        "settings": {
+            "title": "Ayarlar",
+            "user": "Kullanıcı Ayarları",
+            "system": "Sistem Ayarları",
+            "profile": "Profil",
+            "vault": "Kasa",
+            "tokens": "Kişisel Erişim Anahtarları",
+            "extensions": "Eklentiler",
+            "users": "Kullanıcılar",
+            "roles": "Roller",
+            "email": "E-Posta",
+            "external_notifications": "Dış Bildirimler",
+            "subscriptions": "Abonelikler",
+            "access": "Erişim",
+            "health": "Sağlık Durumu",
+            "advanced": "Gelişmiş Ayarlar"
+        }
+    }
 }

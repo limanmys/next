@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
-import { useSidebarContext } from "@/providers/sidebar-provider"
 import { apiService } from "@/services"
 import { FolderX } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { IMostUsedExtension } from "@/types/dashboard"
 
@@ -11,11 +11,10 @@ import ExtensionCard from "./extension-card"
 
 export default function MostUsedExtensions() {
   const router = useRouter()
+  const { t } = useTranslation("dashboard")
 
   const [loading, setLoading] = useState<Boolean>(true)
   const [data, setData] = useState<IMostUsedExtension[]>([])
-
-  const sidebarCtx = useSidebarContext()
 
   useEffect(() => {
     apiService
@@ -32,7 +31,7 @@ export default function MostUsedExtensions() {
   return (
     <>
       <h3 className="p-8 pb-3 text-lg font-semibold">
-        Sık Kullanılan Eklentiler
+        {t("most_used_extensions.title")}
       </h3>
 
       <div className="grid grid-cols-2 gap-6 p-8 pt-3">
@@ -63,9 +62,11 @@ export default function MostUsedExtensions() {
         <div className="flex h-[50%] w-full flex-col items-center justify-center gap-3">
           <FolderX className="h-8 w-8 text-muted-foreground" />
           <div className="flex flex-col items-center justify-center gap-1">
-            <h5 className="font-semibold text-muted-foreground">Eklenti yok</h5>
+            <h5 className="font-semibold text-muted-foreground">
+              {t("most_used_extensions.empty_title")}
+            </h5>
             <span className="text-sm font-medium text-muted-foreground">
-              Daha önce hiç eklenti kullanmamışsınız.
+              {t("most_used_extensions.empty_description")}
             </span>
           </div>
         </div>

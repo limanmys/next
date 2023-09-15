@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { apiService } from "@/services"
+import { useTranslation } from "react-i18next"
 
 import { DivergentColumn } from "@/types/table"
 import { IAuthLog } from "@/types/user"
@@ -16,6 +17,7 @@ import {
 export default function AuthLog() {
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IAuthLog[]>([])
+  const { i18n } = useTranslation()
 
   const columns: DivergentColumn<IAuthLog, string>[] = [
     {
@@ -55,13 +57,16 @@ export default function AuthLog() {
       cell: ({ row }) => (
         <>
           {row.original.created_at
-            ? new Date(row.original.created_at).toLocaleDateString("tr-TR", {
-                day: "2-digit",
-                month: "long",
-                year: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-              })
+            ? new Date(row.original.created_at).toLocaleDateString(
+                i18n.language,
+                {
+                  day: "2-digit",
+                  month: "long",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                }
+              )
             : "Bilinmiyor"}
         </>
       ),

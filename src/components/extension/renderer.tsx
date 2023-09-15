@@ -3,6 +3,7 @@ import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { ArrowLeft } from "lucide-react"
 import { useTheme } from "next-themes"
+import { useTranslation } from "react-i18next"
 
 import { Button } from "../ui/button"
 import { Icons } from "../ui/icons"
@@ -15,6 +16,7 @@ export default function ExtensionRenderer() {
   const [error, setError] = useState<any>()
   const container = useRef<HTMLDivElement>(null)
   const { theme } = useTheme()
+  const { i18n } = useTranslation()
 
   const deleteAllIframes = (node: HTMLDivElement) => {
     const iframes = node.querySelectorAll("iframe")
@@ -141,6 +143,7 @@ export default function ExtensionRenderer() {
     router.query.slug,
     container.current,
     keyval,
+    i18n.language,
   ])
 
   useEffect(() => {

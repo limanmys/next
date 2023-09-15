@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import md5 from "blueimp-md5"
 import { Save } from "lucide-react"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
 import { IUser } from "@/types/user"
@@ -18,20 +19,22 @@ import { useToast } from "@/components/ui/use-toast"
 import { Form, FormField, FormMessage } from "@/components/form/form"
 import AuthLog from "@/components/profile/auth_log"
 
-const formSchema = z
-  .object({
-    name: z.string().min(3, "Ad soyad en az 3 karakter olmalıdır."),
-    email: z.string().email("Geçerli bir e-posta adresi giriniz."),
-    old_password: z.string().optional(),
-    password: z.string().optional(),
-    password_confirmation: z.string().optional(),
-  })
-  .refine((data) => data.password === data.password_confirmation, {
-    message: "Şifreler eşleşmiyor.",
-    path: ["password_confirmation"],
-  })
-
 export default function ProfilePage() {
+  const { t } = useTranslation("settings")
+
+  const formSchema = z
+    .object({
+      name: z.string().min(3, t("profile.validations.name")),
+      email: z.string().email(t("profile.validations.email")),
+      old_password: z.string().optional(),
+      password: z.string().optional(),
+      password_confirmation: z.string().optional(),
+    })
+    .refine((data) => data.password === data.password_confirmation, {
+      message: t("profile.validations.password"),
+      path: ["password_confirmation"],
+    })
+
   const { toast } = useToast()
 
   const [user, setUser] = useState<IUser>({} as IUser)
@@ -63,22 +66,21 @@ export default function ProfilePage() {
       .then((res) => {
         if (res.status === 200) {
           toast({
-            title: "Başarılı",
-            description:
-              "Bilgileriniz başarıyla düzenlendi. Değişikleri görmek için tekrardan giriş yapmanız gerekmektedir.",
+            title: t("success"),
+            description: t("profile.toasts.success"),
           })
         } else {
           toast({
-            title: "Hata",
-            description: "Bilgileriniz düzenlenirken bir hata oluştu.",
+            title: t("error"),
+            description: t("profile.toasts.error"),
             variant: "destructive",
           })
         }
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description: "Bilgileriniz düzenlenirken bir hata oluştu.",
+          title: t("error"),
+          description: t("profile.toasts.error"),
           variant: "destructive",
         })
       })
@@ -87,8 +89,8 @@ export default function ProfilePage() {
   return (
     <>
       <PageHeader
-        title="Profil"
-        description="Kullanıcı adınızı, e-posta adresinizi ve şifrenizi değiştirebilir ve en son giriş yaptığınız tarih ve IP adresi gibi detayları görüntüleyebilirsiniz."
+        title={t("profile.title")}
+        description={t("profile.description")}
       />
 
       <div className="p-8">
@@ -126,10 +128,9 @@ export default function ProfilePage() {
             <Card className="mt-8 overflow-hidden">
               <div className="grid grid-cols-4">
                 <div className="bg-foreground/5 p-5">
-                  <h3 className="font-semibold">Profil Bilgileri</h3>
+                  <h3 className="font-semibold">{t("profile.form.title")}</h3>
                   <p className="mt-5 text-sm text-muted-foreground">
-                    Kullanıcı adınızı, e-posta adresinizi ve şifrenizi bu
-                    kısımdan güncelleyebilirsiniz.
+                    {t("profile.form.description")}
                   </p>
                 </div>
                 <div className="col-span-3 p-5">
@@ -143,10 +144,12 @@ export default function ProfilePage() {
                         name="name"
                         render={({ field }) => (
                           <div className="flex flex-col gap-2">
-                            <Label htmlFor="name">İsim Soyisim</Label>
+                            <Label htmlFor="name">
+                              {t("profile.form.name")}
+                            </Label>
                             <Input
                               id="name"
-                              placeholder="Liman Kullanıcısı"
+                              placeholder={t("profile.form.name_placeholder")}
                               {...field}
                             />
                             <FormMessage className="mt-1" />
@@ -159,10 +162,12 @@ export default function ProfilePage() {
                         name="email"
                         render={({ field }) => (
                           <div className="flex flex-col gap-2">
-                            <Label htmlFor="email">E-posta Adresi</Label>
+                            <Label htmlFor="email">
+                              {t("profile.form.email")}
+                            </Label>
                             <Input
                               id="email"
-                              placeholder="Liman Kullanıcısı"
+                              placeholder={t("profile.form.email_placeholder")}
                               {...field}
                             />
                             <FormMessage className="mt-1" />
@@ -175,7 +180,9 @@ export default function ProfilePage() {
                         name="old_password"
                         render={({ field }) => (
                           <div className="flex flex-col gap-2">
-                            <Label htmlFor="old_password">Eski Parolanız</Label>
+                            <Label htmlFor="old_password">
+                              {t("profile.form.old_password")}
+                            </Label>
                             <Input
                               id="old_password"
                               type="password"
@@ -191,7 +198,9 @@ export default function ProfilePage() {
                         name="password"
                         render={({ field }) => (
                           <div className="flex flex-col gap-2">
-                            <Label htmlFor="password">Parolanız</Label>
+                            <Label htmlFor="password">
+                              {t("profile.form.password")}
+                            </Label>
                             <Input id="password" type="password" {...field} />
                             <FormMessage className="mt-1" />
                           </div>
@@ -204,7 +213,7 @@ export default function ProfilePage() {
                         render={({ field }) => (
                           <div className="flex flex-col gap-2">
                             <Label htmlFor="password_confirmation">
-                              Parola Onayı
+                              {t("profile.form.password_confirmation")}
                             </Label>
                             <Input
                               id="password_confirmation"
@@ -218,7 +227,7 @@ export default function ProfilePage() {
 
                       <Button type="submit">
                         <Save className="mr-2 h-4 w-4" />
-                        Kaydet
+                        {t("profile.form.save")}
                       </Button>
                     </form>
                   </Form>

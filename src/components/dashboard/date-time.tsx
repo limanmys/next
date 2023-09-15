@@ -1,9 +1,11 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { useTranslation } from "react-i18next"
 
 export default function DateTimeView() {
   const [date, setDate] = useState(new Date())
+  const { i18n } = useTranslation()
 
   useEffect(() => {
     const timer = setInterval(() => setDate(new Date()), 15000)
@@ -12,7 +14,7 @@ export default function DateTimeView() {
 
   return (
     <>
-      {date.toLocaleString("tr-TR", {
+      {date.toLocaleString(i18n.language, {
         year: "numeric",
         month: "numeric",
         day: "numeric",

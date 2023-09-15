@@ -43,9 +43,9 @@ const Layout = ({ Component, pageProps }: any) => {
               </div>
               <div className="pointer-events-none absolute top-0 z-10 -ml-48 mt-40 flex h-[2px] w-96 rotate-90">
                 <div className="gradient w-full flex-none blur-sm"></div>
-                <div className="gradient -ml-[100%] w-full flex-none blur-[1px]"></div>
-                <div className="gradient -ml-[100%] w-full flex-none blur-sm"></div>
-                <div className="gradient -ml-[100%] w-full flex-none blur-[1px]"></div>
+                <div className="gradient ml-[-100%] w-full flex-none blur-[1px]"></div>
+                <div className="gradient ml-[-100%] w-full flex-none blur-sm"></div>
+                <div className="gradient ml-[-100%] w-full flex-none blur-[1px]"></div>
               </div>
               <GradientSvg className="-mt-18 pointer-events-none absolute top-0 z-0 h-auto w-full rotate-180 opacity-30 dark:opacity-60" />
             </main>

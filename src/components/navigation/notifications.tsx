@@ -6,6 +6,7 @@ import Cookies from "js-cookie"
 import Echo from "laravel-echo"
 import { Bell, BellOff, CheckCheck } from "lucide-react"
 import Pusher from "pusher-js"
+import { useTranslation } from "react-i18next"
 
 import { INotification } from "@/types/notification"
 import { cn } from "@/lib/utils"
@@ -26,6 +27,7 @@ export default function Notifications() {
   const router = useRouter()
   const { sendNotification } = useNotification()
   const user = useCurrentUser()
+  const { t, i18n } = useTranslation("common")
 
   const snd = new Audio("/assets/sound/notification.mp3")
   function beep() {
@@ -147,7 +149,7 @@ export default function Notifications() {
       <DropdownMenuContent className="mr-5 w-[500px]">
         <div className="flex items-center justify-between p-4">
           <h3 className="text-lg font-semibold tracking-tight">
-            Bildirimleriniz
+            {t("notifications.title")}
           </h3>
           <Button
             variant="ghost"
@@ -156,8 +158,8 @@ export default function Notifications() {
             disabled={notifications.length === 0}
             onClick={() => handleMarkAsRead()}
           >
-            <CheckCheck className="mr-2 h-5 w-5" /> Tümünü Okundu Olarak
-            İşaretle
+            <CheckCheck className="mr-2 h-5 w-5" />{" "}
+            {t("notifications.mark_all_as_read")}
           </Button>
         </div>
         <div className="flex flex-col gap-3 p-2">
@@ -182,7 +184,7 @@ export default function Notifications() {
                 <div className="flex items-center justify-between">
                   <div className="text-xs text-slate-700 dark:text-slate-400">
                     {new Date(notification.send_at).toLocaleDateString(
-                      "tr-TR",
+                      i18n.language,
                       {
                         day: "2-digit",
                         month: "long",
@@ -208,11 +210,11 @@ export default function Notifications() {
               <BellOff className="mb-5 h-8 w-8 text-slate-800 dark:text-slate-300" />
 
               <h3 className="text-md mb-1 font-semibold tracking-tight">
-                Bildirim Yok
+                {t("notifications.empty")}
               </h3>
 
               <p className="mb-[3px] text-sm text-slate-700 dark:text-slate-300">
-                Bildirimleriniz burada görünecektir.
+                {t("notifications.empty_message")}
               </p>
             </div>
           </>
@@ -226,7 +228,7 @@ export default function Notifications() {
                 variant="ghost"
                 className="-ml-1 text-muted-foreground"
               >
-                Bildirimleri Yönet
+                {t("notifications.manage")}
               </Button>
             </Link>
           ) : (
@@ -235,7 +237,7 @@ export default function Notifications() {
 
           <Link href="/notifications">
             <Button size="sm" className="rounded-[8px]">
-              Tüm Bildirimleri Görüntüle
+              {t("notifications.show_all")}
             </Button>
           </Link>
         </div>

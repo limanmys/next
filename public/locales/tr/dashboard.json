@@ -1,3 +1,30 @@
 {
-    "title": "Pano"
+    "title": "Pano",
+    "cards": {
+        "server_count": "Sunucu Sayısı",
+        "show_all_servers": "Tüm sunucuları gör",
+        "extension_count": "Eklenti Sayısı",
+        "show_all_extensions": "Tüm eklentileri gör",
+        "user_count": "Kullanıcı Sayısı",
+        "show_all_users": "Tüm kullanıcıları gör",
+        "total_user_count": "adet Liman kullanıcısı",
+        "version": "Liman Versiyonu"
+    },
+    "most_used_extensions": {
+        "title": "Sık Kullanılan Eklentiler",
+        "empty_title": "Eklenti bulunamadı",
+        "empty_description": "Daha önce hiç eklenti kullanmamışsınız."
+    },
+    "latest_logged_in_users": {
+        "title": "Son Giriş Yapan Kullanıcılar",
+        "last_login_at": "Son Giriş Tarihi",
+        "last_login_ip": "Giriş Yapılan Son IP",
+        "empty_title": "Kullanıcı yok",
+        "empty_description": "Yeni kullanıcılar oluşturuldukça bu alan dolacaktır."
+    },
+    "favorite_servers": {
+        "title": "Favori Sunucular",
+        "empty_title": "Sunucu yok",
+        "empty_description": "Favori sunucularınız bu kısımda listelenecektir."
+    }
 }

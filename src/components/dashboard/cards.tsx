@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import { apiService } from "@/services"
 import { ArrowRight, Cog, Server, ToyBrick, Users } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { cn } from "@/lib/utils"
 import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
@@ -21,6 +22,7 @@ export default function DashboardCards() {
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IDashboardInformation>()
   const user = useCurrentUser()
+  const { t } = useTranslation("dashboard")
 
   useEffect(() => {
     apiService
@@ -44,7 +46,7 @@ export default function DashboardCards() {
       <div className="p-2">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium opacity-70">
-            Sunucu Sayısı
+            {t("cards.server_count")}
           </CardTitle>
           <Server className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
@@ -60,7 +62,8 @@ export default function DashboardCards() {
             href="/servers"
             className="flex items-center gap-1 text-xs text-muted-foreground transition-all hover:gap-3"
           >
-            Tüm sunucuları gör <ArrowRight className="inline-block h-4 w-4" />
+            {t("cards.show_all_servers")}{" "}
+            <ArrowRight className="inline-block h-4 w-4" />
           </Link>
         </CardContent>
       </div>
@@ -68,7 +71,7 @@ export default function DashboardCards() {
         <div className="p-2">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium opacity-70">
-              Eklenti Sayısı
+              {t("cards.extension_count")}
             </CardTitle>
             <ToyBrick className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
@@ -84,7 +87,7 @@ export default function DashboardCards() {
               className="flex items-center gap-1 text-xs text-muted-foreground transition-all hover:gap-3"
               href="/settings/extensions"
             >
-              Tüm eklentileri gör{" "}
+              {t("cards.show_all_extensions")}{" "}
               <ArrowRight className="inline-block h-4 w-4" />
             </Link>
           </CardContent>
@@ -93,7 +96,7 @@ export default function DashboardCards() {
       <div className="p-2">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium opacity-70">
-            Kullanıcı Sayısı
+            {t("cards.user_count")}
           </CardTitle>
           <Users className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
@@ -110,12 +113,12 @@ export default function DashboardCards() {
               href="/settings/users"
               className="flex items-center gap-1 text-xs text-muted-foreground transition-all hover:gap-3"
             >
-              Tüm kullanıcıları gör{" "}
+              {t("cards.show_all_users")}{" "}
               <ArrowRight className="inline-block h-4 w-4" />
             </Link>
           ) : (
             <p className="flex items-center gap-1 text-xs text-muted-foreground transition-all hover:gap-3">
-              adet Liman kullanıcısı
+              {t("cards.total_user_count")}
             </p>
           )}
         </CardContent>
@@ -123,7 +126,7 @@ export default function DashboardCards() {
       <div className="p-2">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium opacity-70">
-            Liman Versiyonu
+            {t("cards.version")}
           </CardTitle>
           <Cog className="h-4 w-4 text-muted-foreground" />
         </CardHeader>

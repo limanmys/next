@@ -3,6 +3,7 @@ import { useRouter } from "next/router"
 import md5 from "blueimp-md5"
 import Cookies from "js-cookie"
 import { LogOut, User } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { IUser } from "@/types/user"
 import { useLogout } from "@/hooks/auth/useLogout"
@@ -19,6 +20,7 @@ import {
 
 export default function ProfileDropdown() {
   const router = useRouter()
+  const { t, i18n } = useTranslation("common")
 
   const [user, setUser] = useState({} as IUser)
   useEffect(() => {
@@ -72,18 +74,25 @@ export default function ProfileDropdown() {
 
               <div className="my-2 flex flex-col gap-[6px]">
                 <div className="text-sm">
-                  <span className="font-semibold">Son Giriş Tarihi: </span>{" "}
-                  {new Date(user.last_login_at).toLocaleDateString("tr-TR", {
-                    day: "2-digit",
-                    month: "long",
-                    year: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
+                  <span className="font-semibold">
+                    {t("profile_dropdown.last_login_at")}:{" "}
+                  </span>{" "}
+                  {new Date(user.last_login_at).toLocaleDateString(
+                    i18n.language,
+                    {
+                      day: "2-digit",
+                      month: "long",
+                      year: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    }
+                  )}
                 </div>
 
                 <div className="text-sm">
-                  <span className="font-semibold">Giriş Yapılan Son IP: </span>{" "}
+                  <span className="font-semibold">
+                    {t("profile_dropdown.last_login_ip")}:{" "}
+                  </span>{" "}
                   {user.last_login_ip}
                 </div>
               </div>
@@ -98,7 +107,7 @@ export default function ProfileDropdown() {
             variant="ghost"
             onClick={() => router.push("/settings/profile")}
           >
-            <User className="mr-2 h-4 w-4" /> Profil
+            <User className="mr-2 h-4 w-4" /> {t("profile_dropdown.profile")}
           </Button>
           <Button
             className="w-full"
@@ -108,7 +117,7 @@ export default function ProfileDropdown() {
               router.replace("/auth/login")
             }}
           >
-            <LogOut className="mr-2 h-4 w-4" /> Çıkış Yap
+            <LogOut className="mr-2 h-4 w-4" /> {t("profile_dropdown.logout")}
           </Button>
         </div>
       </DropdownMenuContent>

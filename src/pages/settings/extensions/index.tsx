@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { apiService } from "@/services"
 import { Check, X } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { IExtension } from "@/types/extension"
 import { DivergentColumn } from "@/types/table"
@@ -16,7 +17,7 @@ import UploadExtension from "@/components/settings/upload-extension"
 export default function ExtensionSettingsPage() {
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IExtension[]>([])
-
+  const { i18n } = useTranslation()
   const emitter = useEmitter()
 
   const columns: DivergentColumn<IExtension, string>[] = [
@@ -79,7 +80,7 @@ export default function ExtensionSettingsPage() {
     {
       accessorKey: "updated",
       accessorFn: (row) => {
-        return new Date(row.updated).toLocaleDateString("tr-TR", {
+        return new Date(row.updated).toLocaleDateString(i18n.language, {
           day: "2-digit",
           month: "long",
           year: "numeric",

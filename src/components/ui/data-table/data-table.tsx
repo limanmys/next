@@ -15,6 +15,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table"
 import { FolderOpen } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { DivergentColumn } from "@/types/table"
 import { DataTablePagination } from "@/components/ui/data-table/data-table-pagination"
@@ -57,6 +58,7 @@ const DataTable = <TData, TValue>({
     []
   )
   const [sorting, setSorting] = React.useState<SortingState>([])
+  const { t } = useTranslation("components")
 
   const table = useReactTable({
     data,
@@ -166,7 +168,7 @@ const DataTable = <TData, TValue>({
                       className="h-72 text-center"
                     >
                       <FolderOpen className="mx-auto mb-2 h-12 w-12 text-black/50 dark:text-white/80" />
-                      Kayıt bulunamadı.
+                      {t("table.no_records")}
                     </TableCell>
                   </TableRow>
                 )}

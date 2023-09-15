@@ -1,5 +1,6 @@
 import { Table } from "@tanstack/react-table"
 import { Search, X } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { DivergentColumn } from "@/types/table"
 import { Button } from "@/components/ui/button"
@@ -19,6 +20,8 @@ export function DataTableToolbar<TData, TValue>({
   globalFilter,
   setGlobalFilter,
 }: DataTableToolbarProps<TData, TValue>) {
+  const { t } = useTranslation("components")
+
   const isFiltered =
     table.getPreFilteredRowModel().rows.length >
     table.getFilteredRowModel().rows.length
@@ -37,14 +40,14 @@ export function DataTableToolbar<TData, TValue>({
               }}
               className="h-8 px-2 lg:px-3"
             >
-              Filtreleri Temizle
+              {t("table.toolbar.clear_filters")}
               <X className="ml-2 h-4 w-4" />
             </Button>
           )}
 
           <div className="relative">
             <Input
-              placeholder="Arama..."
+              placeholder={t("table.toolbar.search_placeholder")}
               value={globalFilter ?? ""}
               onChange={(e) => {
                 setGlobalFilter(String(e.target.value))
