@@ -40,7 +40,7 @@ export default function UserSettingsPage() {
   const [data, setData] = useState<IUser[]>([])
   const router = useRouter()
   const emitter = useEmitter()
-  const { i18n } = useTranslation()
+  const { t } = useTranslation("settings")
 
   const columns: DivergentColumn<IUser, string>[] = [
     {
@@ -165,8 +165,8 @@ export default function UserSettingsPage() {
   return (
     <>
       <PageHeader
-        title="Kullanıcılar"
-        description="Bu sayfa aracılığıyla kullanıcılara roller ekleyebilir, kullanıcı profillerini düzenleyebilir ve yenilerini ekleyebilirsiniz."
+        title={t("users.title")}
+        description={t("users.description")}
       />
 
       <DataTable
@@ -198,7 +198,7 @@ function AuthLogDialog() {
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IAuthLog[]>([])
   const emitter = useEmitter()
-  const { i18n } = useTranslation()
+  const { t, i18n } = useTranslation("settings")
 
   const columns: DivergentColumn<IAuthLog, string>[] = [
     {

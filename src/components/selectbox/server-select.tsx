@@ -1,6 +1,7 @@
 import * as React from "react"
 import { apiService } from "@/services"
 import { Check, ChevronsUpDown, Server } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { IServer } from "@/types/server"
 import { cn } from "@/lib/utils"
@@ -27,6 +28,8 @@ export function SelectServer({
   defaultValue: string
   onValueChange: (value: string) => void
 }) {
+  const { t } = useTranslation("components")
+
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState("")
 
@@ -69,9 +72,9 @@ export function SelectServer({
             {value ? (
               servers.find((server) => server.id === value)?.name
             ) : (
-              <>
-                <span className="text-muted-foreground">Sunucu seçiniz...</span>
-              </>
+              <span className="text-muted-foreground">
+                {t("select.server.select_placeholder")}
+              </span>
             )}
           </div>
 
@@ -85,8 +88,8 @@ export function SelectServer({
       </PopoverTrigger>
       <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
         <Command>
-          <CommandInput placeholder="Sunucu ara..." />
-          <CommandEmpty>Sunucu bulunamadı.</CommandEmpty>
+          <CommandInput placeholder={t("select.server.search_placeholder")} />
+          <CommandEmpty>{t("select.server.not_found")}</CommandEmpty>
           {/* TODO: Implement scroll-area when fixed.
             https://github.com/radix-ui/primitives/issues/1159
 

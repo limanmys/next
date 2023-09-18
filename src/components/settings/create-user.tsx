@@ -3,6 +3,7 @@ import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { PlusCircle } from "lucide-react"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
 import { useEmitter } from "@/hooks/useEmitter"
@@ -62,6 +63,7 @@ const formSchema = z
 export default function CreateUser() {
   const { toast } = useToast()
   const emitter = useEmitter()
+  const { t } = useTranslation("settings")
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -83,24 +85,24 @@ export default function CreateUser() {
       .then((res) => {
         if (res.status === 200) {
           toast({
-            title: "Başarılı",
-            description: "Kullanıcı başarıyla oluşturuldu.",
+            title: t("success"),
+            description: t("users.toasts.success_msg"),
           })
           emitter.emit("REFETCH_USERS")
           setOpen(false)
           form.reset()
         } else {
           toast({
-            title: "Hata",
-            description: "Kullanıcı oluşturulurken bir hata oluştu.",
+            title: t("error"),
+            description: t("users.toasts.error_msg"),
             variant: "destructive",
           })
         }
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description: "Kullanıcı oluşturulurken bir hata oluştu.",
+          title: t("error"),
+          description: t("users.toasts.error_msg"),
           variant: "destructive",
         })
       })

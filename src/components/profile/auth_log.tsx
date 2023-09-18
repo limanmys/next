@@ -18,21 +18,28 @@ export default function AuthLog() {
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IAuthLog[]>([])
   const { i18n } = useTranslation()
+  const { t } = useTranslation("settings")
 
   const columns: DivergentColumn<IAuthLog, string>[] = [
     {
       accessorKey: "ip_address",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Giriş Yapan IP Adresi" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("profile.auth_log.ip_address")}
+        />
       ),
-      title: "Giriş Yapan IP Adresi",
+      title: t("profile.auth_log.ip_address"),
     },
     {
       accessorKey: "user_agent",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Tarayıcı Bilgileri" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("profile.auth_log.browser")}
+        />
       ),
-      title: "Tarayıcı Bilgileri",
+      title: t("profile.auth_log.browser"),
       cell: ({ row }) => (
         <TooltipProvider delayDuration={200}>
           <Tooltip>
@@ -51,9 +58,12 @@ export default function AuthLog() {
     {
       accessorKey: "created_at",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Giriş Tarihi" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("profile.auth_log.date")}
+        />
       ),
-      title: "Giriş Tarihi",
+      title: t("profile.auth_log.date"),
       cell: ({ row }) => (
         <>
           {row.original.created_at
@@ -88,13 +98,11 @@ export default function AuthLog() {
   }, [])
 
   return (
-    <>
-      <DataTable
-        columns={columns}
-        data={data}
-        loading={loading}
-        selectable={false}
-      ></DataTable>
-    </>
+    <DataTable
+      columns={columns}
+      data={data}
+      loading={loading}
+      selectable={false}
+    ></DataTable>
   )
 }

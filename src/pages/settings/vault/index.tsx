@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { apiService } from "@/services"
+import { useTranslation } from "react-i18next"
 
 import { DivergentColumn } from "@/types/table"
 import { IVault } from "@/types/vault"
@@ -18,23 +19,23 @@ export default function VaultPage() {
   const [data, setData] = useState<IVault[]>([])
   const [user, setUser] = useState<string>("")
   const currentUser = useCurrentUser()
-
   const emitter = useEmitter()
+  const { t } = useTranslation("settings")
 
   const columns: DivergentColumn<IVault, string>[] = [
     {
       accessorKey: "name",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Veri Adı" />
+        <DataTableColumnHeader column={column} title={t("vault.data_name")} />
       ),
-      title: "Veri Adı",
+      title: t("vault.data_name"),
     },
     {
       accessorKey: "server_name",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Sunucu Adı" />
+        <DataTableColumnHeader column={column} title={t("vault.server_name")} />
       ),
-      title: "Sunucu Adı",
+      title: t("vault.server_name"),
     },
     {
       id: "actions",
@@ -82,8 +83,8 @@ export default function VaultPage() {
   return (
     <>
       <PageHeader
-        title="Kasa"
-        description="Sunucular üzerindeki eklenti ayarlarını, şifrelerinizi ve yöneticiyseniz diğer kullanıcıların girdiği değerleri değiştirebilirsiniz."
+        title={t("vault.title")}
+        description={t("vault.description")}
       />
 
       <DataTable

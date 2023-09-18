@@ -2,6 +2,7 @@ import { useState } from "react"
 import { apiService } from "@/services"
 import { Row } from "@tanstack/react-table"
 import { Edit, MoreHorizontal, Trash } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { IVault } from "@/types/vault"
 import { useEmitter } from "@/hooks/useEmitter"
@@ -39,6 +40,7 @@ export function VaultRowActions({ row }: { row: Row<IVault> }) {
   const vault = row.original
   const [deleteDialog, setDeleteDialog] = useState(false)
   const [editDialog, setEditDialog] = useState(false)
+  const { t } = useTranslation("settings")
 
   return (
     <>
@@ -58,11 +60,11 @@ export function VaultRowActions({ row }: { row: Row<IVault> }) {
             disabled={vault.type == "key"}
           >
             <Edit className="mr-2 h-3.5 w-3.5" />
-            Düzenle
+            {t("vault.actions.edit.button")}
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setDeleteDialog(true)}>
             <Trash className="mr-2 h-3.5 w-3.5" />
-            Sil
+            {t("vault.actions.delete.button")}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -87,6 +89,7 @@ function DeleteDialog({
 }) {
   const emitter = useEmitter()
   const { toast } = useToast()
+  const { t } = useTranslation("settings")
   const [loading, setLoading] = useState(false)
 
   const handleDelete = () => {
@@ -102,16 +105,16 @@ function DeleteDialog({
       })
       .then(() => {
         toast({
-          title: "Başarılı",
-          description: "Veri başarıyla silindi.",
+          title: t("vault.actions.delete.success"),
+          description: t("vault.actions.delete.success_msg"),
         })
         emitter.emit("REFETCH_VAULT")
         setOpen(false)
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description: "Veri silinirken hata oluştu.",
+          title: t("vault.actions.delete.error"),
+          description: t("vault.actions.delete.error_msg"),
           variant: "destructive",
         })
       })
@@ -124,17 +127,20 @@ function DeleteDialog({
     <AlertDialog open={open} onOpenChange={(open) => setOpen(open)}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Emin misiniz?</AlertDialogTitle>
+          <AlertDialogTitle>
+            {t("vault.actions.delete.confirm")}
+          </AlertDialogTitle>
           <AlertDialogDescription>
-            Seçilen veri Liman sisteminden tamamen silinecektir. Devam etmek
-            istiyor musunuz?
+            {t("vault.actions.delete.confirm_msg")}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Vazgeç</AlertDialogCancel>
+          <AlertDialogCancel>
+            {t("vault.actions.delete.cancel")}
+          </AlertDialogCancel>
           <AlertDialogAction onClick={() => handleDelete()}>
             {loading && <Icons.spinner className="h-4 w-4 animate-spin" />}
-            Onayla
+            {t("vault.actions.delete.delete")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -154,6 +160,7 @@ function EditVaultKey({
   const emitter = useEmitter()
   const { toast } = useToast()
   const [loading, setLoading] = useState(false)
+  const { t } = useTranslation("settings")
   const [data, setData] = useState<string>("")
 
   const handleCreate = () => {
@@ -164,16 +171,16 @@ function EditVaultKey({
       .patch(`/settings/vault`, { value: data, setting_id: vault.id })
       .then(() => {
         toast({
-          title: "Başarılı",
-          description: "Veri başarıyla düzenlendi.",
+          title: t("vault.actions.edit.success"),
+          description: t("vault.actions.edit.success_msg"),
         })
         emitter.emit("REFETCH_VAULT")
         setOpen(false)
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description: "Veri düzenlenirken hata oluştu.",
+          title: t("vault.actions.edit.error"),
+          description: t("vault.actions.edit.error_msg"),
           variant: "destructive",
         })
       })
@@ -186,14 +193,14 @@ function EditVaultKey({
     <Dialog onOpenChange={(open) => setOpen(open)} open={open}>
       <DialogContent className="sm:max-w-[525px]">
         <DialogHeader>
-          <DialogTitle>Veri Düzenle</DialogTitle>
+          <DialogTitle>{t("vault.actions.edit.confirm")}</DialogTitle>
           <DialogDescription>
-            Eski veri içeriği silinip yeni veri eklenecektir.
+            {t("vault.actions.edit.confirm_msg")}
           </DialogDescription>
         </DialogHeader>
 
         <div className="mt-3 grid w-full items-center gap-1.5">
-          <Label htmlFor="license">Veri</Label>
+          <Label htmlFor="license">{t("vault.actions.edit.data")}</Label>
           <Textarea id="license" onChange={(e) => setData(e.target.value)} />
         </div>
 
@@ -203,7 +210,7 @@ function EditVaultKey({
             onClick={() => setOpen(false)}
             className="mr-2"
           >
-            İptal
+            {t("vault.actions.edit.cancel")}
           </Button>
           <Button disabled={loading} onClick={() => handleCreate()}>
             {!loading ? (
@@ -211,7 +218,7 @@ function EditVaultKey({
             ) : (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
-            Düzenle
+            {t("vault.actions.edit.edit")}
           </Button>
         </div>
       </DialogContent>

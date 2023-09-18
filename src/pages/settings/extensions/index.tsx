@@ -17,60 +17,68 @@ import UploadExtension from "@/components/settings/upload-extension"
 export default function ExtensionSettingsPage() {
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IExtension[]>([])
-  const { i18n } = useTranslation()
+  const { t, i18n } = useTranslation("settings")
   const emitter = useEmitter()
 
   const columns: DivergentColumn<IExtension, string>[] = [
     {
       accessorKey: "display_name",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Eklenti Adı" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("extensions.display_name")}
+        />
       ),
-      title: "Eklenti Adı",
+      title: t("extensions.display_name"),
     },
     {
       accessorKey: "version",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Versiyon" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("extensions.version")}
+        />
       ),
-      title: "Versiyon",
+      title: t("extensions.version"),
     },
     {
       accessorKey: "licensed",
       accessorFn: (row) => {
-        return row.licensed ? "lisanslı" : "lisanslanmamış"
+        return row.licensed
+          ? t("extensions.licensed")
+          : t("extensions.not_licensed")
       },
       header: ({ column }) => (
         <DataTableColumnHeader
           column={column}
-          title="Lisanslanmış"
+          title={t("extensions.license")}
           filterPresets={[
             {
-              key: "Lisanslı",
-              value: "lisanslı",
+              key: t("extensions.licensed"),
+              value: t("extensions.licensed"),
             },
             {
-              key: "Lisanslanmamış",
-              value: "lisanslanmamış",
+              key: t("extensions.not_licensed"),
+              value: t("extensions.not_licensed"),
             },
           ]}
         />
       ),
-      title: "Lisanslanmış",
+      title: t("extensions.license"),
       cell: ({ row }) => (
         <>
           {row.original.licensed ? (
             <div className="flex items-center">
               <Check className="h-5 w-5 text-green-500" />
               <Badge className="ml-2" variant="success">
-                Lisanslı
+                {t("extensions.licensed")}
               </Badge>
             </div>
           ) : (
             <div className="flex items-center">
               <X className="h-5 w-5 text-red-500" />
               <Badge className="ml-2" variant="outline">
-                Lisanslanmamış
+                {t("extensions.not_licensed")}
               </Badge>
             </div>
           )}
@@ -89,9 +97,12 @@ export default function ExtensionSettingsPage() {
         })
       },
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Güncellenme Tarihi" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("extensions.updated_at")}
+        />
       ),
-      title: "Güncellenme Tarihi",
+      title: t("extensions.updated_at"),
       sortingFn: compareNumericString,
     },
     {
@@ -128,8 +139,8 @@ export default function ExtensionSettingsPage() {
   return (
     <>
       <PageHeader
-        title="Eklentiler"
-        description="Bu sayfa aracılığıyla sisteminizdeki eklentileri yönetebilir, sürümlerini güncelleyebilir ve yeni eklentiler yükleyebilirsiniz."
+        title={t("extensions.title")}
+        description={t("extensions.description")}
       />
 
       <DataTable

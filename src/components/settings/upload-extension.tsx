@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { apiService } from "@/services"
 import { UploadCloud } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { useEmitter } from "@/hooks/useEmitter"
 import {
@@ -30,12 +31,11 @@ import { useToast } from "@/components/ui/use-toast"
 export default function UploadExtension() {
   const { toast } = useToast()
   const emitter = useEmitter()
-
   const [open, setOpen] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   const [file, setFile] = useState<File | null>(null)
-
   const [alertOpen, setAlertOpen] = useState<boolean>(false)
+  const { t } = useTranslation("settings")
 
   const upload = async (customRequest: any) => {
     return new Promise<number>(async (resolve, reject) => {
@@ -57,7 +57,7 @@ export default function UploadExtension() {
         .then((res) => {
           if (res.status === 200) {
             toast({
-              title: "Başarılı",
+              title: t("success"),
               description: res.data.message,
             })
             emitter.emit("REFETCH_EXTENSIONS")
@@ -68,7 +68,7 @@ export default function UploadExtension() {
               reject(res.status)
             } else {
               toast({
-                title: "Hata",
+                title: t("error"),
                 description: JSON.stringify(res.data),
                 variant: "destructive",
               })
@@ -78,7 +78,7 @@ export default function UploadExtension() {
         })
         .catch((error) => {
           toast({
-            title: "Hata",
+            title: t("error"),
             description: JSON.stringify(error.response.data),
             variant: "destructive",
           })
@@ -108,20 +108,19 @@ export default function UploadExtension() {
       <DialogTrigger asChild>
         <Button variant="default" size="sm" className="ml-auto h-8 lg:flex">
           <UploadCloud className="mr-2 h-4 w-4" />
-          Yükle
+          {t("extensions.upload.upload")}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[525px]">
         <DialogHeader>
-          <DialogTitle>Eklenti Yükle</DialogTitle>
+          <DialogTitle>{t("extensions.upload.title")}</DialogTitle>
           <DialogDescription>
-            Güvenmediğiniz <b className="font-semibold">.zip</b> dosyalarını
-            yüklemenizi tavsiye etmiyoruz.
+            {t("extensions.upload.description")}
           </DialogDescription>
         </DialogHeader>
 
         <div className="mt-3 grid w-full items-center gap-1.5">
-          <Label htmlFor="extension">Dosya</Label>
+          <Label htmlFor="extension">{t("extensions.upload.file")}</Label>
           <Input
             id="extension"
             type="file"
@@ -136,7 +135,7 @@ export default function UploadExtension() {
             onClick={() => setOpen(false)}
             className="mr-2"
           >
-            İptal
+            {t("extensions.upload.cancel")}
           </Button>
           <Button onClick={handleCreate} disabled={loading}>
             {!loading ? (
@@ -144,7 +143,7 @@ export default function UploadExtension() {
             ) : (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
-            Yükle
+            {t("extensions.upload.upload")}
           </Button>
         </div>
 
@@ -154,16 +153,19 @@ export default function UploadExtension() {
         >
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Emin misiniz?</AlertDialogTitle>
+              <AlertDialogTitle>
+                {t("extensions.upload.dialog_title")}
+              </AlertDialogTitle>
               <AlertDialogDescription>
-                Bu eklenti dosyası imzalanmamış görünüyor. Bu eklentiyi yüklemek
-                istediğinize emin misiniz?
+                {t("extensions.upload.dialog_description")}
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Vazgeç</AlertDialogCancel>
+              <AlertDialogCancel>
+                {t("extensions.upload.cancel")}
+              </AlertDialogCancel>
               <AlertDialogAction onClick={() => upload({ force: true })}>
-                Onayla
+                {t("extensions.upload.accept")}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>

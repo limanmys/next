@@ -237,10 +237,11 @@ export default function ProfilePage() {
             <Card className="mt-8 overflow-hidden">
               <div className="grid grid-cols-4">
                 <div className="bg-foreground/5 p-5">
-                  <h3 className="font-semibold">Giriş Kayıtları</h3>
+                  <h3 className="font-semibold">
+                    {t("profile.auth_log.title")}
+                  </h3>
                   <p className="mt-5 text-sm text-muted-foreground">
-                    Hesabınıza yapılmış olan giriş kayıtlarını IP adresleri ile
-                    birlikte bu kısımdan görüntüleyebilirsiniz.
+                    {t("profile.auth_log.description")}
                   </p>
                 </div>
                 <div className="col-span-3 py-5">

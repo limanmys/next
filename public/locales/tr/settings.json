@@ -1,6 +1,7 @@
 {
     "success": "Başarılı",
     "error": "Hata",
+    "information": "Bilgi",
     "title": "Ayarlar",
     "description": "Bu sayfa aracılığıyla kişisel ayarlarınızı ve Liman MYS'nin sistem ayarlarını yapabilirsiniz.",
     "user_settings": "Kullanıcı Ayarları",
@@ -14,8 +15,7 @@
             "password": "Şifreler eşleşmiyor."
         },
         "toasts": {
-            "success": 
-              "Bilgileriniz başarıyla düzenlendi. Değişikleri görmek için tekrardan giriş yapmanız gerekmektedir.",
+            "success": "Bilgileriniz başarıyla düzenlendi. Değişikleri görmek için tekrardan giriş yapmanız gerekmektedir.",
             "error": "Bilgileriniz düzenlenirken bir hata oluştu."
         },
         "form": {
@@ -29,11 +29,94 @@
             "password": "Parolanız",
             "password_confirmation": "Parola Onayı",
             "save": "Kaydet"
+        },
+        "auth_log": {
+            "title": "Giriş Kayıtları",
+            "description": "Hesabınıza yapılmış olan giriş kayıtlarını IP adresleri ile birlikte bu kısımdan görüntüleyebilirsiniz.",
+            "ip_address": "Giriş Yapan IP Adresi",
+            "browser": "Tarayıcı Bilgileri",
+            "date": "Giriş Tarihi"
         }
     },
     "vault": {
         "title": "Kasa",
-        "description": "Sunucular üzerindeki eklenti ayarlarını, şifrelerinizi ve yöneticiyseniz diğer kullanıcıların girdiği değerleri değiştirebilirsiniz."
+        "description": "Sunucular üzerindeki eklenti ayarlarını, şifrelerinizi ve yöneticiyseniz diğer kullanıcıların girdiği değerleri değiştirebilirsiniz.",
+        "data_name": "Veri Adı",
+        "server_name": "Sunucu Adı",
+        "actions": {
+            "edit": {
+                "button": "Düzenle",
+                "success": "Başarılı",
+                "error": "Hata",
+                "success_msg": "Veri başarıyla düzenlendi.",
+                "error_msg": "Veri düzenlenirken hata oluştu.",
+                "confirm": "Veri Düzenle",
+                "confirm_msg": "Eski veri içeriği silinip yeni veri eklenecektir.",
+                "cancel": "İptal",
+                "edit": "Düzenle",
+                "data": "Veri"
+            },
+            "delete": {
+                "button": "Sil",
+                "success": "Başarılı",
+                "error": "Hata",
+                "success_msg": "Veri başarıyla silindi.",
+                "error_msg": "Veri silinirken hata oluştu.",
+                "confirm": "Emin misiniz?",
+                "confirm_msg": "Seçilen veri Liman sisteminden tamamen silinecektir. Devam etmek istiyor musunuz?",
+                "cancel": "Vazgeç",
+                "delete": "Onayla"
+            }
+        },
+        "create": {
+            "button": "Ayar Ekle",
+            "description": "Bu pencereyi kullanarak seçilmiş olan kullanıcıya ait ayar ekleyebilirsiniz.",
+            "toasts": {
+                "success": "Başarılı",
+                "error": "Hata",
+                "success_msg": "Ayar oluşturuldu.",
+                "error_msg": "Ayar oluşturulurken bir hata oluştu."
+            },
+            "form": {
+                "server": "Sunucu",
+                "key": "Anahtar",
+                "value": "Değer",
+                "submit": "Oluştur"
+            },
+            "validation": {
+                "server": "Sunucu seçimi yapmalısınız.",
+                "key": "Anahtar alanı boş bırakılamaz.",
+                "value": "Değer alanı boş bırakılamaz."
+            }
+        },
+        "key": {
+            "button": "Anahtar Ekle",
+            "description": "Bu pencereyi kullanarak sunucuya bağlantı anahtarı ekleyebilirsiniz.",
+            "toasts": {
+                "success": "Başarılı",
+                "error": "Hata",
+                "success_msg": "Ayar oluşturuldu.",
+                "error_msg": "Ayar oluşturulurken bir hata oluştu."
+            },
+            "form": {
+                "server": "Sunucu",
+                "type": "Anahtar Türü",
+                "username": "Kullanıcı Adı",
+                "password": "Şifre",
+                "port": "Kontrol Portu",
+                "submit": "Oluştur",
+                "ssh_pw": "SSH (Şifreli)",
+                "ssh_cert": "SSH (Sertifika)",
+                "winrm_insecure": "WinRM (Güvensiz)",
+                "no_key": "Anahtarsız Giriş"
+            },
+            "validation": {
+                "server": "Sunucu seçimi yapmalısınız.",
+                "type": "Anahtar tipi seçimi yapmalısınız.",
+                "port": "Bağlantı portu 5 karakterden uzun olamaz.",
+                "port_nonempty": "Bağlantı portu boş bırakılamaz."
+            }
+        }
     },
     "tokens": {
         "title": "Kişisel Erişim Anahtarları",
@@ -41,11 +124,71 @@
     },
     "extensions": {
         "title": "Eklentiler",
-        "description": "Bu sayfa aracılığıyla sisteminizdeki eklentileri yönetebilir, sürümlerini güncelleyebilir ve yeni eklentiler yükleyebilirsiniz."
+        "description": "Bu sayfa aracılığıyla sisteminizdeki eklentileri yönetebilir, sürümlerini güncelleyebilir ve yeni eklentiler yükleyebilirsiniz.",
+        "display_name": "Eklenti Adı",
+        "version": "Versiyon",
+        "licensed": "Lisanslanmış",
+        "not_licensed": "Lisanslanmamış",
+        "license": "Lisans",
+        "updated_at": "Güncellenme Tarihi",
+        "upload": {
+            "cancel": "Vazgeç",
+            "accept": "Onayla",
+            "upload": "Yükle",
+            "title": "Eklenti Yükle",
+            "description": "Güvenmediğiniz .zip dosyalarını yüklemenizi tavsiye etmiyoruz.",
+            "file": "Dosya",
+            "dialog_title": "Emin misiniz?",
+            "dialog_description": "Bu eklenti dosyası imzalanmamış görünüyor. Bu eklentiyi yüklemek istediğinize emin misiniz?"
+        },
+        "actions": {
+            "download_start": "İndirme başladı.",
+            "download_success": "İndirme tamamlandı.",
+            "download_error": "Eklenti indirilirken bir hata oluştu.",
+            "add_license": "Lisans Ekle",
+            "download": "İndir",
+            "delete": "Sil",
+            "license": {
+                "title": "Lisans Ekle",
+                "description": "Eklentiniz için size HAVELSAN A.Ş. tarafından sağlanan lisansı bu kısma giriniz.",
+                "form": {
+                    "license": "Lisans",
+                    "submit": "Ekle",
+                    "cancel": "İptal"
+                },
+                "success_msg": "Lisans başarıyla eklendi.",
+                "error_msg": "Lisans eklenirken bir hata oluştu."
+            },
+            "delete_dialog": {
+                "success_msg": "Eklenti başarıyla silindi.",
+                "error_msg": "Eklenti silinirken bir hata oluştu.",
+                "title": "Emin misiniz?",
+                "description": "Seçilen eklenti <b>({{extension}})</b> Liman sisteminden tamamen kaldırılacaktır. Bu işlem sonucunda kasa verilerinizde ve eklenti izinlerinde kayıp olabilir. Devam etmek istiyor musunuz?",
+                "cancel": "Vazgeç",
+                "delete": "Onayla"
+            }
+        }
     },
     "users": {
         "title": "Kullanıcılar",
-        "description": "Bu sayfa aracılığıyla kullanıcılara roller ekleyebilir, kullanıcı profillerini düzenleyebilir ve yenilerini ekleyebilirsiniz."
+        "description": "Bu sayfa aracılığıyla kullanıcılara roller ekleyebilir, kullanıcı profillerini düzenleyebilir ve yenilerini ekleyebilirsiniz.",
+        "toasts": {
+            "success_msg": "Kullanıcı başarıyla oluşturuldu.",
+            "error_msg": "Kullanıcı oluşturulurken bir hata oluştu."
+        },
+        "validation": {
+            "name_min": "Kullanıcı adı en az 2 karakter olmalıdır.",
+            "name_max": "Kullanıcı adı en fazla 50 karakter olmalıdır.",
+            "email": "Geçerli bir e-posta adresi giriniz.",
+            "password_min": "Şifre en az 8 karakter olmalıdır.",
+            "password_max": "Şifre en fazla 50 karakter olmalıdır.",
+            "password_confirmation": "Şifreler eşleşmiyor."
+        },
+        "create": {
+            "button": "Ekle",
+            "title": "Kullanıcı Ekle",
+            "description": "Bu pencereyi kullanarak yeni bir kullanıcı oluşturabilirsiniz."
+        }
     },
     "roles": {
         "title": "Roller",

@@ -1,0 +1,9 @@
+{
+    "extensions": {
+        "actions": {
+            "delete_dialog": {
+                "description": "Seçilen asdas <b>({{extension}})</b> Liman sisteminden tamamen kaldırılacaktır. Bu işlem sonucunda kasa verilerinizde ve eklenti izinlerinde kayıp olabilir. Devam etmek istiyor musunuz?"
+            }
+        }
+    }
+}

@@ -1,8 +1,8 @@
 import { useState } from "react"
 import { apiService } from "@/services"
 import { Row } from "@tanstack/react-table"
-import { AxiosResponse } from "axios"
 import { Download, MoreHorizontal, PlusCircle, Trash } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { IExtension } from "@/types/extension"
 import { useDownloadFile } from "@/hooks/useDownloadFile"
@@ -32,10 +32,8 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "../ui/dialog"
 import { Icons } from "../ui/icons"
-import { Input } from "../ui/input"
 import { Label } from "../ui/label"
 import { Textarea } from "../ui/textarea"
 import { useToast } from "../ui/use-toast"
@@ -45,6 +43,7 @@ export function ExtensionRowActions({ row }: { row: Row<IExtension> }) {
   const [deleteDialog, setDeleteDialog] = useState(false)
   const [licenseDialog, setLicenseDialog] = useState(false)
   const { toast } = useToast()
+  const { t } = useTranslation("settings")
 
   const { ref, url, download, name } = useDownloadFile({
     apiDefinition: () => {
@@ -56,18 +55,18 @@ export function ExtensionRowActions({ row }: { row: Row<IExtension> }) {
     },
     preDownloading: () =>
       toast({
-        title: "Bilgi",
-        description: "İndirme başladı.",
+        title: t("information"),
+        description: t("extensions.actions.download_start"),
       }),
     postDownloading: () =>
       toast({
-        title: "Bilgi",
-        description: "İndirme tamamlandı.",
+        title: t("information"),
+        description: t("extensions.actions.download_success"),
       }),
     onError: () => {
       toast({
-        title: "Hata",
-        description: "Eklenti indirilirken bir hata oluştu.",
+        title: t("error"),
+        description: t("extensions.actions.download_error"),
       })
     },
     getFileName: () => {
@@ -90,16 +89,16 @@ export function ExtensionRowActions({ row }: { row: Row<IExtension> }) {
         <DropdownMenuContent align="end" className="w-[160px]">
           <DropdownMenuItem onClick={() => setLicenseDialog(true)}>
             <PlusCircle className="mr-2 h-3.5 w-3.5" />
-            Lisans Ekle
+            {t("extensions.actions.add_license")}
           </DropdownMenuItem>
           <DropdownMenuItem onClick={download}>
             <Download className="mr-2 h-3.5 w-3.5" />
-            İndir
+            {t("extensions.actions.download")}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setDeleteDialog(true)}>
             <Trash className="mr-2 h-3.5 w-3.5" />
-            Sil
+            {t("extensions.actions.delete")}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -131,6 +130,7 @@ function License({
   const { toast } = useToast()
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState<string>("")
+  const { t } = useTranslation("settings")
 
   const handleCreate = () => {
     setLoading(true)
@@ -140,16 +140,16 @@ function License({
       .post(`/settings/extensions/${extension.id}/license`, { license: data })
       .then(() => {
         toast({
-          title: "Başarılı",
-          description: "Lisans başarıyla eklendi.",
+          title: t("success"),
+          description: t("extensions.actions.license.success_msg"),
         })
         emitter.emit("REFETCH_EXTENSIONS")
         setOpen(false)
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description: "Lisans eklenirken hata oluştu.",
+          title: t("error"),
+          description: t("extensions.actions.license.error_msg"),
           variant: "destructive",
         })
       })
@@ -162,15 +162,16 @@ function License({
     <Dialog onOpenChange={(open) => setOpen(open)} open={open}>
       <DialogContent className="sm:max-w-[525px]">
         <DialogHeader>
-          <DialogTitle>Lisans Ekle</DialogTitle>
+          <DialogTitle>{t("extensions.actions.license.title")}</DialogTitle>
           <DialogDescription>
-            Eklentiniz için size HAVELSAN A.Ş. tarafından verilen lisansı bu
-            kısma giriniz.
+            {t("extensions.actions.license.description")}
           </DialogDescription>
         </DialogHeader>
 
         <div className="mt-3 grid w-full items-center gap-1.5">
-          <Label htmlFor="license">Lisans Bilgisi</Label>
+          <Label htmlFor="license">
+            {t("extensions.actions.license.form.license")}
+          </Label>
           <Textarea id="license" onChange={(e) => setData(e.target.value)} />
         </div>
 
@@ -180,7 +181,7 @@ function License({
             onClick={() => setOpen(false)}
             className="mr-2"
           >
-            İptal
+            {t("extensions.actions.license.form.cancel")}
           </Button>
           <Button disabled={loading} onClick={() => handleCreate()}>
             {!loading ? (
@@ -188,7 +189,7 @@ function License({
             ) : (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
-            Ekle
+            {t("extensions.actions.license.form.submit")}
           </Button>
         </div>
       </DialogContent>
@@ -208,6 +209,7 @@ function DeleteExtension({
   const emitter = useEmitter()
   const { toast } = useToast()
   const [loading, setLoading] = useState(false)
+  const { t } = useTranslation("settings")
 
   const handleDelete = () => {
     setLoading(true)
@@ -217,16 +219,16 @@ function DeleteExtension({
       .delete(`/settings/extensions/${extension.id}`)
       .then(() => {
         toast({
-          title: "Başarılı",
-          description: "Eklenti başarıyla silindi.",
+          title: t("success"),
+          description: t("extensions.actions.delete_dialog.success_msg"),
         })
         emitter.emit("REFETCH_EXTENSIONS")
         setOpen(false)
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description: "Eklenti silinirken hata oluştu.",
+          title: t("error"),
+          description: t("extensions.actions.delete_dialog.success_msg"),
           variant: "destructive",
         })
       })
@@ -239,20 +241,29 @@ function DeleteExtension({
     <AlertDialog open={open} onOpenChange={(open) => setOpen(open)}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Emin misiniz?</AlertDialogTitle>
+          <AlertDialogTitle>
+            {t("extensions.actions.delete_dialog.title")}
+          </AlertDialogTitle>
           <AlertDialogDescription>
-            Seçilen eklenti{" "}
-            <b className="font-semibold">({extension.display_name})</b> Liman
-            sisteminden tamamen kaldırılacaktır. Bu işlem sonucunda kasa
-            verilerinizde ve eklenti izinlerinde kayıp olabilir. Devam etmek
-            istiyor musunuz?
+            <span
+              dangerouslySetInnerHTML={{
+                // TODO: Localization
+                // Couldn't find a better way to use tags with localized strings
+                // If i find any i'll change it.
+                __html: t("extensions.actions.delete_dialog.description", {
+                  extension: extension.display_name,
+                }),
+              }}
+            />
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Vazgeç</AlertDialogCancel>
+          <AlertDialogCancel>
+            {t("extensions.actions.delete_dialog.cancel")}
+          </AlertDialogCancel>
           <AlertDialogAction onClick={() => handleDelete()}>
             {loading && <Icons.spinner className="h-4 w-4 animate-spin" />}
-            Onayla
+            {t("extensions.actions.delete_dialog.delete")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

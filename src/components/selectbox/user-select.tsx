@@ -1,6 +1,7 @@
 import * as React from "react"
 import { apiService } from "@/services"
 import { Check, ChevronsUpDown, User } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { IUser } from "@/types/user"
 import { cn } from "@/lib/utils"
@@ -28,6 +29,8 @@ export function SelectUser({
   defaultValue: string
   onValueChange: (value: string) => void
 }) {
+  const { t } = useTranslation("components")
+
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState("")
 
@@ -70,11 +73,9 @@ export function SelectUser({
           {value ? (
             users.find((user) => user.id === value)?.name
           ) : (
-            <>
-              <span className="text-muted-foreground">
-                Kullanıcı seçiniz...
-              </span>
-            </>
+            <span className="text-muted-foreground">
+              {t("select.user.select_placeholder")}
+            </span>
           )}
           {!loading && (
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -86,8 +87,8 @@ export function SelectUser({
       </PopoverTrigger>
       <PopoverContent className="w-[var(--radix-popover-trigger-width)] min-w-[300px] p-0">
         <Command>
-          <CommandInput placeholder="Kullanıcı ara..." />
-          <CommandEmpty>Kullanıcı bulunamadı.</CommandEmpty>
+          <CommandInput placeholder={t("select.user.search_placeholder")} />
+          <CommandEmpty>{t("select.user.not_found")}</CommandEmpty>
           <ScrollArea className="h-[300px]">
             <CommandGroup>
               {users.map((user) => (

@@ -3,6 +3,7 @@ import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Ban, FileKey2, Key, PlusCircle } from "lucide-react"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
 import { useEmitter } from "@/hooks/useEmitter"
@@ -33,22 +34,23 @@ import { Input } from "../ui/input"
 import { Textarea } from "../ui/textarea"
 import { useToast } from "../ui/use-toast"
 
-const formSchema = z.object({
-  server_id: z.string().nonempty("Sunucu seçimi yapmalısınız."),
-  type: z.string().nonempty("Anahtar tipi seçimi yapmalısınız."),
-  username: z.string().optional(),
-  password: z.string().optional(),
-  key_port: z
-    .string()
-    .max(5, {
-      message: "Bağlantı portu 5 karakterden uzun olamaz.",
-    })
-    .nonempty("Bağlantı portu boş bırakılamaz."),
-})
-
 export default function CreateVaultKey({ userId }: { userId: string }) {
   const { toast } = useToast()
   const emitter = useEmitter()
+  const { t } = useTranslation("settings")
+
+  const formSchema = z.object({
+    server_id: z.string().nonempty(t("vault.key.validation.server")),
+    type: z.string().nonempty(t("vault.key.validation.type")),
+    username: z.string().optional(),
+    password: z.string().optional(),
+    key_port: z
+      .string()
+      .max(5, {
+        message: t("vault.key.validation.port"),
+      })
+      .nonempty(t("vault.key.validation.port_nonempty")),
+  })
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -72,24 +74,24 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
       .then((res) => {
         if (res.status === 200) {
           toast({
-            title: "Başarılı",
-            description: "Anahtar oluşturuldu.",
+            title: t("vault.key.toasts.success"),
+            description: t("vault.key.toasts.success_msg"),
           })
           emitter.emit("REFETCH_VAULT")
           setOpen(false)
           form.reset()
         } else {
           toast({
-            title: "Hata",
-            description: "Anahtar oluşturulurken bir hata oluştu.",
+            title: t("vault.key.toasts.error"),
+            description: t("vault.key.toasts.error_msg"),
             variant: "destructive",
           })
         }
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description: "Anahtar oluşturulurken bir hata oluştu.",
+          title: t("vault.key.toasts.error"),
+          description: t("vault.key.toasts.error_msg"),
           variant: "destructive",
         })
       })
@@ -100,15 +102,13 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
       <SheetTrigger asChild>
         <Button variant="outline" size="sm" className="ml-auto h-8 lg:flex">
           <Key className="mr-2 h-4 w-4" />
-          Anahtar Ekle
+          {t("vault.key.button")}
         </Button>
       </SheetTrigger>
       <SheetContent side="right" className="sm:w-[800px] sm:max-w-full">
         <SheetHeader className="mb-8">
-          <SheetTitle>Anahtar Ekle</SheetTitle>
-          <SheetDescription>
-            Bu pencereyi kullanarak sunucuya bağlantı anahtarı ekleyebilirsiniz.
-          </SheetDescription>
+          <SheetTitle>{t("vault.key.button")}</SheetTitle>
+          <SheetDescription>{t("vault.key.description")}</SheetDescription>
         </SheetHeader>
 
         <Form {...form}>
@@ -121,7 +121,9 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
               name="server_id"
               render={({ field }) => (
                 <div className="flex flex-col gap-2">
-                  <Label htmlFor="server_id">Sunucu</Label>
+                  <Label htmlFor="server_id">
+                    {t("vault.key.form.server")}
+                  </Label>
                   <SelectServer
                     onValueChange={field.onChange}
                     defaultValue={field.value}
@@ -135,7 +137,7 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
               name="type"
               render={({ field }) => (
                 <div className="flex flex-col gap-2">
-                  <Label htmlFor="type">Anahtar Türü</Label>
+                  <Label htmlFor="type">{t("vault.key.form.type")}</Label>
                   <div className="mt-1 space-y-8 sm:col-span-2 sm:mt-0">
                     <RadioGroup
                       className="grid grid-cols-3 gap-8 pt-2"
@@ -151,7 +153,7 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
                           </FormControl>
                           <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent">
                             <div className="flex flex-col gap-8 p-4">
-                              <span>SSH (Şifreli)</span>
+                              <span>{t("vault.key.form.ssh_pw")}</span>
                               <div className="details flex justify-between">
                                 <div className="icons">
                                   <Key className="h-4 w-4" />
@@ -176,7 +178,7 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
                           </FormControl>
                           <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent">
                             <div className="flex flex-col gap-8 p-4">
-                              <span>SSH (Sertifikalı)</span>
+                              <span>{t("vault.key.form.ssh_cert")}</span>
                               <div className="details flex justify-between">
                                 <div className="icons">
                                   <FileKey2 className="h-4 w-4" />
@@ -222,7 +224,7 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
                           </FormControl>
                           <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent">
                             <div className="flex flex-col gap-8 p-4">
-                              <span>WinRM (Güvensiz)</span>
+                              <span>{t("vault.key.form.winrm_insecure")}</span>
                               <div className="details flex justify-between">
                                 <div className="icons">
                                   <Key className="h-4 w-4" />
@@ -246,7 +248,7 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
                           </FormControl>
                           <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent">
                             <div className="flex flex-col gap-8 p-4">
-                              <span>Anahtarsız Giriş</span>
+                              <span>{t("vault.key.form.no_key")}</span>
                               <div className="details flex justify-between">
                                 <div className="icons">
                                   <Ban className="h-4 w-4" />
@@ -270,7 +272,9 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
                   name="username"
                   render={({ field }) => (
                     <div className="flex flex-col gap-2">
-                      <Label htmlFor="username">Kullanıcı Adı</Label>
+                      <Label htmlFor="username">
+                        {t("vault.key.form.username")}
+                      </Label>
                       <Input id="username" {...field} />
                       <FormMessage className="mt-1" />
                     </div>
@@ -282,7 +286,9 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
                   name="password"
                   render={({ field }) => (
                     <div className="flex flex-col gap-2">
-                      <Label htmlFor="password">Şifre</Label>
+                      <Label htmlFor="password">
+                        {t("vault.key.form.password")}
+                      </Label>
                       {form.watch("type") === "ssh_certificate" ? (
                         <Textarea id="password" {...field} />
                       ) : (
@@ -300,7 +306,7 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
               name="key_port"
               render={({ field }) => (
                 <div className="flex flex-col gap-2">
-                  <Label htmlFor="key_port">Kontrol Portu</Label>
+                  <Label htmlFor="key_port">{t("vault.key.form.port")}</Label>
                   <div className="mt-1 space-y-8 sm:col-span-2 sm:mt-0">
                     <RadioGroup
                       className="grid grid-cols-3 gap-8 pt-2"
@@ -381,7 +387,8 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
             />
             <SheetFooter>
               <Button type="submit">
-                <PlusCircle className="mr-2 h-4 w-4" /> Oluştur
+                <PlusCircle className="mr-2 h-4 w-4" />{" "}
+                {t("vault.key.form.submit")}
               </Button>
             </SheetFooter>
           </form>
