@@ -19,5 +19,17 @@
             "desc": "Azalan",
             "hide": "Gizle"
         }
+    },
+    "select": {
+        "user": {
+            "search_placeholder": "Kullanıcı ara...",
+            "not_found": "Kullanıcı bulunamadı",
+            "select_placeholder": "Kullanıcı seçiniz"
+        },
+        "server": { 
+            "search_placeholder": "Sunucu ara...",
+            "not_found": "Sunucu bulunamadı",
+            "select_placeholder": "Sunucu seçiniz"
+        }
     }
 }

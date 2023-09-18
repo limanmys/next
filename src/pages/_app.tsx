@@ -11,8 +11,10 @@ import { AppProps, AppType } from "next/app"
 import Head from "next/head"
 import { useRouter } from "next/router"
 import { appWithI18Next, useSyncLanguage } from "ni18n"
-import { ni18nConfig } from "ni18n.config.mjs"
+import { ni18nConfig } from "ni18n.config"
 import { useTranslation } from "react-i18next"
+import { z } from "zod"
+import { makeZodI18nMap } from "zod-i18n-map"
 
 import { cn } from "@/lib/utils"
 import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
@@ -38,6 +40,8 @@ const RootLayout: AppType = ({ Component, pageProps }: AppPropsWithLayout) => {
   useSyncLanguage(locale || user.locale || "tr")
 
   const { t, ready } = useTranslation("common")
+  const { t: tfull } = useTranslation()
+  z.setErrorMap(makeZodI18nMap({ t: tfull, ns: "zod" }))
 
   return (
     <>
