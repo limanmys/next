@@ -46,23 +46,23 @@ export default function UserSettingsPage() {
     {
       accessorKey: "name",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="İsim Soyisim" />
+        <DataTableColumnHeader column={column} title={t("users.name")} />
       ),
-      title: "İsim Soyisim",
+      title: t("users.name"),
     },
     {
       accessorKey: "username",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Kullanıcı Adı" />
+        <DataTableColumnHeader column={column} title={t("users.username")} />
       ),
-      title: "Kullanıcı Adı",
+      title: t("users.username"),
     },
     {
       accessorKey: "email",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="E-Posta" />
+        <DataTableColumnHeader column={column} title={t("users.email")} />
       ),
-      title: "E-Posta",
+      title: t("users.email"),
     },
     {
       accessorKey: "status",
@@ -72,7 +72,7 @@ export default function UserSettingsPage() {
       header: ({ column }) => (
         <DataTableColumnHeader
           column={column}
-          title="Yetki Seviyesi"
+          title={t("users.status")}
           filterPresets={[
             {
               key: "Yönetici",
@@ -85,7 +85,7 @@ export default function UserSettingsPage() {
           ]}
         />
       ),
-      title: "Yetki Seviyesi",
+      title: t("users.status"),
       cell: ({ row }) => (
         <>
           {row.original.status === 1 ? (
@@ -111,7 +111,7 @@ export default function UserSettingsPage() {
       header: ({ column }) => (
         <DataTableColumnHeader
           column={column}
-          title="Giriş Türü"
+          title={t("users.auth_type")}
           filterPresets={[
             {
               key: "Liman",
@@ -128,7 +128,7 @@ export default function UserSettingsPage() {
           ]}
         />
       ),
-      title: "Giriş Türü",
+      title: t("users.auth_type"),
       cell: ({ row }) => <>{getType(row.original.auth_type)}</>,
     },
     {

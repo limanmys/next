@@ -1,48 +1,176 @@
+import { useEffect, useState } from "react"
+import Link from "next/link"
 import { useRouter } from "next/router"
-import { ArrowLeft } from "lucide-react"
+import { apiService } from "@/services"
+import {
+  ExternalLink,
+  Lock,
+  Network,
+  RefreshCw,
+  ServerCrash,
+  User2,
+} from "lucide-react"
+import { useTranslation } from "react-i18next"
 
+import { IHealthCheck } from "@/types/health"
 import { Button } from "@/components/ui/button"
-import { Icons } from "@/components/ui/icons"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import Loading from "@/components/ui/loading"
 import PageHeader from "@/components/ui/page-header"
+import { useToast } from "@/components/ui/use-toast"
+
+function HealthStatus({ status }: { status: boolean }) {
+  const { t } = useTranslation("settings")
+
+  return (
+    <div className="ml-2 flex items-center">
+      <span
+        className={`mr-2 h-2 w-2 rounded-full ${
+          status ? "bg-green-500" : "bg-orange-500"
+        }`}
+      ></span>
+      <span className="text-muted-foreground">
+        {status ? t("ok") : t("warning")}
+      </span>
+    </div>
+  )
+}
 
 export default function HealthPage() {
   const router = useRouter()
+  const { t } = useTranslation("settings")
+
+  const [data, setData] = useState<IHealthCheck>()
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    apiService
+      .getInstance()
+      .get("/settings/health")
+      .then((response) => {
+        setData(response.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [])
+
+  const { toast } = useToast()
+
+  const manualSync = () => {
+    apiService
+      .getInstance()
+      .post("/settings/health/manual_high_availability_sync")
+      .then(() => {
+        toast({
+          title: t("success"),
+          description: t("health.manual_sync_success"),
+        })
+      })
+  }
 
   return (
     <>
       <PageHeader
-        title="Sağlık Durumu"
-        description="Liman Merkezi Yönetim Sistemi'nin sağlık durumunu görüntüleyebilir, güvenlik geliştirme önerilerini kolayca uygulayabilirsiniz."
+        title={t("health.title")}
+        description={t("health.description")}
       />
 
-      <div
-        className="container mx-auto flex items-center px-6 py-12"
-        style={{ height: "calc(var(--container-height) - 30vh)" }}
-      >
-        <div className="mx-auto flex max-w-sm flex-col items-center text-center">
-          <Icons.dugumluLogo className="w-18 mb-10 h-12" />
-          <h1 className="mt-3 text-2xl font-semibold text-gray-800 dark:text-white md:text-3xl">
-            Bir hata oluştu
-          </h1>
-          <p className="mt-4 text-gray-500 dark:text-gray-400">
-            Bu sayfa henüz geliştirilmedi.
-          </p>
-          <div className="mt-6 flex w-full shrink-0 items-center gap-x-3 sm:w-auto">
-            <Button onClick={() => router.back()} size="sm">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Geri dön
-            </Button>
-            <Button
-              onClick={() => router.push("/")}
-              size="sm"
-              className="px-4"
-              variant="secondary"
-            >
-              Panoya git
-            </Button>
-          </div>
-        </div>
-      </div>
+      {loading && <Loading />}
+      {!loading && data && (
+        <section className="flex flex-col gap-5 p-8 pt-3">
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <User2 className="h-6 w-6" />{" "}
+                    {t("health.admin_account_title")}{" "}
+                    <HealthStatus status={data.admin_account} />
+                  </div>
+                  <Link href="/settings/users">
+                    <Button size="sm">
+                      <ExternalLink className="mr-2 h-4 w-4" />{" "}
+                      {t("health.go_to_user_settings")}
+                    </Button>
+                  </Link>
+                </div>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>{t("health.admin_account_description")}</CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <Network className="h-6 w-6" />{" "}
+                    {t("health.dns_check_title")}{" "}
+                    <HealthStatus status={data.dns_check} />
+                  </div>
+                  <Link href="/settings/advanced/dns">
+                    <Button size="sm">
+                      <ExternalLink className="mr-2 h-4 w-4" />{" "}
+                      {t("health.go_to_dns_settings")}
+                    </Button>
+                  </Link>
+                </div>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>{t("health.dns_check_description")}</CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                <div className="flex items-center gap-3">
+                  <Lock className="h-6 w-6" /> {t("health.ssl_check_title")}{" "}
+                  <HealthStatus status={data.ssl_check} />
+                </div>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>{t("health.ssl_check_description")}</CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                <div className="flex items-center gap-3">
+                  <Lock className="h-6 w-6" /> {t("health.ssl_self_title")}{" "}
+                  <HealthStatus status={data.self_signed} />
+                </div>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>{t("health.ssl_self_description")}</CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <ServerCrash className="h-6 w-6" />{" "}
+                    {t("health.high_availability_service_title")}{" "}
+                    <HealthStatus status={data.high_availability_service} />
+                  </div>
+
+                  <Button size="sm" onClick={() => manualSync()}>
+                    <RefreshCw className="mr-2 h-4 w-4" />{" "}
+                    {t("health.manual_sync")}
+                  </Button>
+                </div>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              {t("health.high_availability_service_description")}
+            </CardContent>
+          </Card>
+        </section>
+      )}
     </>
   )
 }

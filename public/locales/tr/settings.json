@@ -3,6 +3,8 @@
     "error": "Hata",
     "information": "Bilgi",
     "title": "Ayarlar",
+    "ok": "OK",
+    "warning": "Uyarı",
     "description": "Bu sayfa aracılığıyla kişisel ayarlarınızı ve Liman MYS'nin sistem ayarlarını yapabilirsiniz.",
     "user_settings": "Kullanıcı Ayarları",
     "system_settings": "Sistem Ayarları",
@@ -172,6 +174,13 @@
     "users": {
         "title": "Kullanıcılar",
         "description": "Bu sayfa aracılığıyla kullanıcılara roller ekleyebilir, kullanıcı profillerini düzenleyebilir ve yenilerini ekleyebilirsiniz.",
+        "name": "İsim Soyisim",
+        "email": "E-Posta Adresi",
+        "username": "Kullanıcı Adı",
+        "status": "Yetki Seviyesi",
+        "auth_type": "Giriş Türü",
+        "admin": "Yönetici",
+        "user": "Kullanıcı",
         "toasts": {
             "success_msg": "Kullanıcı başarıyla oluşturuldu.",
             "error_msg": "Kullanıcı oluşturulurken bir hata oluştu."
@@ -212,7 +221,21 @@
     },
     "health": {
         "title": "Sağlık Durumu",
-        "description": "Liman Merkezi Yönetim Sistemi'nin sağlık durumunu görüntüleyebilir, güvenlik geliştirme önerilerini kolayca uygulayabilirsiniz."
+        "description": "Liman Merkezi Yönetim Sistemi'nin sağlık durumunu görüntüleyebilir, güvenlik geliştirme önerilerini kolayca uygulayabilirsiniz.",
+        "admin_account_title": "Varsayılan Yönetici Hesabı Durumu",
+        "admin_account_description": "Güvenliğiniz için varsayılan olarak gelen administrator@liman.dev hesabını sistemden kaldırmanızı öneriyoruz. Default hesabın kullanılması bruteforce gibi durumlara yol açabilme riski taşımaktadır.",
+        "go_to_user_settings": "Kullanıcı Ayarlarına Git",
+        "dns_check_title": "Liman Sunucusu DNS Kontrolü",
+        "dns_check_description": "Liman sunucunuzun dış internete ve ağınızdaki IP adreslerini çözebilmesi için DNS konfigürasyonunu yapmanız gerekmektedir.",
+        "go_to_dns_settings": "DNS Ayarlarına Git",
+        "ssl_check_title": "SSL Sertifikası Süre Kontrolü",
+        "ssl_check_description": "Liman sunucunuz üzerine tanımlı olan sertifikanın süresi dolmak üzeredir. Yenilemeniz tavsiye edilmektedir.",
+        "ssl_self_title": "Self-Signed Sertifika",
+        "ssl_self_description": "Self-signed sertifika kullandığınızı tespit ettik. Eğer kurumunuzda kullandığınız bir wildcard sertifika mevcut ise HAVELSAN A.Ş. aracılığıyla tanımlama yapmanızı tavsiye ediyoruz.",
+        "high_availability_service_title": "High Availability Servis Durumu",
+        "high_availability_service_description": "Liman'ın High Availability servisi aktif değil. Bu servis aktif edilmediği takdirde sunucu kaynaklı bir sorun oluştuğunda Liman yedekli şekilde çalışamayacaktır.",
+        "manual_sync": "Elle Senkronize Et",
+        "manual_sync_success": "Senkronizasyon isteği gönderildi. Sunucular birbiri arasında senkronizasyon çalıştıracaktır."       
     },
     "advanced": {
         "title": "Gelişmiş Ayarlar",
