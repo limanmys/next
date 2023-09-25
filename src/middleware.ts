@@ -7,7 +7,8 @@ const authRoutes = ["/auth/login"]
 export function middleware(request: NextRequest) {
   if (
     request.nextUrl.pathname.includes("_next") ||
-    request.nextUrl.pathname.includes("favicon")
+    request.nextUrl.pathname.includes("favicon") ||
+    request.nextUrl.pathname.includes("locales")
   ) {
     return NextResponse.next()
   }

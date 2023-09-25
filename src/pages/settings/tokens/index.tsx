@@ -1,48 +1,278 @@
-import { useRouter } from "next/router"
-import { ArrowLeft } from "lucide-react"
+import { useEffect, useState } from "react"
+import { apiService } from "@/services"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { FileWarning, PlusCircle } from "lucide-react"
+import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
+import { z } from "zod"
 
+import { DivergentColumn } from "@/types/table"
+import { IToken } from "@/types/token"
+import { useEmitter } from "@/hooks/useEmitter"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
-import { Icons } from "@/components/ui/icons"
+import DataTable from "@/components/ui/data-table/data-table"
+import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import PageHeader from "@/components/ui/page-header"
+import { useToast } from "@/components/ui/use-toast"
+import { Form, FormField, FormMessage } from "@/components/form/form"
+import { TokenActions } from "@/components/settings/token-actions"
 
 export default function TokensPage() {
-  const router = useRouter()
+  const [loading, setLoading] = useState<boolean>(true)
+  const [data, setData] = useState<IToken[]>([])
+  const { t, i18n } = useTranslation("settings")
+
+  const emitter = useEmitter()
+
+  const columns: DivergentColumn<IToken, string>[] = [
+    {
+      accessorKey: "name",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title={t("tokens.name")} />
+      ),
+      title: t("tokens.name"),
+    },
+    {
+      accessorKey: "ip_range",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title={t("tokens.ip_range")} />
+      ),
+      title: t("tokens.ip_range"),
+    },
+    {
+      accessorKey: "last_used_ip",
+      header: ({ column }) => (
+        <DataTableColumnHeader
+          column={column}
+          title={t("tokens.last_used_ip")}
+        />
+      ),
+      title: t("tokens.last_used_ip"),
+    },
+    {
+      accessorKey: "last_used_at",
+      header: ({ column }) => (
+        <DataTableColumnHeader
+          column={column}
+          title={t("tokens.last_used_at")}
+        />
+      ),
+      title: t("tokens.last_used_at"),
+      cell: ({ row }) => (
+        <>
+          {row.original.last_used_at
+            ? new Date(row.original.last_used_at).toLocaleDateString(
+                i18n.language,
+                {
+                  day: "2-digit",
+                  month: "long",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                }
+              )
+            : t("tokens.unknown")}
+        </>
+      ),
+    },
+    {
+      id: "actions",
+      cell: ({ row }) => (
+        <div className="flex justify-center">
+          <TokenActions row={row} />
+        </div>
+      ),
+    },
+  ]
+
+  const fetchData = () => {
+    apiService
+      .getInstance()
+      .get<IToken[]>(`/settings/tokens`)
+      .then((res) => {
+        setData(res.data)
+        setLoading(false)
+      })
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  useEffect(() => {
+    emitter.on("REFETCH_TOKENS", () => {
+      fetchData()
+    })
+    return () => emitter.off("REFETCH_TOKENS")
+  }, [])
 
   return (
     <>
       <PageHeader
-        title="Kişisel Erişim Anahtarları"
-        description="Kişisel erişim anahtarları oluşturarak Liman MYS'nin sağladığı dış API uçlarını kullanabilirsiniz."
+        title={t("tokens.title")}
+        description={t("tokens.description")}
       />
 
-      <div
-        className="container mx-auto flex items-center px-6 py-12"
-        style={{ height: "calc(var(--container-height) - 30vh)" }}
+      <DataTable
+        columns={columns}
+        data={data}
+        loading={loading}
+        selectable={false}
       >
-        <div className="mx-auto flex max-w-sm flex-col items-center text-center">
-          <Icons.dugumluLogo className="w-18 mb-10 h-12" />
-          <h1 className="mt-3 text-2xl font-semibold text-gray-800 dark:text-white md:text-3xl">
-            Bir hata oluştu
-          </h1>
-          <p className="mt-4 text-gray-500 dark:text-gray-400">
-            Bu sayfa henüz geliştirilmedi.
-          </p>
-          <div className="mt-6 flex w-full shrink-0 items-center gap-x-3 sm:w-auto">
-            <Button onClick={() => router.back()} size="sm">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Geri dön
-            </Button>
-            <Button
-              onClick={() => router.push("/")}
-              size="sm"
-              className="px-4"
-              variant="secondary"
-            >
-              Panoya git
-            </Button>
-          </div>
-        </div>
-      </div>
+        <CreateAccessToken />
+      </DataTable>
     </>
+  )
+}
+
+function CreateAccessToken() {
+  const { t } = useTranslation("settings")
+  const { toast } = useToast()
+  const emitter = useEmitter()
+  const [token, setToken] = useState<string>("")
+
+  const formSchema = z.object({
+    name: z.string().nonempty(t("tokens.validation.name")),
+    ip_range: z.string().nonempty(t("tokens.validation.ip_range")),
+  })
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      ip_range: "",
+    },
+  })
+
+  const [open, setOpen] = useState<boolean>(false)
+  const handleCreate = (values: z.infer<typeof formSchema>) => {
+    apiService
+      .getInstance()
+      .post<{
+        status: boolean
+        token: string
+      }>(`/settings/tokens`, values)
+      .then((res) => {
+        if (res.status === 200) {
+          toast({
+            title: t("success"),
+            description: t("tokens.toasts.create_success"),
+          })
+          setToken(res.data.token)
+          emitter.emit("REFETCH_TOKENS")
+          form.reset()
+        } else {
+          toast({
+            title: t("error"),
+            description: t("tokens.toasts.create_error"),
+            variant: "destructive",
+          })
+        }
+      })
+      .catch(() => {
+        toast({
+          title: t("error"),
+          description: t("tokens.toasts.create_error"),
+          variant: "destructive",
+        })
+      })
+  }
+
+  return (
+    <Dialog onOpenChange={(open) => setOpen(open)} open={open}>
+      <DialogTrigger asChild>
+        <Button variant="outline" size="sm" className="ml-auto h-8 lg:flex">
+          <PlusCircle className="mr-2 h-4 w-4" />
+          {t("tokens.create.button")}
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[525px]">
+        <DialogHeader>
+          <DialogTitle>{t("tokens.create.title")}</DialogTitle>
+          <DialogDescription>
+            {t("tokens.create.description")}
+          </DialogDescription>
+        </DialogHeader>
+        {token && (
+          <Alert>
+            <FileWarning className="h-4 w-4" />
+            <AlertTitle>{t("tokens.create.alert_title")}</AlertTitle>
+            <AlertDescription>
+              {t("tokens.create.alert_description")}
+              <br />
+              <br />
+              <b>{token}</b>
+            </AlertDescription>
+          </Alert>
+        )}
+
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(handleCreate)}
+            className="space-y-5"
+          >
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="name" className="text-right">
+                    {t("tokens.create.form.name")}
+                  </Label>
+                  <div className="col-span-3">
+                    <Input id="name" {...field} />
+                    <FormMessage className="mt-1" />
+                  </div>
+                </div>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="ip_range"
+              render={({ field }) => (
+                <>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="ip" className="text-right">
+                      {t("tokens.create.form.ip_range")}
+                    </Label>
+                    <div className="col-span-3">
+                      <Input id="ip" {...field} />
+
+                      <FormMessage className="mt-1" />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-4">
+                    <div></div>
+                    <div className="col-span-3">
+                      <small className="text-sm text-muted-foreground">
+                        {t("tokens.create.subtext")}
+                      </small>
+                    </div>
+                  </div>
+                </>
+              )}
+            />
+            <DialogFooter>
+              <Button type="submit">
+                <PlusCircle className="mr-2 h-4 w-4" />
+                {t("tokens.create.form.submit")}
+              </Button>
+            </DialogFooter>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
   )
 }

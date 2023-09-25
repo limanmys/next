@@ -5,6 +5,7 @@
     "title": "Ayarlar",
     "ok": "OK",
     "warning": "Uyarı",
+    "delete": "Sil",
     "description": "Bu sayfa aracılığıyla kişisel ayarlarınızı ve Liman MYS'nin sistem ayarlarını yapabilirsiniz.",
     "user_settings": "Kullanıcı Ayarları",
     "system_settings": "Sistem Ayarları",
@@ -122,7 +123,41 @@
     },
     "tokens": {
         "title": "Kişisel Erişim Anahtarları",
-        "description": "Kişisel erişim anahtarları oluşturarak Liman MYS'nin sağladığı dış API uçlarını kullanabilirsiniz."
+        "description": "Kişisel erişim anahtarları oluşturarak Liman MYS'nin sağladığı dış API uçlarını kullanabilirsiniz.",
+        "toasts": {
+            "delete_success": "Anahtar başarıyla silindi.",
+            "delete_error": "Anahtar silinirken bir hata oluştu.",
+            "create_success": "Anahtar başarıyla oluşturuldu.",
+            "create_error": "Anahtar oluşturulurken bir hata oluştu."
+        },
+        "delete": {
+            "title": "Emin misiniz?",
+            "description": "Seçilen dış bildirim <b>({{token}})</b> Liman sisteminden tamamen silinecektir. Bu işlem sonucunda bildirim alışınızda kesinti yaşanabilir. Devam etmek istiyor musunuz?",
+            "cancel": "Vazgeç",
+            "delete": "Onayla"
+        },
+        "name": "İsim",
+        "ip_range": "İzin Verilen IP Adresi",
+        "last_used_ip": "Son Erişen IP Adresi",
+        "last_used_at": "Son Erişim Tarihi",
+        "unknown": "Bilinmiyor",
+        "validation": {
+            "name": "Erişim anahtarı adı boş bırakılamaz.",
+            "ip_range": "İzin verilen IP adresi boş bırakılamaz."
+        },
+        "create": {
+            "button": "Ekle",
+            "title": "Erişim Anahtarı Oluştur",
+            "description": "Bu pencereyi kullanarak yeni bir erişim anahtarı oluşturabilirsiniz.",
+            "subtext": "Bu bölüme izin vermek istediğiniz bir subnet adresini ya da IP adresini yazarak erişimi kısıtlayabilirsiniz. -1 yazdığınızda kısıt kalkmaktadır. Örneğin: 192.168.1.0/24",
+            "alert_title": "Erişim Anahtarınız",
+            "alert_description": "Bu tokeni kimse ile paylaşmayınız. Sizin adınıza Liman sistemi üzerinde işlem yapabilir.",
+            "form": {
+                "name": "İsim",
+                "ip_range": "İzin Verilen IP Adresi",
+                "submit": "Oluştur"
+            }
+        }
     },
     "extensions": {
         "title": "Eklentiler",
