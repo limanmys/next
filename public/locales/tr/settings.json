@@ -252,7 +252,20 @@
     },
     "access": {
         "title": "Erişim",
-        "description": "Giriş yapılabilecek giriş araçlarını ayarlamanızı sağlar. Keycloak ve LDAP girişlerini bu sayfa üzerinden ayarlayabilirsiniz."
+        "description": "Giriş yapılabilecek giriş araçlarını ayarlamanızı sağlar. Keycloak ve LDAP girişlerini bu sayfa üzerinden ayarlayabilirsiniz.",
+        "audit": {
+            "title": "Erişim Kayıtları",
+            "description": "Kullanıcıların eklentiler dışında Liman'da yaptığı işlemleri bu sayfa üzerinden detaylı şekilde gözlemleyebilirsiniz.",
+            "username": "Kullanıcı Adı",
+            "ip_address": "IP Adresi",
+            "type": "İşlem Tipi",
+            "action": "Yapılan İşlem",
+            "message": "Mesaj",
+            "timestamp": "Zaman",
+            "extension": "Eklenti",
+            "assign": "Atama",
+            "EXTENSION_ASSIGNED_TO_SERVER": "{{extension_name}} eklentisi {{server_name}} sunucusuna atandı."
+        }
     },
     "health": {
         "title": "Sağlık Durumu",

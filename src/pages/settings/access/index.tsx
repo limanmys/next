@@ -5,7 +5,7 @@ export default function Index() {
   const router = useRouter()
 
   useEffect(() => {
-    router.push("/settings/access/ldap")
+    router.push("/settings/access/audit")
   }, [])
 
   return

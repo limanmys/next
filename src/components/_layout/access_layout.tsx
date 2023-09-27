@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { apiService } from "@/services"
-import { BookKey, FolderGit2, ScanFace } from "lucide-react"
+import { BookKey, FolderGit2, ScanFace, ScrollText } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import AccessCard from "../settings/access-card"
 
@@ -10,8 +11,17 @@ export default function AccessLayout({
   children: React.ReactNode
 }) {
   const [enabled, setEnabled] = useState(false)
+  const { t } = useTranslation("settings")
 
   const access = [
+    {
+      id: "audit",
+      icon: ScrollText,
+      title: t("access.audit.title"),
+      description: t("access.audit.description"),
+      href: `/settings/access/audit`,
+      enabled: true,
+    },
     {
       id: "ldap",
       icon: FolderGit2,
@@ -54,7 +64,7 @@ export default function AccessLayout({
 
   return (
     <div
-      className="grid grid-cols-4"
+      className="grid grid-cols-5"
       style={{
         height: "var(--container-height)",
       }}
@@ -74,7 +84,7 @@ export default function AccessLayout({
           />
         ))}
       </div>
-      <div className="col-span-3">{children}</div>
+      <div className="col-span-4">{children}</div>
     </div>
   )
 }
