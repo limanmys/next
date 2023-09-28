@@ -52,7 +52,7 @@ const AccessAuditLogsPage: NextPageWithLayout = () => {
       ),
       title: t("access.audit.type"),
       accessorFn: (row) => {
-        return t(`access.audit.${row.type}`) as string
+        return t(`access.audit.types.${row.type}`) as string
       },
     },
     {
@@ -65,11 +65,11 @@ const AccessAuditLogsPage: NextPageWithLayout = () => {
       ),
       title: t("access.audit.action"),
       accessorFn: (row) => {
-        return t(`access.audit.${row.action}`) as string
+        return t(`access.audit.actions.${row.action}`) as string
       },
       cell: ({ row }) => (
         <div className="flex items-center gap-2">
-          {t(`access.audit.${row.original.action}`)}{" "}
+          {t(`access.audit.actions.${row.original.action}`)}{" "}
           <AuditLogDetails id={row.original.id} />
         </div>
       ),
@@ -86,12 +86,15 @@ const AccessAuditLogsPage: NextPageWithLayout = () => {
       cell: ({ row }) => (
         <>
           {row.original.message
-            ? t(`access.audit.${row.original.message}`, row.original.details)
+            ? t(
+                `access.audit.messages.${row.original.message}`,
+                row.original.details
+              )
             : "-"}
         </>
       ),
       accessorFn: (row) => {
-        return t(`access.audit.${row.message}`, row.details) as string
+        return t(`access.audit.messages.${row.message}`, row.details) as string
       },
     },
     {

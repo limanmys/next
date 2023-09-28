@@ -262,9 +262,38 @@
             "action": "Yapılan İşlem",
             "message": "Mesaj",
             "timestamp": "Zaman",
-            "extension": "Eklenti",
-            "assign": "Atama",
-            "EXTENSION_ASSIGNED_TO_SERVER": "{{extension_name}} eklentisi {{server_name}} sunucusuna atandı."
+            "types": {
+                "extension": "Eklenti",
+                "user": "Kullanıcı",
+                "server": "Sunucu",
+                "role": "Rol Grubu",
+                "dns": "DNS Sunucuları",
+                "tweak": "İnce Ayarlar"
+            },
+            "actions": {
+                "assign": "Atama",
+                "unassign": "Kaldırma",
+                "create": "Oluşturma",
+                "delete": "Silme",
+                "edit": "Düzenleme",
+                "users": "Kullanıcı Yetkilendirme",
+                "upload": "Yükleme/Güncelleme"
+            },
+            "messages": {
+                "EXTENSION_ASSIGNED_TO_SERVER": "{{extension_name}} eklentisi {{server_name}} sunucusuna atandı.",
+                "EXTENSION_UNASSIGNED_FROM_SERVER": "{{extension_name}} eklentisi {{server_name}} sunucusundan kaldırıldı.",
+                "USER_CREATED": "{{user_name}} isimli kullanıcı oluşturuldu.",
+                "USER_DELETED": "{{user_name}} isimli kullanıcı silindi.",
+                "EXTENSION_UPLOAD": "{{extension_name}} eklentisi yüklendi.",
+                "EXTENSION_DELETE": "{{extension_name}} eklentisi silindi.",
+                "SERVER_CREATE": "{{server_name}} sunucusu oluşturuldu.",
+                "ROLE_CREATE": "{{role_name}} rolü oluşturuldu.",
+                "ROLE_DELETE": "{{role_name}} rolü silindi.",
+                "ROLE_USERS": "{{role_name}} rolü {{user_name}} isimli kullanıcıya atandı.",
+                "ROLE_EDIT": "Rol düzenlendi, {{changed_count}} adet obje değiştirildi. İstek detaylarına bakınız.",
+                "TWEAK_EDIT": "Sistem ince ayarları düzenlendi.",
+                "DNS_EDIT": "DNS sunucuları {{dns1}}, {{dns2}}, {{dns3}} olarak güncellendi."
+            }
         }
     },
     "health": {
@@ -283,7 +312,7 @@
         "high_availability_service_title": "High Availability Servis Durumu",
         "high_availability_service_description": "Liman'ın High Availability servisi aktif değil. Bu servis aktif edilmediği takdirde sunucu kaynaklı bir sorun oluştuğunda Liman yedekli şekilde çalışamayacaktır.",
         "manual_sync": "Elle Senkronize Et",
-        "manual_sync_success": "Senkronizasyon isteği gönderildi. Sunucular birbiri arasında senkronizasyon çalıştıracaktır."       
+        "manual_sync_success": "Senkronizasyon isteği gönderildi. Sunucular birbiri arasında senkronizasyon çalıştıracaktır."
     },
     "advanced": {
         "title": "Gelişmiş Ayarlar",
