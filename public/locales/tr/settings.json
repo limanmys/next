@@ -317,5 +317,31 @@
     "advanced": {
         "title": "Gelişmiş Ayarlar",
         "description": "Sistemin DNS ayarlarını, sertifika kurulumları ve log yönlendirme gibi değişiklikleri bu sayfa üzerinden yapabilirsiniz."
+    },
+    "servers": {
+        "actions": {
+            "edit_btn": "Düzenle",
+            "delete": "Sil",
+            "edit": {
+                "title": "Sunucu Düzenle",
+                "description": "Sunucunuzun görünen adını ve IP adresini bu kısımdan düzenleyebilirsiniz.",
+                "form": {
+                    "name": "İsim",
+                    "ip_address": "IP Adresi",
+                    "submit": "Düzenle",
+                    "cancel": "İptal"
+                },
+                "success_msg": "Sunucu başarıyla düzenlendi.",
+                "error_msg": "Sunucu düzenlenirken bir hata oluştu."
+            },
+            "delete_dialog": {
+                "success_msg": "Sunucu başarıyla silindi.",
+                "error_msg": "Sunucu silinirken bir hata oluştu.",
+                "title": "Emin misiniz?",
+                "description": "Seçilen sunucu <b>({{server}})</b> Liman sisteminden tamamen kaldırılacaktır. Devam etmek istiyor musunuz?",
+                "cancel": "Vazgeç",
+                "delete": "Onayla"
+            }
+        }
     }
 }

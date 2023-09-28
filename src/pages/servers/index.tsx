@@ -6,15 +6,18 @@ import { Link2, Server } from "lucide-react"
 import { IServer } from "@/types/server"
 import { DivergentColumn } from "@/types/table"
 import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
+import { useEmitter } from "@/hooks/useEmitter"
 import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
 import PageHeader from "@/components/ui/page-header"
+import { ServerRowActions } from "@/components/settings/server-actions"
 
 export default function Servers() {
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IServer[]>([])
   const user = useCurrentUser()
+  const emitter = useEmitter()
 
   const columns: DivergentColumn<IServer>[] = [
     {
@@ -53,6 +56,14 @@ export default function Servers() {
       ),
       title: "Eklenti Sayısı",
     },
+    {
+      id: "actions",
+      cell: ({ row }) => (
+        <div className="flex justify-center">
+          <ServerRowActions row={row} />
+        </div>
+      ),
+    },
   ]
 
   useEffect(() => {
@@ -65,6 +76,22 @@ export default function Servers() {
         setData(res.data)
         setLoading(false)
       })
+
+    emitter.on("REFETCH_SERVERS", () => {
+      setLoading(true)
+
+      apiService
+        .getInstance()
+        .get(`/servers`)
+        .then((res) => {
+          setData(res.data)
+          setLoading(false)
+        })
+    })
+
+    return () => {
+      emitter.off("REFETCH_SERVERS")
+    }
   }, [])
 
   return (
