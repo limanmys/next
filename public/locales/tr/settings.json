@@ -276,6 +276,7 @@
                 "create": "Oluşturma",
                 "delete": "Silme",
                 "edit": "Düzenleme",
+                "update": "Düzenleme",
                 "users": "Kullanıcı Yetkilendirme",
                 "upload": "Yükleme/Güncelleme"
             },
@@ -287,6 +288,8 @@
                 "EXTENSION_UPLOAD": "{{extension_name}} eklentisi yüklendi.",
                 "EXTENSION_DELETE": "{{extension_name}} eklentisi silindi.",
                 "SERVER_CREATE": "{{server_name}} sunucusu oluşturuldu.",
+                "SERVER_UPDATE": "{{server_name}} sunucusu güncellendi, yeni değerleri: {{new_server_name}}, {{new_server_ip}}",
+                "SERVER_DELETE": "{{server_name}} sunucusu silindi.",
                 "ROLE_CREATE": "{{role_name}} rolü oluşturuldu.",
                 "ROLE_DELETE": "{{role_name}} rolü silindi.",
                 "ROLE_USERS": "{{role_name}} rolü {{user_name}} isimli kullanıcıya atandı.",

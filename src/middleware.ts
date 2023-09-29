@@ -16,18 +16,23 @@ export function middleware(request: NextRequest) {
   const currentUser = request.cookies.get("currentUser")?.value
 
   if (!currentUser && !authRoutes.includes(request.nextUrl.pathname)) {
-    return NextResponse.redirect(new URL("/auth/login", request.url))
+    return NextResponse.redirect(
+      new URL("/auth/login?redirect=" + request.nextUrl.pathname, request.url)
+    )
   }
 
   if (currentUser && Date.now() > JSON.parse(currentUser).expired_at) {
     request.cookies.delete("currentUser")
-    const response = NextResponse.redirect(new URL("/auth/login", request.url))
+    const response = NextResponse.redirect(
+      new URL("/auth/login?redirect=" + request.nextUrl.pathname, request.url)
+    )
     response.cookies.delete("currentUser")
     return response
   }
 
   if (currentUser && authRoutes.includes(request.nextUrl.pathname)) {
-    return NextResponse.redirect(new URL("/", request.url))
+    let url = request.nextUrl.searchParams.get("redirect") || "/"
+    return NextResponse.redirect(new URL(url, request.url))
   }
 
   if (currentUser) {

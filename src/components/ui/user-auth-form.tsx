@@ -42,7 +42,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         login(name, newPassword)
           .then(() => {
             setTimeout(() => {
-              router.push("/")
+              router.push((router.query.redirect || "/") as string)
             }, 1000)
           })
           .catch((e) => {
@@ -63,7 +63,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       login(name, password)
         .then(() => {
           setTimeout(() => {
-            router.push("/")
+            router.push((router.query.redirect || "/") as string)
           }, 1000)
         })
         .catch((e) => {
