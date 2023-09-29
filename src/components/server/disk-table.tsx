@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { apiService } from "@/services"
+import { useTranslation } from "react-i18next"
 
 import { IServerDiskUsage } from "@/types/server"
 
@@ -18,6 +19,7 @@ import {
 
 export default function DiskTable() {
   const router = useRouter()
+  const { t } = useTranslation("servers")
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState<IServerDiskUsage[]>([])
 
@@ -42,13 +44,13 @@ export default function DiskTable() {
 
   return (
     <Table>
-      <TableCaption>Sisteme mount edilmiş disk kullanım durumları</TableCaption>
+      <TableCaption>{t("system_status.disk_status_desc")}</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="pl-6">Disk</TableHead>
-          <TableHead>Boyut</TableHead>
-          <TableHead>Dolu</TableHead>
-          <TableHead>Kullanım (%)</TableHead>
+          <TableHead className="pl-6">{t("system_status.disk")}</TableHead>
+          <TableHead>{t("system_status.size")}</TableHead>
+          <TableHead>{t("system_status.full")}</TableHead>
+          <TableHead>{t("system_status.usage")}</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

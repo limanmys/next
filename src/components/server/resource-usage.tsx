@@ -3,6 +3,7 @@ import dynamic from "next/dynamic"
 import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { Cpu, Download, HardDrive, MemoryStick, Upload } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { IServerStats } from "@/types/server"
 
@@ -12,6 +13,7 @@ import { Skeleton } from "../ui/skeleton"
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false })
 
 export default function ResourceUsage() {
+  const { t } = useTranslation("servers")
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState([] as IServerStats[])
@@ -97,7 +99,7 @@ export default function ResourceUsage() {
   return (
     <div className="p-[24px]">
       <h2 className="mb-5 text-2xl font-bold tracking-tight">
-        Kaynak Kullanımı
+        {t("system_status.resource_usage")}
       </h2>
       <div className="grid grid-cols-4 gap-5">
         {loading ? (
@@ -111,7 +113,7 @@ export default function ResourceUsage() {
           <>
             <Card>
               <CardHeader>
-                <CardTitle>CPU Kullanımı</CardTitle>
+                <CardTitle>{t("system_status.cpu_usage")}</CardTitle>
                 <div className="flex items-center">
                   <Cpu className="mr-2 h-4 w-4" />%{data[0]?.cpu}
                 </div>
@@ -128,7 +130,7 @@ export default function ResourceUsage() {
                   width="100%"
                   series={[
                     {
-                      name: "% CPU Kullanımı",
+                      name: "% " + t("system_status.cpu_usage"),
                       data: data.map((e) => ({ x: e.time, y: e.cpu })),
                     },
                   ]}
@@ -148,7 +150,7 @@ export default function ResourceUsage() {
             </Card>
             <Card>
               <CardHeader>
-                <CardTitle>Bellek Kullanımı</CardTitle>
+                <CardTitle>{t("system_status.ram_usage")}</CardTitle>
                 <div className="flex items-center">
                   <MemoryStick className="mr-2 h-4 w-4" /> %{data[0]?.ram}
                 </div>
@@ -165,7 +167,7 @@ export default function ResourceUsage() {
                   width="100%"
                   series={[
                     {
-                      name: "% RAM Kullanımı",
+                      name: "% " + t("system_status.ram_usage"),
                       data: data.map((e) => ({ x: e.time, y: e.ram })),
                     },
                   ]}
@@ -185,7 +187,7 @@ export default function ResourceUsage() {
             </Card>
             <Card>
               <CardHeader>
-                <CardTitle>IO Kullanımı</CardTitle>
+                <CardTitle>{t("system_status.io_usage")}</CardTitle>
                 <div className="flex items-center">
                   <HardDrive className="mr-2 h-4 w-4" /> %{data[0]?.io}
                 </div>
@@ -202,7 +204,7 @@ export default function ResourceUsage() {
                   width="100%"
                   series={[
                     {
-                      name: "% IO Kullanımı",
+                      name: "% " + t("system_status.io_usage"),
                       data: data.map((e) => ({ x: e.time, y: e.io })),
                     },
                   ]}
@@ -223,7 +225,7 @@ export default function ResourceUsage() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-end justify-between">
-                  Network Kullanımı{" "}
+                  {t("system_status.network_usage")}{" "}
                   <small className="text-foreground/50">kb/s</small>
                 </CardTitle>
                 <div className="flex items-center">

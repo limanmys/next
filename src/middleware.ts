@@ -5,6 +5,8 @@ import { IUser } from "./types/user"
 const authRoutes = ["/auth/login"]
 
 export function middleware(request: NextRequest) {
+  const urlBeforeRedirect = request.nextUrl.pathname
+
   if (
     request.nextUrl.pathname.includes("_next") ||
     request.nextUrl.pathname.includes("favicon") ||
@@ -24,7 +26,7 @@ export function middleware(request: NextRequest) {
   if (currentUser && Date.now() > JSON.parse(currentUser).expired_at) {
     request.cookies.delete("currentUser")
     const response = NextResponse.redirect(
-      new URL("/auth/login?redirect=" + request.nextUrl.pathname, request.url)
+      new URL("/auth/login?redirect=" + urlBeforeRedirect, request.url)
     )
     response.cookies.delete("currentUser")
     return response

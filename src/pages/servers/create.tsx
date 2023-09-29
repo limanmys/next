@@ -8,6 +8,7 @@ import {
 import { apiService } from "@/services"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { ChevronLeft, ChevronRight, PlusCircle, Server } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -26,14 +27,15 @@ export default function ServerCreatePage() {
   const [parent] = useAutoAnimate()
   const router = useRouter()
   const sidebarCtx = useSidebarContext()
+  const { t } = useTranslation("servers")
 
   const [data, setData] = useState<any>({})
   const [loading, setLoading] = useState<boolean>(false)
   const [step, setStep] = useState<number>(0)
   const steps = [
     {
-      name: "Bağlantı Bilgileri",
-      description: "Sunucu bağlantısını kontrol edin.",
+      name: t("create.steps.connection_information.name"),
+      description: t("create.steps.connection_information.description"),
       ref: useRef<any>(),
       component: ConnectionInformation,
       validation: async (data: any) => {
@@ -54,8 +56,8 @@ export default function ServerCreatePage() {
       },
     },
     {
-      name: "Genel Ayarlar",
-      description: "Sunucu adını ve işletim sistemini belirleyin.",
+      name: t("create.steps.general_settings.name"),
+      description: t("create.steps.general_settings.description"),
       ref: useRef<any>(),
       component: GeneralSettings,
       validation: async (data: any) => {
@@ -76,9 +78,8 @@ export default function ServerCreatePage() {
       },
     },
     {
-      name: "Anahtar Seçimi",
-      description:
-        "Sunucunuza bağlantı kurulabilmesi için bir anahtar türü seçiniz.",
+      name: t("create.steps.key_selection.name"),
+      description: t("create.steps.key_selection.description"),
       ref: useRef<any>(),
       component: KeySelection,
       validation: async (data: any) => {
@@ -89,8 +90,8 @@ export default function ServerCreatePage() {
       },
     },
     {
-      name: "Anahtar",
-      description: "Sunucunuza bağlantı kurmak için anahtar sağlayın.",
+      name: t("create.steps.key_inputs.name"),
+      description: t("create.steps.key_inputs.description"),
       ref: useRef<any>(),
       component: KeyInputs,
       validation: async (data: any) => {
@@ -118,8 +119,8 @@ export default function ServerCreatePage() {
       },
     },
     {
-      name: "Özet",
-      description: "Seçimlerinizi kontrol edin ve onaylayın.",
+      name: t("create.steps.summary.name"),
+      description: t("create.steps.summary.description"),
       ref: useRef<any>(),
       component: Summary,
       validation: async (data: any) => {
@@ -156,8 +157,8 @@ export default function ServerCreatePage() {
           })
 
           toast({
-            title: "Hata",
-            description: "Lütfen devam etmeden önce girdinizi kontrol edin.",
+            title: t("error"),
+            description: t("errors.validation"),
             variant: "destructive",
           })
           setLoading(false)
@@ -178,8 +179,8 @@ export default function ServerCreatePage() {
         setStep(step + 1)
       } else {
         toast({
-          title: "Hata",
-          description: "Lütfen devam etmeden önce girdinizi kontrol edin.",
+          title: t("error"),
+          description: t("errors.validation"),
           variant: "destructive",
         })
       }
@@ -195,15 +196,15 @@ export default function ServerCreatePage() {
       .then(() => {
         sidebarCtx[SIDEBARCTX_STATES.refreshServers]()
         toast({
-          title: "Başarılı",
-          description: "Sunucu başarıyla oluşturuldu.",
+          title: t("success"),
+          description: t("errors.success"),
         })
         router.push("/servers")
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description: "Sunucu oluşturulurken hata oluştu.",
+          title: t("error"),
+          description: t("errors.error"),
           variant: "destructive",
         })
       })
@@ -215,13 +216,13 @@ export default function ServerCreatePage() {
   return (
     <>
       <PageHeader
-        title="Sunucu Ekle"
-        description="Liman Merkezi Yönetim Sistemine halihazırda kurmuş olduğunuz Windows ve Linux sunucularınızı ekleyebilirsiniz."
+        title={t("create.title")}
+        description={t("create.description")}
         rightSide={
           <Link href="/servers">
             <Button className="rounded-full">
               <Server className="mr-2 h-4 w-4" />
-              Sunucular
+              {t("create.servers")}
             </Button>
           </Link>
         }
@@ -245,7 +246,7 @@ export default function ServerCreatePage() {
               disabled={step === 0}
             >
               <ChevronLeft className="mr-2 h-4 w-4" />
-              Geri
+              {t("create.back")}
             </Button>
             {step !== steps.length - 1 ? (
               <Button
@@ -256,7 +257,7 @@ export default function ServerCreatePage() {
                 {loading && (
                   <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                 )}
-                İleri
+                {t("create.next")}
                 <ChevronRight className="ml-2 h-4 w-4" />
               </Button>
             ) : (
@@ -269,7 +270,7 @@ export default function ServerCreatePage() {
                   <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                 )}
                 {!loading && <PlusCircle className="mr-2 h-4 w-4" />}
-                Ekle
+                {t("create.create")}
               </Button>
             )}
           </div>

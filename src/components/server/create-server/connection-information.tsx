@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Check } from "lucide-react"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
 import { Icons } from "@/components/ui/icons"
@@ -16,16 +16,6 @@ import {
   FormMessage,
 } from "@/components/form/form"
 
-const informationSchema = z.object({
-  ip_address: z.string().nonempty("Sunucu adresi boş bırakılamaz."),
-  port: z
-    .string()
-    .max(5, {
-      message: "Bağlantı portu 5 karakterden uzun olamaz.",
-    })
-    .nonempty("Bağlantı portu boş bırakılamaz."),
-})
-
 export default function ConnectionInformation({
   formRef,
   data,
@@ -33,6 +23,22 @@ export default function ConnectionInformation({
   formRef: any
   data: any
 }) {
+  const { t } = useTranslation("servers")
+
+  const informationSchema = z.object({
+    ip_address: z
+      .string()
+      .nonempty(t("create.steps.connection_information.validation.ip_address")),
+    port: z
+      .string()
+      .max(5, {
+        message: t("create.steps.connection_information.validation.port.max"),
+      })
+      .nonempty(
+        t("create.steps.connection_information.validation.port.nonempty")
+      ),
+  })
+
   const form = useForm<z.infer<typeof informationSchema>>({
     resolver: zodResolver(informationSchema),
     defaultValues: {
@@ -49,10 +55,10 @@ export default function ConnectionInformation({
       <div>
         <div>
           <h3 className="text-lg font-medium leading-6 text-foreground">
-            Bağlantı Bilgileri
+            {t("create.steps.connection_information.name")}
           </h3>
           <p className="mt-1 max-w-2xl text-sm text-foreground/60">
-            Sunucu bağlantısını kontrol edin.
+            {t("create.steps.connection_information.description")}
           </p>
         </div>
         <Form {...form}>
@@ -64,7 +70,9 @@ export default function ConnectionInformation({
                 <div className="mt-6 space-y-6 sm:mt-5 sm:space-y-5">
                   <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-foreground/10 sm:pt-5">
                     <Label htmlFor="ip_address" className="sm:mt-px sm:pt-2">
-                      Sunucunuzun Adresi
+                      {t(
+                        "create.steps.connection_information.ip_address.label"
+                      )}
                     </Label>
                     <div className="mt-1 sm:col-span-2 sm:mt-0">
                       <Input
@@ -74,8 +82,9 @@ export default function ConnectionInformation({
                         {...field}
                       />
                       <p className="mt-2 text-sm text-foreground/60">
-                        Bağlanmak istediğiniz sunucunun IP adresini ya da
-                        hostname&apos;ini girin.
+                        {t(
+                          "create.steps.connection_information.ip_address.information"
+                        )}
                       </p>
                       <FormMessage />
                     </div>
@@ -91,7 +100,7 @@ export default function ConnectionInformation({
                 <div className="mt-6 space-y-6 sm:mt-5 sm:space-y-5">
                   <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-foreground/10 sm:pt-5">
                     <Label htmlFor="port" className="sm:mt-px sm:pt-2">
-                      Bağlantı Portu
+                      {t("create.steps.connection_information.port.label")}
                     </Label>
                     <div className="mt-1 space-y-8 sm:col-span-2 sm:mt-0">
                       <RadioGroup

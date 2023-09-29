@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { Cpu, MemoryStick, PackageSearch, Server } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { IServerSpecs } from "@/types/server"
 
@@ -12,6 +13,7 @@ export default function ServerSpecs() {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState<IServerSpecs>()
+  const { t } = useTranslation("servers")
 
   useEffect(() => {
     if (!router.query.server_id) return
@@ -28,7 +30,7 @@ export default function ServerSpecs() {
   return (
     <div className="border-b p-[24px]">
       <h2 className="mb-5 text-2xl font-bold tracking-tight">
-        Sunucu Özellikleri
+        {t("system_status.specs")}
       </h2>
       <div className="grid grid-cols-4 gap-5">
         {loading ? (
@@ -44,7 +46,7 @@ export default function ServerSpecs() {
               <CardHeader>
                 <CardTitle>
                   <div className="flex items-center justify-between">
-                    CPU
+                    {t("system_status.cpu")}
                     <Cpu className="ml-2 inline-block h-4 w-4" />
                   </div>
                 </CardTitle>
@@ -56,7 +58,7 @@ export default function ServerSpecs() {
               <CardHeader>
                 <CardTitle>
                   <div className="flex items-center justify-between">
-                    Bellek Boyutu
+                    {t("system_status.ram_size")}
                     <MemoryStick className="ml-2 inline-block h-4 w-4" />
                   </div>
                 </CardTitle>
@@ -68,7 +70,7 @@ export default function ServerSpecs() {
               <CardHeader>
                 <CardTitle>
                   <div className="flex items-center justify-between">
-                    Üretici
+                    {t("system_status.vendor")}
                     <PackageSearch className="ml-2 inline-block h-4 w-4" />
                   </div>
                 </CardTitle>
@@ -80,7 +82,7 @@ export default function ServerSpecs() {
               <CardHeader>
                 <CardTitle>
                   <div className="flex items-center justify-between">
-                    Model
+                    {t("system_status.model")}
                     <Server className="ml-2 inline-block h-4 w-4" />
                   </div>
                 </CardTitle>

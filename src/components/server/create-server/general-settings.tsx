@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Check } from "lucide-react"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
 import { Icons } from "@/components/ui/icons"
@@ -16,11 +16,6 @@ import {
   FormMessage,
 } from "@/components/form/form"
 
-const generalSchema = z.object({
-  name: z.string().nonempty("Sunucu adresi boş bırakılamaz."),
-  os_type: z.string().nonempty("Bağlantı portu boş bırakılamaz."),
-})
-
 export default function GeneralSettings({
   formRef,
   data,
@@ -28,6 +23,17 @@ export default function GeneralSettings({
   formRef: any
   data: any
 }) {
+  const { t } = useTranslation("servers")
+
+  const generalSchema = z.object({
+    name: z
+      .string()
+      .nonempty(t("create.steps.general_settings.validation.name")),
+    os_type: z
+      .string()
+      .nonempty(t("create.steps.general_settings.validation.os_type")),
+  })
+
   const form = useForm<z.infer<typeof generalSchema>>({
     resolver: zodResolver(generalSchema),
     defaultValues: {
@@ -44,10 +50,10 @@ export default function GeneralSettings({
       <div>
         <div>
           <h3 className="text-lg font-medium leading-6 text-foreground">
-            Genel Ayarlar
+            {t("create.steps.general_settings.name")}
           </h3>
           <p className="mt-1 max-w-2xl text-sm text-foreground/60">
-            Sunucu adını ve işletim sistemini belirleyin.
+            {t("create.steps.general_settings.description")}
           </p>
         </div>
         <Form {...form}>
@@ -59,7 +65,7 @@ export default function GeneralSettings({
                 <div className="mt-6 space-y-6 sm:mt-5 sm:space-y-5">
                   <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-foreground/10 sm:pt-5">
                     <Label htmlFor="name" className="sm:mt-px sm:pt-2">
-                      Sunucu Adı
+                      {t("create.steps.general_settings.sname.label")}
                     </Label>
                     <div className="mt-1 sm:col-span-2 sm:mt-0">
                       <Input
@@ -69,7 +75,7 @@ export default function GeneralSettings({
                         {...field}
                       />
                       <p className="mt-2 text-sm text-foreground/60">
-                        Görünmesini istediğiniz sunucu adını yazınız.
+                        {t("create.steps.general_settings.sname.information")}
                       </p>
                       <FormMessage />
                     </div>
@@ -85,7 +91,7 @@ export default function GeneralSettings({
                 <div className="mt-6 space-y-6 sm:mt-5 sm:space-y-5">
                   <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-foreground/10 sm:pt-5">
                     <Label htmlFor="os_type" className="sm:mt-px sm:pt-2">
-                      İşletim Sistemi
+                      {t("create.steps.general_settings.os_type.label")}
                     </Label>
                     <div className="mt-1 space-y-8 sm:col-span-2 sm:mt-0">
                       <RadioGroup

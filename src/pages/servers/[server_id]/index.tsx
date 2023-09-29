@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { apiService } from "@/services"
+import { useTranslation } from "react-i18next"
 
 import { IServer, IServerDetails } from "@/types/server"
 import CpuTable from "@/components/server/cpu-table"
@@ -19,6 +20,7 @@ export default function ServerStatus() {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState<IDetails>({} as IDetails)
+  const { t } = useTranslation("servers")
 
   useEffect(() => {
     setLoading(true)
@@ -43,19 +45,19 @@ export default function ServerStatus() {
           <div className="flex flex-[2] divide-x border-t">
             <div className="w-1/3 pb-[24px]">
               <h2 className="p-[24px] text-xl font-bold tracking-tight">
-                CPU Kullanımı
+                {t("system_status.cpu_usage")}
               </h2>
               <CpuTable />
             </div>
             <div className="w-1/3 pb-[24px]">
               <h2 className="p-[24px] text-xl font-bold tracking-tight">
-                Bellek Kullanımı
+                {t("system_status.ram_usage")}
               </h2>
               <RamTable />
             </div>
             <div className="w-1/3 pb-[24px]">
               <h2 className="p-[24px] text-xl font-bold tracking-tight">
-                Disk Durumu
+                {t("system_status.disk_status")}
               </h2>
               <DiskTable />
             </div>

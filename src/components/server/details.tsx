@@ -1,4 +1,5 @@
 import { Clock, Network, User } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { IServer, IServerDetails } from "@/types/server"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -17,6 +18,8 @@ export default function ServerDetails({
   loading: boolean
   data: IDetails
 }) {
+  const { t } = useTranslation("servers")
+
   return (
     <div
       className="border-r"
@@ -25,12 +28,14 @@ export default function ServerDetails({
       }}
     >
       <h2 className="p-[24px] text-2xl font-bold tracking-tight">
-        Sunucu Detayları
+        {t("system_status.details")}
       </h2>
 
       <div className="border-y p-[24px]">
         <div className="flex flex-col">
-          <span className="mb-3 text-sm font-semibold">Sunucu Adı</span>
+          <span className="mb-3 text-sm font-semibold">
+            {t("system_status.name")}
+          </span>
           {loading ? (
             <Skeleton className="h-[20px] w-full" />
           ) : (
@@ -41,7 +46,9 @@ export default function ServerDetails({
 
       <div className="border-b p-[24px]">
         <div className="flex flex-col">
-          <span className="mb-3 text-sm font-semibold">Hostname</span>
+          <span className="mb-3 text-sm font-semibold">
+            {t("system_status.hostname")}
+          </span>
           {loading ? (
             <Skeleton className="h-[20px] w-full" />
           ) : (
@@ -52,7 +59,9 @@ export default function ServerDetails({
 
       <div className="border-b p-[24px]">
         <div className="flex flex-col">
-          <span className="mb-3 text-sm font-semibold">İşletim Sistemi</span>
+          <span className="mb-3 text-sm font-semibold">
+            {t("system_status.os")}
+          </span>
           {loading ? (
             <Skeleton className="h-[20px] w-full" />
           ) : (
@@ -70,7 +79,9 @@ export default function ServerDetails({
 
       <div className="border-b p-[24px]">
         <div className="flex flex-col">
-          <span className="mb-3 text-sm font-semibold">IP Adresi</span>
+          <span className="mb-3 text-sm font-semibold">
+            {t("system_status.ip_address")}
+          </span>
           {loading ? (
             <Skeleton className="h-[20px] w-full" />
           ) : (
@@ -85,7 +96,7 @@ export default function ServerDetails({
       <div className="border-b p-[24px]">
         <div className="flex flex-col">
           <span className="mb-3 text-sm font-semibold">
-            Giriş Yapmış Kullanıcı
+            {t("system_status.user")}
           </span>
           {loading ? (
             <Skeleton className="h-[20px] w-full" />
@@ -100,7 +111,9 @@ export default function ServerDetails({
 
       <div className="border-b p-[24px]">
         <div className="flex flex-col">
-          <span className="mb-3 text-sm font-semibold">Açık Kalma Süresi</span>
+          <span className="mb-3 text-sm font-semibold">
+            {t("system_status.uptime")}
+          </span>
           {loading ? (
             <Skeleton className="h-[20px] w-full" />
           ) : (
@@ -114,7 +127,9 @@ export default function ServerDetails({
 
       <div className="border-b p-[24px]">
         <div className="flex flex-col">
-          <span className="mb-3 text-sm font-semibold">Servis Sayısı</span>
+          <span className="mb-3 text-sm font-semibold">
+            {t("system_status.service_count")}
+          </span>
           {loading ? (
             <Skeleton className="h-[20px] w-full" />
           ) : (
@@ -125,7 +140,9 @@ export default function ServerDetails({
 
       <div className="border-b p-[24px]">
         <div className="flex flex-col">
-          <span className="mb-3 text-sm font-semibold">İşlem Sayısı</span>
+          <span className="mb-3 text-sm font-semibold">
+            {t("system_status.process_count")}
+          </span>
           {loading ? (
             <Skeleton className="h-[20px] w-full" />
           ) : (

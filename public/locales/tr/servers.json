@@ -1,0 +1,137 @@
+{
+    "error": "Hata",
+    "success": "Başarılı",
+    "information": "Bilgilendirme",
+    "ssh": "SSH (Şifreli)",
+    "ssh_certificate": "SSH (Sertifikalı)",
+    "winrm": "WinRM",
+    "winrm_insecure": "WinRM (Güvensiz)",
+    "no_key": "Anahtarsız Giriş",
+    "yes": "Evet",
+    "no": "Hayır",
+    "index": {
+        "title": "Sunucular",
+        "description": "Liman Merkezi Yönetim Sistemine bağlı sunucularınızı bu sayfa üzerinden yönetebilirsiniz.",
+        "create": "Sunucu Ekle",
+        "table": {
+            "name": "Sunucu Adı",
+            "ip_address": "IP Adresi",
+            "port": "Kontrol Portu",
+            "extension_count": "Eklenti Sayısı"
+        }
+    },
+    "create": {
+        "title": "Sunucu Ekle",
+        "description": "Liman Merkezi Yönetim Sistemine halihazırda kurmuş olduğunuz Windows ve Linux sunucularınızı ekleyebilirsiniz.",
+        "servers": "Sunucular",
+        "back": "Geri",
+        "next": "İleri",
+        "create": "Ekle",
+        "steps": {
+            "connection_information": {
+                "name": "Bağlantı Bilgileri",
+                "description": "Sunucu bağlantısını kontrol edin.",
+                "validation": {
+                    "ip_address": "Sunucu adresi boş bırakılamaz.",
+                    "port": {
+                        "max": "Bağlantı portu 5 karakterden uzun olamaz.",
+                        "nonempty": "Bağlantı portu boş bırakılamaz."
+                    }
+                },
+                "ip_address": {
+                    "label": "Sunucunuzun Adresi",
+                    "information": "Bağlanmak istediğiniz sunucunun IP adresini ya da hostname'ini giriniz."
+                },
+                "port": {
+                    "label": "Bağlantı Portu"
+                }
+            },
+            "general_settings": {
+                "name": "Genel Ayarlar",
+                "description": "Sunucu adını ve işletim sistemini seçin.",
+                "validation": {
+                    "name": "Sunucu adı boş bırakılamaz.",
+                    "os_type": "Lütfen bir işletim sistemi seçiniz."
+                },
+                "sname": {
+                    "label": "Sunucu Adı",
+                    "information": "Görünmesini istediğiniz sunucu adını yazınız."
+                },
+                "os_type": {
+                    "label": "İşletim Sistemi"
+                }
+            },
+            "key_selection": {
+                "name": "Anahtar Seçimi",
+                "description": "Sunucunuza bağlantı kurulabilmesi için bir anahtar türü seçiniz.",
+                "validation": {
+                    "key_type": "Lütfen bir anahtar türü seçiniz."
+                },
+                "key_type": {
+                    "label": "Anahtar Türü"
+                }
+            },
+            "key_inputs": {
+                "name": "Anahtar",
+                "description": "Sunucunuza bağlantı kurmak için anahtar sağlayın.",
+                "validation": {
+                    "username": "Kullanıcı adı boş bırakılamaz.",
+                    "password": "Şifre boş bırakılamaz."
+                },
+                "username": {
+                    "label": "Kullanıcı Adı",
+                    "information": "{{key_type}} bağlantı türü için kullanıcı adı sağlayın."
+                },
+                "password": {
+                    "label": "Parola",
+                    "information": "{{key_type}} bağlantı türü için parola sağlayın."
+                },
+                "shared": {
+                    "label": "Paylaşımlı",
+                    "information": "{{key_type}} bağlantı türü için girdiğiniz anahtarın tüm kullanıcılar tarafından kullanılmasını istiyorsanız işaretleyiniz."
+                }
+            },
+            "summary": {
+                "name": "Özet",
+                "description": "Sunucu bilgilerinizi kontrol edin ve onaylayın.",
+                "shared_key": "Anahtar Paylaşımı"
+            }
+        },
+        "errors": {
+            "validation": "Lütfen devam etmeden önce girdinizi kontrol edin.",
+            "success": "Sunucu başarıyla oluşturuldu.",
+            "error": "Sunucu oluşturulurken hata oluştu."
+        }
+    },
+    "system_status": {
+        "details": "Sunucu Detayları",
+        "name": "Sunucu Adı",
+        "hostname": "Hostname",
+        "os": "İşletim Sistemi",
+        "ip_address": "IP Adresi",
+        "uptime": "Açık Kalma Süresi",
+        "user": "Giriş Yapmış Kullanıcı",
+        "service_count": "Servis Sayısı",
+        "process_count": "İşlem Sayısı",
+        "specs": "Sunucu Özellikleri",
+        "cpu": "CPU",
+        "ram_size": "Bellek Boyutu",
+        "vendor": "Üretici",
+        "model": "Model",
+        "resource_usage": "Kaynak Kullanımı",
+        "cpu_usage": "CPU Kullanımı",
+        "ram_usage": "Bellek Kullanımı",
+        "io_usage": "IO Kullanımı",
+        "network_usage": "Ağ Kullanımı",
+        "disk_status": "Disk Durumu",
+        "most_5_cpu_usage_process": "En çok CPU kullanan 5 işlem",
+        "most_5_ram_usage_process": "En çok bellek kullanan 5 işlem",
+        "disk_status_desc": "Sisteme mount edilmiş disk kullanım durumları",
+        "user_title": "Kullanıcı",
+        "process": "İşlem",
+        "usage": "Kullanım",
+        "disk": "Disk",
+        "size": "Boyut",
+        "full": "Dolu"
+    }
+}

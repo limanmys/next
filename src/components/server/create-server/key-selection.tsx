@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Ban, FileKey2, Key, Network } from "lucide-react"
+import { Ban, FileKey2, Key } from "lucide-react"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
 import { Icons } from "@/components/ui/icons"
@@ -15,10 +16,6 @@ import {
   FormMessage,
 } from "@/components/form/form"
 
-const keySchema = z.object({
-  key_type: z.string().nonempty("Lütfen bir anahtar türü seçiniz."),
-})
-
 export default function KeySelection({
   formRef,
   data,
@@ -26,6 +23,14 @@ export default function KeySelection({
   formRef: any
   data: any
 }) {
+  const { t } = useTranslation("servers")
+
+  const keySchema = z.object({
+    key_type: z
+      .string()
+      .nonempty(t("create.steps.key_selection.validation.key_type")),
+  })
+
   const form = useForm<z.infer<typeof keySchema>>({
     resolver: zodResolver(keySchema),
     defaultValues: {
@@ -41,10 +46,10 @@ export default function KeySelection({
       <div>
         <div>
           <h3 className="text-lg font-medium leading-6 text-foreground">
-            Anahtar Seçimi
+            {t("create.steps.key_selection.name")}
           </h3>
           <p className="mt-1 max-w-2xl text-sm text-foreground/60">
-            Sunucunuza bağlantı kurulabilmesi için bir anahtar türü seçiniz.
+            {t("create.steps.key_selection.description")}
           </p>
         </div>
         <Form {...form}>
@@ -56,7 +61,7 @@ export default function KeySelection({
                 <div className="mt-6 space-y-6 sm:mt-5 sm:space-y-5">
                   <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-foreground/10 sm:pt-5">
                     <Label htmlFor="key_type" className="sm:mt-px sm:pt-2">
-                      Anahtar Türü
+                      {t("create.steps.key_selection.key_type.label")}
                     </Label>
                     <div className="mt-1 space-y-8 sm:col-span-2 sm:mt-0">
                       <RadioGroup
@@ -73,7 +78,7 @@ export default function KeySelection({
                             </FormControl>
                             <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent">
                               <div className="flex flex-col gap-8 p-4">
-                                <span>SSH (Şifreli)</span>
+                                <span>{t("ssh")}</span>
                                 <div className="details flex justify-between">
                                   <div className="icons">
                                     <Key className="h-4 w-4" />
@@ -98,7 +103,7 @@ export default function KeySelection({
                             </FormControl>
                             <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent">
                               <div className="flex flex-col gap-8 p-4">
-                                <span>SSH (Sertifikalı)</span>
+                                <span>{t("ssh_certificate")}</span>
                                 <div className="details flex justify-between">
                                   <div className="icons">
                                     <FileKey2 className="h-4 w-4" />
@@ -147,7 +152,7 @@ export default function KeySelection({
                             </FormControl>
                             <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent">
                               <div className="flex flex-col gap-8 p-4">
-                                <span>WinRM (Güvensiz)</span>
+                                <span>{t("winrm_insecure")}</span>
                                 <div className="details flex justify-between">
                                   <div className="icons">
                                     <Key className="h-4 w-4" />
@@ -171,7 +176,7 @@ export default function KeySelection({
                             </FormControl>
                             <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent">
                               <div className="flex flex-col gap-8 p-4">
-                                <span>Anahtarsız Giriş</span>
+                                <span>{t("no_key")}</span>
                                 <div className="details flex justify-between">
                                   <div className="icons">
                                     <Ban className="h-4 w-4" />

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import { apiService } from "@/services"
 import { Link2, Server } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { IServer } from "@/types/server"
 import { DivergentColumn } from "@/types/table"
@@ -18,14 +19,15 @@ export default function Servers() {
   const [data, setData] = useState<IServer[]>([])
   const user = useCurrentUser()
   const emitter = useEmitter()
+  const { t } = useTranslation("servers")
 
   const columns: DivergentColumn<IServer>[] = [
     {
       accessorKey: "name",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Sunucu Adı" />
+        <DataTableColumnHeader column={column} title={t("index.table.name")} />
       ),
-      title: "Sunucu Adı",
+      title: t("index.table.name"),
       enableSorting: true,
       enableHiding: true,
       cell: ({ row }) => (
@@ -38,23 +40,29 @@ export default function Servers() {
     {
       accessorKey: "ip_address",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="IP Adresi" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("index.table.ip_address")}
+        />
       ),
-      title: "IP Adresi",
+      title: t("index.table.ip_address"),
     },
     {
       accessorKey: "control_port",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Kontrol Portu" />
+        <DataTableColumnHeader column={column} title={t("index.table.port")} />
       ),
-      title: "Kontrol Portu",
+      title: t("index.table.port"),
     },
     {
       accessorKey: "extension_count",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Eklenti Sayısı" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("index.table.extension_count")}
+        />
       ),
-      title: "Eklenti Sayısı",
+      title: t("index.table.extension_count"),
     },
     {
       id: "actions",
@@ -97,14 +105,14 @@ export default function Servers() {
   return (
     <>
       <PageHeader
-        title="Sunucular"
-        description="Liman Merkezi Yönetim Sistemine bağlı sunucularınızı bu sayfa üzerinden yönetebilirsiniz."
+        title={t("index.title")}
+        description={t("index.description")}
         rightSide={
           user.permissions.add_server && (
             <Link href="/servers/create">
               <Button className="rounded-full">
                 <Server className="mr-2 h-4 w-4" />
-                Sunucu Oluştur
+                {t("index.create")}
               </Button>
             </Link>
           )

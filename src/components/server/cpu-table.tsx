@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { apiService } from "@/services"
+import { useTranslation } from "react-i18next"
 
 import { IServerCpuUsage } from "@/types/server"
 
@@ -18,6 +19,7 @@ import {
 
 export default function CpuTable() {
   const router = useRouter()
+  const { t } = useTranslation("servers")
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState<IServerCpuUsage[]>([])
 
@@ -42,12 +44,14 @@ export default function CpuTable() {
 
   return (
     <Table>
-      <TableCaption>En çok CPU kullanan 5 işlem</TableCaption>
+      <TableCaption>{t("system_status.most_5_cpu_usage_process")}</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="pl-6">Kullanıcı</TableHead>
-          <TableHead>İşlem</TableHead>
-          <TableHead>Kullanım (%)</TableHead>
+          <TableHead className="pl-6">
+            {t("system_status.user_title")}
+          </TableHead>
+          <TableHead>{t("system_status.process")}</TableHead>
+          <TableHead>{t("system_status.usage")}</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
