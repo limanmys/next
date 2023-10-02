@@ -10,7 +10,8 @@ export function middleware(request: NextRequest) {
   if (
     request.nextUrl.pathname.includes("_next") ||
     request.nextUrl.pathname.includes("favicon") ||
-    request.nextUrl.pathname.includes("locales")
+    request.nextUrl.pathname.includes("locales") ||
+    isStaticAsset(request)
   ) {
     return NextResponse.next()
   }
@@ -24,6 +25,8 @@ export function middleware(request: NextRequest) {
   }
 
   if (currentUser && Date.now() > JSON.parse(currentUser).expired_at) {
+    console.log(request.referrer)
+
     request.cookies.delete("currentUser")
     const response = NextResponse.redirect(
       new URL("/auth/login?redirect=" + urlBeforeRedirect, request.url)
@@ -54,4 +57,19 @@ export function middleware(request: NextRequest) {
   }
 
   return NextResponse.next()
+}
+
+function isStaticAsset(req: NextRequest) {
+  const extensions = [
+    ".js",
+    ".css",
+    ".png",
+    ".jpg",
+    ".jpeg",
+    ".gif",
+    ".svg",
+    ".mp3",
+  ]
+  const requestPath = req.nextUrl.pathname.toLowerCase()
+  return extensions.some((extension) => requestPath.endsWith(extension))
 }

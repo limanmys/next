@@ -39,7 +39,7 @@ export default function ServerExtensionPage() {
   const tableRef = useRef<any>()
   const sidebarCtx = useSidebarContext()
   const { toast } = useToast()
-  const { i18n } = useTranslation()
+  const { t, i18n } = useTranslation("servers")
 
   const columns: DivergentColumn<IExtension, string>[] = [
     {
@@ -66,9 +66,9 @@ export default function ServerExtensionPage() {
     {
       accessorKey: "display_name",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Eklenti Adı" />
+        <DataTableColumnHeader column={column} title={t("extensions.name")} />
       ),
-      title: "Eklenti Adı",
+      title: t("extensions.name"),
       cell: ({ row }) => (
         <>
           <Link
@@ -92,9 +92,12 @@ export default function ServerExtensionPage() {
     {
       accessorKey: "version",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Versiyon" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("extensions.version")}
+        />
       ),
-      title: "Versiyon",
+      title: t("extensions.version"),
     },
     {
       accessorKey: "updated",
@@ -108,9 +111,12 @@ export default function ServerExtensionPage() {
         })
       },
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Güncellenme Tarihi" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("extensions.updated_at")}
+        />
       ),
-      title: "Güncellenme Tarihi",
+      title: t("extensions.updated_at"),
       sortingFn: compareNumericString,
     },
   ]
@@ -142,8 +148,8 @@ export default function ServerExtensionPage() {
       })
       .then(() => {
         toast({
-          title: "Başarılı",
-          description: "Seçtiğiniz eklentiler sunucuya başarıyla atandı.",
+          title: t("success"),
+          description: t("extensions.toasts.assign"),
         })
         sidebarCtx[SIDEBARCTX_STATES.refreshSelected]()
         fetchData()
@@ -161,8 +167,8 @@ export default function ServerExtensionPage() {
       })
       .then(() => {
         toast({
-          title: "Başarılı",
-          description: "Seçtiğiniz eklentiler sunucudan başarıyla kaldırıldı.",
+          title: t("success"),
+          description: t("extensions.toasts.unassign"),
         })
         setSelected([])
         tableRef.current?.resetRowSelection()
@@ -174,13 +180,13 @@ export default function ServerExtensionPage() {
   return (
     <>
       <PageHeader
-        title="Eklentiler"
-        description="Sunucunuzda kullanılan eklentileri bu sayfa aracılığı ile yönetebilirsiniz."
+        title={t("extensions.title")}
+        description={t("extensions.description")}
         rightSide={
           <Link href="/settings/extensions">
             <Button className="rounded-full">
               <UploadCloud className="mr-2 h-4 w-4" />
-              Eklenti Yükle
+              {t("extensions.upload")}
             </Button>
           </Link>
         }
@@ -209,23 +215,26 @@ export default function ServerExtensionPage() {
                 disabled={selected.length === 0}
               >
                 <MinusCircle className="mr-2 h-4 w-4" />
-                Çıkar
+                {t("extensions.remove")}
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Emin misiniz?</AlertDialogTitle>
+                <AlertDialogTitle>
+                  {t("extensions.unassign.title")}
+                </AlertDialogTitle>
                 <AlertDialogDescription>
-                  Bu işlem geri alınamaz. Seçilen eklentiler sunucudan
-                  kaldırılacaktır, devam etmek istiyor musunuz?
+                  {t("extensions.unassign.description")}
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>Vazgeç</AlertDialogCancel>
+                <AlertDialogCancel>
+                  {t("extensions.unassign.no")}
+                </AlertDialogCancel>
                 <AlertDialogAction
                   onClick={() => onUnassignExtension(selected)}
                 >
-                  Onayla
+                  {t("extensions.unassign.yes")}
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>

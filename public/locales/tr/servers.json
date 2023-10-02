@@ -133,5 +133,25 @@
         "disk": "Disk",
         "size": "Boyut",
         "full": "Dolu"
+    },
+    "extensions": {
+        "title": "Eklentiler",
+        "description": "Sunucunuzda kullanılan eklentileri bu sayfa aracılığıyla yönetebilirsiniz.",
+        "add": "Ekle",
+        "remove": "Çıkar",
+        "upload": "Eklenti Yükle",
+        "name": "Eklenti Adı",
+        "version": "Versiyon",
+        "updated_at": "Güncellenme Tarihi",
+        "toasts": {
+            "assign": "Seçtiğiniz eklentiler sunucuya başarıyla atandı.",
+            "unassign": "Seçtiğiniz eklentiler sunucudan başarıyla kaldırıldı."
+        },
+        "unassign": {
+            "title": "Emin misiniz?",
+            "description": "Bu işlem geri alınamaz. Seçilen eklentiler sunucudan kaldırılacaktır, devam etmek istiyor musunuz?",
+            "no": "Vazgeç",
+            "yes": "Onayla"
+        }
     }
 }
