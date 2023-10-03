@@ -26,10 +26,17 @@
             "not_found": "Kullanıcı bulunamadı",
             "select_placeholder": "Kullanıcı seçiniz"
         },
-        "server": { 
+        "server": {
             "search_placeholder": "Sunucu ara...",
             "not_found": "Sunucu bulunamadı",
             "select_placeholder": "Sunucu seçiniz"
         }
+    },
+    "transfer": {
+        "select_all": "Tümünü seç",
+        "search": "Arama...",
+        "selected": "({{selected}}/{{total}} seçili)",
+        "no_records": "Veri yok",
+        "save": "Kaydet"
     }
 }

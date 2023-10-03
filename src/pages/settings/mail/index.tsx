@@ -3,6 +3,7 @@ import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Key, Save, Server, User2, UserCheck2 } from "lucide-react"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import * as z from "zod"
 
 import { Button } from "@/components/ui/button"
@@ -28,17 +29,18 @@ import {
   FormMessage,
 } from "@/components/form/form"
 
-const formSchema = z.object({
-  encryption: z.enum(["tls", "ssl", "none"]),
-  host: z.string().nonempty("Sunucu adresi boş bırakılamaz."),
-  port: z.string().nonempty("Port boş bırakılamaz."),
-  username: z.string().nonempty("Kullanıcı adı boş bırakılamaz."),
-  password: z.string().optional(),
-  active: z.boolean(),
-})
-
 export default function MailSettingsPage() {
   const { toast } = useToast()
+  const { t } = useTranslation("settings")
+
+  const formSchema = z.object({
+    encryption: z.enum(["tls", "ssl", "none"]),
+    host: z.string().nonempty("Sunucu adresi boş bırakılamaz."),
+    port: z.string().nonempty("Port boş bırakılamaz."),
+    username: z.string().nonempty("Kullanıcı adı boş bırakılamaz."),
+    password: z.string().optional(),
+    active: z.boolean(),
+  })
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -75,8 +77,8 @@ export default function MailSettingsPage() {
   return (
     <>
       <PageHeader
-        title="E-Posta"
-        description="Sistemin e-posta gönderim ayarlarını bu sayfa üzerinden detaylı şekilde ayarlayabilir ve test edebilirsiniz."
+        title={t("email.title")}
+        description={t("email.description")}
       />
 
       <div className="px-8">
@@ -88,7 +90,7 @@ export default function MailSettingsPage() {
                 name="host"
                 render={({ field }) => (
                   <div className="flex flex-col gap-3">
-                    <Label htmlFor="host">Sunucu Adresi</Label>
+                    <Label htmlFor="host">{t("email.form.host.label")}</Label>
                     <div className="relative">
                       <Input
                         id="host"
@@ -98,8 +100,7 @@ export default function MailSettingsPage() {
                       />
                       <Server className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                       <small className="italic text-muted-foreground">
-                        E-posta sunucusu adresiniz Liman tarafından çözülebilir
-                        olmalıdır.
+                        {t("email.form.host.subtext")}
                       </small>
                     </div>
                     <FormMessage />
@@ -112,13 +113,11 @@ export default function MailSettingsPage() {
                 name="port"
                 render={({ field }) => (
                   <div className="flex flex-col gap-3">
-                    <Label htmlFor="port">Sunucu Portu</Label>
+                    <Label htmlFor="port">{t("email.form.port.label")}</Label>
                     <div className="relative">
                       <Input id="port" placeholder="587" {...field} />
                       <small className="italic text-muted-foreground">
-                        E-posta sunucunuza bağlantının kurulacağı port. SMTP
-                        için 25, 465 ya da 587 seçeneklerinden birini
-                        girebilirsiniz.
+                        {t("email.form.port.subtext")}
                       </small>
                     </div>
                     <FormMessage />
@@ -132,7 +131,9 @@ export default function MailSettingsPage() {
               name="username"
               render={({ field }) => (
                 <div className="flex flex-col gap-3">
-                  <Label htmlFor="username">Kullanıcı Adı</Label>
+                  <Label htmlFor="username">
+                    {t("email.form.username.label")}
+                  </Label>
                   <div className="relative">
                     <Input
                       id="username"
@@ -142,8 +143,7 @@ export default function MailSettingsPage() {
                     />
                     <User2 className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                     <small className="italic text-muted-foreground">
-                      E-posta sunucunuzda gönderim yapma yetkisi olan bir
-                      kullanıcı adı girebilirsiniz.
+                      {t("email.form.username.subtext")}
                     </small>
                   </div>
                   <FormMessage />
@@ -156,7 +156,9 @@ export default function MailSettingsPage() {
               name="password"
               render={({ field }) => (
                 <div className="flex flex-col gap-3">
-                  <Label htmlFor="password">Şifre</Label>
+                  <Label htmlFor="password">
+                    {t("email.form.password.label")}
+                  </Label>
                   <div className="relative">
                     <Input
                       id="password"
@@ -167,7 +169,7 @@ export default function MailSettingsPage() {
                     />
                     <Key className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                     <small className="italic text-muted-foreground">
-                      Girdiğiniz kullanıcıya ait şifre.
+                      {t("email.form.password.subtext")}
                     </small>
                   </div>
                   <FormMessage />
@@ -180,7 +182,9 @@ export default function MailSettingsPage() {
               name="encryption"
               render={({ field }) => (
                 <div className="flex flex-col gap-3">
-                  <Label htmlFor="encryption">Şifreleme Türü</Label>
+                  <Label htmlFor="encryption">
+                    {t("email.form.encryption.label")}
+                  </Label>
                   <div className="relative">
                     <Select onValueChange={field.onChange} value={field.value}>
                       <SelectTrigger>
@@ -189,11 +193,13 @@ export default function MailSettingsPage() {
                       <SelectContent>
                         <SelectItem value="ssl">SSL</SelectItem>
                         <SelectItem value="tls">TLS</SelectItem>
-                        <SelectItem value="none">Hiçbiri</SelectItem>
+                        <SelectItem value="none">
+                          {t("email.form.encryption.none")}
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                     <small className="italic text-muted-foreground">
-                      TLS, SSL veya hiçbiri olarak seçim yapabilirsiniz.
+                      {t("email.form.encryption.subtext")}
                     </small>
                   </div>
                   <FormMessage />
@@ -209,11 +215,9 @@ export default function MailSettingsPage() {
                   <div className="flex space-x-3 space-y-0.5">
                     <UserCheck2 className="h-6 w-6 text-muted-foreground" />
                     <div className="flex flex-col space-y-0.5">
-                      <FormLabel>E-posta gönderimini aktifleştir</FormLabel>
+                      <FormLabel>{t("email.form.active.label")}</FormLabel>
                       <FormDescription>
-                        E-posta gönderimini aktifleştirdiğinizde Liman
-                        tarafından çeşitli bilgilendirici e-postalar
-                        alabilirsiniz.
+                        {t("email.form.active.subtext")}
                       </FormDescription>
                     </div>
                   </div>
@@ -230,7 +234,7 @@ export default function MailSettingsPage() {
             <div className="flex justify-end">
               <Button type="submit">
                 <Save className="mr-2 h-4 w-4" />
-                Test Et ve Kaydet
+                {t("email.form.save")}
               </Button>
             </div>
           </form>

@@ -2,6 +2,7 @@ import { useState } from "react"
 import { apiService } from "@/services"
 import { Row } from "@tanstack/react-table"
 import { Footprints, MoreHorizontal, Trash } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { IUser } from "@/types/user"
 import { useEmitter } from "@/hooks/useEmitter"
@@ -30,6 +31,7 @@ export function UserRowActions({ row }: { row: Row<IUser> }) {
   const user = row.original
   const [deleteDialog, setDeleteDialog] = useState(false)
   const emitter = useEmitter()
+  const { t } = useTranslation("settings")
 
   return (
     <>
@@ -48,11 +50,11 @@ export function UserRowActions({ row }: { row: Row<IUser> }) {
             onClick={() => emitter.emit("AUTH_LOG_DIALOG", user.id)}
           >
             <Footprints className="mr-2 h-3.5 w-3.5" />
-            Giriş Kayıtları
+            {t("users.auth_log.title")}
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setDeleteDialog(true)}>
             <Trash className="mr-2 h-3.5 w-3.5" />
-            Sil
+            {t("delete")}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -73,6 +75,7 @@ function DeleteDialog({
   const emitter = useEmitter()
   const { toast } = useToast()
   const [loading, setLoading] = useState(false)
+  const { t } = useTranslation("settings")
 
   const handleDelete = () => {
     setLoading(true)
@@ -82,16 +85,16 @@ function DeleteDialog({
       .delete(`/settings/users/${user.id}`)
       .then(() => {
         toast({
-          title: "Başarılı",
-          description: "Kullanıcı başarıyla silindi.",
+          title: t("success"),
+          description: t("users.delete.success"),
         })
         emitter.emit("REFETCH_USERS")
         setOpen(false)
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description: "Kullanıcı silinirken hata oluştu.",
+          title: t("error"),
+          description: t("users.delete.error"),
           variant: "destructive",
         })
       })
@@ -104,19 +107,25 @@ function DeleteDialog({
     <AlertDialog open={open} onOpenChange={(open) => setOpen(open)}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Emin misiniz?</AlertDialogTitle>
+          <AlertDialogTitle>{t("users.delete.title")}</AlertDialogTitle>
           <AlertDialogDescription>
-            Seçilen kullanıcı <b className="font-semibold">({user.name})</b>{" "}
-            Liman sisteminden tamamen silinecektir. Bu işlem sonucunda kasa
-            verilerinizde ve eklenti izinlerinde kayıp olabilir. Devam etmek
-            istiyor musunuz?
+            <span
+              dangerouslySetInnerHTML={{
+                // TODO: Localization
+                // Couldn't find a better way to use tags with localized strings
+                // If i find any i'll change it.
+                __html: t("users.delete.subtext", {
+                  username: user.name,
+                }),
+              }}
+            />
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Vazgeç</AlertDialogCancel>
+          <AlertDialogCancel>{t("users.delete.no")}</AlertDialogCancel>
           <AlertDialogAction onClick={() => handleDelete()}>
             {loading && <Icons.spinner className="h-4 w-4 animate-spin" />}
-            Onayla
+            {t("users.delete.yes")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

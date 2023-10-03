@@ -3,6 +3,7 @@ import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { Row } from "@tanstack/react-table"
 import { Edit, MoreHorizontal, Trash } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { IRole } from "@/types/role"
 import { useEmitter } from "@/hooks/useEmitter"
@@ -31,6 +32,7 @@ export function RoleRowActions({ row }: { row: Row<IRole> }) {
   const role = row.original
   const [deleteDialog, setDeleteDialog] = useState(false)
   const router = useRouter()
+  const { t } = useTranslation("settings")
 
   return (
     <>
@@ -49,11 +51,11 @@ export function RoleRowActions({ row }: { row: Row<IRole> }) {
             onClick={() => router.push(`/settings/roles/${role.id}/users`)}
           >
             <Edit className="mr-2 h-3.5 w-3.5" />
-            Düzenle
+            {t("roles.actions.edit")}
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setDeleteDialog(true)}>
             <Trash className="mr-2 h-3.5 w-3.5" />
-            Sil
+            {t("roles.actions.delete")}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -74,6 +76,7 @@ function DeleteRole({
   const emitter = useEmitter()
   const { toast } = useToast()
   const [loading, setLoading] = useState(false)
+  const { t } = useTranslation("settings")
 
   const handleDelete = () => {
     setLoading(true)
@@ -83,16 +86,16 @@ function DeleteRole({
       .delete(`/settings/roles/${role.id}`)
       .then(() => {
         toast({
-          title: "Başarılı",
-          description: "Rol başarıyla silindi.",
+          title: t("success"),
+          description: t("roles.actions.success"),
         })
         emitter.emit("REFETCH_ROLES")
         setOpen(false)
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description: "Rol silinirken hata oluştu.",
+          title: t("error"),
+          description: t("roles.actions.error"),
           variant: "destructive",
         })
       })
@@ -105,17 +108,25 @@ function DeleteRole({
     <AlertDialog open={open} onOpenChange={(open) => setOpen(open)}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Emin misiniz?</AlertDialogTitle>
+          <AlertDialogTitle>{t("roles.actions.title")}</AlertDialogTitle>
           <AlertDialogDescription>
-            Seçilen rol <b className="font-semibold">({role.name})</b> Liman
-            sisteminden tamamen kaldırılacaktır. şDevam etmek istiyor musunuz?
+            <span
+              dangerouslySetInnerHTML={{
+                // TODO: Localization
+                // Couldn't find a better way to use tags with localized strings
+                // If i find any i'll change it.
+                __html: t("roles.actions.subtext", {
+                  role_name: role.name,
+                }),
+              }}
+            />
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Vazgeç</AlertDialogCancel>
+          <AlertDialogCancel>{t("roles.actions.no")}</AlertDialogCancel>
           <AlertDialogAction onClick={() => handleDelete()}>
             {loading && <Icons.spinner className="h-4 w-4 animate-spin" />}
-            Onayla
+            {t("roles.actions.yes")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

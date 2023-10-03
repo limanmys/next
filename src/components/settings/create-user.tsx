@@ -30,40 +30,40 @@ import {
 } from "../ui/select"
 import { useToast } from "../ui/use-toast"
 
-const formSchema = z
-  .object({
-    name: z
-      .string()
-      .min(2, {
-        message: "Kullanıcı adı en az 2 karakter olmalıdır.",
-      })
-      .max(50, {
-        message: "Kullanıcı adı en fazla 50 karakter olmalıdır.",
-      }),
-    username: z.string(),
-    email: z.string().email({
-      message: "Geçerli bir e-posta adresi giriniz.",
-    }),
-    status: z.string(),
-    password: z
-      .string()
-      .min(8, {
-        message: "Şifre en az 8 karakter olmalıdır.",
-      })
-      .max(50, {
-        message: "Şifre en fazla 50 karakter olmalıdır.",
-      }),
-    password_confirmation: z.string(),
-  })
-  .refine((data) => data.password === data.password_confirmation, {
-    message: "Şifreler eşleşmiyor.",
-    path: ["password_confirmation"],
-  })
-
 export default function CreateUser() {
   const { toast } = useToast()
   const emitter = useEmitter()
   const { t } = useTranslation("settings")
+
+  const formSchema = z
+    .object({
+      name: z
+        .string()
+        .min(2, {
+          message: t("users.validation.name_min"),
+        })
+        .max(50, {
+          message: t("users.validation.name_max"),
+        }),
+      username: z.string(),
+      email: z.string().email({
+        message: t("users.validation.email"),
+      }),
+      status: z.string(),
+      password: z
+        .string()
+        .min(8, {
+          message: t("users.validation.password_min"),
+        })
+        .max(50, {
+          message: t("users.validation.password_max"),
+        }),
+      password_confirmation: z.string(),
+    })
+    .refine((data) => data.password === data.password_confirmation, {
+      message: t("users.validation.password_confirmation"),
+      path: ["password_confirmation"],
+    })
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -113,15 +113,13 @@ export default function CreateUser() {
       <SheetTrigger asChild>
         <Button variant="outline" size="sm" className="ml-auto h-8 lg:flex">
           <PlusCircle className="mr-2 h-4 w-4" />
-          Ekle
+          {t("users.create.button")}
         </Button>
       </SheetTrigger>
       <SheetContent side="right">
         <SheetHeader className="mb-8">
-          <SheetTitle>Kullanıcı Oluştur</SheetTitle>
-          <SheetDescription>
-            Bu pencereyi kullanarak yeni bir kullanıcı oluşturabilirsiniz.
-          </SheetDescription>
+          <SheetTitle>{t("users.create.title")}</SheetTitle>
+          <SheetDescription>{t("users.create.description")}</SheetDescription>
         </SheetHeader>
 
         <Form {...form}>
@@ -134,7 +132,7 @@ export default function CreateUser() {
               name="status"
               render={({ field }) => (
                 <div className="flex flex-col gap-2">
-                  <Label htmlFor="status">Kullanıcı Türü</Label>
+                  <Label htmlFor="status">{t("users.create.user_type")}</Label>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
@@ -143,8 +141,12 @@ export default function CreateUser() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="0">Kullanıcı</SelectItem>
-                      <SelectItem value="1">Yönetici</SelectItem>
+                      <SelectItem value="0">
+                        {t("users.create.user")}
+                      </SelectItem>
+                      <SelectItem value="1">
+                        {t("users.create.admin")}
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage className="mt-1" />
@@ -156,8 +158,12 @@ export default function CreateUser() {
               name="name"
               render={({ field }) => (
                 <div className="flex flex-col gap-2">
-                  <Label htmlFor="name">İsim Soyisim</Label>
-                  <Input id="name" placeholder="Liman Kullanıcısı" {...field} />
+                  <Label htmlFor="name">{t("users.create.name_surname")}</Label>
+                  <Input
+                    id="name"
+                    placeholder={t("users.create.name_surname_placeholder")}
+                    {...field}
+                  />
                   <FormMessage className="mt-1" />
                 </div>
               )}
@@ -167,7 +173,7 @@ export default function CreateUser() {
               name="username"
               render={({ field }) => (
                 <div className="flex flex-col gap-2">
-                  <Label htmlFor="username">Kullanıcı Adı</Label>
+                  <Label htmlFor="username">{t("users.create.username")}</Label>
                   <Input id="username" placeholder="limanuser" {...field} />
                   <FormMessage className="mt-1" />
                 </div>
@@ -178,7 +184,7 @@ export default function CreateUser() {
               name="email"
               render={({ field }) => (
                 <div className="flex flex-col gap-2">
-                  <Label htmlFor="email">E-Posta</Label>
+                  <Label htmlFor="email">{t("users.create.email")}</Label>
                   <Input
                     id="email"
                     placeholder="user@liman.dev"
@@ -195,7 +201,7 @@ export default function CreateUser() {
               name="password"
               render={({ field }) => (
                 <div className="flex flex-col gap-2">
-                  <Label htmlFor="password">Şifre</Label>
+                  <Label htmlFor="password">{t("users.create.password")}</Label>
                   <Input
                     id="password"
                     {...field}
@@ -212,7 +218,9 @@ export default function CreateUser() {
               name="password_confirmation"
               render={({ field }) => (
                 <div className="flex flex-col gap-2">
-                  <Label htmlFor="password_confirmation">Şifreyi Onayla</Label>
+                  <Label htmlFor="password_confirmation">
+                    {t("users.create.password_confirmation")}
+                  </Label>
                   <Input
                     id="password_confirmation"
                     {...field}
@@ -225,7 +233,8 @@ export default function CreateUser() {
             />
             <SheetFooter>
               <Button type="submit">
-                <PlusCircle className="mr-2 h-4 w-4" /> Oluştur
+                <PlusCircle className="mr-2 h-4 w-4" />{" "}
+                {t("users.create.create")}
               </Button>
             </SheetFooter>
           </form>

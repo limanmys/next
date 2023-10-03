@@ -2,18 +2,19 @@ import { ReactElement, useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { NextPageWithLayout } from "@/pages/_app"
 import { apiService } from "@/services"
+import { useTranslation } from "react-i18next"
 
 import { IUser } from "@/types/user"
 import { useEmitter } from "@/hooks/useEmitter"
 import PageHeader from "@/components/ui/page-header"
 import TransferList from "@/components/ui/transfer-list"
 import { useToast } from "@/components/ui/use-toast"
-
-import RoleLayout from "../../../../components/_layout/role_layout"
+import RoleLayout from "@/components/_layout/role_layout"
 
 const RoleUserList: NextPageWithLayout = () => {
   const router = useRouter()
   const emitter = useEmitter()
+  const { t } = useTranslation("settings")
   const { toast } = useToast()
   const [users, setUsers] = useState<IUser[]>([])
   const [selected, setSelected] = useState<IUser[]>([])
@@ -44,16 +45,16 @@ const RoleUserList: NextPageWithLayout = () => {
       .post(`/settings/roles/${router.query.role_id}/users`, data)
       .then(() => {
         toast({
-          title: "Başarılı",
-          description: "Kullanıcılar başarıyla güncellendi.",
+          title: t("success"),
+          description: t("roles.users.success"),
         })
         emitter.emit("REFETCH_ROLE", router.query.role_id)
         fetchData()
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description: "Kullanıcılar güncellenirken bir hata oluştu.",
+          title: t("error"),
+          description: t("roles.users.error"),
           variant: "destructive",
         })
       })
@@ -62,8 +63,8 @@ const RoleUserList: NextPageWithLayout = () => {
   return (
     <>
       <PageHeader
-        title="Kullanıcılar"
-        description="Bu role hangi kullanıcıların sahip olacağını belirleyin."
+        title={t("roles.users.title")}
+        description={t("roles.users.description")}
       />
 
       <div className="p-8 pt-0">
@@ -71,8 +72,8 @@ const RoleUserList: NextPageWithLayout = () => {
           items={users}
           selected={selected}
           loading={loading}
-          leftTitle="Bu role sahip olmayan kullanıcılar"
-          rightTitle="Bu role sahip kullanıcılar"
+          leftTitle={t("roles.users.left")}
+          rightTitle={t("roles.users.right")}
           onSave={onSave}
         />
       </div>

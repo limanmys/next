@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { ChevronLeft, Download } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { IRole } from "@/types/role"
 import { DivergentColumn } from "@/types/table"
@@ -17,56 +18,66 @@ export default function RoleDetailsPage() {
   const { toast } = useToast()
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IRole[]>([])
+  const { t } = useTranslation("settings")
 
   const columns: DivergentColumn<IRole, string>[] = [
     {
       accessorKey: "username",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Kullanıcı Adı" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("roles.details.username")}
+        />
       ),
-      title: "Kullanıcı Adı",
+      title: t("roles.details.username"),
     },
     {
       accessorKey: "role_name",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Rol Adı" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("roles.details.role_name")}
+        />
       ),
-      title: "Rol Adı",
+      title: t("roles.details.role_name"),
     },
     {
       accessorKey: "perm_type",
       header: ({ column }) => (
         <DataTableColumnHeader
           column={column}
-          title="İzin Türü"
+          title={t("roles.details.perm_type")}
           filterPresets={[
             {
-              key: "Liman",
-              value: "Liman",
+              key: t("roles.details.liman"),
+              value: t("roles.details.liman"),
             },
             {
-              key: "Sunucu",
-              value: "Sunucu",
+              key: t("roles.details.server"),
+              value: t("roles.details.server"),
             },
             {
-              key: "Eklenti",
-              value: "Eklenti",
+              key: t("roles.details.extension"),
+              value: t("roles.details.extension"),
             },
             {
-              key: "Fonksiyon",
-              value: "Fonksiyon",
+              key: t("roles.details.function"),
+              value: t("roles.details.function"),
             },
           ]}
         />
       ),
-      title: "İzin Türü",
+      title: t("roles.details.perm_type"),
     },
     {
       accessorKey: "perm_value",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="İzin Değeri" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("roles.details.perm_value")}
+        />
       ),
-      title: "İzin Değeri",
+      title: t("roles.details.perm_value"),
     },
   ]
 
@@ -92,18 +103,18 @@ export default function RoleDetailsPage() {
     },
     preDownloading: () =>
       toast({
-        title: "Bilgi",
-        description: "İndirme başladı.",
+        title: t("information"),
+        description: t("roles.details.download_start"),
       }),
     postDownloading: () =>
       toast({
-        title: "Bilgi",
-        description: "İndirme tamamlandı.",
+        title: t("information"),
+        description: t("roles.details.download_success"),
       }),
     onError: () => {
       toast({
-        title: "Hata",
-        description: "Eklenti indirilirken bir hata oluştu.",
+        title: t("error"),
+        description: t("roles.details.download_error"),
       })
     },
     getFileName: () => {
@@ -114,8 +125,8 @@ export default function RoleDetailsPage() {
   return (
     <>
       <PageHeader
-        title="Detaylı Rol Listesi"
-        description="Veritabanı üzerinde oluşturulmuş tüm rol ve izinleri detaylı filtrelemeler yaparak görüntüleyebilirsiniz."
+        title={t("roles.details.title")}
+        description={t("roles.details.description")}
       />
 
       <DataTable
@@ -132,7 +143,7 @@ export default function RoleDetailsPage() {
             onClick={() => router.push("/settings/roles")}
           >
             <ChevronLeft className="mr-2 h-4 w-4" />
-            Rollere geri dön
+            {t("roles.details.back_to_roles")}
           </Button>
 
           <Button
@@ -142,7 +153,7 @@ export default function RoleDetailsPage() {
             onClick={download}
           >
             <Download className="mr-2 h-4 w-4" />
-            Rapor oluştur
+            {t("roles.details.create_report")}
           </Button>
 
           <a href={url} download={name} className="hidden" ref={ref} />

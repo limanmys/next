@@ -6,6 +6,7 @@ import {
   Save,
   Search,
 } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { Button } from "./button"
 import { Card, CardContent, CardHeader, CardTitle } from "./card"
@@ -34,6 +35,8 @@ interface ITransferListProps<T extends ITransferListItem> {
 const TransferList = <T extends ITransferListItem>(
   props: ITransferListProps<T>
 ) => {
+  const { t } = useTranslation("components")
+
   const [checked, setChecked] = useState<T[]>([])
   const [left, setLeft] = useState<T[]>([])
   const [right, setRight] = useState<T[]>([])
@@ -133,16 +136,19 @@ const TransferList = <T extends ITransferListItem>(
               htmlFor={`select_all_${title}`}
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
-              Tümünü seç{" "}
+              {t("transfer.select_all")}{" "}
               {items.length > 0 &&
-                `(${numberOfChecked(items)}/${items.length} seçili)`}
+                t("transfer.selected", {
+                  selected: numberOfChecked(items),
+                  total: items.length,
+                })}
             </Label>
           </div>
 
           <Separator className="my-6" />
           <div className="search relative">
             <Input
-              placeholder="Arama..."
+              placeholder={t("transfer.search")}
               className="mb-6 h-8"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -168,7 +174,7 @@ const TransferList = <T extends ITransferListItem>(
                   <div className="flex flex-col items-center justify-center gap-3">
                     <FolderOpen className="h-8 w-8 text-foreground/70" />
                     <span className="text-sm font-medium leading-none text-foreground/70">
-                      Veri yok
+                      {t("transfer.no_records")}
                     </span>
                   </div>
                 )}
@@ -228,7 +234,7 @@ const TransferList = <T extends ITransferListItem>(
       {props.onSave && (
         <div className="mt-5 flex justify-end">
           <Button onClick={() => props.onSave && props.onSave(right)}>
-            <Save className="mr-2 h-4 w-4" /> Kaydet
+            <Save className="mr-2 h-4 w-4" /> {t("transfer.save")}
           </Button>
         </div>
       )}

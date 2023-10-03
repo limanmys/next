@@ -9,6 +9,7 @@ import {
   ToyBrick,
   Users2,
 } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { IRole } from "@/types/role"
 import { useEmitter } from "@/hooks/useEmitter"
@@ -22,50 +23,48 @@ export default function RoleLayout({
 }) {
   const router = useRouter()
   const emitter = useEmitter()
+  const { t } = useTranslation("settings")
   const roles = [
     {
       id: "users",
       icon: Users2,
-      title: "Kullanıcılar",
-      description: "Bu role hangi kullanıcıların sahip olacağını belirleyin.",
+      title: t("roles.users.title"),
+      description: t("roles.users.description"),
       href: `/settings/roles/${router.query.role_id}/users`,
     },
     {
       id: "liman",
       icon: Icons.dugumluLogo,
-      title: "Liman İzinleri",
-      description: "Liman üzerinde gerçekleştirilen fonksiyonlara yetki verin.",
+      title: t("roles.liman.title"),
+      description: t("roles.liman.description"),
       href: `/settings/roles/${router.query.role_id}/liman`,
     },
     {
       id: "servers",
       icon: Server,
-      title: "Sunucu İzinleri",
-      description:
-        "Bu rolün hangi sunuculara erişim sağlayabileceğini belirleyin.",
+      title: t("roles.servers.title"),
+      description: t("roles.servers.description"),
       href: `/settings/roles/${router.query.role_id}/servers`,
     },
     {
       id: "extensions",
       icon: ToyBrick,
-      title: "Eklenti İzinleri",
-      description:
-        "Bu rolün hangi eklentilere erişim sağlayabileceğini belirleyin.",
+      title: t("roles.extensions.title"),
+      description: t("roles.extensions.description"),
       href: `/settings/roles/${router.query.role_id}/extensions`,
     },
     {
       id: "functions",
       icon: FunctionSquare,
-      title: "Fonksiyon İzinleri",
-      description:
-        "Eklentilerin iç izinlerini detaylı şekilde bu sayfa aracılığıyla yönetebilirsiniz.",
+      title: t("roles.functions.title"),
+      description: t("roles.functions.description"),
       href: `/settings/roles/${router.query.role_id}/functions`,
     },
     {
       id: "variables",
       icon: Text,
-      title: "Özel Veriler",
-      description: "Bu rolün eklentiye paylaşacağı özel verileri ayarlayın.",
+      title: t("roles.variables.title"),
+      description: t("roles.variables.description"),
       href: `/settings/roles/${router.query.role_id}/variables`,
     },
   ]
@@ -103,7 +102,7 @@ export default function RoleLayout({
             onClick={() => router.push("/settings/roles")}
             className="mr-2 h-6 w-6 cursor-pointer"
           />
-          {role && role.name} rolü
+          {role && role.name} {t("roles.role")}
         </div>
         {roles.map((r) => (
           <RoleCard

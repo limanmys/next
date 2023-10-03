@@ -2,18 +2,19 @@ import { ReactElement, useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { NextPageWithLayout } from "@/pages/_app"
 import { apiService } from "@/services"
+import { useTranslation } from "react-i18next"
 
 import { IServer } from "@/types/server"
 import { useEmitter } from "@/hooks/useEmitter"
 import PageHeader from "@/components/ui/page-header"
 import TransferList from "@/components/ui/transfer-list"
 import { useToast } from "@/components/ui/use-toast"
-
-import RoleLayout from "../../../../components/_layout/role_layout"
+import RoleLayout from "@/components/_layout/role_layout"
 
 const RoleServerList: NextPageWithLayout = () => {
   const router = useRouter()
   const emitter = useEmitter()
+  const { t } = useTranslation("settings")
   const { toast } = useToast()
   const [servers, setServers] = useState<IServer[]>([])
   const [selected, setSelected] = useState<IServer[]>([])
@@ -44,16 +45,16 @@ const RoleServerList: NextPageWithLayout = () => {
       .post(`/settings/roles/${router.query.role_id}/servers`, data)
       .then(() => {
         toast({
-          title: "Başarılı",
-          description: "Sunucular başarıyla güncellendi.",
+          title: t("success"),
+          description: t("roles.servers.success"),
         })
         emitter.emit("REFETCH_ROLE", router.query.role_id)
         fetchData()
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description: "Sunucular güncellenirken bir hata oluştu.",
+          title: t("error"),
+          description: t("roles.servers.error"),
           variant: "destructive",
         })
       })
@@ -62,8 +63,8 @@ const RoleServerList: NextPageWithLayout = () => {
   return (
     <>
       <PageHeader
-        title="Sunucu İzinleri"
-        description="Bu rolün hangi sunuculara erişim sağlayabileceğini belirtin."
+        title={t("roles.servers.title")}
+        description={t("roles.servers.description")}
       />
 
       <div className="p-8 pt-0">
@@ -71,8 +72,8 @@ const RoleServerList: NextPageWithLayout = () => {
           items={servers}
           selected={selected}
           loading={loading}
-          leftTitle="Kullanılabilir sunucular"
-          rightTitle="İzin verilen sunucular"
+          leftTitle={t("roles.servers.left")}
+          rightTitle={t("roles.servers.right")}
           onSave={onSave}
         />
       </div>

@@ -185,7 +185,7 @@ export default function UserSettingsPage() {
             onClick={() => router.push("/settings/users/auth_logs")}
           >
             <Footprints className="mr-2 h-4 w-4" />
-            Giriş kayıtları
+            {t("users.auth_log.title")}
           </Button>
         </div>
       </DataTable>
@@ -204,16 +204,22 @@ function AuthLogDialog() {
     {
       accessorKey: "ip_address",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Giriş Yapan IP Adresi" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("users.auth_log.ip_address")}
+        />
       ),
-      title: "Giriş Yapan IP Adresi",
+      title: t("users.auth_log.ip_address"),
     },
     {
       accessorKey: "user_agent",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Tarayıcı Bilgileri" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("users.auth_log.browser")}
+        />
       ),
-      title: "Tarayıcı Bilgileri",
+      title: t("users.auth_log.browser"),
       cell: ({ row }) => (
         <TooltipProvider delayDuration={200}>
           <Tooltip>
@@ -232,9 +238,12 @@ function AuthLogDialog() {
     {
       accessorKey: "created_at",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Giriş Tarihi" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("users.auth_log.created_at")}
+        />
       ),
-      title: "Giriş Tarihi",
+      title: t("users.auth_log.created_at"),
       cell: ({ row }) => (
         <>
           {row.original.created_at
@@ -248,7 +257,7 @@ function AuthLogDialog() {
                   minute: "2-digit",
                 }
               )
-            : "Bilinmiyor"}
+            : t("users.auth_log.unknown")}
         </>
       ),
     },
@@ -272,10 +281,9 @@ function AuthLogDialog() {
       <DialogContent className="max-w-[75vw] p-0">
         <div className="grid grid-cols-4">
           <div className="rounded-lg rounded-r-none bg-foreground/5 p-5">
-            <h3 className="font-semibold">Giriş Kayıtları</h3>
+            <h3 className="font-semibold">{t("users.auth_log.title")}</h3>
             <p className="mt-5 text-sm text-muted-foreground">
-              Kullanıcıya ait giriş kayıtlarını detaylı şekilde
-              görüntüleyebilirsiniz.
+              {t("users.auth_log.desc2")}
             </p>
           </div>
           <div className="col-span-3 py-5">

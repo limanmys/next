@@ -21,15 +21,18 @@ export default function AuthLogsPage() {
   const router = useRouter()
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IAuthLog[]>([])
-  const { i18n } = useTranslation()
+  const { t, i18n } = useTranslation("settings")
 
   const columns: DivergentColumn<IAuthLog, string>[] = [
     {
       accessorKey: "user.name",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Kullanıcı" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("users.auth_log.user")}
+        />
       ),
-      title: "Kullanıcı",
+      title: t("users.auth_log.user"),
       cell: ({ row }) => (
         <>
           {row.original.user.name} ({row.original.user.email})
@@ -39,16 +42,22 @@ export default function AuthLogsPage() {
     {
       accessorKey: "ip_address",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Giriş Yapan IP Adresi" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("users.auth_log.ip_address")}
+        />
       ),
-      title: "Giriş Yapan IP Adresi",
+      title: t("users.auth_log.ip_address"),
     },
     {
       accessorKey: "user_agent",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Tarayıcı Bilgileri" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("users.auth_log.browser")}
+        />
       ),
-      title: "Tarayıcı Bilgileri",
+      title: t("users.auth_log.browser"),
       cell: ({ row }) => (
         <TooltipProvider delayDuration={200}>
           <Tooltip>
@@ -67,9 +76,12 @@ export default function AuthLogsPage() {
     {
       accessorKey: "created_at",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Giriş Tarihi" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("users.auth_log.created_at")}
+        />
       ),
-      title: "Giriş Tarihi",
+      title: t("users.auth_log.created_at"),
       cell: ({ row }) => (
         <>
           {row.original.created_at
@@ -83,7 +95,7 @@ export default function AuthLogsPage() {
                   minute: "2-digit",
                 }
               )
-            : "Bilinmiyor"}
+            : t("users.auth_log.unknown")}
         </>
       ),
     },
@@ -106,8 +118,8 @@ export default function AuthLogsPage() {
   return (
     <>
       <PageHeader
-        title="Giriş Kayıtları"
-        description="Liman MYS üzerinde giriş yapmış olan tüm kullanıcıları detaylı şekilde inceleyebilirsiniz."
+        title={t("users.auth_log.title")}
+        description={t("users.auth_log.description")}
       />
 
       <DataTable
@@ -124,7 +136,7 @@ export default function AuthLogsPage() {
             onClick={() => router.push("/settings/users")}
           >
             <ChevronLeft className="mr-2 h-4 w-4" />
-            Kullanıcı listesine geri dön
+            {t("users.auth_log.back_to_users")}
           </Button>
         </div>
       </DataTable>

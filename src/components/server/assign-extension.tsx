@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { apiService } from "@/services"
 import { PlusCircle } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { IExtension } from "@/types/extension"
 import { DivergentColumn } from "@/types/table"
@@ -30,6 +31,7 @@ export default function AssignExtension({
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IExtension[]>([])
   const [selected, setSelected] = useState<IExtension[]>([])
+  const { t } = useTranslation("servers")
 
   const fetchData = () => {
     setLoading(true)
@@ -71,16 +73,22 @@ export default function AssignExtension({
     {
       accessorKey: "display_name",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Eklenti Adı" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("extensions.assign.name")}
+        />
       ),
-      title: "Eklenti Adı",
+      title: t("extensions.assign.name"),
     },
     {
       accessorKey: "version",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Versiyon" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("extensions.assign.version")}
+        />
       ),
-      title: "Versiyon",
+      title: t("extensions.assign.version"),
     },
   ]
 
@@ -94,14 +102,14 @@ export default function AssignExtension({
           onClick={fetchData}
         >
           <PlusCircle className="mr-2 h-4 w-4" />
-          Ekle
+          {t("extensions.assign.button")}
         </Button>
       </SheetTrigger>
       <SheetContent side="right" className="sm:w-[800px] sm:max-w-full">
         <SheetHeader>
-          <SheetTitle>Eklenti Ekle</SheetTitle>
+          <SheetTitle>{t("extensions.assign.title")}</SheetTitle>
           <SheetDescription>
-            Bu pencereyi kullanarak sunucunuza eklenti ekleyebilirsiniz.
+            {t("extensions.assign.description")}
           </SheetDescription>
         </SheetHeader>
         <div className="-mx-6 my-8">

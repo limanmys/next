@@ -31,6 +31,9 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     e.preventDefault()
     setIsLoading(true)
 
+    let redirectUri = (router.query.redirect || "/") as string
+    redirectUri = redirectUri.replace("http", "")
+
     if (forceChange) {
       if (newPassword !== newPasswordConfirm) {
         setError("Girdiğiniz şifreler uyuşmuyor.")
@@ -42,7 +45,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         login(name, newPassword)
           .then(() => {
             setTimeout(() => {
-              router.push((router.query.redirect || "/") as string)
+              router.push(redirectUri)
             }, 1000)
           })
           .catch((e) => {
@@ -63,7 +66,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       login(name, password)
         .then(() => {
           setTimeout(() => {
-            router.push((router.query.redirect || "/") as string)
+            router.push(redirectUri)
           }, 1000)
         })
         .catch((e) => {

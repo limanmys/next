@@ -231,16 +231,164 @@
         "create": {
             "button": "Ekle",
             "title": "Kullanıcı Ekle",
-            "description": "Bu pencereyi kullanarak yeni bir kullanıcı oluşturabilirsiniz."
+            "description": "Bu pencereyi kullanarak yeni bir kullanıcı oluşturabilirsiniz.",
+            "user_type": "Kullanıcı Türü",
+            "user": "Kullanıcı",
+            "admin": "Yönetici",
+            "name_surname": "İsim Soyisim",
+            "name_surname_placeholder": "Liman Kullanıcısı",
+            "username": "Kullanıcı Adı",
+            "email": "E-Posta Adresi",
+            "password": "Parolanız",
+            "password_confirmation": "Parola Onayı",
+            "create": "Oluştur"
+        },
+        "auth_log": {
+            "user": "Kullanıcı",
+            "ip_address": "Giriş Yapan IP Adresi",
+            "browser": "Tarayıcı Bilgileri",
+            "created_at": "Giriş Tarihi",
+            "unknown": "Bilinmiyor",
+            "title": "Giriş Kayıtları",
+            "description": "Liman MYS üzerinde giriş yapmış olan tüm kullanıcıları detaylı şekilde inceleyebilirsiniz.",
+            "desc2": "Kullanıcıya ait giriş kayıtlarını detaylı şekilde görüntüleyebilirsiniz.",
+            "back_to_users": "Kullanıcı listesine geri dön"
+        },
+        "delete": {
+            "success": "Kullanıcı başarıyla silindi.",
+            "error": "Kullanıcı silinirken hata oluştu.",
+            "title": "Emin misiniz?",
+            "subtext": "Seçilen kullanıcı <b>({{username}})</b> Liman sisteminden tamamen silinecektir. Bu işlem sonucunda kasa verilerinizde ve eklenti izinlerinde kayıp olabilir. Devam etmek istiyor musunuz?",
+            "no": "Vazgeç",
+            "yes": "Onayla"
         }
     },
     "roles": {
         "title": "Roller",
-        "description": "Kullanıcıların erişim yetki seviyelerini detaylı şekilde gruplar ve kişiler bazında düzenleyebilirsiniz."
+        "role": "rolü",
+        "description": "Kullanıcıların erişim yetki seviyelerini detaylı şekilde gruplar ve kişiler bazında düzenleyebilirsiniz.",
+        "validation": {
+            "name": "Rol adı boş bırakılamaz."
+        },
+        "create": {
+            "success": "Rol başarıyla oluşturuldu.",
+            "error": "Rol oluşturulurken bir hata oluştu.",
+            "button": "Ekle",
+            "title": "Rol Oluştur",
+            "description": "Bu işlem sonucu sisteminizde bir rol oluşturulacaktır ve düzenleme sayfasına yönlendirileceksiniz.",
+            "name": "Rol Adı",
+            "create": "Oluştur"
+        },
+        "name": "Rol Adı",
+        "updated_at": "Güncellenme Tarihi",
+        "detailed_view": "Detaylı görüntüleme",
+        "details": {
+            "title": "Detaylı Rol Listesi",
+            "description": "Veritabanı üzerinde oluşturulmuş tüm rol ve izinleri detaylı filtrelemeler yaparak görüntüleyebilirsiniz.",
+            "username": "Kullanıcı Adı",
+            "role_name": "Rol Adı",
+            "liman": "Liman",
+            "server": "Sunucu",
+            "extension": "Eklenti",
+            "function": "Fonksiyon",
+            "perm_type": "İzin Türü",
+            "perm_value": "İzin Değeri",
+            "back_to_roles": "Rollere geri dön",
+            "create_report": "Rapor oluştur",
+            "download_start": "İndirme başladı.",
+            "download_success": "İndirme tamamlandı.",
+            "download_error": "Rapor indirilirken bir hata oluştu."
+        },
+        "actions": {
+            "edit": "Düzenle",
+            "delete": "Sil",
+            "title": "Emin misiniz?",
+            "subtext": "Seçilen rol <b>({{role_name}})</b> Liman sisteminden tamamen kaldırılacaktır. şDevam etmek istiyor musunuz?",
+            "no": "Vazgeç",
+            "yes": "Onayla",
+            "success": "Rol başarıyla silindi.",
+            "error": "Rol silinirken hata oluştu."
+        },
+        "users": {
+            "title": "Kullanıcılar",
+            "description": "Bu role hangi kullanıcıların sahip olacağını belirleyin.",
+            "left": "Bu role sahip olmayan kullanıcılar",
+            "right": "Bu role sahip kullanıcılar",
+            "success": "Kullanıcılar başarıyla güncellendi.",
+            "error": "Kullanıcılar güncellenirken bir hata oluştu."
+        },
+        "liman": {
+            "title": "Liman İzinleri",
+            "description": "Liman üzerinde gerçekleştirilen fonksiyonlara yetki verin.",
+            "left": "Tüm İzinler",
+            "right": "Verilmiş İzinler",
+            "success": "Liman izinleri başarıyla güncellendi.",
+            "error": "Liman izinleri güncellenirken bir hata oluştu."
+        },
+        "servers": {
+            "title": "Sunucu İzinleri",
+            "description": "Bu rolün hangi sunuculara erişim sağlayabileceğini belirleyin.",
+            "left": "Kullanılabilir sunucular",
+            "right": "İzin verilen sunucular",
+            "success": "Sunucular başarıyla güncellendi.",
+            "error": "Sunucular güncellenirken bir hata oluştu."
+        },
+        "extensions": {
+            "title": "Eklenti İzinleri",
+            "description": "Bu rolün hangi eklentilere erişim sağlayabileceğini belirleyin.",
+            "left": "Kullanılabilir eklentiler",
+            "right": "Kullanılabilir sunucular",
+            "success": "Eklentiler başarıyla güncellendi.",
+            "error": "Eklentiler güncellenirken bir hata oluştu."
+        },
+        "functions": {
+            "title": "Fonksiyon İzinleri",
+            "description": "Eklentilerin iç izinlerini detaylı şekilde b "
+        },
+        "variables": {
+            "title": "Özel Veriler",
+            "description": "Bu rolün eklentiyle paylaşacağı özel verileri ayarlayın."
+        }
     },
     "email": {
         "title": "E-Posta",
-        "description": "Sistemin e-posta gönderim ayarlarını bu sayfa üzerinden detaylı şekilde ayarlayabilir ve test edebilirsiniz."
+        "description": "Sistemin e-posta gönderim ayarlarını bu sayfa üzerinden detaylı şekilde ayarlayabilir ve test edebilirsiniz.",
+        "validation": {
+            "host": "Sunucu adresi boş bırakılamaz.",
+            "port": "Port boş bırakılamaz.",
+            "username": "Kullanıcı adı boş bırakılamaz."
+        },
+        "toasts": {
+            "success": "Mail ayarları başarıyla güncellendi."
+        },
+        "form": {
+            "host": {
+                "label": "Sunucu Adresi",
+                "subtext": "E-posta sunucusu adresiniz Liman tarafından çözülebilir olmalıdır."
+            },
+            "port": {
+                "label": "Sunucu Portu",
+                "subtext": "E-posta sunucunuza bağlantının kurulacağı port. SMTP için 25, 465 ya da 587 seçeneklerinden birini girebilirsiniz."
+            },
+            "username": {
+                "label": "Kullanıcı Adı",
+                "subtext": "E-posta sunucunuzda gönderim yapma yetkisi olan bir kullanıcı adı girebilirsiniz."
+            },
+            "password": {
+                "label": "Parola",
+                "subtext": "Girdiğiniz kullanıcıya ait şifre."
+            },
+            "encryption": {
+                "label": "Şifreleme Türü",
+                "subtext": "TLS, SSL veya hiçbiri olarak seçim yapabilirsiniz.",
+                "none": "Hiçbiri"
+            },
+            "active": {
+                "label": "E-posta gönderimini aktifleştir",
+                "subtext": "E-posta gönderimini aktifleştirdiğinizde Liman tarafından çeşitli bilgilendirici e-postalar alabilirsiniz."
+            },
+            "save": "Test Et ve Kaydet"
+        }
     },
     "external_notifications": {
         "title": "Dış Bildirimler",

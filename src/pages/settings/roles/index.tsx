@@ -34,7 +34,7 @@ export default function RoleSettingsPage() {
   const router = useRouter()
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IRole[]>([])
-  const { i18n } = useTranslation()
+  const { t, i18n } = useTranslation("settings")
 
   const emitter = useEmitter()
 
@@ -42,9 +42,9 @@ export default function RoleSettingsPage() {
     {
       accessorKey: "name",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Rol Adı" />
+        <DataTableColumnHeader column={column} title={t("roles.name")} />
       ),
-      title: "Rol Adı",
+      title: t("roles.name"),
       cell: ({ row }) => (
         <div
           className="flex cursor-pointer items-center gap-2"
@@ -68,9 +68,9 @@ export default function RoleSettingsPage() {
         })
       },
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Güncellenme Tarihi" />
+        <DataTableColumnHeader column={column} title={t("roles.updated_at")} />
       ),
-      title: "Güncellenme Tarihi",
+      title: t("roles.updated_at"),
       sortingFn: compareNumericString,
     },
     {
@@ -107,8 +107,8 @@ export default function RoleSettingsPage() {
   return (
     <>
       <PageHeader
-        title="Roller"
-        description="Kullanıcıların erişim yetki seviyelerini detaylı şekilde gruplar ve kişiler bazında düzenleyebilirsiniz."
+        title={t("roles.title")}
+        description={t("roles.description")}
       />
 
       <DataTable
@@ -126,7 +126,7 @@ export default function RoleSettingsPage() {
             onClick={() => router.push("/settings/roles/details")}
           >
             <Footprints className="mr-2 h-4 w-4" />
-            Detaylı görüntüleme
+            {t("roles.detailed_view")}
           </Button>
         </div>
       </DataTable>
@@ -134,14 +134,14 @@ export default function RoleSettingsPage() {
   )
 }
 
-const formSchema = z.object({
-  name: z.string().nonempty("Rol adı boş bırakılamaz."),
-})
-
 function CreateRole() {
   const { toast } = useToast()
-  const emitter = useEmitter()
   const router = useRouter()
+  const { t } = useTranslation("settings")
+
+  const formSchema = z.object({
+    name: z.string().nonempty(t("roles.validation.name")),
+  })
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -158,8 +158,8 @@ function CreateRole() {
       .then((res) => {
         if (res.status === 200) {
           toast({
-            title: "Başarılı",
-            description: "Rol başarıyla oluşturuldu.",
+            title: t("success"),
+            description: t("roles.create.success"),
           })
           setOpen(false)
           form.reset()
@@ -167,16 +167,16 @@ function CreateRole() {
           router.push(`/settings/roles/${res.data.id}/users`)
         } else {
           toast({
-            title: "Hata",
-            description: "Rol oluştulurken bir hata oluştu.",
+            title: t("error"),
+            description: t("roles.create.error"),
             variant: "destructive",
           })
         }
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description: "Rol oluştulurken bir hata oluştu.",
+          title: t("error"),
+          description: t("roles.create.error"),
           variant: "destructive",
         })
       })
@@ -187,16 +187,13 @@ function CreateRole() {
       <DialogTrigger asChild>
         <Button variant="outline" size="sm" className="ml-auto h-8 lg:flex">
           <PlusCircle className="mr-2 h-4 w-4" />
-          Ekle
+          {t("roles.create.button")}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[525px]">
         <DialogHeader>
-          <DialogTitle>Rol Oluştur</DialogTitle>
-          <DialogDescription>
-            Bu işlem sonucu sisteminizde bir rol oluşturulacaktır ve düzenleme
-            sayfasına yönlendirileceksiniz.
-          </DialogDescription>
+          <DialogTitle>{t("roles.create.title")}</DialogTitle>
+          <DialogDescription>{t("roles.create.description")}</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form
@@ -209,7 +206,7 @@ function CreateRole() {
               render={({ field }) => (
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="name" className="text-right">
-                    Rol Adı
+                    {t("roles.create.name")}
                   </Label>
                   <div className="col-span-3">
                     <Input id="name" {...field} />
@@ -221,7 +218,7 @@ function CreateRole() {
             <DialogFooter>
               <Button type="submit">
                 <PlusCircle className="mr-2 h-4 w-4" />
-                Oluştur
+                {t("roles.create.create")}
               </Button>
             </DialogFooter>
           </form>

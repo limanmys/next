@@ -3,6 +3,7 @@ import { useRouter } from "next/router"
 import { NextPageWithLayout } from "@/pages/_app"
 import { apiService } from "@/services"
 import { MinusCircle } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { IExtension } from "@/types/extension"
 import { DivergentColumn } from "@/types/table"
@@ -24,16 +25,16 @@ import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
 import PageHeader from "@/components/ui/page-header"
 import { useToast } from "@/components/ui/use-toast"
+import RoleLayout from "@/components/_layout/role_layout"
 import AssignFunction from "@/components/settings/assign-function"
 import { FunctionExtensionActions } from "@/components/settings/function-extension-actions"
-
-import RoleLayout from "../../../../components/_layout/role_layout"
 
 const RoleFunctionsList: NextPageWithLayout = () => {
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IExtension[]>([])
   const [selected, setSelected] = useState<IExtension[]>([])
   const tableRef = useRef<any>()
+  const { t } = useTranslation("settings")
   const { toast } = useToast()
 
   const router = useRouter()

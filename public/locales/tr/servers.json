@@ -152,6 +152,13 @@
             "description": "Bu işlem geri alınamaz. Seçilen eklentiler sunucudan kaldırılacaktır, devam etmek istiyor musunuz?",
             "no": "Vazgeç",
             "yes": "Onayla"
+        },
+        "assign": {
+            "button": "Ekle",
+            "title": "Eklenti Ekle",
+            "description": "Bu pencereyi kullanarak sunucunuza eklenti ekleyebilirsiniz.",
+            "name": "Eklenti Adı",
+            "version": "Versiyon"
         }
     }
 }
