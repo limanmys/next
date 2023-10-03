@@ -22,7 +22,8 @@ export class ApiService {
       },
       (error) => {
         if (error.response.status === 401) {
-          window.location.href = "/auth/login"
+          window.location.href =
+            "/auth/login?redirect=" + window.location.pathname
         }
         if (error.response.status === 504) {
           window.location.href = "/504"

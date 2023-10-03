@@ -25,8 +25,6 @@ export function middleware(request: NextRequest) {
   }
 
   if (currentUser && Date.now() > JSON.parse(currentUser).expired_at) {
-    console.log(request.referrer)
-
     request.cookies.delete("currentUser")
     const response = NextResponse.redirect(
       new URL("/auth/login?redirect=" + urlBeforeRedirect, request.url)
