@@ -21,18 +21,13 @@ export class ApiService {
         return response
       },
       (error) => {
-        if (error.response.status === 401) {
+        if (error.response && error.response.status === 401) {
           window.location.href =
             "/auth/login?redirect=" + window.location.pathname
         }
-        if (error.response.status === 504) {
+        if (error.response && error.response.status === 504) {
           window.location.href = "/504"
         }
-        /*
-        if (error.response.status === 403) {
-          window.location.href = "/403"
-        }
-        */
         return Promise.reject(error)
       }
     )

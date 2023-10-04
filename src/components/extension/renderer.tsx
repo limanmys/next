@@ -112,6 +112,14 @@ export default function ExtensionRenderer() {
                 return
               }
             )
+
+            iframeElement.contentWindow.addEventListener(
+              "limanHashChange",
+              function (e: any) {
+                // Change the hash of the parent window with e.detail data
+                window.location.hash = e.detail
+              }
+            )
           }
 
           const onHashChanged = () => {
