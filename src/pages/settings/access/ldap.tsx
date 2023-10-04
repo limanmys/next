@@ -25,11 +25,11 @@ import {
 } from "@/components/form/form"
 
 const formSchema = z.object({
-  server_address: z.string().nonempty("LDAP sunucu adresi boş bırakılamaz."),
+  server_address: z.string().min(1, "LDAP sunucu adresi boş bırakılamaz."),
   objectguid: z
     .string()
-    .nonempty("LDAP şemanızdaki objectguid alanının adını yazınız."),
-  mail: z.string().nonempty("LDAP şemanızdaki mail alanının adını yazınız."),
+    .min(1, "LDAP şemanızdaki objectguid alanının adını yazınız."),
+  mail: z.string().min(1, "LDAP şemanızdaki mail alanının adını yazınız."),
   active: z.boolean(),
 })
 

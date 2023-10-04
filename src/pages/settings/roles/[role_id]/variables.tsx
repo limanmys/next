@@ -219,8 +219,8 @@ function CreateVariable() {
   const emitter = useEmitter()
 
   const formSchema = z.object({
-    key: z.string().nonempty(),
-    value: z.string().nonempty(),
+    key: z.string().min(1),
+    value: z.string().min(1),
   })
 
   const form = useForm<z.infer<typeof formSchema>>({

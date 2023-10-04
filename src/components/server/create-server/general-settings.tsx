@@ -26,12 +26,10 @@ export default function GeneralSettings({
   const { t } = useTranslation("servers")
 
   const generalSchema = z.object({
-    name: z
-      .string()
-      .nonempty(t("create.steps.general_settings.validation.name")),
+    name: z.string().min(1, t("create.steps.general_settings.validation.name")),
     os_type: z
       .string()
-      .nonempty(t("create.steps.general_settings.validation.os_type")),
+      .min(1, t("create.steps.general_settings.validation.os_type")),
   })
 
   const form = useForm<z.infer<typeof generalSchema>>({

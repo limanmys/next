@@ -35,9 +35,9 @@ export default function MailSettingsPage() {
 
   const formSchema = z.object({
     encryption: z.enum(["tls", "ssl", "none"]),
-    host: z.string().nonempty("Sunucu adresi boş bırakılamaz."),
-    port: z.string().nonempty("Port boş bırakılamaz."),
-    username: z.string().nonempty("Kullanıcı adı boş bırakılamaz."),
+    host: z.string().min(1, "Sunucu adresi boş bırakılamaz."),
+    port: z.string().min(1, "Port boş bırakılamaz."),
+    username: z.string().min(1, "Kullanıcı adı boş bırakılamaz."),
     password: z.string().optional(),
     active: z.boolean(),
   })

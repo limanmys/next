@@ -28,7 +28,7 @@ export default function KeySelection({
   const keySchema = z.object({
     key_type: z
       .string()
-      .nonempty(t("create.steps.key_selection.validation.key_type")),
+      .min(1, t("create.steps.key_selection.validation.key_type")),
   })
 
   const form = useForm<z.infer<typeof keySchema>>({

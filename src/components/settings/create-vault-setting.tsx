@@ -30,9 +30,9 @@ export default function CreateVaultSetting({ userId }: { userId: string }) {
   const emitter = useEmitter()
 
   const formSchema = z.object({
-    server_id: z.string().nonempty(t("vault.create.validation.server")),
-    name: z.string().nonempty(t("vault.create.validation.key")),
-    value: z.string().nonempty(t("vault.create.validation.value")),
+    server_id: z.string().min(1, t("vault.create.validation.server")),
+    name: z.string().min(1, t("vault.create.validation.key")),
+    value: z.string().min(1, t("vault.create.validation.value")),
   })
 
   const form = useForm<z.infer<typeof formSchema>>({

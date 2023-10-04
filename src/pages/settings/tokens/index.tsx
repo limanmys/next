@@ -144,8 +144,8 @@ function CreateAccessToken() {
   const [token, setToken] = useState<string>("")
 
   const formSchema = z.object({
-    name: z.string().nonempty(t("tokens.validation.name")),
-    ip_range: z.string().nonempty(t("tokens.validation.ip_range")),
+    name: z.string().min(1, t("tokens.validation.name")),
+    ip_range: z.string().min(1, t("tokens.validation.ip_range")),
   })
 
   const form = useForm<z.infer<typeof formSchema>>({

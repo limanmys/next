@@ -4,6 +4,7 @@ import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { KeyRound, LogIn, User2, Users2 } from "lucide-react"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import * as z from "zod"
 
 import { Button } from "@/components/ui/button"
@@ -17,13 +18,15 @@ import AccessLayout from "@/components/_layout/access_layout"
 import { Form, FormField, FormMessage } from "@/components/form/form"
 import AsyncTransferList from "@/components/settings/async-transfer-list"
 
-const loginSchema = z.object({
-  username: z.string().nonempty("Kullanıcı adı alanı boş bırakılamaz."),
-  password: z.string().nonempty("Şifre alanı boş bırakılamaz."),
-})
-
-const AccessKeycloakPage: NextPageWithLayout = () => {
+const AccessLdapPermissionsPage: NextPageWithLayout = () => {
+  const { t } = useTranslation("settings")
   const { toast } = useToast()
+
+  const loginSchema = z.object({
+    username: z.string().min(1, t("access.permissions.validation.username")),
+    password: z.string().min(1, t("access.permissions.validation.password")),
+  })
+
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
   })
@@ -43,9 +46,8 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
       .then((res) => {
         if (res.status === 200) {
           toast({
-            title: "Başarılı",
-            description:
-              "Giriş başarılı, işlemlerinizi gerçekleştirebilirsiniz.",
+            title: t("success"),
+            description: t("access.permissions.login_success"),
           })
           setLoginData({
             ...loginData,
@@ -55,16 +57,16 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
           setLoggedIn(true)
         } else {
           toast({
-            title: "Hata",
-            description: "Giriş başarısız, lütfen bilgilerinizi kontrol edin.",
+            title: t("error"),
+            description: t("access.permissions.login_error"),
             variant: "destructive",
           })
         }
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description: "Giriş başarısız, lütfen bilgilerinizi kontrol edin.",
+          title: t("error"),
+          description: t("access.permissions.login_error"),
           variant: "destructive",
         })
       })
@@ -120,14 +122,14 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
       })
       .then(() => {
         toast({
-          title: "Başarılı",
-          description: "Kullanıcı listesi başarıyla güncellendi.",
+          title: t("success"),
+          description: t("access.permissions.user_success"),
         })
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description: "Kullanıcı listesi güncellenemedi.",
+          title: t("error"),
+          description: t("access.permissions.user_error"),
           variant: "destructive",
         })
       })
@@ -184,13 +186,13 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
       .then((res) => {
         if (res.data.status) {
           toast({
-            title: "Başarılı",
-            description: "Grup listesi başarıyla güncellendi.",
+            title: t("success"),
+            description: t("access.permissions.group_success"),
           })
         } else {
           toast({
-            title: "Hata",
-            description: "Grup listesi güncellenemedi.",
+            title: t("error"),
+            description: t("access.permissions.group_error"),
             variant: "destructive",
           })
         }
@@ -200,8 +202,8 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
   return (
     <>
       <PageHeader
-        title="LDAP Erişim İzinleri"
-        description="Hangi LDAP gruplarının ve kullanıcılarının Liman'a giriş yapabileceğini veya yapamayacağını bu sayfa aracılığıyla detaylı şekilde ayarlayabilirsiniz."
+        title={t("access.permissions.title")}
+        description={t("access.permissions.description")}
       />
 
       <div className="px-8">
@@ -215,12 +217,10 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
                 >
                   <div>
                     <h3 className="text-lg font-medium leading-6">
-                      Giriş yapın
+                      {t("access.permissions.login_title")}
                     </h3>
                     <p className="mt-1 text-sm text-muted-foreground">
-                      LDAP erişim izinlerini düzenleyebilmek için kullanıcı ve
-                      gruplara sorgu atma yetkisi bulunan bir LDAP kullanıcısı
-                      ile giriş yapınız.
+                      {t("access.permissions.login_description")}
                     </p>
                   </div>
 
@@ -230,7 +230,9 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
                     name="username"
                     render={({ field }) => (
                       <div className="flex flex-col gap-3">
-                        <Label htmlFor="username">Kullanıcı Adı</Label>
+                        <Label htmlFor="username">
+                          {t("access.permissions.username")}
+                        </Label>
                         <div className="relative">
                           <Input
                             id="username"
@@ -250,7 +252,9 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
                     name="password"
                     render={({ field }) => (
                       <div className="flex flex-col gap-3">
-                        <Label htmlFor="password">Şifre</Label>
+                        <Label htmlFor="password">
+                          {t("access.permissions.password")}
+                        </Label>
                         <div className="relative">
                           <Input
                             id="password"
@@ -268,7 +272,7 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
                   <div className="flex justify-end">
                     <Button type="submit">
                       <LogIn className="mr-2 h-4 w-4" />
-                      Giriş Yap
+                      {t("access.permissions.login")}
                     </Button>
                   </div>
                 </form>
@@ -282,18 +286,18 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
               <TabsList className="w-full">
                 <TabsTrigger value="users" className="w-full">
                   <User2 className="mr-2 h-4 w-4" />
-                  Kullanıcı İzinleri
+                  {t("access.permissions.user.title")}
                 </TabsTrigger>
                 <TabsTrigger value="groups" className="w-full">
                   <Users2 className="mr-2 h-4 w-4" />
-                  Grup İzinleri
+                  {t("access.permissions.group.title")}
                 </TabsTrigger>
               </TabsList>
               <TabsContent value="users">
                 <AsyncTransferList
                   loading={userListLoading}
-                  leftTitle="Seçilebilir Kullanıcılar"
-                  rightTitle="Giriş Yapabilen Kullanıcılar"
+                  leftTitle={t("access.permissions.user.left")}
+                  rightTitle={t("access.permissions.user.right")}
                   items={userList}
                   selected={selectedUserList}
                   onSave={handleUserListSave}
@@ -303,8 +307,8 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
               <TabsContent value="groups">
                 <AsyncTransferList
                   loading={groupListLoading}
-                  leftTitle="Seçilebilir Gruplar"
-                  rightTitle="Giriş Yapabilen Gruplar"
+                  leftTitle={t("access.permissions.group.left")}
+                  rightTitle={t("access.permissions.group.right")}
                   items={groupList}
                   selected={selectedGroupList}
                   onSave={handleGroupListSave}
@@ -319,8 +323,8 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
   )
 }
 
-AccessKeycloakPage.getLayout = function getLayout(page: ReactElement) {
+AccessLdapPermissionsPage.getLayout = function getLayout(page: ReactElement) {
   return <AccessLayout>{page}</AccessLayout>
 }
 
-export default AccessKeycloakPage
+export default AccessLdapPermissionsPage

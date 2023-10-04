@@ -140,7 +140,7 @@ function CreateRole() {
   const { t } = useTranslation("settings")
 
   const formSchema = z.object({
-    name: z.string().nonempty(t("roles.validation.name")),
+    name: z.string().min(1, t("roles.validation.name")),
   })
 
   const form = useForm<z.infer<typeof formSchema>>({

@@ -21,10 +21,10 @@ export default function KeyInputs({
   const keySchema = z.object({
     username: z
       .string()
-      .nonempty(t("create.steps.key_inputs.validation.username")),
+      .min(1, t("create.steps.key_inputs.validation.username")),
     password: z
       .string()
-      .nonempty(t("create.steps.key_inputs.validation.password")),
+      .min(1, t("create.steps.key_inputs.validation.password")),
     shared: z.string(),
   })
 

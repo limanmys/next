@@ -140,8 +140,8 @@ function CreateExternalNotification() {
   const [token, setToken] = useState<string>("")
 
   const formSchema = z.object({
-    name: z.string().nonempty(t("external_notifications.validation.name")),
-    ip: z.string().nonempty(t("external_notifications.validation.ip")),
+    name: z.string().min(1, t("external_notifications.validation.name")),
+    ip: z.string().min(1, t("external_notifications.validation.ip")),
   })
 
   const form = useForm<z.infer<typeof formSchema>>({

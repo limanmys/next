@@ -25,11 +25,11 @@ import {
 } from "@/components/form/form"
 
 const formSchema = z.object({
-  client_id: z.string().nonempty("Client ID alanı boş bırakılamaz."),
-  client_secret: z.string().nonempty("Client Secret alanı boş bırakılamaz."),
-  redirect_uri: z.string().nonempty("Redirect URI alanı boş bırakılamaz."),
-  base_url: z.string().nonempty("Base URL alanı boş bırakılamaz."),
-  realm: z.string().nonempty("Realm alanı boş bırakılamaz."),
+  client_id: z.string().min(1, "Client ID alanı boş bırakılamaz."),
+  client_secret: z.string().min(1, "Client Secret alanı boş bırakılamaz."),
+  redirect_uri: z.string().min(1, "Redirect URI alanı boş bırakılamaz."),
+  base_url: z.string().min(1, "Base URL alanı boş bırakılamaz."),
+  realm: z.string().min(1, "Realm alanı boş bırakılamaz."),
   active: z.boolean(),
 })
 

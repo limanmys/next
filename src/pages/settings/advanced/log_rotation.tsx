@@ -27,9 +27,9 @@ const AdvancedLogRotationPage: NextPageWithLayout = () => {
   const { toast } = useToast()
 
   const formSchema = z.object({
-    type: z.string().nonempty(),
-    ip_address: z.string().nonempty(),
-    port: z.string().nonempty(),
+    type: z.string().min(1),
+    ip_address: z.string().min(1),
+    port: z.string().min(1),
   })
 
   const form = useForm<z.infer<typeof formSchema>>({

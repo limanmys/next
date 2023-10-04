@@ -20,7 +20,7 @@ const AdvancedDnsSettingsPage: NextPageWithLayout = () => {
   const { toast } = useToast()
 
   const formSchema = z.object({
-    dns1: z.string().nonempty(t("advanced.dns.dns1_validation")),
+    dns1: z.string().min(1, t("advanced.dns.dns1_validation")),
     dns2: z.string().optional(),
     dns3: z.string().optional(),
   })

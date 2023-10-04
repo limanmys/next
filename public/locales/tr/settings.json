@@ -551,6 +551,35 @@
                 "TWEAK_EDIT": "Sistem ince ayarları düzenlendi.",
                 "DNS_EDIT": "DNS sunucuları {{dns1}}, {{dns2}}, {{dns3}} olarak güncellendi."
             }
+        },
+        "permissions": {
+            "title": "LDAP Erişim İzinleri",
+            "description": "Hangi LDAP gruplarının ve kullanıcılarının Liman'a giriş yapabileceğini veya yapamayacağını bu sayfa aracılığıyla detaylı şekilde ayarlayabilirsiniz.",
+            "login_success": "Giriş başarılı, işlemlerinizi gerçekleştirebilirsiniz.",
+            "login_error": "Giriş başarısız, lütfen bilgilerinizi kontrol edin.",
+            "user_success": "Kullanıcı listesi başarıyla güncellendi.",
+            "user_error": "Kullanıcı listesi güncellenemedi.",
+            "group_success": "Grup listesi başarıyla güncellendi.",
+            "group_error": "Grup listesi güncellenemedi.",
+            "login_title": "Giriş yapın",
+            "login_description": "LDAP erişim izinlerini düzenleyebilmek için kullanıcı ve gruplara sorgu atma yetkisi bulunan bir LDAP kullanıcısı ile giriş yapınız.",
+            "username": "Kullanıcı Adı",
+            "password": "Parola",
+            "validation": {
+                "username": "Kullanıcı adı alanı boş bırakılamaz.",
+                "password": "Şifre alanı boş bırakılamaz."
+            },
+            "login": "Giriş Yap",
+            "user": {
+                "title": "Kullanıcı İzinleri",
+                "left": "Seçilebilir Kullanıcılar",
+                "right": "Giriş Yapabilen Kullanıcılar"
+            },
+            "group": {
+                "title": "Grup İzinleri",
+                "left": "Seçilebilir Gruplar",
+                "right": "Giriş Yapabilen Gruplar"
+            }
         }
     },
     "health": {
