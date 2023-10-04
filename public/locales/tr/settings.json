@@ -343,11 +343,54 @@
         },
         "functions": {
             "title": "Fonksiyon İzinleri",
-            "description": "Eklentilerin iç izinlerini detaylı şekilde b "
+            "description": "Eklentilerin iç izinlerini detaylı şekilde bu sayfa aracılığıyla yönetebilirsiniz.",
+            "display_name": "Eklenti Adı",
+            "function_name": "Fonksiyon Adı",
+            "delete_success": "Fonksiyon izinleri başarıyla silindi.",
+            "delete_error": "Fonksiyon izinleri silinirken bir hata oluştu.",
+            "delete": "Sil",
+            "delete_dialog": {
+                "title": "Emin misiniz?",
+                "description": "Bu işlem geri alınamaz. Seçilen izinler kaldırılacaktır, devam etmek istiyor musunuz?",
+                "cancel": "Vazgeç",
+                "delete": "Onayla"
+            },
+            "assign": {
+                "title": "İzin Ekle",
+                "description": "Bu pencereyi kullanarak eklentilerin iç izinlerini bu role atayabilirsiniz.",
+                "success": "Fonksiyon izinleri başarıyla eklendi.",
+                "error": "Fonksiyon izinleri eklenirken bir hata oluştu.",
+                "permission": "İzin",
+                "add": "Ekle",
+                "extension_selection": "Eklenti Seçimi",
+                "extensions": "Eklentiler",
+                "extension_placeholder": "Fonksiyonları görmek için seçim yapınız..."
+            }
         },
         "variables": {
             "title": "Özel Veriler",
-            "description": "Bu rolün eklentiyle paylaşacağı özel verileri ayarlayın."
+            "description": "Bu rolün eklentiyle paylaşacağı özel verileri ayarlayın.",
+            "key": "Adı",
+            "value": "Değeri",
+            "delete": {
+                "button": "Sil",
+                "title": "Emin misiniz?",
+                "description": "Bu işlem geri alınamaz. Seçilen veriler kaldırılacaktır, devam etmek istiyor musunuz?",
+                "cancel": "Vazgeç",
+                "delete": "Onayla",
+                "success": "Özel veriler başarıyla silindi.",
+                "error": "Özel veriler silinirken hata oluştu."
+            },
+            "create": {
+                "success": "Özel veriler başarıyla oluşturuldu.",
+                "error": "Özel veriler oluşturulurken bir hata oluştu.",
+                "button": "Ekle",
+                "title": "Özel Veri Oluştur",
+                "description": "Bu işlem sonucu rol üzerinde bir özel veri oluşturulacaktır.",
+                "key": "Adı",
+                "value": "Değeri",
+                "create": "Oluştur"
+            }
         }
     },
     "email": {

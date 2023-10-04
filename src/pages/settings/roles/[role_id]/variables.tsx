@@ -5,6 +5,7 @@ import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { MinusCircle, PlusCircle } from "lucide-react"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import * as z from "zod"
 
 import { IFunction } from "@/types/function"
@@ -38,15 +39,15 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import PageHeader from "@/components/ui/page-header"
 import { useToast } from "@/components/ui/use-toast"
+import RoleLayout from "@/components/_layout/role_layout"
 import { Form, FormField, FormMessage } from "@/components/form/form"
-
-import RoleLayout from "../../../../components/_layout/role_layout"
 
 const RoleVariablesList: NextPageWithLayout = () => {
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IFunction[]>([])
   const [selected, setSelected] = useState<IFunction[]>([])
   const tableRef = useRef<any>()
+  const { t } = useTranslation("settings")
   const { toast } = useToast()
 
   const router = useRouter()
@@ -77,16 +78,22 @@ const RoleVariablesList: NextPageWithLayout = () => {
     {
       accessorKey: "key",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Adı" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("roles.variables.key")}
+        />
       ),
-      title: "Adı",
+      title: t("roles.variables.key"),
     },
     {
       accessorKey: "value",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Değeri" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("roles.variables.value")}
+        />
       ),
-      title: "Değeri",
+      title: t("roles.variables.value"),
     },
   ]
 
@@ -126,8 +133,8 @@ const RoleVariablesList: NextPageWithLayout = () => {
       .then((res) => {
         if (res.status === 200) {
           toast({
-            title: "Başarılı",
-            description: "Özel veriler başarıyla silindi.",
+            title: t("success"),
+            description: t("roles.variables.delete.success"),
           })
           fetchData()
           emitter.emit("REFETCH_ROLE", router.query.role_id)
@@ -135,16 +142,16 @@ const RoleVariablesList: NextPageWithLayout = () => {
           setSelected([])
         } else {
           toast({
-            title: "Hata",
-            description: "Özel veriler silinirken bir hata oluştu.",
+            title: t("error"),
+            description: t("roles.variables.delete.error"),
             variant: "destructive",
           })
         }
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description: "Özel veriler silinirken bir hata oluştu.",
+          title: t("error"),
+          description: t("roles.variables.delete.error"),
           variant: "destructive",
         })
       })
@@ -153,8 +160,8 @@ const RoleVariablesList: NextPageWithLayout = () => {
   return (
     <>
       <PageHeader
-        title="Özel Veriler"
-        description="Bu rolün eklentiye paylaşacağı özel verileri ayarlayın."
+        title={t("roles.variables.title")}
+        description={t("roles.variables.description")}
       />
 
       <DataTable
@@ -177,21 +184,24 @@ const RoleVariablesList: NextPageWithLayout = () => {
                 disabled={!selected?.length}
               >
                 <MinusCircle className="mr-2 h-4 w-4" />
-                Sil
+                {t("roles.variables.delete.button")}
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Emin misiniz?</AlertDialogTitle>
+                <AlertDialogTitle>
+                  {t("roles.variables.delete.title")}
+                </AlertDialogTitle>
                 <AlertDialogDescription>
-                  Bu işlem geri alınamaz. Seçilen yetkili kullanıcılar sunucudan
-                  kaldırılacaktır, devam etmek istiyor musunuz?
+                  {t("roles.variables.delete.description")}
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>Vazgeç</AlertDialogCancel>
+                <AlertDialogCancel>
+                  {t("roles.variables.delete.cancel")}
+                </AlertDialogCancel>
                 <AlertDialogAction onClick={() => deleteSelected()}>
-                  Onayla
+                  {t("roles.variables.delete.delete")}
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
@@ -202,15 +212,16 @@ const RoleVariablesList: NextPageWithLayout = () => {
   )
 }
 
-const formSchema = z.object({
-  key: z.string().nonempty("Bu alan boş bırakılamaz."),
-  value: z.string().nonempty("Bu alan boş bırakılamaz."),
-})
-
 function CreateVariable() {
   const router = useRouter()
+  const { t } = useTranslation("settings")
   const { toast } = useToast()
   const emitter = useEmitter()
+
+  const formSchema = z.object({
+    key: z.string().nonempty(),
+    value: z.string().nonempty(),
+  })
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -228,8 +239,8 @@ function CreateVariable() {
       .then((res) => {
         if (res.status === 200) {
           toast({
-            title: "Başarılı",
-            description: "Özel veriler başarıyla oluşturuldu.",
+            title: t("success"),
+            description: t("roles.variables.create.success"),
           })
           emitter.emit("REFETCH_VARIABLES", router.query.role_id)
           emitter.emit("REFETCH_ROLE", router.query.role_id)
@@ -237,16 +248,16 @@ function CreateVariable() {
           form.reset()
         } else {
           toast({
-            title: "Hata",
-            description: "Özel veriler oluşturulurken bir hata oluştu.",
+            title: t("error"),
+            description: t("roles.variables.create.error"),
             variant: "destructive",
           })
         }
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description: "Özel veriler oluşturulurken bir hata oluştu.",
+          title: t("error"),
+          description: t("roles.variables.create.error"),
           variant: "destructive",
         })
       })
@@ -257,14 +268,14 @@ function CreateVariable() {
       <DialogTrigger asChild>
         <Button variant="outline" size="sm" className="ml-auto h-8 lg:flex">
           <PlusCircle className="mr-2 h-4 w-4" />
-          Ekle
+          {t("roles.variables.create.button")}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[525px]">
         <DialogHeader>
-          <DialogTitle>Özel Veri Oluştur</DialogTitle>
+          <DialogTitle>{t("roles.variables.create.title")}</DialogTitle>
           <DialogDescription>
-            Bu işlem sonucu rol üzerinde bir özel veri oluşturulacaktır.
+            {t("roles.variables.create.description")}
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -278,7 +289,7 @@ function CreateVariable() {
               render={({ field }) => (
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="key" className="text-right">
-                    Adı
+                    {t("roles.variables.create.key")}
                   </Label>
                   <div className="col-span-3">
                     <Input id="key" {...field} />
@@ -294,7 +305,7 @@ function CreateVariable() {
               render={({ field }) => (
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="value" className="text-right">
-                    Değeri
+                    {t("roles.variables.create.value")}
                   </Label>
                   <div className="col-span-3">
                     <Input id="value" {...field} />
@@ -306,7 +317,7 @@ function CreateVariable() {
             <DialogFooter>
               <Button type="submit">
                 <PlusCircle className="mr-2 h-4 w-4" />
-                Oluştur
+                {t("roles.variables.create.create")}
               </Button>
             </DialogFooter>
           </form>

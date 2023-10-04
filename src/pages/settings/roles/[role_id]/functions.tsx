@@ -80,18 +80,21 @@ const RoleFunctionsList: NextPageWithLayout = () => {
       header: ({ column }) => (
         <FunctionExtensionActions
           column={column}
-          title="Eklenti Adı"
+          title={t("roles.functions.display_name")}
           extensions={extensions}
         />
       ),
-      title: "Eklenti Adı",
+      title: t("roles.functions.display_name"),
     },
     {
       accessorKey: "description",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Fonksiyon Adı" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("roles.functions.function_name")}
+        />
       ),
-      title: "Fonksiyon Adı",
+      title: t("roles.functions.function_name"),
     },
   ]
 
@@ -131,8 +134,8 @@ const RoleFunctionsList: NextPageWithLayout = () => {
       .then((res) => {
         if (res.status === 200) {
           toast({
-            title: "Başarılı",
-            description: "İzinler başarıyla silindi.",
+            title: t("success"),
+            description: t("roles.functions.delete_success"),
           })
           fetchData()
           tableRef.current?.resetRowSelection()
@@ -140,16 +143,16 @@ const RoleFunctionsList: NextPageWithLayout = () => {
           setSelected([])
         } else {
           toast({
-            title: "Hata",
-            description: "İzinler silinirken bir hata oluştu.",
+            title: t("error"),
+            description: t("roles.functions.delete_error"),
             variant: "destructive",
           })
         }
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description: "İzinler silinirken bir hata oluştu.",
+          title: t("error"),
+          description: t("roles.functions.delete_error"),
           variant: "destructive",
         })
       })
@@ -158,8 +161,8 @@ const RoleFunctionsList: NextPageWithLayout = () => {
   return (
     <>
       <PageHeader
-        title="Fonksiyon İzinleri"
-        description="Eklentilerin iç izinlerini detaylı şekilde bu sayfa aracılığıyla yönetebilirsiniz."
+        title={t("roles.functions.title")}
+        description={t("roles.functions.description")}
       />
 
       <DataTable
@@ -182,21 +185,24 @@ const RoleFunctionsList: NextPageWithLayout = () => {
                 disabled={!selected?.length}
               >
                 <MinusCircle className="mr-2 h-4 w-4" />
-                Sil
+                {t("roles.functions.delete")}
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Emin misiniz?</AlertDialogTitle>
+                <AlertDialogTitle>
+                  {t("roles.functions.delete_dialog.title")}
+                </AlertDialogTitle>
                 <AlertDialogDescription>
-                  Bu işlem geri alınamaz. Seçilen izinler kaldırılacaktır, devam
-                  etmek istiyor musunuz?
+                  {t("roles.functions.delete_dialog.description")}
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>Vazgeç</AlertDialogCancel>
+                <AlertDialogCancel>
+                  {t("roles.functions.cancel")}
+                </AlertDialogCancel>
                 <AlertDialogAction onClick={() => deleteSelected()}>
-                  Onayla
+                  {t("roles.functions.delete")}
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>

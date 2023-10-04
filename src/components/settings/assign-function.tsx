@@ -2,11 +2,27 @@ import { useState } from "react"
 import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { PlusCircle } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { IExtension } from "@/types/extension"
 import { IMiniFunction } from "@/types/function"
 import { DivergentColumn } from "@/types/table"
 import { useEmitter } from "@/hooks/useEmitter"
+import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
+import DataTable from "@/components/ui/data-table/data-table"
+import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
+import { Label } from "@/components/ui/label"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import {
   Sheet,
   SheetClose,
@@ -17,27 +33,12 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-
-import { Button } from "../ui/button"
-import { Checkbox } from "../ui/checkbox"
-import DataTable from "../ui/data-table/data-table"
-import { DataTableColumnHeader } from "../ui/data-table/data-table-column-header"
-import { Label } from "../ui/label"
-import { ScrollArea } from "../ui/scroll-area"
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select"
-import { useToast } from "../ui/use-toast"
+import { useToast } from "@/components/ui/use-toast"
 
 export default function AssignFunction() {
   const router = useRouter()
   const emitter = useEmitter()
+  const { t } = useTranslation("settings")
   const { toast } = useToast()
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IMiniFunction[]>([])
@@ -101,9 +102,12 @@ export default function AssignFunction() {
     {
       accessorKey: "description",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="İzin" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("roles.functions.assign.permission")}
+        />
       ),
-      title: "İzin",
+      title: t("roles.functions.assign.permission"),
     },
   ]
 
@@ -116,16 +120,16 @@ export default function AssignFunction() {
       })
       .then((res) => {
         toast({
-          title: "Başarılı",
-          description: "İzinler başarıyla eklendi.",
+          title: t("success"),
+          description: t("roles.functions.assign.success"),
         })
         emitter.emit("REFETCH_FUNCTIONS", router.query.role_id)
         emitter.emit("REFETCH_ROLE", router.query.role_id)
       })
       .catch((err) => {
         toast({
-          title: "Hata",
-          description: "İzinler eklenirken bir hata oluştu.",
+          title: t("error"),
+          description: t("roles.functions.assign.error"),
           variant: "destructive",
         })
       })
@@ -141,26 +145,30 @@ export default function AssignFunction() {
           onClick={fetchExtensionList}
         >
           <PlusCircle className="mr-2 h-4 w-4" />
-          Ekle
+          {t("roles.functions.assign.add")}
         </Button>
       </SheetTrigger>
       <SheetContent side="right" className="sm:w-[800px] sm:max-w-full">
         <SheetHeader>
-          <SheetTitle>İzin Ekle</SheetTitle>
+          <SheetTitle>{t("roles.functions.assign.title")}</SheetTitle>
           <SheetDescription>
-            Bu pencereyi kullanarak fonksiyon izinlerini ekleyebilirsiniz.
+            {t("roles.functions.assign.description")}
           </SheetDescription>
         </SheetHeader>
         <div className="mt-5 flex flex-col gap-3">
-          <Label>Eklenti Seçimi</Label>
+          <Label>{t("roles.functions.assign.extension_selection")}</Label>
           <Select onValueChange={(value) => fetchFunctionList(value)}>
             <SelectTrigger className="mb-3 h-8 w-full ">
-              <SelectValue placeholder="Fonksiyonları görmek için seçim yapınız..." />
+              <SelectValue
+                placeholder={t("roles.functions.assign.extension_placeholder")}
+              />
             </SelectTrigger>
             <SelectContent>
               <ScrollArea className="h-48">
                 <SelectGroup>
-                  <SelectLabel>Eklentiler</SelectLabel>
+                  <SelectLabel>
+                    {t("roles.functions.assign.extensions")}
+                  </SelectLabel>
                   {extensions.map((extension) => (
                     <SelectItem key={extension.id} value={extension.id}>
                       {extension.display_name}
@@ -189,7 +197,8 @@ export default function AssignFunction() {
               className="rounded-full"
               onClick={() => handleAddPermission()}
             >
-              <PlusCircle className="mr-2 h-4 w-4" /> Ekle
+              <PlusCircle className="mr-2 h-4 w-4" />{" "}
+              {t("roles.functions.assign.add")}
             </Button>
           </SheetClose>
         </SheetFooter>
