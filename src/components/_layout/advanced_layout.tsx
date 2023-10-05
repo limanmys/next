@@ -1,4 +1,5 @@
 import { Award, CloudCog, Cog, ScrollText } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import AccessCard from "../settings/access-card"
 
@@ -7,40 +8,38 @@ export default function AdvancedLayout({
 }: {
   children: React.ReactNode
 }) {
+  const { t } = useTranslation("settings")
+
   const advanced = [
     {
       id: "certificates",
       icon: Award,
-      title: "Sertifikalar",
-      description:
-        "Liman sunucusunun kabul edeceği sertifikaları buradan ekleyebilirsiniz.",
+      title: t("advanced.certificates.title"),
+      description: t("advanced.certificates.description"),
       href: `/settings/advanced/certificates`,
       enabled: true,
     },
     {
       id: "dns",
       icon: CloudCog,
-      title: "DNS Ayarları",
-      description:
-        "Liman'ın bağlanacağı uçları ve aktif dizin sunucuları çözmesini sağlayan DNS ayarlarını buradan yapabilirsiniz.",
+      title: t("advanced.dns.title"),
+      description: t("advanced.dns.description"),
       href: `/settings/advanced/dns`,
       enabled: true,
     },
     {
       id: "log_rotation",
       icon: ScrollText,
-      title: "Log Yönlendirme",
-      description:
-        "Liman'ın önemli sistem loglarını ve mesajlarını rsyslog aracılığı ile yönlendirmenizi sağlar.",
+      title: t("advanced.logrotation.title"),
+      description: t("advanced.logrotation.description"),
       href: `/settings/advanced/log_rotation`,
       enabled: true,
     },
     {
       id: "tweaks",
       icon: Cog,
-      title: "İnce Ayarlar",
-      description:
-        "Liman ile ilgili ince ayarları bu sayfadan değiştirebilirsiniz.",
+      title: t("advanced.tweaks.title"),
+      description: t("advanced.tweaks.description"),
       href: `/settings/advanced/tweaks`,
       enabled: true,
     },
@@ -55,7 +54,7 @@ export default function AdvancedLayout({
     >
       <div className="col-span-1 border-r">
         <div className="flex items-center border-b p-8 text-2xl font-bold">
-          Gelişmiş Ayarlar
+          {t("advanced.title")}
         </div>
         {advanced.map((r) => (
           <AccessCard

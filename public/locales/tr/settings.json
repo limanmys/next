@@ -462,7 +462,47 @@
     },
     "subscriptions": {
         "title": "Abonelikler",
-        "description": "Sistem ve eklenti aboneliklerinizi, yenilemelerinizi bu sayfa aracılığıyla gözlemleyebilirsiniz."
+        "description": "Sistem ve eklenti aboneliklerinizi, yenilemelerinizi bu sayfa aracılığıyla gözlemleyebilirsiniz.",
+        "liman": "Liman Destek Aboneliği",
+        "extension": "Eklenti Abonelikleri",
+        "issued_no": "Üye Numarası",
+        "issued": "Üye",
+        "package_type": "Üyelik Türü",
+        "start_time": "Üyelik Başlangıç Tarihi",
+        "support": "Destek Süresi",
+        "remaining": "Kalan Gün Sayısı",
+        "open_source_warning": "Açık kaynak destek paketini kullanıyorsunuz.",
+        "add_license": "Lisans Ekle",
+        "license_dialog": {
+            "success": "Lisans başarıyla eklendi.",
+            "error": "Lisans eklenirken hata oluştu.",
+            "title": "Lisans Ekle",
+            "description": "Liman için size HAVELSAN A.Ş. tarafından verilen lisansı bu kısma giriniz.",
+            "license": "Lisans Bilgisi",
+            "cancel": "İptal",
+            "ok": "Ekle"
+        },
+        "subcard": {
+            "server": {
+                "placeholder": "Sunucu seçiniz...",
+                "label": "Seçilebilir sunucular"
+            },
+            "subscription_settings": "Abonelik Seçenekleri",
+            "renew": "Aboneliği Yenile",
+            "add_license": "Lisans Ekle",
+            "remaining": "Kalan Gün Sayısı",
+            "days_remaining": "days remaining",
+            "issuer": "Lisanslayan",
+            "allowed_device_count": "İzin Verilen Cihaz Sayısı",
+            "no_sub": "Aboneliğiniz bulunamadı.",
+            "success": "Lisans başarıyla eklendi.",
+            "error": "Lisans eklenirken hata oluştu.",
+            "title": "Lisans Ekle",
+            "description": "Eklentiniz için size HAVELSAN A.Ş. tarafından verilen lisansı bu kısma giriniz.",
+            "license": "Lisans Bilgisi",
+            "cancel": "İptal",
+            "ok": "Ekle"
+        }
     },
     "access": {
         "title": "Erişim",
@@ -533,7 +573,114 @@
     },
     "advanced": {
         "title": "Gelişmiş Ayarlar",
-        "description": "Sistemin DNS ayarlarını, sertifika kurulumları ve log yönlendirme gibi değişiklikleri bu sayfa üzerinden yapabilirsiniz."
+        "certificates": {
+            "title": "Sertifikalar",
+            "description": "Liman sunucusunun kabul edeceği sertifikaları buradan ekleyebilirsiniz.",
+            "updated_at": "Son Güncellenme Tarihi",
+            "unknown": "Bilinmiyor",
+            "add": "Ekle",
+            "retrieve": {
+                "fetch_error": "Sertifika detayları getirilirken bir hata oluştu.",
+                "success": "Sertifika başarıyla oluşturuldu.",
+                "error": "Sertifika oluşturulurken bir hata oluştu.",
+                "title": "Sertifika Ekle",
+                "description": "Hostname ve port bilgisini sağladığınız sunucunun sertifikası Liman sistemine aktarılacaktır.",
+                "client_details": "İstemci Detayları",
+                "ip_address": "IP Adresi",
+                "fetch_details": "Sertifika Detaylarını Getir",
+                "validity": "Geçerlilik Süresi",
+                "valid_from": "Başlangıç",
+                "valid_to": "Bitiş",
+                "details": "Genel Detaylar",
+                "issuer_cn": "İstemci",
+                "issuer_dc": "Otorite",
+                "subject_key_identifier": "İstemci Parmak İzi",
+                "authority_key_identifier": "Otorite Parmak İzi",
+                "save": "Kaydet"
+            },
+            "details": {
+                "title": "Sertifika Detayları",
+                "description": "Seçtiğiniz sertifikaya ait detaylı bilgileri görüntüleyebilirsiniz."
+            },
+            "actions": {
+                "details": "Detaylar",
+                "delete": {
+                    "button": "Sil",
+                    "title": "Emin misiniz?",
+                    "description": "Seçilen sertifika <b>({{name}})</b> Liman sisteminden tamamen silinecektir. Bu işlem sonucunda eklentilere erişimde kesinti yaşanabilir. Devam etmek istiyor musunuz?",
+                    "cancel": "Vazgeç",
+                    "delete": "Onayla",
+                    "success": "Sertifika başarıyla silindi.",
+                    "error": "Sertifika silinirken bir hata oluştu."
+                }
+            }
+        },
+        "dns": {
+            "title": "DNS Ayarları",
+            "description": "Liman'ın bağlanacağı uçları ve aktif dizin sunucuları çözmesini sağlayan DNS ayarlarını buradan yapabilirsiniz.",
+            "dns1_validation": "DNS 1 alanı boş bırakılamaz.",
+            "success": "DNS ayarları başarıyla güncellendi.",
+            "error": "DNS ayarları güncellenirken bir hata oluştu.",
+            "save": "Kaydet"
+        },
+        "logrotation": {
+            "title": "Log Yönlendirme",
+            "description": "Liman'ın önemli sistem loglarını ve mesajlarını rsyslog aracılığı ile yönlendirmenizi sağlar.",
+            "success": "Log yönlendirme ayarları başarıyla güncellendi.",
+            "error": "Log yönlendirme ayarları güncellenirken bir hata oluştu.",
+            "ip_address": "IP Adresi",
+            "type": "Bağlantı Türü",
+            "type_placeholder": "Bir bağlantı türü seçiniz.",
+            "save": "Kaydet"
+        },
+        "tweaks": {
+            "title": "İnce Ayarlar",
+            "description": "Liman ile ilgili ince ayarları bu sayfadan değiştirebilirsiniz.",
+            "success": "İnce ayarlar başarıyla kaydedildi.",
+            "error": "İnce ayarlar kaydedilirken bir hata oluştu.",
+            "validation": "Geçerli bir sayı giriniz.",
+            "APP_LANG": {
+                "label": "Sistem Dili",
+                "subtext": "Türkçe, İngilizce ve Almanca seçenekleri arasından değişiklik yaparak varsayılan sistem dilini değiştirebilirsiniz."
+            },
+            "OTP_ENABLED": {
+                "label": "İki Faktörlü Doğrulama",
+                "subtext": "Aktif ettiğinizde tüm kullanıcılar zorunlu olarak tercih ettiğiniz iki faktörlü doğrulama uygulaması aracılığıyla kodlar alarak giriş yapacaktır."
+            },
+            "APP_NOTIFICATION_EMAIL": {
+                "label": "Sistem E-Postası",
+                "subtext": "Bu alana girdiğiniz e-posta adresi Liman tarafından kullanılarak size bildirimleri ve uyarıları gönderecektir."
+            },
+            "APP_URL": {
+                "label": "Uygulama Adresi",
+                "subtext": "Maillerde ve bildirimlerde eklenecek Liman sisteminin adresi."
+            },
+            "EXTENSION_TIMEOUT": {
+                "label": "Eklenti İstek Zaman Aşımı",
+                "subtext": "Liman'ın eklentilere göndereceği isteklerde kullanılacak zaman aşımı süresi."
+            },
+            "APP_DEBUG": {
+                "label": "Geliştirici Modu",
+                "subtext": "Aktif edildiğinde Liman sistemi daha detaylı loglar gönderecek ve hata mesajları değişecektir."
+            },
+            "EXTENSION_DEVELOPER_MODE": {
+                "label": "Eklenti Geliştirici Modu",
+                "subtext": "Aktif edildiğinde eklenti geliştiricileri için daha detaylı hata mesajları ve loglar gönderilecektir."
+            },
+            "NEW_LOG_LEVEL": {
+                "label": "Loglama Seviyesi",
+                "minimal": "Minimal",
+                "ext_log": "Eklenti Log",
+                "detailed_ext_log": "Detaylı Eklenti Logları",
+                "all": "Tüm İşlemleri Logla",
+                "subtext": "Liman'ın loglanma davranışını bu kısım aracılığıyla değiştirebilirsiniz."
+            },
+            "LDAP_IGNORE_CERT": {
+                "label": "LDAP Sertifika Kontrolünü Devre Dışı Bırak",
+                "subtext": "Aktif edildiğinde sisteme sertifika eklenmesine gerek olmadan LDAP sunucularına bağlanılabilirsiniz. Eklenti klasörü içerisinde .ignoreme adında bir dosya oluşturmanız gerekecektir."
+            },
+            "save": "Kaydet"
+        }
     },
     "servers": {
         "actions": {

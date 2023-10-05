@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { apiService } from "@/services"
 import { MoreHorizontal, PlusCircle, Send, Server, XCircle } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { IExtension } from "@/types/extension"
 import { IServer } from "@/types/server"
@@ -43,6 +44,7 @@ export default function SubscriptionCard({
 }: {
   extension: IExtension
 }) {
+  const { t } = useTranslation("settings")
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<ISubscription>({} as ISubscription)
   const [licenseDialog, setLicenseDialog] = useState<boolean>(false)
@@ -127,11 +129,17 @@ export default function SubscriptionCard({
                 >
                   <SelectTrigger className="h-18 w-[200px]">
                     <Server className="h-4 w-4 text-muted-foreground" />
-                    <SelectValue placeholder="Sunucu seçiniz..." />
+                    <SelectValue
+                      placeholder={t(
+                        "subscriptions.subcard.server.placeholder"
+                      )}
+                    />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectLabel>Seçilebilir sunucular</SelectLabel>
+                      <SelectLabel>
+                        {t("subscriptions.subcard.server.label")}
+                      </SelectLabel>
                       {servers &&
                         servers.length > 0 &&
                         servers.map((server) => (
@@ -157,21 +165,27 @@ export default function SubscriptionCard({
                 })}
               >
                 <MoreHorizontal className="h-5 w-5" />
-                <span className="sr-only">Abonelik Seçenekleri</span>
+                <span className="sr-only">
+                  {t("subscriptions.subcard.subscription_settings")}
+                </span>
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
-              <DropdownMenuLabel>Abonelik Seçenekleri</DropdownMenuLabel>
+              <DropdownMenuLabel>
+                {t("subscriptions.subcard.subscription_settings")}
+              </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 onClick={() =>
                   window.open("mailto:aciklab@havelsan.com.tr", "_blank")
                 }
               >
-                <Send className="mr-2 h-4 w-4" /> Aboneliği Yenile
+                <Send className="mr-2 h-4 w-4" />{" "}
+                {t("subscriptions.subcard.renew")}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setLicenseDialog(true)}>
-                <PlusCircle className="mr-2 h-4 w-4" /> Lisans Ekle
+                <PlusCircle className="mr-2 h-4 w-4" />{" "}
+                {t("subscriptions.subcard.add_license")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -183,7 +197,7 @@ export default function SubscriptionCard({
             <div className="flex gap-12">
               <div className="part">
                 <h5 className="mb-3 font-semibold tracking-tight">
-                  Kalan Gün Sayısı
+                  {t("subscriptions.subcard.remaining")}
                 </h5>
                 <div className="flex items-center gap-5">
                   <Skeleton className="h-20 w-20 rounded-full" />
@@ -192,7 +206,9 @@ export default function SubscriptionCard({
                     <span className="text-3xl font-bold">
                       <Skeleton className="h-8 w-20 rounded-md" />
                     </span>
-                    <small className="text-foreground/60">gün kaldı</small>
+                    <small className="text-foreground/60">
+                      {t("subscriptions.subcard.days_remaining")}
+                    </small>
                   </div>
                 </div>
               </div>
@@ -200,14 +216,14 @@ export default function SubscriptionCard({
               <div className="flex flex-col gap-4">
                 <div className="part">
                   <h5 className="mb-1 font-semibold tracking-tight">
-                    Lisanslayan
+                    {t("subscriptions.subcard.issuer")}
                   </h5>
                   <Skeleton className="h-5 w-32 rounded-md" />
                 </div>
 
                 <div className="part">
                   <h5 className="mb-1 font-semibold tracking-tight">
-                    İzin Verilen Cihaz Sayısı
+                    {t("subscriptions.subcard.allowed_device_count")}
                   </h5>
                   <Skeleton className="h-5 w-16 rounded-md" />
                 </div>
@@ -220,7 +236,7 @@ export default function SubscriptionCard({
                 <div className="flex gap-12">
                   <div className="part">
                     <h5 className="mb-3 font-semibold tracking-tight">
-                      Kalan Gün Sayısı
+                      {t("subscriptions.subcard.remaining")}
                     </h5>
                     <div className="flex items-center gap-5">
                       <div
@@ -243,7 +259,9 @@ export default function SubscriptionCard({
                         <span className="text-3xl font-bold">
                           {calculateRemainingDays(data.timestamp)}
                         </span>
-                        <small className="text-foreground/60">gün kaldı</small>
+                        <small className="text-foreground/60">
+                          {t("subscriptions.subcard.days_remaining")}
+                        </small>
                       </div>
                     </div>
                   </div>
@@ -251,14 +269,14 @@ export default function SubscriptionCard({
                   <div className="flex flex-col gap-4">
                     <div className="part">
                       <h5 className="mb-1 font-semibold tracking-tight">
-                        Lisanslayan
+                        {t("subscriptions.subcard.issuer")}
                       </h5>
                       {data.owner}
                     </div>
 
                     <div className="part">
                       <h5 className="mb-1 font-semibold tracking-tight">
-                        İzin Verilen Cihaz Sayısı
+                        {t("subscriptions.subcard.allowed_device_count")}
                       </h5>
                       {data.client_count}
                     </div>
@@ -269,7 +287,7 @@ export default function SubscriptionCard({
                 <div className="flex flex-col items-center justify-center gap-4">
                   <XCircle className="h-12 w-12 text-red-500" />
                   <h5 className="mb-1 font-semibold tracking-tight">
-                    Aboneliğiniz bulunamadı.
+                    {t("subscriptions.subcard.no_sub")}
                   </h5>
                 </div>
               )}
@@ -298,6 +316,7 @@ function License({
   extension: IExtension
   server: string
 }) {
+  const { t } = useTranslation("settings")
   const { toast } = useToast()
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState<string>("")
@@ -313,15 +332,15 @@ function License({
       })
       .then(() => {
         toast({
-          title: "Başarılı",
-          description: "Lisans başarıyla eklendi.",
+          title: t("success"),
+          description: t("subscriptions.subcard.success"),
         })
         setOpen(false)
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description: "Lisans eklenirken hata oluştu.",
+          title: t("error"),
+          description: t("subscriptions.subcard.error"),
           variant: "destructive",
         })
       })
@@ -334,15 +353,16 @@ function License({
     <Dialog onOpenChange={(open) => setOpen(open)} open={open}>
       <DialogContent className="sm:max-w-[525px]">
         <DialogHeader>
-          <DialogTitle>Lisans Ekle</DialogTitle>
+          <DialogTitle>{t("subscriptions.license_dialog.title")}</DialogTitle>
           <DialogDescription>
-            Eklentiniz için size HAVELSAN A.Ş. tarafından verilen lisansı bu
-            kısma giriniz.
+            {t("subscriptions.license_dialog.description")}
           </DialogDescription>
         </DialogHeader>
 
         <div className="mt-3 grid w-full items-center gap-1.5">
-          <Label htmlFor="license">Lisans Bilgisi</Label>
+          <Label htmlFor="license">
+            {t("subscriptions.license_dialog.license")}
+          </Label>
           <Textarea id="license" onChange={(e) => setData(e.target.value)} />
         </div>
 
@@ -352,7 +372,7 @@ function License({
             onClick={() => setOpen(false)}
             className="mr-2"
           >
-            İptal
+            {t("subscriptions.license_dialog.cancel")}
           </Button>
           <Button disabled={loading} onClick={() => handleCreate()}>
             {!loading ? (
@@ -360,7 +380,7 @@ function License({
             ) : (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
-            Ekle
+            {t("subscriptions.license_dialog.ok")}
           </Button>
         </div>
       </DialogContent>
