@@ -435,7 +435,30 @@
     },
     "external_notifications": {
         "title": "Dış Bildirimler",
-        "description": "Eklenti sunucularının ve dış uygulamaların Liman'a bildirim göndermesini IP kısıtı koyarak sağlayabilirsiniz."
+        "description": "Eklenti sunucularının ve dış uygulamaların Liman'a bildirim göndermesini IP kısıtı koyarak sağlayabilirsiniz.",
+        "name": "İsim",
+        "ip_address": "İzin Verilen IP Adresi",
+        "last_used": "Son Erişim Tarihi",
+        "unknown": "Bilinmiyor",
+        "validation": {
+            "name": "Dış bildirim adı boş bırakılamaz.",
+            "ip": "İzin verilen IP adresi boş bırakılamaz."
+        },
+        "toasts": {
+            "success": "Dış bildirim başarıyla oluşturuldu.",
+            "error": "Dış bildirim oluşturulurken bir hata oluştu."
+        },
+        "create": {
+            "button": "Ekle",
+            "title": "Dış Bildirim Oluştur",
+            "description": "Bu işlem sonucu sisteminizde bir dış bildirim oluşturulacaktır.",
+            "alert_title": "Dış Uygulama Tokeniniz",
+            "alert_description": "Bu tokeni güvenmediğiniz kimse ile paylaşmayınız. Dış uygulamalarınız bu tokeni kullanarak Liman'a bildirim gönderebilir.",
+            "name": "Dış Bildirim Adı",
+            "ip": "IP Adresi",
+            "subtext": "Bu bölüme izin vermek istediğiniz bir subnet adresini ya da IP adresini yazarak erişimi kısıtlayabilirsiniz. <br /> <b>Örneğin: 192.168.1.0/24</b>",
+            "create": "Oluştur"
+        }
     },
     "subscriptions": {
         "title": "Abonelikler",
