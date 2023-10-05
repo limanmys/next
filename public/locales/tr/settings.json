@@ -15,7 +15,7 @@
         "validations": {
             "name": "Ad soyad en az 3 karakter olmalıdır.",
             "email": "Geçerli bir e-posta adresi giriniz.",
-            "password": "Şifreler eşleşmiyor."
+            "password": "Şifreler eşleprofileşmiyor."
         },
         "toasts": {
             "success": "Bilgileriniz başarıyla düzenlendi. Değişikleri görmek için tekrardan giriş yapmanız gerekmektedir.",
@@ -435,7 +435,23 @@
     },
     "external_notifications": {
         "title": "Dış Bildirimler",
-        "description": "Eklenti sunucularının ve dış uygulamaların Liman'a bildirim göndermesini IP kısıtı koyarak sağlayabilirsiniz."
+        "description": "Eklenti sunucularının ve dış uygulamaların Liman'a bildirim göndermesini IP kısıtı koyarak sağlayabilirsiniz.",
+        "actions":{
+            "open_menu":"Menüyü aç",
+            "delete":"Sil",
+            "success":"Başarılı",
+            "error":"Hata",
+            "toasts":{
+                "success":"Dış bildirim başarıyla silindi.",
+                "error":"Dış bildirim silinirken hata oluştu."
+            },
+            "confirm":"Emin misiniz?",
+            "no":"Vazgeç",
+            "yes":"Onayla",
+            "selected_notification":"Seçilen dış bildirim",
+            "confirm_delete":"Liman sisteminden tamamen silinecektir. Bu işlem sonucunda bildirim alışınızda kesinti yaşanabilir. Devam etmek istiyor musunuz?"
+        }
+        
     },
     "subscriptions": {
         "title": "Abonelikler",
