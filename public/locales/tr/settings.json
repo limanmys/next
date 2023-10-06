@@ -573,6 +573,7 @@
     },
     "advanced": {
         "title": "Gelişmiş Ayarlar",
+        "description": "Sistemin DNS ayarlarını, sertifika kurulumları ve log yönlendirme gibi değişiklikleri bu sayfa üzerinden yapabilirsiniz.",
         "certificates": {
             "title": "Sertifikalar",
             "description": "Liman sunucusunun kabul edeceği sertifikaları buradan ekleyebilirsiniz.",
