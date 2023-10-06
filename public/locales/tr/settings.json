@@ -15,7 +15,7 @@
         "validations": {
             "name": "Ad soyad en az 3 karakter olmalıdır.",
             "email": "Geçerli bir e-posta adresi giriniz.",
-            "password": "Şifreler eşleprofileşmiyor."
+            "password": "Şifreler eşleşmiyor."
         },
         "toasts": {
             "success": "Bilgileriniz başarıyla düzenlendi. Değişikleri görmek için tekrardan giriş yapmanız gerekmektedir.",
@@ -448,10 +448,8 @@
             "confirm":"Emin misiniz?",
             "no":"Vazgeç",
             "yes":"Onayla",
-            "selected_notification":"Seçilen dış bildirim",
-            "confirm_delete":"Liman sisteminden tamamen silinecektir. Bu işlem sonucunda bildirim alışınızda kesinti yaşanabilir. Devam etmek istiyor musunuz?"
+            "confirm_delete":"Seçilen dış bildirim{\" \"} <b className=\"font-semibold\">({externalNotificationName})</b> Liman sisteminden tamamen silinecektir. Bu işlem sonucunda bildirim alışınızda kesinti yaşanabilir. Devam etmek istiyor musunuz?"
         }
-        
     },
     "subscriptions": {
         "title": "Abonelikler",

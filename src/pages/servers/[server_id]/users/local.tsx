@@ -4,6 +4,7 @@ import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { PlusCircle } from "lucide-react"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import * as z from "zod"
 
 import { ILocalUser } from "@/types/server_user"
@@ -27,35 +28,11 @@ import PageHeader from "@/components/ui/page-header"
 import { useToast } from "@/components/ui/use-toast"
 import { Form, FormField, FormMessage } from "@/components/form/form"
 
-const formSchema = z
-  .object({
-    username: z
-      .string()
-      .min(2, {
-        message: "Kullanıcı adı en az 2 karakter olmalıdır.",
-      })
-      .max(50, {
-        message: "Kullanıcı adı en fazla 50 karakter olmalıdır.",
-      }),
-    password: z
-      .string()
-      .min(8, {
-        message: "Şifre en az 8 karakter olmalıdır.",
-      })
-      .max(50, {
-        message: "Şifre en fazla 50 karakter olmalıdır.",
-      }),
-    password_confirmation: z.string(),
-  })
-  .refine((data) => data.password === data.password_confirmation, {
-    message: "Şifreler eşleşmiyor.",
-    path: ["password_confirmation"],
-  })
-
 export default function LocalUsersPage() {
   const router = useRouter()
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<ILocalUser[]>([])
+  const { t } = useTranslation("servers")
 
   const emitter = useEmitter()
 
@@ -63,9 +40,12 @@ export default function LocalUsersPage() {
     {
       accessorKey: "user",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Kullanıcı Adı" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("users.local.accessor_user_title")}
+        />
       ),
-      title: "Kullanıcı Adı",
+      title: t("users.local.accessor_user_title"),
     },
   ]
 
@@ -95,8 +75,8 @@ export default function LocalUsersPage() {
   return (
     <>
       <PageHeader
-        title="Yerel Kullanıcılar"
-        description="Sunucunuzda mevcut bulunan yerel kullanıcıları görüntüleyebilir, bu sayfa aracılığı ile yenisini ekleyebilirsiniz."
+        title={t("users.local.page_header.title")}
+        description={t("users.local.page_header.description")}
       />
 
       <DataTable
@@ -115,6 +95,32 @@ function CreateLocalUser() {
   const router = useRouter()
   const { toast } = useToast()
   const emitter = useEmitter()
+  const { t } = useTranslation("servers")
+
+  const formSchema = z
+    .object({
+      username: z
+        .string()
+        .min(2, {
+          message: t("users.local.form_message.username.min"),
+        })
+        .max(50, {
+          message: t("users.local.form_message.username.max"),
+        }),
+      password: z
+        .string()
+        .min(8, {
+          message: t("users.local.form_message.password.min"),
+        })
+        .max(50, {
+          message: t("users.local.form_message.password.min"),
+        }),
+      password_confirmation: z.string(),
+    })
+    .refine((data) => data.password === data.password_confirmation, {
+      message: t("users.local.form_message.error_message"),
+      path: ["password_confirmation"],
+    })
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -133,24 +139,24 @@ function CreateLocalUser() {
       .then((res) => {
         if (res.status === 200) {
           toast({
-            title: "Başarılı",
-            description: "Yerel kullanıcı başarıyla oluşturuldu.",
+            title: t("users.local.toasts.success.title"),
+            description: t("users.local.toasts.success.description"),
           })
           emitter.emit("REFETCH_LOCAL_USERS")
           setOpen(false)
           form.reset()
         } else {
           toast({
-            title: "Hata",
-            description: "Yerel kullanıcı oluşturulurken bir hata oluştu.",
+            title: t("users.local.toasts.fail.title"),
+            description: t("users.local.toasts.fail.description"),
             variant: "destructive",
           })
         }
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description: "Yerel kullanıcı oluşturulurken bir hata oluştu.",
+          title: t("users.local.toasts.fail.title"),
+          description: t("users.local.toasts.fail.description"),
           variant: "destructive",
         })
       })
@@ -161,14 +167,14 @@ function CreateLocalUser() {
       <DialogTrigger asChild>
         <Button variant="outline" size="sm" className="ml-auto h-8 lg:flex">
           <PlusCircle className="mr-2 h-4 w-4" />
-          Ekle
+          {t("users.local.dialog.add_btn")}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[525px]">
         <DialogHeader>
-          <DialogTitle>Yerel Kullanıcı Oluştur</DialogTitle>
+          <DialogTitle> {t("users.local.dialog.title")}</DialogTitle>
           <DialogDescription>
-            Bu işlem sonucu sisteminizde yerel bir kullanıcı oluşturulacaktır.
+            {t("users.local.dialog.description")}
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -182,7 +188,7 @@ function CreateLocalUser() {
               render={({ field }) => (
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="username" className="text-right">
-                    Kullanıcı Adı
+                    {t("users.local.dialog.form_labels.username")}
                   </Label>
                   <div className="col-span-3">
                     <Input id="username" {...field} />
@@ -197,7 +203,7 @@ function CreateLocalUser() {
               render={({ field }) => (
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="password" className="text-right">
-                    Şifre
+                    {t("users.local.dialog.form_labels.password")}
                   </Label>
                   <div className="col-span-3">
                     <Input
@@ -218,7 +224,7 @@ function CreateLocalUser() {
               render={({ field }) => (
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="password_confirmation" className="text-right">
-                    Şifreyi Onayla
+                    {t("users.local.dialog.form_labels.confirm_passsword")}
                   </Label>
                   <div className="col-span-3">
                     <Input
@@ -235,7 +241,7 @@ function CreateLocalUser() {
             <DialogFooter>
               <Button type="submit">
                 <PlusCircle className="mr-2 h-4 w-4" />
-                Oluştur
+                {t("users.local.dialog.create_btn")}
               </Button>
             </DialogFooter>
           </form>

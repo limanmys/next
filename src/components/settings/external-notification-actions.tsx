@@ -1,8 +1,11 @@
+import { useState } from "react"
 import { apiService } from "@/services"
 import { Row } from "@tanstack/react-table"
 import { MoreHorizontal, Trash } from "lucide-react"
-import { useState } from "react"
+import { useTranslation } from "react-i18next"
 
+import { IExternalNotification } from "@/types/notification"
+import { useEmitter } from "@/hooks/useEmitter"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,13 +23,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useEmitter } from "@/hooks/useEmitter"
-import { IExternalNotification } from "@/types/notification"
 
 import { Icons } from "../ui/icons"
 import { useToast } from "../ui/use-toast"
-
-import { useTranslation } from "react-i18next"
 
 export function ExternalNotificationActions({
   row,
@@ -35,7 +34,7 @@ export function ExternalNotificationActions({
 }) {
   const externalNotification = row.original
   const [deleteDialog, setDeleteDialog] = useState(false)
-  const {t}=useTranslation("settings")
+  const { t } = useTranslation("settings")
 
   return (
     <>
@@ -46,7 +45,9 @@ export function ExternalNotificationActions({
             className="flex h-5 w-5 p-0 data-[state=open]:bg-muted"
           >
             <MoreHorizontal className="h-4 w-4" />
-            <span className="sr-only">{t("external_notifications.actions.open_menu")}</span>
+            <span className="sr-only">
+              {t("external_notifications.actions.open_menu")}
+            </span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
@@ -77,7 +78,7 @@ function DeleteDialog({
   const emitter = useEmitter()
   const { toast } = useToast()
   const [loading, setLoading] = useState(false)
-  const {t}=useTranslation("settings")
+  const { t } = useTranslation("settings")
 
   const handleDelete = () => {
     setLoading(true)
@@ -111,13 +112,22 @@ function DeleteDialog({
         <AlertDialogHeader>
           <AlertDialogTitle>Emin misiniz?</AlertDialogTitle>
           <AlertDialogDescription>
-            {t("external_notifications.selected_notification")}{" "}
-            <b className="font-semibold">({externalNotification.name})</b> 
-            {t("external_notifications.confirm_delete")}
+            <span
+              dangerouslySetInnerHTML={{
+                // TODO: Localization
+                // Couldn't find a better way to use tags with localized strings
+                // If i find any i'll change it.
+                __html: t("external_notifications.actions.confirm_delete", {
+                  externalNotificationName: externalNotification.name,
+                }),
+              }}
+            />
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>{t("external_notifications.actions.no")}</AlertDialogCancel>
+          <AlertDialogCancel>
+            {t("external_notifications.actions.no")}
+          </AlertDialogCancel>
           <AlertDialogAction onClick={() => handleDelete()}>
             {loading && <Icons.spinner className="h-4 w-4 animate-spin" />}
             {t("external_notifications.actions.yes")}
