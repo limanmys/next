@@ -5,6 +5,7 @@ import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Save, UserCheck2 } from "lucide-react"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import * as z from "zod"
 
 import { Button } from "@/components/ui/button"
@@ -24,17 +25,22 @@ import {
   FormMessage,
 } from "@/components/form/form"
 
-const formSchema = z.object({
-  client_id: z.string().nonempty("Client ID alanı boş bırakılamaz."),
-  client_secret: z.string().nonempty("Client Secret alanı boş bırakılamaz."),
-  redirect_uri: z.string().nonempty("Redirect URI alanı boş bırakılamaz."),
-  base_url: z.string().nonempty("Base URL alanı boş bırakılamaz."),
-  realm: z.string().nonempty("Realm alanı boş bırakılamaz."),
-  active: z.boolean(),
-})
-
 const AccessKeycloakPage: NextPageWithLayout = () => {
   const { toast } = useToast()
+  const { t } = useTranslation("settings")
+
+  const formSchema = z.object({
+    client_id: z.string().nonempty(t("access.keycloak.formScema.client_id")),
+    client_secret: z
+      .string()
+      .nonempty(t("access.keycloak.formScema.client_secret")),
+    redirect_uri: z
+      .string()
+      .nonempty(t("access.keycloak.formScema.redirect_uri")),
+    base_url: z.string().nonempty(t("access.keycloak.formScema.base_url")),
+    realm: z.string().nonempty(t("access.keycloak.formScema.realm")),
+    active: z.boolean(),
+  })
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -46,14 +52,14 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
       .post("/settings/access/keycloak/configuration", data)
       .then(() => {
         toast({
-          title: "Başarılı",
-          description: "Keycloak ayarları başarıyla kaydedildi.",
+          title: t("access.keycloak.toasts.success.title"),
+          description: t("access.keycloak.toasts.success.description"),
         })
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description: "Keycloak ayarları kaydedilirken bir hata oluştu.",
+          title: t("access.keycloak.toasts.fail.title"),
+          description: t("access.keycloak.toasts.fail.description"),
           variant: "destructive",
         })
       })
@@ -71,12 +77,12 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>Keycloak | Liman</title>
+        <title>{t("access.keycloak.head_title")}</title>
       </Head>
 
       <PageHeader
-        title="Keycloak"
-        description="Keycloak auth gatewayini kullanarak Liman üzerine kullanıcı girişi yapılmasını sağlayabilirsiniz."
+        title={t("access.keycloak.page_header.title")}
+        description={t("access.keycloak.page_header.description")}
       />
 
       <div className="px-8">
@@ -87,7 +93,9 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
               name="client_id"
               render={({ field }) => (
                 <div className="flex flex-col gap-3">
-                  <Label htmlFor="client_id">Client ID</Label>
+                  <Label htmlFor="client_id">
+                    {t("access.keycloak.form.client_id")}
+                  </Label>
                   <div className="relative">
                     <Input
                       id="client_id"
@@ -95,8 +103,7 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
                       {...field}
                     />
                     <small className="italic text-muted-foreground">
-                      Client ID değeri Keycloak üzerinde oluşturduğunuz client
-                      için verilen ID değeridir.
+                      {t("access.keycloak.form.info_id")}
                     </small>
                   </div>
                   <FormMessage />
@@ -109,7 +116,9 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
               name="client_secret"
               render={({ field }) => (
                 <div className="flex flex-col gap-3">
-                  <Label htmlFor="client_secret">Client Secret</Label>
+                  <Label htmlFor="client_secret">
+                    {t("access.keycloak.form.client_secret")}
+                  </Label>
                   <div className="relative">
                     <Input
                       id="client_secret"
@@ -118,8 +127,7 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
                       {...field}
                     />
                     <small className="italic text-muted-foreground">
-                      Client Secret değeri Keycloak üzerinde oluşturduğunuz
-                      client için oluşmuş secret değeridir.
+                      {t("access.keycloak.form.info_secret")}
                     </small>
                   </div>
                   <FormMessage />
@@ -132,7 +140,9 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
               name="redirect_uri"
               render={({ field }) => (
                 <div className="flex flex-col gap-3">
-                  <Label htmlFor="redirect_uri">Redirect URI</Label>
+                  <Label htmlFor="redirect_uri">
+                    {t("access.keycloak.form.redirect_url")}
+                  </Label>
                   <div className="relative">
                     <Input
                       id="redirect_uri"
@@ -140,9 +150,7 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
                       {...field}
                     />
                     <small className="italic text-muted-foreground">
-                      Redirect URI değeri Liman URL&apos;niz /keycloak/callback
-                      şeklinde olmalıdır ve bu değeri clientinizde de izin
-                      verilen redirect uri&apos;lar kısmında belirtmelisiniz.
+                      {t("access.keycloak.form.redirect_info")}
                     </small>
                   </div>
                   <FormMessage />
@@ -155,7 +163,9 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
               name="base_url"
               render={({ field }) => (
                 <div className="flex flex-col gap-3">
-                  <Label htmlFor="base_url">Base URL</Label>
+                  <Label htmlFor="base_url">
+                    {t("access.keycloak.form.base_url")}
+                  </Label>
                   <div className="relative">
                     <Input
                       id="base_url"
@@ -163,7 +173,7 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
                       {...field}
                     />
                     <small className="italic text-muted-foreground">
-                      Base URL değeri Keycloak URL&apos;nizdir.
+                      {t("access.keycloak.form.base_info")}
                     </small>
                   </div>
                   <FormMessage />
@@ -176,12 +186,13 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
               name="realm"
               render={({ field }) => (
                 <div className="flex flex-col gap-3">
-                  <Label htmlFor="realm">Realm</Label>
+                  <Label htmlFor="realm">
+                    {t("access.keycloak.form.realm")}
+                  </Label>
                   <div className="relative">
                     <Input id="realm" placeholder="my-sweet-realm" {...field} />
                     <small className="italic text-muted-foreground">
-                      Realm değeri Keycloak üzerinde oluşturduğunuz realmin
-                      adıdır.
+                      {t("access.keycloak.form.realm_info")}
                     </small>
                   </div>
                   <FormMessage />
@@ -197,11 +208,11 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
                   <div className="flex space-x-3 space-y-0.5">
                     <UserCheck2 className="h-6 w-6 text-muted-foreground" />
                     <div className="flex flex-col space-y-0.5">
-                      <FormLabel>Entegrasyonu aktifleştir</FormLabel>
+                      <FormLabel>
+                        {t("access.keycloak.form.integration")}
+                      </FormLabel>
                       <FormDescription>
-                        Entegrasyonu aktifleştirdiğinizde Keycloak sunucunuz
-                        üzerindeki kullanıcılar Liman&apos;a giriş
-                        yapabilecektir.
+                        {t("access.keycloak.form.integration_info")}
                       </FormDescription>
                     </div>
                   </div>
@@ -218,7 +229,7 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
             <div className="flex justify-end">
               <Button type="submit">
                 <Save className="mr-2 h-4 w-4" />
-                Kaydet
+                {t("access.keycloak.form.save")}
               </Button>
             </div>
           </form>

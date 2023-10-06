@@ -502,6 +502,46 @@
                 "TWEAK_EDIT": "Sistem ince ayarları düzenlendi.",
                 "DNS_EDIT": "DNS sunucuları {{dns1}}, {{dns2}}, {{dns3}} olarak güncellendi."
             }
+        },
+        "keycloak":{
+            "formScema":{
+                "client_id": "Client ID alanı boş bırakılamaz.",
+                "client_secret": "Client Secret alanı boş bırakılamaz.",
+                "redirect_uri":"Redirect URI alanı boş bırakılamaz.",
+                "base_url": "Base URL alanı boş bırakılamaz.",
+                "realm": "Realm alanı boş bırakılamaz."      
+            },
+           "toast":{
+                "success":{
+                      "title": "Başarılı",
+                      "description": "Keycloak ayarları başarıyla kaydedildi."
+                  },
+                  "fail":{
+                      "title": "Hata",
+                      "description": "Keycloak ayarları kaydedilirken bir hata oluştu."
+                  }
+            },
+            "head_title":"Keycloak | Liman",
+            "page_header":{
+                "title":"Keycloak",
+                "description":"Keycloak auth gatewayini kullanarak Liman üzerine kullanıcı girişi yapılmasını sağlayabilirsiniz."
+            },
+            "form":{
+                "client_id":"Client ID",
+                "info_id":"Client ID değeri Keycloak üzerinde oluşturduğunuz client için verilen ID değeridir.",
+                "client_secret":"Client Secret",
+                "info_secret":"Client Secret değeri Keycloak üzerinde oluşturduğunuz client için oluşmuş secret değeridir.",
+                "redirect_url":"Redirect URL",
+                "redirect_info":"Redirect URL değeri Liman URL'niz /keycloak/callback şeklinde olmalıdır ve bu değeri clientinizde de izin verilen redirect URL'ler kısmında belirtmelisiniz.",
+                "base_url":"Base URL",
+                "base_info":"Base URL değeri Keycloak URL'nizdir.",
+                "realm":"Realm",
+                "realm_info":"Realm değeri Keycloak üzerinde oluşturduğunuz realmin adıdır.",
+                "integration":"Entegrasyonu aktifleştir",
+                "integration_info":"Entegrasyonu aktifleştirdiğinizde Keycloak sunucunuz üzerindeki kullanıcılar Liman'a giriş yapabilecektir.",
+                "save":"Kaydet"
+
+            }
         }
     },
     "health": {

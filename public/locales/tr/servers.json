@@ -357,11 +357,11 @@
                 "add":{
                       "success":{
                             "title": "Başarılı",
-                            "description": "Yetkili kullanıcı başarıyla silindi."
+                            "description": "Yetkili kullanıcı başarıyla eklendi."
                         },
                         "fail":{
                             "title": "Hata",
-                            "description": "Yetkili kullanıcı silinirken bir hata oluştu."
+                            "description": "Yetkili kullanıcı eklenirken bir hata oluştu."
                         }
                 }
             
