@@ -1,1 +1,827 @@
-{}
+{
+    "success": "Erfolgreich",
+    "error": "Fehler",
+    "information": "Information",
+    "title": "Einstellungen",
+    "ok": "Ok",
+    "warning": "Warnung",
+    "delete": "Löschen",
+    "description": "Über diese Seite können Sie Ihre persönlichen Einstellungen und Systemeinstellungen von Liman vornehmen.",
+    "user_settings": "Benutzereinstellungen",
+    "system_settings": "Systemeinstellungen",
+    "profile": {
+        "title": "Profil",
+        "description": "Sie können Ihren Benutzernamen, Ihre E-Mail-Adresse und Ihr Passwort ändern und Details wie Ihr letztes Anmeldedatum und Ihre IP-Adresse anzeigen.",
+        "validations": {
+            "name": "Vor- und Nachname müssen mindestens 3 Zeichen lang sein.",
+            "email": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+            "password": "Passwörter stimmen nicht überein."
+        },
+        "toasts": {
+            "success": "Ihre Daten wurden erfolgreich bearbeitet. Sie müssen sich erneut anmelden, um die Änderungen zu sehen.",
+            "error": "Beim Bearbeiten Ihrer Informationen ist ein Fehler aufgetreten."
+        },
+        "form": {
+            "title": "Profilinformationen",
+            "description": "In diesem Abschnitt können Sie Ihren Benutzernamen, Ihre E-Mail-Adresse und Ihr Passwort aktualisieren.",
+            "name": "Vorname Nachname",
+            "name_placeholder": "Liman-Benutzer",
+            "email": "E-Mail-Adresse",
+            "email_placeholder": "dummy@liman.dev",
+            "old_password": "Ihr altes Passwort",
+            "password": "Ihr Passwort",
+            "password_confirmation": "Bestätigung des Passworts",
+            "save": "Retten"
+        },
+        "auth_log": {
+            "title": "Login-Datensätze",
+            "description": "In diesem Abschnitt können Sie die Anmeldedatensätze für Ihr Konto zusammen mit ihren IP-Adressen anzeigen.",
+            "ip_address": "Login-IP-Adresse",
+            "browser": "Browser-Informationen",
+            "date": "Login-Datum"
+        }
+    },
+    "vault": {
+        "title": "Gewölbe",
+        "description": "Sie können die Erweiterungseinstellungen auf den Servern, Ihre Kennwörter und die von anderen Benutzern eingegebenen Werte ändern.",
+        "data_name": "Name der Daten",
+        "server_name": "Servername",
+        "actions": {
+            "edit": {
+                "button": "Redigieren",
+                "success": "Erfolgreich",
+                "error": "Fehler",
+                "success_msg": "Die Daten wurden erfolgreich bearbeitet.",
+                "error_msg": "Beim Bearbeiten von Daten ist ein Fehler aufgetreten.",
+                "confirm": "Daten bearbeiten",
+                "confirm_msg": "Alte Dateninhalte werden gelöscht und neue Daten hinzugefügt.",
+                "cancel": "Abbrechen",
+                "edit": "Redigieren",
+                "data": "Daten"
+            },
+            "delete": {
+                "button": "Löschen",
+                "success": "Erfolgreich",
+                "error": "Fehler",
+                "success_msg": "Die Daten wurden erfolgreich gelöscht.",
+                "error_msg": "Beim Löschen von Daten ist ein Fehler aufgetreten.",
+                "confirm": "Bist du sicher?",
+                "confirm_msg": "Die ausgewählten Daten werden vollständig aus dem Liman-System gelöscht. Möchten Sie fortfahren?",
+                "cancel": "Abbrechen",
+                "delete": "Bestätigen"
+            }
+        },
+        "create": {
+            "button": "Einstellung hinzufügen",
+            "description": "In diesem Fenster können Sie Einstellungen für den ausgewählten Benutzer hinzufügen.",
+            "toasts": {
+                "success": "Erfolgreich",
+                "error": "Fehler",
+                "success_msg": "Die Einstellung wurde erstellt.",
+                "error_msg": "Beim Erstellen der Einstellung ist ein Fehler aufgetreten."
+            },
+            "form": {
+                "server": "Server",
+                "key": "Schlüssel",
+                "value": "Wert",
+                "submit": "Schaffen"
+            },
+            "validation": {
+                "server": "Sie müssen einen Server auswählen.",
+                "key": "Das Schlüsselfeld darf nicht leer sein.",
+                "value": "Das Wertfeld darf nicht leer sein."
+            }
+        },
+        "key": {
+            "button": "Schlüssel hinzufügen",
+            "description": "In diesem Fenster können Sie dem Server einen Verbindungsschlüssel hinzufügen.",
+            "toasts": {
+                "success": "Erfolgreich",
+                "error": "Fehler",
+                "success_msg": "Die Einstellung wurde erstellt.",
+                "error_msg": "Beim Erstellen der Einstellung ist ein Fehler aufgetreten."
+            },
+            "form": {
+                "server": "Server",
+                "type": "Typ des Schlüssels",
+                "username": "Benutzername",
+                "password": "Passwort",
+                "port": "Steuer-Port",
+                "submit": "Schaffen",
+                "ssh_pw": "SSH (verschlüsselt)",
+                "ssh_cert": "SSH (Zertifikat)",
+                "winrm_insecure": "WinRM (unsicher)",
+                "no_key": "Login ohne Schlüssel"
+            },
+            "validation": {
+                "server": "Sie müssen einen Server auswählen.",
+                "type": "Sie müssen den Schlüsseltyp auswählen.",
+                "port": "Der Verbindungsport darf nicht länger als 5 Zeichen sein.",
+                "port_nonempty": "Der Verbindungsport darf nicht leer sein."
+            }
+        }
+    },
+    "tokens": {
+        "title": "Persönliche Zugangsschlüssel",
+        "description": "Sie können externe API-Enden verwenden, die von Liman bereitgestellt werden, indem Sie persönliche Zugriffsschlüssel erstellen.",
+        "toasts": {
+            "delete_success": "Der Schlüssel wurde erfolgreich gelöscht.",
+            "delete_error": "Beim Löschen des Schlüssels ist ein Fehler aufgetreten.",
+            "create_success": "Der Schlüssel wurde erfolgreich erstellt.",
+            "create_error": "Beim Erstellen des Schlüssels ist ein Fehler aufgetreten."
+        },
+        "delete": {
+            "title": "Bist du sicher?",
+            "description": "Die ausgewählte externe Benachrichtigung <b>({{token}})</b> wird vollständig aus dem Liman-System gelöscht. Als Folge dieses Vorgangs kann der Empfang von Benachrichtigungen unterbrochen werden. Möchten Sie fortfahren?",
+            "cancel": "Abbrechen",
+            "delete": "Bestätigen"
+        },
+        "name": "Name",
+        "ip_range": "Zulässige IP-Adresse",
+        "last_used_ip": "IP-Adresse des letzten Zugriffs",
+        "last_used_at": "Datum des letzten Zugriffs",
+        "unknown": "Unbekannt",
+        "validation": {
+            "name": "Der Name des Zugriffsschlüssels darf nicht leer sein.",
+            "ip_range": "Die zulässige IP-Adresse darf nicht leer sein."
+        },
+        "create": {
+            "button": "Hinzufügen",
+            "title": "Zugriffsschlüssel erstellen",
+            "description": "In diesem Fenster können Sie einen neuen Zugriffsschlüssel erstellen.",
+            "subtext": "Sie können den Zugriff einschränken, indem Sie eine Subnetzadresse oder IP-Adresse eingeben, die Sie in diesem Abschnitt zulassen möchten. Wenn Sie -1 eingeben, wird die Einschränkung aufgehoben. Beispiel: 192.168.1.0/24",
+            "alert_title": "Ihr Zugangsschlüssel",
+            "alert_description": "Geben Sie dieses Token an niemanden weiter. Sie können in Ihrem Namen Transaktionen im Port-System durchführen.",
+            "form": {
+                "name": "Name",
+                "ip_range": "Zulässige IP-Adresse",
+                "submit": "Schaffen"
+            }
+        }
+    },
+    "extensions": {
+        "title": "Erweiterungen",
+        "description": "Auf dieser Seite können Sie die Erweiterungen auf Ihrem System verwalten, ihre Versionen aktualisieren und neue Erweiterungen hochladen.",
+        "display_name": "Name der Erweiterung",
+        "version": "Version",
+        "licensed": "Lizenziert",
+        "not_licensed": "Unerlaubt",
+        "license": "Lizenz",
+        "updated_at": "Aktualisiertes Datum",
+        "upload": {
+            "cancel": "Abbrechen",
+            "accept": "Bestätigen",
+            "upload": "Hochladen",
+            "title": "Erweiterung hochladen",
+            "description": "Es wird nicht empfohlen, .zip Dateien hochzuladen, denen Sie nicht vertrauen.",
+            "file": "Datei",
+            "dialog_title": "Bist du sicher?",
+            "dialog_description": "Diese Erweiterungsdatei scheint unsigniert zu sein. Sind Sie sicher, dass Sie diese Erweiterung installieren möchten?"
+        },
+        "actions": {
+            "download_start": "Der Download wurde gestartet.",
+            "download_success": "Download abgeschlossen.",
+            "download_error": "Beim Herunterladen der Erweiterung ist ein Fehler aufgetreten.",
+            "add_license": "Lizenz hinzufügen",
+            "download": "Herunterladen",
+            "delete": "Löschen",
+            "license": {
+                "title": "Lizenz hinzufügen",
+                "description": "Geben Sie die von HAVELSAN A.Ş. zur Verfügung gestellte Lizenz für Ihre Erweiterung ein.",
+                "form": {
+                    "license": "Lizenz",
+                    "submit": "Hinzufügen",
+                    "cancel": "Abbrechen"
+                },
+                "success_msg": "Die Lizenz wurde erfolgreich hinzugefügt.",
+                "error_msg": "Beim Hinzufügen der Lizenz ist ein Fehler aufgetreten."
+            },
+            "delete_dialog": {
+                "success_msg": "Die Erweiterung wurde erfolgreich gelöscht.",
+                "error_msg": "Beim Löschen der Erweiterung ist ein Fehler aufgetreten.",
+                "title": "Bist du sicher?",
+                "description": "Die ausgewählte Erweiterung <b>({{extension}})</b> wird vollständig aus dem Liman-System entfernt. Als Ergebnis dieses Prozesses verlieren Sie möglicherweise Ihre Falldaten und Erweiterungsberechtigungen. Möchten Sie fortfahren?",
+                "cancel": "Abbrechen",
+                "delete": "Bestätigen"
+            }
+        }
+    },
+    "users": {
+        "title": "Benutzer",
+        "description": "Über diese Seite können Sie Rollen zu Benutzern hinzufügen, Benutzerprofile bearbeiten und neue hinzufügen.",
+        "name": "Vorname Nachname",
+        "email": "E-Mail-Adresse",
+        "username": "Benutzername",
+        "status": "Behördenebene",
+        "auth_type": "Login-Typ",
+        "admin": "Administrator",
+        "user": "Benutzer",
+        "toasts": {
+            "success_msg": "Der Benutzer wurde erfolgreich erstellt.",
+            "error_msg": "Beim Anlegen des Benutzers ist ein Fehler aufgetreten."
+        },
+        "validation": {
+            "name_min": "Der Benutzername muss mindestens 2 Zeichen lang sein.",
+            "name_max": "Der Benutzername darf maximal 50 Zeichen lang sein.",
+            "email": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+            "password_min": "Das Passwort muss mindestens 8 Zeichen lang sein.",
+            "password_max": "Das Passwort darf maximal 50 Zeichen lang sein.",
+            "password_confirmation": "Passwörter stimmen nicht überein."
+        },
+        "create": {
+            "button": "Hinzufügen",
+            "title": "Benutzer hinzufügen",
+            "description": "In diesem Fenster können Sie einen neuen Benutzer erstellen.",
+            "user_type": "Benutzertyp",
+            "user": "Benutzer",
+            "admin": "Administrator",
+            "name_surname": "Vorname Nachname",
+            "name_surname_placeholder": "Liman-Benutzer",
+            "username": "Benutzername",
+            "email": "E-Mail-Adresse",
+            "password": "Ihr Passwort",
+            "password_confirmation": "Bestätigung des Passworts",
+            "create": "Schaffen"
+        },
+        "auth_log": {
+            "user": "Benutzer",
+            "ip_address": "Login-IP-Adresse",
+            "browser": "Browser-Informationen",
+            "created_at": "Login-Datum",
+            "unknown": "Unbekannt",
+            "title": "Login-Datensätze",
+            "description": "Sie können alle Benutzer, die bei Liman angemeldet sind, im Detail untersuchen.",
+            "desc2": "Sie können die Anmeldedatensätze des Benutzers im Detail anzeigen.",
+            "back_to_users": "Zurück zur Benutzerliste"
+        },
+        "delete": {
+            "success": "Der Benutzer wurde erfolgreich gelöscht.",
+            "error": "Beim Löschen des Benutzers ist ein Fehler aufgetreten.",
+            "title": "Bist du sicher?",
+            "subtext": "Der ausgewählte Benutzer <b>({{username}})</b> wird vollständig aus dem Liman-System gelöscht. Als Ergebnis dieses Prozesses verlieren Sie möglicherweise Ihre Falldaten und Erweiterungsberechtigungen. Möchten Sie fortfahren?",
+            "no": "Abbrechen",
+            "yes": "Bestätigen"
+        }
+    },
+    "roles": {
+        "title": "Rollen",
+        "role": "Rolle",
+        "description": "Sie können die Zugriffsberechtigungsstufen von Benutzern detailliert nach Gruppen und Einzelpersonen organisieren.",
+        "validation": {
+            "name": "Der Rollenname darf nicht leer sein."
+        },
+        "create": {
+            "success": "Die Rolle wurde erfolgreich erstellt.",
+            "error": "Beim Erstellen der Rolle ist ein Fehler aufgetreten.",
+            "button": "Hinzufügen",
+            "title": "Rolle erstellen",
+            "description": "Als Ergebnis dieses Prozesses wird eine Rolle in Ihrem System erstellt und Sie werden auf die Bearbeitungsseite weitergeleitet.",
+            "name": "Name der Rolle",
+            "create": "Schaffen"
+        },
+        "name": "Name der Rolle",
+        "updated_at": "Datum der Aktualisierung",
+        "detailed_view": "Detailansicht",
+        "details": {
+            "title": "Detaillierte Rollenliste",
+            "description": "Sie können alle Rollen und Berechtigungen anzeigen, die für die Datenbank erstellt wurden, indem Sie eine detaillierte Filterung durchführen.",
+            "username": "Benutzername",
+            "role_name": "Name der Rolle",
+            "liman": "Liman",
+            "server": "Server",
+            "extension": "Erweiterung",
+            "function": "Funktion",
+            "perm_type": "Art der Genehmigung",
+            "perm_value": "Wert der Genehmigung",
+            "back_to_roles": "Zurück zu den Rollen",
+            "create_report": "Bericht erstellen",
+            "download_start": "Der Download wurde gestartet.",
+            "download_success": "Download abgeschlossen.",
+            "download_error": "Beim Herunterladen des Berichts ist ein Fehler aufgetreten."
+        },
+        "actions": {
+            "edit": "Redigieren",
+            "delete": "Löschen",
+            "title": "Bist du sicher?",
+            "subtext": "Die ausgewählte Rolle <b>({{role_name}})</b> wird vollständig aus dem Portsystem entfernt. Möchten Sie fortfahren?",
+            "no": "Abbrechen",
+            "yes": "Bestätigen",
+            "success": "Die Rolle wurde erfolgreich gelöscht.",
+            "error": "Beim Löschen der Rolle ist ein Fehler aufgetreten."
+        },
+        "users": {
+            "title": "Benutzer",
+            "description": "Legen Sie fest, welche Benutzer diese Rolle haben sollen.",
+            "left": "Benutzer, die diese Rolle nicht haben",
+            "right": "Benutzer mit dieser Rolle",
+            "success": "Die Benutzer wurden erfolgreich aktualisiert.",
+            "error": "Beim Aktualisieren von Benutzern ist ein Fehler aufgetreten."
+        },
+        "liman": {
+            "title": "liman Genehmigungen",
+            "description": "Autorisieren Sie Funktionen, die auf Liman ausgeführt werden.",
+            "left": "Alle Berechtigungen",
+            "right": "Erteilte Berechtigungen",
+            "success": "Die Liman-Berechtigungen wurden erfolgreich aktualisiert.",
+            "error": "Beim Aktualisieren der Liman-Berechtigungen ist ein Fehler aufgetreten."
+        },
+        "servers": {
+            "title": "Server-Berechtigungen",
+            "description": "Bestimmen Sie, auf welche Server diese Rolle zugreifen kann.",
+            "left": "Verfügbare Server",
+            "right": "Erlaubte Server",
+            "success": "Die Server wurden erfolgreich aktualisiert.",
+            "error": "Beim Aktualisieren der Server ist ein Fehler aufgetreten."
+        },
+        "extensions": {
+            "title": "Berechtigungen für Erweiterungen",
+            "description": "Legen Sie fest, auf welche Erweiterungen diese Rolle zugreifen kann.",
+            "left": "Verfügbare Erweiterungen",
+            "right": "Verfügbare Server",
+            "success": "Erweiterungen wurden erfolgreich aktualisiert.",
+            "error": "Beim Aktualisieren von Erweiterungen ist ein Fehler aufgetreten."
+        },
+        "functions": {
+            "title": "Berechtigungen für Funktionen",
+            "description": "Auf dieser Seite können Sie die internen Berechtigungen von Erweiterungen im Detail verwalten.",
+            "display_name": "Name der Erweiterung",
+            "function_name": "Name der Funktion",
+            "delete_success": "--",
+            "delete_error": "Beim Löschen von Funktionsberechtigungen ist ein Fehler aufgetreten.",
+            "delete": "--",
+            "delete_dialog": {
+                "title": "Bist du sicher?",
+                "description": "Diese Aktion kann nicht rückgängig gemacht werden. Die ausgewählten Berechtigungen werden entfernt, möchten Sie fortfahren?",
+                "cancel": "Abbrechen",
+                "delete": "Bestätigen"
+            },
+            "assign": {
+                "title": "Berechtigung hinzufügen",
+                "description": "In diesem Fenster können Sie dieser Rolle interne Berechtigungen von Erweiterungen zuweisen.",
+                "success": "Funktionsberechtigungen wurden erfolgreich hinzugefügt.",
+                "error": "Beim Hinzufügen von Funktionsberechtigungen ist ein Fehler aufgetreten.",
+                "permission": "Erlaubnis",
+                "add": "Hinzufügen",
+                "extension_selection": "Auswahl der Erweiterung",
+                "extensions": "Erweiterungen",
+                "extension_placeholder": "Wählen Sie diese Option aus, um die Funktionen anzuzeigen..."
+            }
+        },
+        "variables": {
+            "title": "Private Daten",
+            "description": "Legen Sie die benutzerdefinierten Daten fest, die diese Rolle für die Erweiterung freigibt.",
+            "key": "Name",
+            "value": "Wert",
+            "delete": {
+                "button": "Löschen",
+                "title": "Bist du sicher?",
+                "description": "Diese Aktion kann nicht rückgängig gemacht werden. Die ausgewählten Daten werden entfernt, möchten Sie fortfahren?",
+                "cancel": "Abbrechen",
+                "delete": "Bestätigen",
+                "success": "Private Daten wurden erfolgreich gelöscht.",
+                "error": "Beim Löschen privater Daten ist ein Fehler aufgetreten."
+            },
+            "create": {
+                "success": "Private Daten wurden erfolgreich erstellt.",
+                "error": "Beim Erstellen privater Daten ist ein Fehler aufgetreten.",
+                "button": "Hinzufügen",
+                "title": "Private Daten erstellen",
+                "description": "Als Ergebnis dieses Prozesses werden private Daten für die Rolle erstellt.",
+                "key": "Name",
+                "value": "Wert",
+                "create": "Schaffen"
+            }
+        }
+    },
+    "email": {
+        "title": "E-Mail",
+        "description": "Auf dieser Seite können Sie die Einstellungen für den E-Mail-Versand des Systems im Detail anpassen und testen.",
+        "validation": {
+            "host": "Die Serveradresse darf nicht leer sein.",
+            "port": "Der Port darf nicht leer sein.",
+            "username": "Der Benutzername darf nicht leer sein."
+        },
+        "toasts": {
+            "success": "Die E-Mail-Einstellungen wurden erfolgreich aktualisiert."
+        },
+        "form": {
+            "host": {
+                "label": "Server-Adresse",
+                "subtext": "Ihre E-Mail-Serveradresse muss von Liman aufgelöst werden können."
+            },
+            "port": {
+                "label": "Server-Port",
+                "subtext": "Der Port, über den die Verbindung zu Ihrem E-Mail-Server hergestellt wird. Für SMTP können Sie eine der Optionen 25, 465 oder 587 eingeben."
+            },
+            "username": {
+                "label": "Benutzername",
+                "subtext": "Sie können einen Benutzernamen eingeben, der zum Senden auf Ihrem E-Mail-Server autorisiert ist."
+            },
+            "password": {
+                "label": "Passwort",
+                "subtext": "Passwort des von Ihnen eingegebenen Benutzers."
+            },
+            "encryption": {
+                "label": "Verschlüsselungstyp",
+                "subtext": "Sie können TLS, SSL oder keines von beiden wählen.",
+                "none": "Nichts"
+            },
+            "active": {
+                "label": "E-Mail-Versand aktivieren",
+                "subtext": "Wenn Sie den E-Mail-Versand aktivieren, können Sie verschiedene informative E-Mails vom Liman erhalten."
+            },
+            "save": "Testen und Speichern"
+        }
+    },
+    "external_notifications": {
+        "title": "Externe Benachrichtigungen",
+        "description": "Sie können sicherstellen, dass Erweiterungsserver und externe Anwendungen Benachrichtigungen an Liman senden, indem Sie eine IP-Einschränkung festlegen.",
+        "actions": {
+            "open_menu": "Menü öffnen",
+            "delete": "Löschen",
+            "success": "Erfolgreich",
+            "error": "Fehler",
+            "toasts": {
+                "success": "Die externe Benachrichtigung wurde erfolgreich gelöscht.",
+                "error": "Beim Löschen einer externen Benachrichtigung ist ein Fehler aufgetreten."
+            },
+            "confirm": "Bist du sicher?",
+            "no": "Abbrechen",
+            "yes": "Bestätigen",
+            "confirm_delete": "Die ausgewählte externe Benachrichtigung {\" \"} <b className=\"font-semibold\">({externalNotificationName})</b> wird vollständig aus dem Liman-System gelöscht. Als Folge dieses Vorgangs kann der Empfang von Benachrichtigungen unterbrochen werden. Möchten Sie fortfahren?"
+        },
+        "name": "Name",
+        "ip_address": "Zulässige IP-Adresse",
+        "last_used": "Datum des letzten Zugriffs",
+        "unknown": "Unbekannt",
+        "validation": {
+            "name": "Der Name der externen Deklaration darf nicht leer sein.",
+            "ip": "Die zulässige IP-Adresse darf nicht leer sein."
+        },
+        "toasts": {
+            "success": "Die externe Benachrichtigung wurde erfolgreich erstellt.",
+            "error": "Beim Erstellen der externen Benachrichtigung ist ein Fehler aufgetreten."
+        },
+        "create": {
+            "button": "Hinzufügen",
+            "title": "Externe Benachrichtigung erstellen",
+            "description": "Als Ergebnis dieses Prozesses wird eine externe Benachrichtigung in Ihrem System erstellt.",
+            "alert_title": "Ihr externes Anwendungstoken",
+            "alert_description": "Geben Sie dieses Token nicht an Personen weiter, denen Sie nicht vertrauen. Ihre externen Anwendungen können mit diesem Token Benachrichtigungen an Liman senden.",
+            "name": "Name der externen Deklaration",
+            "ip": "IP-Adresse",
+            "subtext": "Sie können den Zugriff einschränken, indem Sie eine Subnetzadresse oder IP-Adresse eingeben, die Sie in diesem Abschnitt zulassen möchten. <br /> <b> Beispiel: 192.168.1.0/24</b>",
+            "create": "Schaffen"
+        }
+    },
+    "subscriptions": {
+        "title": "Abonnements",
+        "description": "Auf dieser Seite können Sie Ihre System- und Erweiterungsabonnements und -verlängerungen einsehen.",
+        "liman": "Liman-Support-Abonnement",
+        "extension": "Verlängerungs-Abonnements",
+        "issued_no": "Mitgliedsnummer",
+        "issued": "Mitglied",
+        "package_type": "Art der Mitgliedschaft",
+        "start_time": "Startdatum der Mitgliedschaft",
+        "support": "Support-Zeitraum",
+        "remaining": "Verbleibende Tage",
+        "open_source_warning": "Sie verwenden das Open-Source-Support-Paket.",
+        "add_license": "Lizenz hinzufügen",
+        "license_dialog": {
+            "success": "Die Lizenz wurde erfolgreich hinzugefügt.",
+            "error": "Beim Hinzufügen der Lizenz ist ein Fehler aufgetreten.",
+            "title": "Lizenz hinzufügen",
+            "description": "Geben Sie in diesem Abschnitt die Lizenz ein, die Ihnen von HAVELSAN A.Ş. für Liman zur Verfügung gestellt wurde.",
+            "license": "Lizenzinformationen",
+            "cancel": "Abbrechen",
+            "ok": "Hinzufügen"
+        },
+        "subcard": {
+            "server": {
+                "placeholder": "Wählen Sie einen Server aus...",
+                "label": "Wählbare Server"
+            },
+            "subscription_settings": "Abonnement-Optionen",
+            "renew": "Abonnement verlängern",
+            "add_license": "Lizenz hinzufügen",
+            "remaining": "Verbleibende Tage",
+            "days_remaining": "Verbleibende Tage",
+            "issuer": "Lizenzgeber",
+            "allowed_device_count": "Zulässige Geräteanzahl",
+            "no_sub": "Es wurde kein Abonnement gefunden.",
+            "success": "Die Lizenz wurde erfolgreich hinzugefügt.",
+            "error": "Beim Hinzufügen der Lizenz ist ein Fehler aufgetreten.",
+            "title": "Lizenz hinzufügen",
+            "description": "Geben Sie in diesem Abschnitt die Lizenz ein, die Sie von HAVELSAN A.Ş. für Ihre Erweiterung erhalten haben.",
+            "license": "Lizenzinformationen",
+            "cancel": "Abbrechen",
+            "ok": "Hinzufügen"
+        }
+    },
+    "access": {
+        "title": "Zugang",
+        "description": "Hier können Sie die Anmeldetools konfigurieren, die für die Anmeldung verwendet werden können. Auf dieser Seite können Sie Keycloak- und LDAP-Logins einrichten.",
+        "audit": {
+            "title": "Zugriffsprotokolle",
+            "description": "Auf dieser Seite können Sie die von anderen Benutzern in Liman ausgeführten Vorgänge als Erweiterungen im Detail beobachten.",
+            "username": "Nutzername",
+            "ip_address": "IP-Adresse",
+            "type": "Art des Vorgangs",
+            "action": "Aktion",
+            "message": "Nachricht",
+            "timestamp": "Zeit",
+            "types": {
+                "extension": "Erweiterung",
+                "user": "Benutzer",
+                "server": "Server",
+                "role": "Rollengruppe",
+                "dns": "DNS-Server",
+                "tweak": "Feineinstellung"
+            },
+            "actions": {
+                "assign": "Zuweisung",
+                "unassign": "Entfernung",
+                "create": "Kreation",
+                "delete": "Löschung",
+                "edit": "Bearbeitung",
+                "update": "Bearbeitung",
+                "users": "Benutzer-Autorisierung",
+                "upload": "Hochladen/Aktualisieren"
+            },
+            "messages": {
+                "EXTENSION_ASSIGNED_TO_SERVER": "{{extension_name}} Erweiterung, die {{server_name}} Server zugewiesen ist.",
+                "EXTENSION_UNASSIGNED_FROM_SERVER": "{{extension_name}} Erweiterung, {{server_name}} Server nicht zugewiesen ist.",
+                "USER_CREATED": "{{user_name}} Benutzer erstellt.",
+                "USER_DELETED": "{{user_name}} Benutzer gelöscht.",
+                "EXTENSION_UPLOAD": "{{extension_name}} Erweiterung hochgeladen.",
+                "EXTENSION_DELETE": "{{extension_name}} Extension gelöscht.",
+                "SERVER_CREATE": "{{server_name}} Server erstellt.",
+                "SERVER_UPDATE": "{{server_name}} Server aktualisiert, neue Werte: {{new_server_name}}, {{new_server_ip}}",
+                "SERVER_DELETE": "{{server_name}} Server gelöscht.",
+                "ROLE_CREATE": "{{role_name}} Rolle erstellt.",
+                "ROLE_DELETE": "{{role_name}} Rolle gelöscht.",
+                "ROLE_USERS": "{{role_name}} Rolle, die dem Benutzer {{user_name}} zugewiesen ist.",
+                "ROLE_EDIT": "Rolle bearbeitet, {{changed_count}} Objekte geändert. Weitere Informationen finden Sie unter Anforderungsdetails.",
+                "TWEAK_EDIT": "Die Feinabstimmung des Systems wurde bearbeitet.",
+                "DNS_EDIT": "DNS-Server, die als {{dns1}}, {{dns2}}, {{dns3}} aktualisiert wurden."
+            }
+        },
+        "keycloak": {
+            "formScema": {
+                "client_id": "Das Feld \"Client-ID\" darf nicht leer sein.",
+                "client_secret": "Das Feld \"Geheimer Clientschlüssel\" darf nicht leer sein.",
+                "redirect_uri": "Das Feld \"Umleitungs-URI\" darf nicht leer sein.",
+                "base_url": "Das Feld Basis-URL darf nicht leer sein.",
+                "realm": "Das Feld \"Bereich\" darf nicht leer sein."
+            },
+            "toast": {
+                "success": {
+                    "title": "Erfolg",
+                    "description": "Keycloak-Einstellungen wurden erfolgreich gespeichert."
+                },
+                "fail": {
+                    "title": "Fehler",
+                    "description": "Beim Speichern der Keycloak-Einstellungen ist ein Fehler aufgetreten."
+                }
+            },
+            "head_title": "Schlüsselumhang | Liman",
+            "page_header": {
+                "title": "Schlüssel-Umhang",
+                "description": "Sie können die Benutzeranmeldung bei Liman über das Keycloak-Authentifizierungsgateway aktivieren."
+            },
+            "form": {
+                "client_id": "Client-ID",
+                "info_id": "Der Client-ID-Wert ist der ID-Wert, der für den Client angegeben wird, den Sie auf Keycloak erstellt haben.",
+                "client_secret": "Geheimer Clientschlüssel",
+                "info_secret": "Der Client Secret-Wert ist der Secret-Wert, der für den Client generiert wird, den Sie auf Keycloak erstellt haben.",
+                "redirect_url": "Weiterleitungs-URL",
+                "redirect_info": "Der Wert für die Umleitungs-URL sollte Ihre Liman-URL /keycloak/callback sein, und Sie sollten diesen Wert im Abschnitt \"Zulässige Umleitungs-URLs\" Ihres Clients angeben.",
+                "base_url": "Basis-URL",
+                "base_info": "Der Basis-URL-Wert ist Ihre Keycloak-URL.",
+                "realm": "Reich",
+                "realm_info": "Der Realm-Wert ist der Name des Realms, den Sie auf Keycloak erstellt haben.",
+                "integration": "Integration aktivieren",
+                "integration_info": "Wenn Sie die Integration aktivieren, können sich Benutzer auf Ihrem Keycloak-Server bei Liman anmelden.",
+                "save": "Retten"
+            }
+        },
+        "ldap": {
+            "formScema": {
+                "address": "Die LDAP-Serveradresse darf nicht leer sein.",
+                "objectguid": "Schreiben Sie den Namen des objectguid-Felds in Ihr LDAP-Schema.",
+                "mail": "Schreiben Sie den Namen des E-Mail-Felds in Ihr LDAP-Schema."
+            },
+            "toast": {
+                "success": {
+                    "title": "Erfolg",
+                    "description": "Die LDAP-Verbindungseinstellungen wurden erfolgreich gespeichert."
+                },
+                "fail": {
+                    "title": "Fehler",
+                    "description": "Beim Speichern der LDAP-Verbindungseinstellungen ist ein Fehler aufgetreten."
+                }
+            },
+            "head_title": "LDAP-Verbindung | Liman",
+            "page_header": {
+                "title": "LDAP-Verbindung",
+                "description": "Sie können die LDAP-Verbindung verwenden, wenn Sie sich bei Liman anmelden, und die Zugriffsberechtigungen im Detail konfigurieren."
+            },
+            "forms": {
+                "server_address": "Server-Adresse",
+                "server_info": "Geben Sie die Verbindungsadresse des verwendeten Active Directory-, Samba- oder LDAP-Anbieters ein. Diese Verbindungsadresse muss von Ihrem Liman-Server aufgelöst werden können.",
+                "object_guid": "Objekt-GUID-Feld",
+                "object_guid_info": "Schreiben Sie den Namen des objectguid-Felds, das aktiv in Ihrem LDAP-Schema verwendet wird. Obwohl der Wert dieses Feldes in der Regel objectguid ist, kann er in einigen Installationen variieren.",
+                "mail": "E-Mail-Feld",
+                "mail_info": "Geben Sie den Namen des E-Mail-Felds ein, das aktiv in Ihrem LDAP-Schema verwendet wird. Obwohl der Wert dieses Feldes in der Regel mail ist, kann er in einigen Installationen variieren.",
+                "integration": "Integration aktivieren",
+                "integration_info": "Wenn Sie die Integration aktivieren, können sich LDAP-Benutzer, denen Sie die Berechtigung erteilt haben, mit ihrem Benutzernamen bei Liman anmelden.",
+                "save": "Retten"
+            }
+        },
+        "permissions": {
+            "title": "LDAP-Zugriffsberechtigungen",
+            "description": "Auf dieser Seite können Sie im Detail einstellen, welche LDAP-Gruppen und Benutzer sich bei Liman anmelden können und welche nicht.",
+            "login_success": "Wenn Sie sich erfolgreich anmelden, können Sie Ihre Vorgänge ausführen.",
+            "login_error": "Login fehlgeschlagen, bitte überprüfen Sie Ihre Angaben.",
+            "user_success": "Die Benutzerliste wurde erfolgreich aktualisiert.",
+            "user_error": "Die Benutzerliste konnte nicht aktualisiert werden.",
+            "group_success": "Die Gruppenliste wurde erfolgreich aktualisiert.",
+            "group_error": "Die Gruppenliste konnte nicht aktualisiert werden.",
+            "login_title": "Anmelden",
+            "login_description": "Melden Sie sich mit einem LDAP-Benutzer an, der berechtigt ist, Benutzer und Gruppen abzufragen, um LDAP-Zugriffsberechtigungen zu bearbeiten.",
+            "username": "Nutzername",
+            "password": "Passwort",
+            "validation": {
+                "username": "Das Feld \"Benutzername\" darf nicht leer sein.",
+                "password": "Das Kennwortfeld darf nicht leer sein."
+            },
+            "login": "Anmelden",
+            "user": {
+                "title": "Benutzerberechtigungen",
+                "left": "Auswählbare Benutzer",
+                "right": "Benutzer, die sich anmelden können"
+            },
+            "group": {
+                "title": "Gruppenberechtigungen",
+                "left": "Wählbare Gruppen",
+                "right": "Gruppen, die sich anmelden können"
+            }
+        }
+    },
+    "health": {
+        "title": "Gesundheitszustand",
+        "description": "Sie können den Integritätsstatus des zentralen Liman-Verwaltungssystems anzeigen und Empfehlungen zur Sicherheitsverbesserung einfach anwenden.",
+        "admin_account_title": "Standardstatus des Administratorkontos",
+        "admin_account_description": "Zu Ihrer Sicherheit empfehlen wir Ihnen, das administrator@liman.dev Konto zu entfernen, das standardmäßig enthalten ist. Die Verwendung des Standardkontos birgt das Risiko, Situationen wie Bruteforce zu verursachen.",
+        "go_to_user_settings": "Gehen Sie zu den Benutzereinstellungen",
+        "dns_check_title": "Liman-Server-DNS-Prüfung",
+        "dns_check_description": "Sie müssen DNS so konfigurieren, dass externe Internet- und IP-Adressen in Ihrem Netzwerk für Ihren Liman-Server aufgelöst werden.",
+        "go_to_dns_settings": "Gehen Sie zu den DNS-Einstellungen",
+        "ssl_check_title": "Überprüfung der SSL-Zertifikatszeit",
+        "ssl_check_description": "Das auf Ihrem Liman-Server definierte Zertifikat läuft demnächst ab. Es wird empfohlen, es zu erneuern.",
+        "ssl_self_title": "Selbstsigniertes Zertifikat",
+        "ssl_self_description": "Wir haben festgestellt, dass Sie ein selbstsigniertes Zertifikat verwenden. Wenn Sie über ein Platzhalterzertifikat verfügen, das Sie in Ihrer Organisation verwenden, empfehlen wir Ihnen, die Definition über HAVELSAN A.Ş.",
+        "high_availability_service_title": "Status des Hochverfügbarkeitsdiensts",
+        "high_availability_service_description": "Der Hochverfügbarkeitsdienst von Liman ist nicht aktiv. Wenn dieser Dienst nicht aktiviert ist, kann Liman im Falle eines serverbezogenen Problems nicht redundant arbeiten.",
+        "manual_sync": "Manuelles Synchronisieren",
+        "manual_sync_success": "Die Synchronisierungsanforderung wurde gesendet. Die Server führen die Synchronisierung untereinander aus."
+    },
+    "advanced": {
+        "title": "Erweiterte Einstellungen",
+        "description": "Auf dieser Seite können Sie Änderungen an den DNS-Einstellungen des Systems, Zertifikatinstallationen und Protokollumleitungen vornehmen.",
+        "certificates": {
+            "title": "Atteste",
+            "description": "Von hier aus können Sie die Zertifikate hinzufügen, die der Liman-Server akzeptiert.",
+            "updated_at": "Zuletzt aktualisiert",
+            "unknown": "Unbekannt",
+            "add": "Hinzufügen",
+            "retrieve": {
+                "fetch_error": "Beim Abrufen von Zertifikatsdetails ist ein Fehler aufgetreten.",
+                "success": "Das Zertifikat wurde erfolgreich erstellt.",
+                "error": "Beim Erstellen des Zertifikats ist ein Fehler aufgetreten.",
+                "title": "Zertifikat hinzufügen",
+                "description": "Das Zertifikat des Servers, für den Sie den Hostnamen und die Portinformationen angeben, wird an das Liman-System übertragen.",
+                "client_details": "Kundendaten",
+                "ip_address": "IP-Adresse",
+                "fetch_details": "Abrufen von Zertifikatsdetails",
+                "validity": "Gültigkeitsdauer",
+                "valid_from": "Anfangen",
+                "valid_to": "Ende",
+                "details": "Allgemeine Details",
+                "issuer_cn": "Kunde",
+                "issuer_dc": "Autorität",
+                "subject_key_identifier": "Client-Fingerabdruck",
+                "authority_key_identifier": "Fingerabdruck der Behörde",
+                "save": "Retten"
+            },
+            "details": {
+                "title": "Details zum Zertifikat",
+                "description": "Sie können detaillierte Informationen über das ausgewählte Zertifikat anzeigen."
+            },
+            "actions": {
+                "details": "Details",
+                "delete": {
+                    "button": "Löschen",
+                    "title": "Bist du sicher?",
+                    "description": "Das ausgewählte Zertifikat <b>({{name}})</b> wird vollständig aus dem Liman-System gelöscht. Der Zugriff auf Erweiterungen kann durch diesen Vorgang unterbrochen werden. Möchten Sie fortfahren?",
+                    "cancel": "Abbrechen",
+                    "delete": "Bestätigen",
+                    "success": "Das Zertifikat wurde erfolgreich gelöscht.",
+                    "error": "Beim Löschen des Zertifikats ist ein Fehler aufgetreten."
+                }
+            }
+        },
+        "dns": {
+            "title": "DNS-Einstellungen",
+            "description": "Sie können DNS-Einstellungen vornehmen, die es Liman ermöglichen, Endpunkte aufzulösen, um eine Verbindung herzustellen, und Active Directory-Server.",
+            "dns1_validation": "Das Feld DNS 1 darf nicht leer sein.",
+            "success": "Die DNS-Einstellungen wurden erfolgreich aktualisiert.",
+            "error": "Beim Aktualisieren der DNS-Einstellungen ist ein Fehler aufgetreten.",
+            "save": "Retten"
+        },
+        "logrotation": {
+            "title": "Log-Umleitung",
+            "description": "Ermöglicht es Ihnen, wichtige Systemprotokolle und Meldungen von Liman über rsyslog umzuleiten.",
+            "success": "Die Einstellungen für die Protokollumleitung wurden erfolgreich aktualisiert.",
+            "error": "Beim Aktualisieren der Einstellungen für die Protokollumleitung ist ein Fehler aufgetreten.",
+            "ip_address": "IP-Adresse",
+            "type": "Verbindungsart",
+            "type_placeholder": "Wählen Sie einen Verbindungstyp aus.",
+            "save": "Retten"
+        },
+        "tweaks": {
+            "title": "Zwickt",
+            "description": "Auf dieser Seite können Sie die Feinabstimmungseinstellungen für Liman ändern.",
+            "success": "Optimierungen wurden erfolgreich gespeichert.",
+            "error": "Beim Speichern von Positionsveränderungen ist ein Fehler aufgetreten.",
+            "validation": "Bitte geben Sie eine gültige Nummer ein.",
+            "APP_LANG": {
+                "label": "Systemsprache",
+                "subtext": "Sie können die Standardsystemsprache ändern, indem Sie zwischen den Optionen Türkisch, Englisch und Deutsch wechseln."
+            },
+            "OTP_ENABLED": {
+                "label": "Zwei-Faktor-Authentifizierung",
+                "subtext": "Wenn diese Option aktiviert ist, melden sich alle Benutzer an, indem sie Codes über die von Ihnen bevorzugte Zwei-Faktor-Authentifizierungsanwendung erhalten."
+            },
+            "APP_NOTIFICATION_EMAIL": {
+                "label": "System-E-Mail",
+                "subtext": "Die E-Mail-Adresse, die Sie in dieses Feld eingeben, wird von Liman verwendet, um Ihnen Benachrichtigungen und Warnungen zu senden."
+            },
+            "APP_URL": {
+                "label": "Bewerbungsadresse",
+                "subtext": "Die Adresse des Liman-Systems, die in E-Mails und Benachrichtigungen hinzugefügt werden soll."
+            },
+            "EXTENSION_TIMEOUT": {
+                "label": "Zeitüberschreitung bei Verlängerungsanforderung",
+                "subtext": "Der Timeout-Zeitraum, der in Anforderungen verwendet werden soll, die von Liman an Erweiterungen gesendet werden."
+            },
+            "APP_DEBUG": {
+                "label": "Entwickler-Modus",
+                "subtext": "Wenn diese Option aktiviert ist, sendet das Liman-System detailliertere Protokolle und Änderungsfehlermeldungen."
+            },
+            "EXTENSION_DEVELOPER_MODE": {
+                "label": "Entwicklermodus für Erweiterungen",
+                "subtext": "Wenn diese Option aktiviert ist, werden detailliertere Fehlermeldungen und Protokolle an Erweiterungsentwickler gesendet."
+            },
+            "NEW_LOG_LEVEL": {
+                "label": "Protokollierungsgrad",
+                "minimal": "Minimal",
+                "ext_log": "Erweiterungs-Protokoll",
+                "detailed_ext_log": "Detaillierte Erweiterungsprotokolle",
+                "all": "Alle Vorgänge protokollieren",
+                "subtext": "In diesem Abschnitt können Sie das Protokollierungsverhalten von Liman ändern."
+            },
+            "LDAP_IGNORE_CERT": {
+                "label": "LDAP-Zertifikatsprüfung deaktivieren",
+                "subtext": "Wenn diese Option aktiviert ist, können Sie eine Verbindung zu LDAP-Servern herstellen, ohne dem System ein Zertifikat hinzufügen zu müssen. Sie müssen eine Datei mit dem Namen .ignoreme im Erweiterungsordner erstellen."
+            },
+            "save": "Retten"
+        }
+    },
+    "servers": {
+        "actions": {
+            "edit_btn": "Redigieren",
+            "delete": "Löschen",
+            "edit": {
+                "title": "Server bearbeiten",
+                "description": "In diesem Abschnitt können Sie den sichtbaren Namen und die IP-Adresse Ihres Servers bearbeiten.",
+                "form": {
+                    "name": "Name",
+                    "ip_address": "IP-Adresse",
+                    "submit": "Redigieren",
+                    "cancel": "Abbrechen"
+                },
+                "success_msg": "Der Server wurde erfolgreich bearbeitet.",
+                "error_msg": "Beim Bearbeiten des Servers ist ein Fehler aufgetreten."
+            },
+            "delete_dialog": {
+                "success_msg": "Der Server wurde erfolgreich gelöscht.",
+                "error_msg": "Beim Löschen des Servers ist ein Fehler aufgetreten.",
+                "title": "Bist du sicher?",
+                "description": "Der ausgewählte Server <b>({{server}})</b> wird vollständig aus dem Liman-System entfernt. Möchten Sie fortfahren?",
+                "cancel": "Abbrechen",
+                "delete": "Bestätigen"
+            }
+        }
+    }
+}

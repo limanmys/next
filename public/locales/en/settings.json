@@ -1,8 +1,826 @@
 {
-    "extensions": {
+    "success": "Successful",
+    "error": "Error",
+    "information": "Information",
+    "title": "Settings",
+    "ok": "OK",
+    "warning": "Warning",
+    "delete": "Delete",
+    "description": "You can make your personal settings and system settings of Liman through this page.",
+    "user_settings": "User Settings",
+    "system_settings": "System settings",
+    "profile": {
+        "title": "Profile",
+        "description": "You can change your username, e-mail address and password, and view details such as your last login date and IP address.",
+        "validations": {
+            "name": "Name and surname must be at least 3 characters.",
+            "email": "Please enter a valid e-mail address.",
+            "password": "Passwords do not match."
+        },
+        "toasts": {
+            "success": "Your information has been successfully edited. You must log in again to see the changes.",
+            "error": "An error occurred while editing your information."
+        },
+        "form": {
+            "title": "Profile Information",
+            "description": "You can update your username, e-mail address and password from this section.",
+            "name": "Name Surname",
+            "name_placeholder": "Liman User",
+            "email": "E-mail Address",
+            "email_placeholder": "dummy@liman.dev",
+            "old_password": "Your Old Password",
+            "password": "Your Password",
+            "password_confirmation": "Password Confirmation",
+            "save": "Save"
+        },
+        "auth_log": {
+            "title": "Login Records",
+            "description": "You can view the login records made to your account along with their IP addresses from this section.",
+            "ip_address": "Login IP Address",
+            "browser": "Browser Information",
+            "date": "Login Date"
+        }
+    },
+    "vault": {
+        "title": "Vault",
+        "description": "You can change the extension settings on the servers, your passwords, and the values ​​entered by other users.",
+        "data_name": "Data Name",
+        "server_name": "Server Name",
         "actions": {
+            "edit": {
+                "button": "Edit",
+                "success": "Successful",
+                "error": "Error",
+                "success_msg": "The data has been edited successfully.",
+                "error_msg": "An error occurred while editing data.",
+                "confirm": "Edit Data",
+                "confirm_msg": "Old data content will be deleted and new data will be added.",
+                "cancel": "Cancel",
+                "edit": "Edit",
+                "data": "Data"
+            },
+            "delete": {
+                "button": "Delete",
+                "success": "Successful",
+                "error": "Error",
+                "success_msg": "The data has been deleted successfully.",
+                "error_msg": "An error occurred while deleting data.",
+                "confirm": "Are you sure?",
+                "confirm_msg": "The selected data will be completely deleted from the Liman system. Do you want to continue?",
+                "cancel": "Cancel",
+                "delete": "Confirm"
+            }
+        },
+        "create": {
+            "button": "Add Setting",
+            "description": "You can add settings for the selected user using this window.",
+            "toasts": {
+                "success": "Successful",
+                "error": "Error",
+                "success_msg": "The setting has been created.",
+                "error_msg": "An error occurred while creating the setting."
+            },
+            "form": {
+                "server": "Server",
+                "key": "Key",
+                "value": "Value",
+                "submit": "Create"
+            },
+            "validation": {
+                "server": "You must choose a server.",
+                "key": "The key field cannot be empty.",
+                "value": "The value field cannot be empty."
+            }
+        },
+        "key": {
+            "button": "Add Key",
+            "description": "You can add a connection key to the server using this window.",
+            "toasts": {
+                "success": "Successful",
+                "error": "Error",
+                "success_msg": "The setting has been created.",
+                "error_msg": "An error occurred while creating the setting."
+            },
+            "form": {
+                "server": "Server",
+                "type": "Key Type",
+                "username": "User Name",
+                "password": "Password",
+                "port": "Control Port",
+                "submit": "Create",
+                "ssh_pw": "SSH (Encrypted)",
+                "ssh_cert": "SSH (Certificate)",
+                "winrm_insecure": "WinRM (Insecure)",
+                "no_key": "Login with No Key"
+            },
+            "validation": {
+                "server": "You must choose a server.",
+                "type": "You must choose the key type.",
+                "port": "The connection port cannot be longer than 5 characters.",
+                "port_nonempty": "The connection port cannot be empty."
+            }
+        }
+    },
+    "tokens": {
+        "title": "Personal Access Keys",
+        "description": "You can use external API ends provided by Liman by creating personal access keys.",
+        "toasts": {
+            "delete_success": "The key has been deleted successfully.",
+            "delete_error": "An error occurred while deleting the key.",
+            "create_success": "The key has been created successfully.",
+            "create_error": "An error occurred while creating the key."
+        },
+        "delete": {
+            "title": "Are you sure?",
+            "description": "The selected external notification <b>({{token}})</b> will be completely deleted from the Liman system. As a result of this process, your notification reception may be interrupted. Do you want to continue?",
+            "cancel": "Cancel",
+            "delete": "Confirm"
+        },
+        "name": "Name",
+        "ip_range": "Allowed IP Address",
+        "last_used_ip": "Last Accessed IP Address",
+        "last_used_at": "Last Access Date",
+        "unknown": "Unknown",
+        "validation": {
+            "name": "Access key name cannot be empty.",
+            "ip_range": "The allowed IP address cannot be empty."
+        },
+        "create": {
+            "button": "Add",
+            "title": "Create Access Key",
+            "description": "You can create a new access key using this window.",
+            "subtext": "You can restrict access by typing a subnet address or IP address that you want to allow in this section. When you type -1, the restriction is removed. For example: 192.168.1.0/24",
+            "alert_title": "Your Access Key",
+            "alert_description": "Do not share this token with anyone. They can perform transactions on the Port system on your behalf.",
+            "form": {
+                "name": "Name",
+                "ip_range": "Allowed IP Address",
+                "submit": "Create"
+            }
+        }
+    },
+    "extensions": {
+        "title": "Extensions",
+        "description": "Through this page, you can manage the extensions on your system, update their versions and upload new extensions.",
+        "display_name": "Extension Name",
+        "version": "Version",
+        "licensed": "Licensed",
+        "not_licensed": "Unlicensed",
+        "license": "Licence",
+        "updated_at": "Updated Date",
+        "upload": {
+            "cancel": "Cancel",
+            "accept": "Confirm",
+            "upload": "Upload",
+            "title": "Upload Extension",
+            "description": "We do not recommend uploading .zip files that you do not trust.",
+            "file": "File",
+            "dialog_title": "Are you sure?",
+            "dialog_description": "This extension file appears to be unsigned. Are you sure you want to install this extension?"
+        },
+        "actions": {
+            "download_start": "Download has started.",
+            "download_success": "Download completed.",
+            "download_error": "An error occurred while downloading the extension.",
+            "add_license": "Add License",
+            "download": "Download",
+            "delete": "Delete",
+            "license": {
+                "title": "Add License",
+                "description": "Enter the licence provided by HAVELSAN A.Ş. for your extension.",
+                "form": {
+                    "license": "Licence",
+                    "submit": "Add",
+                    "cancel": "Cancel"
+                },
+                "success_msg": "License added successfully.",
+                "error_msg": "An error occurred while adding the license."
+            },
             "delete_dialog": {
-                "description": "Seçilen asdas <b>({{extension}})</b> Liman sisteminden tamamen kaldırılacaktır. Bu işlem sonucunda kasa verilerinizde ve eklenti izinlerinde kayıp olabilir. Devam etmek istiyor musunuz?"
+                "success_msg": "The extension has been deleted successfully.",
+                "error_msg": "An error occurred while deleting the extension.",
+                "title": "Are you sure?",
+                "description": "The selected extension <b>({{extension}})</b> will be completely removed from the Liman system. As a result of this process, you may lose your case data and extension permissions. Do you want to continue?",
+                "cancel": "Cancel",
+                "delete": "Confirm"
+            }
+        }
+    },
+    "users": {
+        "title": "Users",
+        "description": "Through this page you can add roles to users, edit user profiles and add new ones.",
+        "name": "Name Surname",
+        "email": "E-mail Address",
+        "username": "User Name",
+        "status": "Authority Level",
+        "auth_type": "Login Type",
+        "admin": "Administrator",
+        "user": "User",
+        "toasts": {
+            "success_msg": "The user has been created successfully.",
+            "error_msg": "An error occurred while creating the user."
+        },
+        "validation": {
+            "name_min": "Username must be at least 2 characters.",
+            "name_max": "Username must be at most 50 characters.",
+            "email": "Please enter a valid e-mail address.",
+            "password_min": "Password must be at least 8 characters.",
+            "password_max": "Password must be at most 50 characters.",
+            "password_confirmation": "Passwords do not match."
+        },
+        "create": {
+            "button": "Add",
+            "title": "Add User",
+            "description": "You can create a new user using this window.",
+            "user_type": "User Type",
+            "user": "User",
+            "admin": "Administrator",
+            "name_surname": "Name Surname",
+            "name_surname_placeholder": "Liman User",
+            "username": "User Name",
+            "email": "E-mail Address",
+            "password": "Your Password",
+            "password_confirmation": "Password Confirmation",
+            "create": "Create"
+        },
+        "auth_log": {
+            "user": "User",
+            "ip_address": "Login IP Address",
+            "browser": "Browser Information",
+            "created_at": "Login Date",
+            "unknown": "Unknown",
+            "title": "Login Records",
+            "description": "You can examine all users logged in to Liman in detail.",
+            "desc2": "You can view the user's login records in detail.",
+            "back_to_users": "Return to user list"
+        },
+        "delete": {
+            "success": "The user has been deleted successfully.",
+            "error": "An error occurred while deleting the user.",
+            "title": "Are you sure?",
+            "subtext": "The selected user <b>({{username}})</b> will be completely deleted from the Liman system. As a result of this process, you may lose your case data and extension permissions. Do you want to continue?",
+            "no": "Cancel",
+            "yes": "Confirm"
+        }
+    },
+    "roles": {
+        "title": "Roles",
+        "role": "role",
+        "description": "You can organize users' access authorization levels in detail based on groups and individuals.",
+        "validation": {
+            "name": "The role name cannot be empty."
+        },
+        "create": {
+            "success": "The role has been created successfully.",
+            "error": "An error occurred while creating the role.",
+            "button": "Add",
+            "title": "Create Role",
+            "description": "As a result of this process, a role will be created in your system and you will be directed to the editing page.",
+            "name": "Role Name",
+            "create": "Create"
+        },
+        "name": "Role Name",
+        "updated_at": "Update Date",
+        "detailed_view": "Detailed view",
+        "details": {
+            "title": "Detailed Role List",
+            "description": "You can view all roles and permissions created on the database by performing detailed filtering.",
+            "username": "User Name",
+            "role_name": "Role Name",
+            "liman": "Liman",
+            "server": "Server",
+            "extension": "Extension",
+            "function": "Function",
+            "perm_type": "Permit Type",
+            "perm_value": "Permit Value",
+            "back_to_roles": "Back to roles",
+            "create_report": "Create report",
+            "download_start": "Download has started.",
+            "download_success": "Download completed.",
+            "download_error": "An error occurred while downloading the report."
+        },
+        "actions": {
+            "edit": "Edit",
+            "delete": "Delete",
+            "title": "Are you sure?",
+            "subtext": "The selected role <b>({{role_name}})</b> will be completely removed from the port system. Do you want to continue?",
+            "no": "Cancel",
+            "yes": "Confirm",
+            "success": "The role has been deleted successfully.",
+            "error": "An error occurred while deleting the role."
+        },
+        "users": {
+            "title": "Users",
+            "description": "Determine which users will have this role.",
+            "left": "Users who do not have this role",
+            "right": "Users with this role",
+            "success": "Users have been updated successfully.",
+            "error": "An error occurred while updating users."
+        },
+        "liman": {
+            "title": "liman Permits",
+            "description": "Authorize functions performed on Liman.",
+            "left": "All Permissions",
+            "right": "Permissions Granted",
+            "success": "Liman permissions have been updated successfully.",
+            "error": "An error occurred while updating Liman permissions."
+        },
+        "servers": {
+            "title": "Server Permissions",
+            "description": "Determine which servers this role can access.",
+            "left": "Available servers",
+            "right": "Allowed servers",
+            "success": "The servers have been updated successfully.",
+            "error": "An error occurred while updating the servers."
+        },
+        "extensions": {
+            "title": "Extension Permissions",
+            "description": "Determine which extensions this role can access.",
+            "left": "Available extensions",
+            "right": "Available servers",
+            "success": "Extensions have been updated successfully.",
+            "error": "An error occurred while updating extensions."
+        },
+        "functions": {
+            "title": "Function Permissions",
+            "description": "You can manage the internal permissions of extensions in detail through this page.",
+            "display_name": "Extension Name",
+            "function_name": "Function Name",
+            "delete_success": "--",
+            "delete_error": "An error occurred while deleting function permissions.",
+            "delete": "--",
+            "delete_dialog": {
+                "title": "Are you sure?",
+                "description": "This action cannot be undone. The selected permissions will be removed, do you want to continue?",
+                "cancel": "Cancel",
+                "delete": "Confirm"
+            },
+            "assign": {
+                "title": "Add Permission",
+                "description": "Using this window, you can assign internal permissions of extensions to this role.",
+                "success": "Function permissions have been added successfully.",
+                "error": "An error occurred while adding function permissions.",
+                "permission": "Permission",
+                "add": "Add",
+                "extension_selection": "Extension Selection",
+                "extensions": "Extensions",
+                "extension_placeholder": "Select to see the functions..."
+            }
+        },
+        "variables": {
+            "title": "Private Data",
+            "description": "Set the custom data that this role will share with the extension.",
+            "key": "Name",
+            "value": "Value",
+            "delete": {
+                "button": "Delete",
+                "title": "Are you sure?",
+                "description": "This action cannot be undone. The selected data will be removed, do you want to continue?",
+                "cancel": "Cancel",
+                "delete": "Confirm",
+                "success": "Private data has been deleted successfully.",
+                "error": "An error occurred while deleting private data."
+            },
+            "create": {
+                "success": "Private data has been created successfully.",
+                "error": "An error occurred while creating private data.",
+                "button": "Add",
+                "title": "Create Private Data",
+                "description": "As a result of this process, private data will be created on the role.",
+                "key": "Name",
+                "value": "Value",
+                "create": "Create"
+            }
+        }
+    },
+    "email": {
+        "title": "E-mail",
+        "description": "You can adjust and test the e-mail sending settings of the system in detail on this page.",
+        "validation": {
+            "host": "Server address cannot be empty.",
+            "port": "Port cannot be empty.",
+            "username": "Username cannot be empty."
+        },
+        "toasts": {
+            "success": "Mail settings have been updated successfully."
+        },
+        "form": {
+            "host": {
+                "label": "Server Address",
+                "subtext": "Your email server address must be resolvable by Liman."
+            },
+            "port": {
+                "label": "Server Port",
+                "subtext": "The port through which the connection to your email server will be established. For SMTP, you can enter one of the options 25, 465 or 587."
+            },
+            "username": {
+                "label": "User Name",
+                "subtext": "You can enter a username that is authorized to send on your email server."
+            },
+            "password": {
+                "label": "Password",
+                "subtext": "Password of the user you entered."
+            },
+            "encryption": {
+                "label": "Encryption Type",
+                "subtext": "You can choose TLS, SSL or neither.",
+                "none": "None"
+            },
+            "active": {
+                "label": "Activate e-mail sending",
+                "subtext": "When you activate e-mail sending, you can receive various informative e-mails from the Liman."
+            },
+            "save": "Test and Save"
+        }
+    },
+    "external_notifications": {
+        "title": "External Notifications",
+        "description": "You can ensure that extensions servers and external applications send notifications to Liman by setting an IP restriction.",
+        "actions": {
+            "open_menu": "Open Menu",
+            "delete": "Delete",
+            "success": "Successful",
+            "error": "Error",
+            "toasts": {
+                "success": "The external notification has been deleted successfully.",
+                "error": "An error occurred while deleting an external notification."
+            },
+            "confirm": "Are you sure?",
+            "no": "Cancel",
+            "yes": "Confirm",
+            "confirm_delete": "The selected external notification {\" \"} <b className=\"font-semibold\">({externalNotificationName})</b> will be completely deleted from the Liman system. As a result of this process, your notification reception may be interrupted. Do you want to continue?"
+        },
+        "name": "Name",
+        "ip_address": "Allowed IP Address",
+        "last_used": "Last Access Date",
+        "unknown": "Unknown",
+        "validation": {
+            "name": "External declaration name cannot be empty.",
+            "ip": "The allowed IP address cannot be empty."
+        },
+        "toasts": {
+            "success": "The external notification has been created successfully.",
+            "error": "An error occurred while creating the external notification."
+        },
+        "create": {
+            "button": "Add",
+            "title": "Create External Notification",
+            "description": "As a result of this process, an external notification will be created in your system.",
+            "alert_title": "Your External Application Token",
+            "alert_description": "Do not share this token with anyone you do not trust. Your external applications can send notifications to Liman using this token.",
+            "name": "External Declaration Name",
+            "ip": "IP Address",
+            "subtext": "You can restrict access by typing a subnet address or IP address that you want to allow in this section. <br /> <b> For example: 192.168.1.0/24</b>",
+            "create": "Create"
+        }
+    },
+    "subscriptions": {
+        "title": "Subscriptions",
+        "description": "You can observe your system and extension subscriptions and renewals through this page.",
+        "liman": "Liman Support Subscription",
+        "extension": "Extension Subscriptions",
+        "issued_no": "Member Number",
+        "issued": "Member",
+        "package_type": "Membership Type",
+        "start_time": "Membership Start Date",
+        "support": "Support Period",
+        "remaining": "Remaining Days",
+        "open_source_warning": "You are using the open source support package.",
+        "add_license": "Add License",
+        "license_dialog": {
+            "success": "License added successfully.",
+            "error": "An error occurred while adding the license.",
+            "title": "Add License",
+            "description": "Enter the license given to you by HAVELSAN A.Ş. for Liman in this section.",
+            "license": "License Information",
+            "cancel": "Cancel",
+            "ok": "Add"
+        },
+        "subcard": {
+            "server": {
+                "placeholder": "Select a server...",
+                "label": "Selectable servers"
+            },
+            "subscription_settings": "Subscription Options",
+            "renew": "Renew Subscription",
+            "add_license": "Add License",
+            "remaining": "Remaining Days",
+            "days_remaining": "days remaining",
+            "issuer": "Licensor",
+            "allowed_device_count": "Allowed Device Count",
+            "no_sub": "No subscription found.",
+            "success": "License added successfully.",
+            "error": "An error occurred while adding the license.",
+            "title": "Add License",
+            "description": "Enter the license given to you by HAVELSAN A.Ş. for your extension in this section.",
+            "license": "License Information",
+            "cancel": "Cancel",
+            "ok": "Add"
+        }
+    },
+    "access": {
+        "title": "Access",
+        "description": "Allows you to configure the login tools that can be used to log in. You can set up Keycloak and LDAP logins on this page.",
+        "audit": {
+            "title": "Access Logs",
+            "description": "You can observe in detail the operations performed by users in Liman other than extensions on this page.",
+            "username": "Username",
+            "ip_address": "IP Address",
+            "type": "Operation Type",
+            "action": "Action",
+            "message": "Message",
+            "timestamp": "Time",
+            "types": {
+                "extension": "Extension",
+                "user": "User",
+                "server": "Server",
+                "role": "Role Group",
+                "dns": "DNS Servers",
+                "tweak": "Fine Tuning"
+            },
+            "actions": {
+                "assign": "Assignment",
+                "unassign": "Removal",
+                "create": "Creation",
+                "delete": "Deletion",
+                "edit": "Editing",
+                "update": "Editing",
+                "users": "User Authorization",
+                "upload": "Upload/Update"
+            },
+            "messages": {
+                "EXTENSION_ASSIGNED_TO_SERVER": "{{extension_name}} extension assigned to {{server_name}} server.",
+                "EXTENSION_UNASSIGNED_FROM_SERVER": "{{extension_name}} extension unassigned from {{server_name}} server.",
+                "USER_CREATED": "{{user_name}} user created.",
+                "USER_DELETED": "{{user_name}} user deleted.",
+                "EXTENSION_UPLOAD": "{{extension_name}} extension uploaded.",
+                "EXTENSION_DELETE": "{{extension_name}} extension deleted.",
+                "SERVER_CREATE": "{{server_name}} server created.",
+                "SERVER_UPDATE": "{{server_name}} server updated, new values: {{new_server_name}}, {{new_server_ip}}",
+                "SERVER_DELETE": "{{server_name}} server deleted.",
+                "ROLE_CREATE": "{{role_name}} role created.",
+                "ROLE_DELETE": "{{role_name}} role deleted.",
+                "ROLE_USERS": "{{role_name}} role assigned to user {{user_name}}.",
+                "ROLE_EDIT": "Role edited, {{changed_count}} objects changed. See request details.",
+                "TWEAK_EDIT": "System fine tuning edited.",
+                "DNS_EDIT": "DNS servers updated as {{dns1}}, {{dns2}}, {{dns3}}."
+            }
+        },
+        "keycloak": {
+            "formScema": {
+                "client_id": "Client ID field cannot be empty.",
+                "client_secret": "Client Secret field cannot be empty.",
+                "redirect_uri": "Redirect URI field cannot be empty.",
+                "base_url": "Base URL field cannot be empty.",
+                "realm": "Realm field cannot be empty."
+            },
+            "toast": {
+                "success": {
+                    "title": "Success",
+                    "description": "Keycloak settings saved successfully."
+                },
+                "fail": {
+                    "title": "Error",
+                    "description": "An error occurred while saving Keycloak settings."
+                }
+            },
+            "head_title": "Keycloak | Liman",
+            "page_header": {
+                "title": "Keycloak",
+                "description": "You can enable user login to Liman using the Keycloak auth gateway."
+            },
+            "form": {
+                "client_id": "Client ID",
+                "info_id": "The Client ID value is the ID value given for the client you created on Keycloak.",
+                "client_secret": "Client Secret",
+                "info_secret": "The Client Secret value is the secret value generated for the client you created on Keycloak.",
+                "redirect_url": "Redirect URL",
+                "redirect_info": "The Redirect URL value should be your Liman URL /keycloak/callback and you should specify this value in the allowed redirect URLs section of your client.",
+                "base_url": "Base URL",
+                "base_info": "The Base URL value is your Keycloak URL.",
+                "realm": "Realm",
+                "realm_info": "The Realm value is the name of the realm you created on Keycloak.",
+                "integration": "Activate Integration",
+                "integration_info": "When you activate integration, users on your Keycloak server will be able to log in to Liman.",
+                "save": "Save"
+            }
+        },
+        "ldap": {
+            "formScema": {
+                "address": "LDAP server address cannot be empty.",
+                "objectguid": "Write the name of the objectguid field in your LDAP schema.",
+                "mail": "Write the name of the mail field in your LDAP schema."
+            },
+            "toast": {
+                "success": {
+                    "title": "Success",
+                    "description": "LDAP connection settings have been saved successfully."
+                },
+                "fail": {
+                    "title": "Error",
+                    "description": "An error occurred while saving LDAP connection settings."
+                }
+            },
+            "head_title": "LDAP Connection | Liman",
+            "page_header": {
+                "title": "LDAP Connection",
+                "description": "You can use LDAP connection when logging in to Liman and configure access permissions in detail."
+            },
+            "forms": {
+                "server_address": "Server Address",
+                "server_info": "Enter the connection address of the active directory, Samba or LDAP provider you are using. This connection address must be resolvable by your Liman server.",
+                "object_guid": "Object GUID Field",
+                "object_guid_info": "Write the name of the objectguid field that is actively used in your LDAP schema. Although the value of this field is usually objectguid, it may vary in some installations.",
+                "mail": "Mail Field",
+                "mail_info": "Write the name of the mail field that is actively used in your LDAP schema. Although the value of this field is usually mail, it may vary in some installations.",
+                "integration": "Activate Integration",
+                "integration_info": "When you activate integration, LDAP users you have granted permission to will be able to log in to Liman using their usernames.",
+                "save": "Save"
+            }
+        },
+        "permissions": {
+            "title": "LDAP Access Permissions",
+            "description": "You can use this page to set in detail which LDAP groups and users can or cannot log in to Liman.",
+            "login_success": "Login successful, you can perform your operations.",
+            "login_error": "Login failed, please check your information.",
+            "user_success": "User list has been updated successfully.",
+            "user_error": "User list could not be updated.",
+            "group_success": "Group list has been updated successfully.",
+            "group_error": "Group list could not be updated.",
+            "login_title": "Log in",
+            "login_description": "Log in with an LDAP user who has the authority to query users and groups to edit LDAP access permissions.",
+            "username": "Username",
+            "password": "Password",
+            "validation": {
+                "username": "Username field cannot be empty.",
+                "password": "Password field cannot be empty."
+            },
+            "login": "Log In",
+            "user": {
+                "title": "User Permissions",
+                "left": "Selectable Users",
+                "right": "Users Who Can Log In"
+            },
+            "group": {
+                "title": "Group Permissions",
+                "left": "Selectable Groups",
+                "right": "Groups Who Can Log In"
+            }
+        }
+    },
+    "health": {
+        "title": "Health Status",
+        "description": "You can view the health status of the Liman Central Management System and easily apply security improvement recommendations.",
+        "admin_account_title": "Default Administrator Account Status",
+        "admin_account_description": "For your security, we recommend that you remove the administrator@liman.dev account that comes as default. Using the default account carries the risk of causing situations such as bruteforce.",
+        "go_to_user_settings": "Go to User Settings",
+        "dns_check_title": "Liman Server DNS Check",
+        "dns_check_description": "You need to configure DNS to resolve external internet and IP addresses on your network for your Liman server.",
+        "go_to_dns_settings": "Go to DNS Settings",
+        "ssl_check_title": "SSL Certificate Time Check",
+        "ssl_check_description": "The certificate defined on your Liman server is about to expire. It is recommended that you renew it.",
+        "ssl_self_title": "Self-Signed Certificate",
+        "ssl_self_description": "We have detected that you are using a self-signed certificate. If you have a wildcard certificate that you use in your organization, we recommend that you make the definition through HAVELSAN A.Ş.",
+        "high_availability_service_title": "High Availability Service Status",
+        "high_availability_service_description": "Liman's High Availability service is not active. If this service is not activated, Liman will not be able to work redundantly in case of a server-related problem.",
+        "manual_sync": "Manually Synchronize",
+        "manual_sync_success": "The synchronization request has been sent. The servers will run synchronization between each other."
+    },
+    "advanced": {
+        "title": "Advanced Settings",
+        "description": "You can make changes to the system's DNS settings, certificate installations, and log redirections from this page.",
+        "certificates": {
+            "title": "Certificates",
+            "description": "You can add the certificates that the Liman server will accept from here.",
+            "updated_at": "Last Updated",
+            "unknown": "Unknown",
+            "add": "Add",
+            "retrieve": {
+                "fetch_error": "An error occurred while retrieving certificate details.",
+                "success": "Certificate created successfully.",
+                "error": "An error occurred while creating the certificate.",
+                "title": "Add Certificate",
+                "description": "The certificate of the server for which you provide the hostname and port information will be transferred to the Liman system.",
+                "client_details": "Client Details",
+                "ip_address": "IP Address",
+                "fetch_details": "Fetch Certificate Details",
+                "validity": "Validity Period",
+                "valid_from": "Start",
+                "valid_to": "End",
+                "details": "General Details",
+                "issuer_cn": "Client",
+                "issuer_dc": "Authority",
+                "subject_key_identifier": "Client Fingerprint",
+                "authority_key_identifier": "Authority Fingerprint",
+                "save": "Save"
+            },
+            "details": {
+                "title": "Certificate Details",
+                "description": "You can view detailed information about the selected certificate."
+            },
+            "actions": {
+                "details": "Details",
+                "delete": {
+                    "button": "Delete",
+                    "title": "Are you sure?",
+                    "description": "The selected certificate <b>({{name}})</b> will be completely deleted from the Liman system. Access to extensions may be interrupted as a result of this operation. Do you want to continue?",
+                    "cancel": "Cancel",
+                    "delete": "Confirm",
+                    "success": "Certificate deleted successfully.",
+                    "error": "An error occurred while deleting the certificate."
+                }
+            }
+        },
+        "dns": {
+            "title": "DNS Settings",
+            "description": "You can make DNS settings that allow Liman to resolve endpoints to connect and active directory servers.",
+            "dns1_validation": "DNS 1 field cannot be empty.",
+            "success": "DNS settings updated successfully.",
+            "error": "An error occurred while updating DNS settings.",
+            "save": "Save"
+        },
+        "logrotation": {
+            "title": "Log Redirection",
+            "description": "Allows you to redirect important system logs and messages of Liman through rsyslog.",
+            "success": "Log redirection settings updated successfully.",
+            "error": "An error occurred while updating log redirection settings.",
+            "ip_address": "IP Address",
+            "type": "Connection Type",
+            "type_placeholder": "Select a connection type.",
+            "save": "Save"
+        },
+        "tweaks": {
+            "title": "Tweaks",
+            "description": "You can change the fine-tuning settings related to Liman from this page.",
+            "success": "Tweaks saved successfully.",
+            "error": "An error occurred while saving tweaks.",
+            "validation": "Please enter a valid number.",
+            "APP_LANG": {
+                "label": "System Language",
+                "subtext": "You can change the default system language by changing between Turkish, English, and German options."
+            },
+            "OTP_ENABLED": {
+                "label": "Two-Factor Authentication",
+                "subtext": "When activated, all users will log in by receiving codes through the two-factor authentication application you prefer."
+            },
+            "APP_NOTIFICATION_EMAIL": {
+                "label": "System Email",
+                "subtext": "The email address you enter in this field will be used by Liman to send you notifications and alerts."
+            },
+            "APP_URL": {
+                "label": "Application Address",
+                "subtext": "The address of the Liman system to be added in emails and notifications."
+            },
+            "EXTENSION_TIMEOUT": {
+                "label": "Extension Request Timeout",
+                "subtext": "The timeout period to be used in requests sent by Liman to extensions."
+            },
+            "APP_DEBUG": {
+                "label": "Developer Mode",
+                "subtext": "When activated, the Liman system will send more detailed logs and change error messages."
+            },
+            "EXTENSION_DEVELOPER_MODE": {
+                "label": "Extension Developer Mode",
+                "subtext": "When activated, more detailed error messages and logs will be sent for extension developers."
+            },
+            "NEW_LOG_LEVEL": {
+                "label": "Logging Level",
+                "minimal": "Minimal",
+                "ext_log": "Extension Log",
+                "detailed_ext_log": "Detailed Extension Logs",
+                "all": "Log All Operations",
+                "subtext": "You can change Liman's logging behavior through this section."
+            },
+            "LDAP_IGNORE_CERT": {
+                "label": "Disable LDAP Certificate Check",
+                "subtext": "When activated, you can connect to LDAP servers without the need to add a certificate to the system. You will need to create a file named .ignoreme in the extension folder."
+            },
+            "save": "Save"
+        }
+    },
+    "servers": {
+        "actions": {
+            "edit_btn": "Edit",
+            "delete": "Delete",
+            "edit": {
+                "title": "Edit Server",
+                "description": "You can edit the visible name and IP address of your server from this section.",
+                "form": {
+                    "name": "Name",
+                    "ip_address": "IP Address",
+                    "submit": "Edit",
+                    "cancel": "Cancel"
+                },
+                "success_msg": "Server edited successfully.",
+                "error_msg": "An error occurred while editing the server."
+            },
+            "delete_dialog": {
+                "success_msg": "Server deleted successfully.",
+                "error_msg": "An error occurred while deleting the server.",
+                "title": "Are you sure?",
+                "description": "The selected server <b>({{server}})</b> will be completely removed from the Liman system. Do you want to continue?",
+                "cancel": "Cancel",
+                "delete": "Confirm"
             }
         }
     }

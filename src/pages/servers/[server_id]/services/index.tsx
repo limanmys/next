@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/router"
 import { apiService } from "@/services"
-import { t } from "i18next"
 import {
   CheckCircle,
   ListRestart,
@@ -253,6 +252,8 @@ function ServiceAlertWindow({
   children: React.ReactNode
   onAction: () => void
 }) {
+  const { t } = useTranslation("servers")
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
@@ -282,6 +283,7 @@ function ServiceStatusWindow({ name }: { name: string }) {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState<string>("")
+  const { t } = useTranslation("servers")
 
   const fetchStatus = () => {
     setLoading(true)

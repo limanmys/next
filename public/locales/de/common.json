@@ -1,3 +1,62 @@
 {
-    "page_title": "Liman Zentrales Managementsystem"
+    "page_title": "Liman Zentrales Management System",
+    "command_menu": {
+        "search": "Suche...",
+        "search_placeholder": "Suche...",
+        "no_results": "Keine Ergebnisse gefunden."
+    },
+    "language_selector": {
+        "title": "Sprachauswahl"
+    },
+    "notifications": {
+        "title": "Benachrichtigungen",
+        "mark_all_as_read": "Alle als gelesen markieren",
+        "empty": "Keine Benachrichtigungen",
+        "empty_message": "Ihre Benachrichtigungen werden hier angezeigt.",
+        "manage": "Benachrichtigungen verwalten",
+        "show_all": "Alle Benachrichtigungen anzeigen"
+    },
+    "profile_dropdown": {
+        "last_login_at": "Letzte Anmeldung am",
+        "last_login_ip": "Letzte Anmeldung IP",
+        "profile": "Profil",
+        "logout": "Abmelden"
+    },
+    "sidebar": {
+        "servers": "Server",
+        "all_servers": "Alle Server",
+        "add_server": "Neuen Server hinzufügen",
+        "admin_message": "Fügen Sie einen Server von oben hinzu, um Liman zu verwenden.",
+        "user_message": "Bitten Sie Ihren Systemadministrator, Ihnen eine Rolle zuzuweisen, um Liman zu verwenden.",
+        "extensions": "Erweiterungen",
+        "system_status": "Systemstatus",
+        "services": "Dienste",
+        "packages": "Pakete",
+        "updates": "Updates",
+        "user_management": {
+            "title": "Benutzerverwaltung",
+            "local_users": "Lokale Benutzer",
+            "local_groups": "Lokale Gruppen",
+            "sudoers": "Autorisierte Benutzer"
+        },
+        "open_ports": "Offene Ports",
+        "access_logs": "Zugriffsprotokolle",
+        "settings": {
+            "title": "Einstellungen",
+            "user": "Benutzereinstellungen",
+            "system": "Systemeinstellungen",
+            "profile": "Profil",
+            "vault": "Tresor",
+            "tokens": "Persönliche Zugriffstoken",
+            "extensions": "Erweiterungen",
+            "users": "Benutzer",
+            "roles": "Rollen",
+            "email": "E-Mail",
+            "external_notifications": "Externe Benachrichtigungen",
+            "subscriptions": "Abonnements",
+            "access": "Zugriff",
+            "health": "Gesundheitsstatus",
+            "advanced": "Erweiterte Einstellungen"
+        }
+    }
 }

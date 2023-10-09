@@ -1,3 +1,30 @@
 {
-    "title": "Dashboard"
+    "title": "Dashboard",
+    "cards": {
+        "server_count": "Server-Anzahl",
+        "show_all_servers": "Alle Server anzeigen",
+        "extension_count": "Erweiterungsanzahl",
+        "show_all_extensions": "Alle Erweiterungen anzeigen",
+        "user_count": "Benutzeranzahl",
+        "show_all_users": "Alle Benutzer anzeigen",
+        "total_user_count": "Gesamtzahl der Liman-Benutzer",
+        "version": "Liman-Version"
+    },
+    "most_used_extensions": {
+        "title": "Am häufigsten verwendete Erweiterungen",
+        "empty_title": "Keine Erweiterungen gefunden",
+        "empty_description": "Sie haben noch keine Erweiterungen verwendet."
+    },
+    "latest_logged_in_users": {
+        "title": "Zuletzt angemeldete Benutzer",
+        "last_login_at": "Letztes Anmeldedatum",
+        "last_login_ip": "Letzte Anmelde-IP",
+        "empty_title": "Keine Benutzer",
+        "empty_description": "Dieser Abschnitt wird gefüllt, sobald neue Benutzer erstellt werden."
+    },
+    "favorite_servers": {
+        "title": "Lieblingsserver",
+        "empty_title": "Keine Server",
+        "empty_description": "Ihre Lieblingsserver werden in diesem Abschnitt aufgelistet."
+    }
 }

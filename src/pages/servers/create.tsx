@@ -158,7 +158,7 @@ export default function ServerCreatePage() {
 
           toast({
             title: t("error"),
-            description: t("errors.validation"),
+            description: t("create.errors.validation"),
             variant: "destructive",
           })
           setLoading(false)
@@ -180,7 +180,7 @@ export default function ServerCreatePage() {
       } else {
         toast({
           title: t("error"),
-          description: t("errors.validation"),
+          description: t("create.errors.validation"),
           variant: "destructive",
         })
       }

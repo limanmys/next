@@ -182,7 +182,7 @@
     },
     "services": {
         "name": {
-            "title": "Servis Ağı"
+            "title": "Servis Adı"
         },
         "description": {
             "title": "Açıklama"

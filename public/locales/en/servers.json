@@ -1,1 +1,394 @@
-{}
+{
+    "error": "Error",
+    "success": "Success",
+    "information": "Information",
+    "ssh": "SSH (Encrypted)",
+    "ssh_certificate": "SSH (Certificate)",
+    "winrm": "WinRM",
+    "winrm_insecure": "WinRM (Insecure)",
+    "no_key": "No Key",
+    "yes": "Yes",
+    "no": "No",
+    "index": {
+        "title": "Servers",
+        "description": "You can manage your servers connected to Liman Center Management System through this page.",
+        "create": "Add Server",
+        "table": {
+            "name": "Server Name",
+            "ip_address": "IP Address",
+            "port": "Control Port",
+            "extension_count": "Extension Count"
+        }
+    },
+    "create": {
+        "title": "Add Server",
+        "description": "You can add your Windows and Linux servers that you have already installed to Liman Center Management System.",
+        "servers": "Servers",
+        "back": "Previous",
+        "next": "Next",
+        "create": "Add",
+        "steps": {
+            "connection_information": {
+                "name": "Connection Information",
+                "description": "Check the server connection.",
+                "validation": {
+                    "ip_address": "Server address cannot be left blank.",
+                    "port": {
+                        "max": "Connection port cannot be longer than 5 characters.",
+                        "nonempty": "Connection port cannot be left blank."
+                    }
+                },
+                "ip_address": {
+                    "label": "Your Server's Address",
+                    "information": "Enter the IP address or hostname of the server you want to connect to."
+                },
+                "port": {
+                    "label": "Connection Port"
+                }
+            },
+            "general_settings": {
+                "name": "General Settings",
+                "description": "Select the server name and operating system.",
+                "validation": {
+                    "name": "Server name cannot be left blank.",
+                    "os_type": "Please select an operating system."
+                },
+                "sname": {
+                    "label": "Server Name",
+                    "information": "Write the server name you want to appear."
+                },
+                "os_type": {
+                    "label": "Operating System"
+                }
+            },
+            "key_selection": {
+                "name": "Key Selection",
+                "description": "Select a key type to connect to your server.",
+                "validation": {
+                    "key_type": "Please select a key type."
+                },
+                "key_type": {
+                    "label": "Key Type"
+                }
+            },
+            "key_inputs": {
+                "name": "Key",
+                "description": "Provide a key to connect to your server.",
+                "validation": {
+                    "username": "Username cannot be left blank.",
+                    "password": "Password cannot be left blank."
+                },
+                "username": {
+                    "label": "Username",
+                    "information": "Provide a username for {{key_type}} connection type."
+                },
+                "password": {
+                    "label": "Password",
+                    "information": "Provide a password for {{key_type}} connection type."
+                },
+                "shared": {
+                    "label": "Shared",
+                    "information": "If you want the key you entered for {{key_type}} connection type to be used by all users, check this box."
+                }
+            },
+            "summary": {
+                "name": "Summary",
+                "description": "Check and confirm your server information.",
+                "shared_key": "Key Sharing"
+            }
+        },
+        "errors": {
+            "validation": "Please check your input before proceeding.",
+            "success": "Server created successfully.",
+            "error": "An error occurred while creating the server."
+        }
+    },
+    "system_status": {
+        "details": "Server Details",
+        "name": "Server Name",
+        "hostname": "Hostname",
+        "os": "Operating System",
+        "ip_address": "IP Address",
+        "uptime": "Uptime",
+        "user": "Logged In User",
+        "service_count": "Service Count",
+        "process_count": "Process Count",
+        "specs": "Server Specs",
+        "cpu": "CPU",
+        "ram_size": "RAM Size",
+        "vendor": "Vendor",
+        "model": "Model",
+        "resource_usage": "Resource Usage",
+        "cpu_usage": "CPU Usage",
+        "ram_usage": "RAM Usage",
+        "io_usage": "IO Usage",
+        "network_usage": "Network Usage",
+        "disk_status": "Disk Status",
+        "most_5_cpu_usage_process": "Top 5 CPU Usage Processes",
+        "most_5_ram_usage_process": "Top 5 RAM Usage Processes",
+        "disk_status_desc": "Disk usage status of mounted disks",
+        "user_title": "User",
+        "process": "Process",
+        "usage": "Usage",
+        "disk": "Disk",
+        "size": "Size",
+        "full": "Full"
+    },
+    "extensions": {
+        "title": "Extensions",
+        "description": "You can manage the extensions used on your server through this page.",
+        "add": "Add",
+        "remove": "Remove",
+        "upload": "Upload Extension",
+        "name": "Extension Name",
+        "version": "Version",
+        "updated_at": "Updated At",
+        "toasts": {
+            "assign": "The selected extensions have been successfully assigned to the server.",
+            "unassign": "The selected extensions have been successfully unassigned from the server."
+        },
+        "unassign": {
+            "title": "Are you sure?",
+            "description": "This action cannot be undone. The selected extensions will be removed from the server. Do you want to continue?",
+            "no": "Cancel",
+            "yes": "Confirm"
+        },
+        "assign": {
+            "button": "Add",
+            "title": "Add Extension",
+            "description": "You can add an extension to your server using this window.",
+            "name": "Extension Name",
+            "version": "Version"
+        },
+        "settings": {
+            "toast": {
+                "title": "Successful",
+                "description": "Settings have been successfully updated."
+            },
+            "page_header": {
+                "title": "Extension Settings",
+                "description": "You can manage the mandatory and advanced settings that the extension requires through this page."
+            },
+            "alert_title": "Error",
+            "card": {
+                "obligatory_settings_h3": "Mandatory Settings",
+                "obligatory_settings_p": "Settings that must be entered for the extension to work.",
+                "advanced_settings_h3": "Advanced Settings",
+                "advanced_settings_p": "Settings that are not mandatory but change the way the extension works."
+            },
+            "no_need_settings": "The extension does not require any settings.",
+            "save": "Save"
+        }
+    },
+    "services": {
+        "name": {
+            "title": "Service Name"
+        },
+        "description": {
+            "title": "Description"
+        },
+        "status": {
+            "title": "Status",
+            "running": {
+                "yes": "Running",
+                "no": "Not Running"
+            },
+            "active": {
+                "yes": "Active",
+                "no": "Inactive"
+            }
+        },
+        "toast": {
+            "title": "Successful",
+            "description": "Operation requests have been successfully delivered to the server."
+        },
+        "page_header": {
+            "title": "Services",
+            "description": "You can perform operations such as starting and stopping services running on your server through this page."
+        },
+        "start": "Start",
+        "stop": "Stop",
+        "restart": "Restart",
+        "activate": "Activate",
+        "deactivate": "Deactivate",
+        "alert_dialog": {
+            "title": "Are you sure?",
+            "description": "This service operation cannot be undone. Do you want to continue?",
+            "cancel": "Cancel",
+            "confirm": "Confirm"
+        },
+        "dialog_description": "The service details for the service are as follows."
+    },
+    "access_logs": {
+        "extension_id": {
+            "title": "Extension Name"
+        },
+        "view": {
+            "title": "Executed Function"
+        },
+        "user_id": {
+            "title": "User Performing the Operation"
+        },
+        "ts": {
+            "title": "Operation Date"
+        },
+        "page_header": {
+            "title": "Access Logs",
+            "description": "You can view and examine the last 500 requests made to your server through this page."
+        },
+        "dialog": {
+            "title": "Access Log Details",
+            "description": "You can view the detailed content of the access log."
+        }
+    },
+    "open_ports": {
+        "accessor_name_title": "Program Name",
+        "accessor_username_title": "Username",
+        "accessor_ip_type_title": "IP Type",
+        "accessor_packet_type_title": "Packet Type",
+        "accessor_port_title": "Port",
+        "page_header": {
+            "title": "Open Ports",
+            "description": "You can view the active ports broadcasting on your server and the active process managing that port through this page."
+        }
+    },
+    "packages": {
+        "accessor_name_title": "Extension Name",
+        "accessor_version_title": "Version",
+        "accessor_type_title": "Architecture Compatibility",
+        "page_header": {
+            "title": "Packages",
+            "description": "You can manage and add new packages installed on your server through this page."
+        }
+    },
+    "updates": {
+        "accessor_name_title": "Extension Name",
+        "accessor_version_title": "Version to be Updated",
+        "accessor_type_title": "Architecture Compatibility",
+        "accessor_status_title": "Status",
+        "update": {
+            "title": "Updates | Liman",
+            "h2": "Updates",
+            "p": "You can view and perform update operations for updates on your server through this page."
+        }
+    },
+    "users": {
+        "groups": {
+            "accessor_group_title": "Group Name",
+            "page_header": {
+                "title": "Local Groups",
+                "description": "You can view the local groups available on your server, add new ones, and add members to groups through this page."
+            },
+            "form_message": {
+                "min": "Group name must be at least 2 characters.",
+                "max": "Group name must be at most 50 characters."
+            },
+            "toasts": {
+                "success": {
+                    "title": "Success",
+                    "description": "Local group created successfully."
+                },
+                "fail": {
+                    "title": "Error",
+                    "description": "An error occurred while creating the local group."
+                }
+            },
+            "dialog": {
+                "add_btn": "Add",
+                "title": "Create Local Group",
+                "description": "This operation will create a local group on your system.",
+                "form_label": "Group Name",
+                "create_btn": "Create"
+            }
+        },
+        "local": {
+            "accessor_user_title": "Username",
+            "page_header": {
+                "title": "Local Users",
+                "description": "You can view the local users available on your server and add new ones through this page."
+            },
+            "form_message": {
+                "username": {
+                    "min": "Username must be at least 2 characters.",
+                    "max": "Username must be at most 50 characters."
+                },
+                "password": {
+                    "min": "Password must be at least 8 characters.",
+                    "max": "Password must be at most 50 characters."
+                },
+                "error_message": "Passwords do not match."
+            },
+            "toasts": {
+                "success": {
+                    "title": "Success",
+                    "description": "Local user created successfully."
+                },
+                "fail": {
+                    "title": "Error",
+                    "description": "An error occurred while creating the local user."
+                }
+            },
+            "dialog": {
+                "add_btn": "Add",
+                "title": "Create Local User",
+                "description": "This operation will create a local user on your system.",
+                "form_labels": {
+                    "username": "Username",
+                    "password": "Password",
+                    "confirm_password": "Confirm Password"
+                },
+                "create_btn": "Create"
+            }
+        },
+        "sudoers": {
+            "accessor_name_title": "Rule Name",
+            "accessor_access_title": "Access Permissions",
+            "toasts": {
+                "delete": {
+                    "success": {
+                        "title": "Success",
+                        "description": "Authorized user deleted successfully."
+                    },
+                    "fail": {
+                        "title": "Error",
+                        "description": "An error occurred while deleting the authorized user."
+                    }
+                },
+                "add": {
+                    "success": {
+                        "title": "Success",
+                        "description": "Authorized user added successfully."
+                    },
+                    "fail": {
+                        "title": "Error",
+                        "description": "An error occurred while adding the authorized user."
+                    }
+                }
+            },
+            "page_header": {
+                "title": "Authorized Users",
+                "description": "You can view the authorized user permissions available on your server and perform add and remove operations."
+            },
+            "alert_dialog": {
+                "delete_btn": "Delete",
+                "title": "Are you sure?",
+                "description": "This operation cannot be undone. The selected authorized users will be removed from the server. Do you want to continue?",
+                "cancel": "Cancel",
+                "confirm": "Confirm"
+            },
+            "form_message": {
+                "min": "Username must be at least 2 characters.",
+                "max": "Username must be at most 50 characters."
+            },
+            "dialog": {
+                "add_btn": "Add",
+                "title": "Create Authorized User",
+                "description": "This operation will create an authorized user on your system.",
+                "form": {
+                    "username": "Username",
+                    "create_btn": "Create"
+                }
+            }
+        }
+    }
+}

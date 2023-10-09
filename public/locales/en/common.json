@@ -1,3 +1,62 @@
 {
-    "page_title": "Liman Central Management System"
+    "page_title": "Liman Central Management System",
+    "command_menu": {
+        "search": "Search...",
+        "search_placeholder": "Search...",
+        "no_results": "No results found."
+    },
+    "language_selector": {
+        "title": "Language Choice"
+    },
+    "notifications": {
+        "title": "Notifications",
+        "mark_all_as_read": "Mark All as Read",
+        "empty": "No Notifications",
+        "empty_message": "Your notifications will appear here.",
+        "manage": "Manage Notifications",
+        "show_all": "Show All Notifications"
+    },
+    "profile_dropdown": {
+        "last_login_at": "Last Login At",
+        "last_login_ip": "Latest Login IP",
+        "profile": "Profile",
+        "logout": "Logout"
+    },
+    "sidebar": {
+        "servers": "Servers",
+        "all_servers": "All servers",
+        "add_server": "Add new server",
+        "admin_message": "Add a server from the top to start using Liman.",
+        "user_message": "Ask your system administrator to assign you a role to start using Liman.",
+        "extensions": "Extensions",
+        "system_status": "System Status",
+        "services": "Services",
+        "packages": "Packages",
+        "updates": "Updates",
+        "user_management": {
+            "title": "User Management",
+            "local_users": "Local Users",
+            "local_groups": "Local Groups",
+            "sudoers": "Authorized Users"
+        },
+        "open_ports": "Open Ports",
+        "access_logs": "Access Logs",
+        "settings": {
+            "title": "Settings",
+            "user": "User Settings",
+            "system": "System Settings",
+            "profile": "Profile",
+            "vault": "Vault",
+            "tokens": "Personal Access Tokens",
+            "extensions": "Extensions",
+            "users": "Users",
+            "roles": "Roles",
+            "email": "Email",
+            "external_notifications": "External Notifications",
+            "subscriptions": "Subscriptions",
+            "access": "Access",
+            "health": "Health Status",
+            "advanced": "Advanced Settings"
+        }
+    }
 }

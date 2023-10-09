@@ -1,1 +1,42 @@
-{}
+{
+    "table": {
+        "no_records": "No records",
+        "pagination": {
+            "selected": "selected.",
+            "page_size": "Page size",
+            "page": "Page",
+            "total": "Total",
+            "records": "records"
+        },
+        "toolbar": {
+            "clear_filters": "Clear Filters",
+            "view": "View",
+            "columns": "Columns",
+            "search_placeholder": "Search..."
+        },
+        "column": {
+            "asc": "Ascending",
+            "desc": "Descending",
+            "hide": "Hide"
+        }
+    },
+    "select": {
+        "user": {
+            "search_placeholder": "Search user...",
+            "not_found": "User not found",
+            "select_placeholder": "Select user"
+        },
+        "server": {
+            "search_placeholder": "Search server...",
+            "not_found": "Server not found",
+            "select_placeholder": "Select server"
+        }
+    },
+    "transfer": {
+        "select_all": "Select all",
+        "search": "Search...",
+        "selected": "({{selected}}/{{total}} selected)",
+        "no_records": "No data",
+        "save": "Save"
+    }
+}
