@@ -18,6 +18,51 @@ function truncate(str: string, n: number) {
   return str.length > n ? str.slice(0, n - 1) + "..." : str
 }
 
+function ExtensionButton({
+  extension,
+  disabled,
+  isCollapsed,
+  onClick,
+}: {
+  extension: IExtension
+  disabled?: boolean
+  isCollapsed: boolean
+  onClick: (e: React.MouseEvent<HTMLAnchorElement>) => void
+}) {
+  const truncatedName = truncate(extension.display_name, 25)
+
+  return (
+    <Button
+      variant={isCollapsed ? "ghost" : "secondary"}
+      size="sm"
+      className={cn(
+        "w-full justify-start",
+        extension.menus && extension.menus.length > 0 && "mb-1"
+      )}
+      disabled={disabled}
+      onClick={() => onClick}
+    >
+      <div className="flex items-center gap-2">
+        <div className="flex w-[18px] items-center justify-center">
+          {extension.icon ? (
+            <i className={`fa-solid fa-${extension.icon} fa-fw`}></i>
+          ) : (
+            <ToyBrick className="h-4 w-4" />
+          )}
+        </div>
+        <span>{truncatedName}</span>
+      </div>
+      {extension.menus &&
+        extension.menus.length > 0 &&
+        (isCollapsed ? (
+          <ChevronRight className="absolute right-6 h-4 w-4" />
+        ) : (
+          <ChevronDown className="absolute right-6 h-4 w-4" />
+        ))}
+    </Button>
+  )
+}
+
 export default function ExtensionItem({
   extension,
   server_id,
@@ -51,79 +96,43 @@ export default function ExtensionItem({
     }
   }, [extension.id, router.asPath])
 
+  const isCollapsed =
+    !router.asPath.includes(extension.id) || !router.asPath.includes(server_id)
+
+  const onClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (disabled) {
+      e.preventDefault()
+    } else {
+      setHash("")
+    }
+  }
+
   return (
     <Collapsible open={router.asPath.includes(extension.id)}>
       <CollapsibleTrigger className="w-full">
-        {!router.asPath.includes(extension.id) ||
-        !router.asPath.includes(server_id) ? (
+        {isCollapsed ? (
           <Link
             href={`/servers/${server_id}/extensions/${extension.id}${
               extension.menus && extension.menus.length > 0
                 ? extension.menus[0].url
                 : ""
             }`}
-            onClick={(e) => {
-              if (disabled) {
-                e.preventDefault()
-              } else {
-                setHash("")
-              }
-            }}
+            onClick={onClick}
           >
-            <Button
-              variant={
-                router.asPath.includes(extension.id) &&
-                router.asPath.includes(server_id)
-                  ? "secondary"
-                  : "ghost"
-              }
-              size="sm"
-              className="w-full justify-start"
+            <ExtensionButton
+              extension={extension}
               disabled={disabled}
-            >
-              <div className="flex items-center gap-2">
-                <div className="flex w-[18px] items-center justify-center">
-                  {extension.icon ? (
-                    <i className={`fa-solid fa-${extension.icon} fa-fw`}></i>
-                  ) : (
-                    <ToyBrick className="h-4 w-4" />
-                  )}
-                </div>
-                <span>{truncate(extension.display_name, 25)}</span>
-              </div>
-              {extension.menus && extension.menus.length > 0 && (
-                <ChevronRight className="absolute right-6 h-4 w-4" />
-              )}
-            </Button>
+              isCollapsed={isCollapsed}
+              onClick={onClick}
+            />
           </Link>
         ) : (
-          <a href="#">
-            <Button
-              variant={
-                router.asPath.includes(extension.id) ? "secondary" : "ghost"
-              }
-              size="sm"
-              className={cn(
-                "w-full justify-start",
-                extension.menus && extension.menus.length > 0 && "mb-1"
-              )}
-              disabled={disabled}
-            >
-              <div className="flex items-center gap-2">
-                <div className="flex w-[18px] items-center justify-center">
-                  {extension.icon ? (
-                    <i className={`fa-solid fa-${extension.icon} fa-fw`}></i>
-                  ) : (
-                    <ToyBrick className="h-4 w-4" />
-                  )}
-                </div>
-                <span>{truncate(extension.display_name, 25)}</span>
-              </div>
-              {extension.menus && extension.menus.length > 0 && (
-                <ChevronDown className="absolute right-6 h-4 w-4" />
-              )}
-            </Button>
-          </a>
+          <ExtensionButton
+            extension={extension}
+            disabled={disabled}
+            isCollapsed={isCollapsed}
+            onClick={onClick}
+          />
         )}
       </CollapsibleTrigger>
       {router.asPath.includes(extension.id) &&
@@ -133,19 +142,68 @@ export default function ExtensionItem({
           <>
             <CollapsibleContent className="mb-1 rounded-md border p-1">
               {extension.menus.map((menu: IMenu) => (
-                <a href={menu.url} key={menu.url}>
-                  <Button
-                    variant={hash.includes(menu.url) ? "secondary" : "ghost"}
-                    size="sm"
-                    className="w-full justify-start"
-                  >
-                    {menu.name}
-                  </Button>
-                </a>
+                <MenuButton menu={menu} hash={hash} key={menu.url} />
               ))}
             </CollapsibleContent>
           </>
         )}
     </Collapsible>
+  )
+}
+
+interface IMenuButtonProps {
+  menu: IMenu
+  hash: string
+}
+
+const MenuButton: React.FC<IMenuButtonProps> = ({ menu, hash }) => {
+  const [isCollapsed, setIsCollapsed] = useState(true)
+
+  const toggleCollapsed = () => {
+    setIsCollapsed(!isCollapsed)
+  }
+
+  useEffect(() => {
+    setIsCollapsed(!hash.includes(menu.url))
+  }, [hash, menu.url])
+
+  return (
+    <div className="my-1">
+      {!menu.children && (
+        <a href={menu.url} key={menu.url}>
+          <Button
+            variant={hash.includes(menu.url) ? "secondary" : "ghost"}
+            size="sm"
+            className="w-full justify-start"
+          >
+            {menu.name}
+          </Button>
+        </a>
+      )}
+      {menu.children && menu.children.length > 0 && (
+        <Collapsible open={!isCollapsed}>
+          <CollapsibleTrigger className="w-full">
+            <Button
+              variant={isCollapsed ? "ghost" : "secondary"}
+              size="sm"
+              className="flex w-full justify-between"
+              onClick={toggleCollapsed}
+            >
+              {menu.name}
+              {isCollapsed ? (
+                <ChevronRight className="h-4 w-4" />
+              ) : (
+                <ChevronDown className="h-4 w-4" />
+              )}
+            </Button>
+          </CollapsibleTrigger>
+          <CollapsibleContent className="mt-1 rounded-md border p-1">
+            {menu.children.map((childMenu: IMenu) => (
+              <MenuButton menu={childMenu} hash={hash} key={childMenu.url} />
+            ))}
+          </CollapsibleContent>
+        </Collapsible>
+      )}
+    </div>
   )
 }

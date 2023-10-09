@@ -23,6 +23,7 @@ export interface IServer {
 export interface IMenu {
   name: string
   url: string
+  children?: IMenu[]
 }
 
 export interface IServerDetails {
