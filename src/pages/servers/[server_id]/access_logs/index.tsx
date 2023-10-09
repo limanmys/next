@@ -33,14 +33,18 @@ export default function ServerExtensionPage() {
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IAccessLog[]>([])
   const { i18n } = useTranslation()
+  const { t } = useTranslation("servers")
 
   const columns: DivergentColumn<IAccessLog, string>[] = [
     {
       accessorKey: "extension_id",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Eklenti Adı" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("access_logs.extension_id.title")}
+        />
       ),
-      title: "Eklenti Adı",
+      title: t("access_logs.extension_id.title"),
       cell: ({ row }) => (
         <div className="flex items-center gap-2">
           <AccessLogDetailsWindow id={row.original.log_id} />{" "}
@@ -51,16 +55,22 @@ export default function ServerExtensionPage() {
     {
       accessorKey: "view",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Çalıştırılan Fonksiyon" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("access_logs.view.title")}
+        />
       ),
-      title: "Çalıştırılan Fonksiyon",
+      title: t("access_logs.view.title"),
     },
     {
       accessorKey: "user_id",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="İşlem Yapan Kullanıcı" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("access_logs.user_id.title")}
+        />
       ),
-      title: "İşlem Yapan Kullanıcı",
+      title: t("access_logs.user_id.title"),
     },
     {
       accessorKey: "ts",
@@ -74,9 +84,12 @@ export default function ServerExtensionPage() {
         })
       },
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="İşlem Tarihi" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("access_logs.ts.title")}
+        />
       ),
-      title: "İşlem Tarihi",
+      title: t("access_logs.ts.title"),
       sortingFn: compareNumericString,
     },
   ]
@@ -100,8 +113,8 @@ export default function ServerExtensionPage() {
   return (
     <>
       <PageHeader
-        title="Erişim Kayıtları"
-        description="Liman üzerinden sunucunuza yapılan son 500 isteği bu sayfa üzerinden görüntüleyebilir, detaylı şekilde inceleyebilirsiniz."
+        title={t("access_logs.page_header.title")}
+        description={t("access_logs.page_header.description")}
       />
       <DataTable
         columns={columns}
@@ -117,6 +130,7 @@ function AccessLogDetailsWindow({ id }: { id: string }) {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState<any>([])
+  const { t } = useTranslation("servers")
 
   const fetchStatus = () => {
     setLoading(true)
@@ -139,9 +153,9 @@ function AccessLogDetailsWindow({ id }: { id: string }) {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[800px]">
         <DialogHeader>
-          <DialogTitle>Erişim Kaydı Detayları</DialogTitle>
+          <DialogTitle>{t("access_logs.dialog.title")}</DialogTitle>
           <DialogDescription>
-            Erişim kaydının detaylı içeriğini görüntüleyebilirsiniz.
+            {t("access_logs.dialog.description")}
           </DialogDescription>
         </DialogHeader>
         {loading ? (

@@ -4,6 +4,7 @@ import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { MinusCircle, PlusCircle } from "lucide-react"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import * as z from "zod"
 
 import { ISudoers } from "@/types/server_user"
@@ -39,17 +40,6 @@ import PageHeader from "@/components/ui/page-header"
 import { useToast } from "@/components/ui/use-toast"
 import { Form, FormField, FormMessage } from "@/components/form/form"
 
-const formSchema = z.object({
-  name: z
-    .string()
-    .min(2, {
-      message: "Kullanıcı adı en az 2 karakter olmalıdır.",
-    })
-    .max(50, {
-      message: "Kullanıcı adı en fazla 50 karakter olmalıdır.",
-    }),
-})
-
 export default function Sudoers() {
   const router = useRouter()
   const [loading, setLoading] = useState<boolean>(true)
@@ -57,6 +47,7 @@ export default function Sudoers() {
   const [selected, setSelected] = useState<ISudoers[]>([])
   const tableRef = useRef<any>()
   const { toast } = useToast()
+  const { t } = useTranslation("servers")
 
   const emitter = useEmitter()
 
@@ -85,16 +76,22 @@ export default function Sudoers() {
     {
       accessorKey: "name",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Kural Adı" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("users.sudoers.accessor_name_title")}
+        />
       ),
-      title: "Kural Adı",
+      title: t("users.sudoers.accessor_name_title"),
     },
     {
       accessorKey: "access",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Erişim Yetkileri" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("users.sudoers.accessor_access_title")}
+        />
       ),
-      title: "Erişim Yetkileri",
+      title: t("users.sudoers.accessor_access_title"),
     },
   ]
 
@@ -134,24 +131,24 @@ export default function Sudoers() {
       .then((res) => {
         if (res.status === 200) {
           toast({
-            title: "Başarılı",
-            description: "Yetkili kullanıcı başarıyla silindi.",
+            title: t("users.sudoers.toasts.success.title"),
+            description: t("users.sudoers.toasts.success"),
           })
           fetchData()
           tableRef.current?.resetRowSelection()
           setSelected([])
         } else {
           toast({
-            title: "Hata",
-            description: "Yetkili kullanıcı silinirken bir hata oluştu.",
+            title: t("users.sudoers.toasts.fail.title"),
+            description: t("users.sudoers.toasts.fail"),
             variant: "destructive",
           })
         }
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description: "Yetkili kullanıcı silinirken bir hata oluştu.",
+          title: t("users.sudoers.toasts.fail.title"),
+          description: t("users.sudoers.toasts.fail"),
           variant: "destructive",
         })
       })
@@ -160,8 +157,8 @@ export default function Sudoers() {
   return (
     <>
       <PageHeader
-        title="Yetkili Kullanıcılar"
-        description="Sunucunuzda mevcut bulunan yetkili kullanıcı izinlerini görüntüleyebilir ve ekleme, çıkartma işlemleri yapabilirsiniz."
+        title={t("users.sudoers.page_header.title")}
+        description={t("users.sudoers.page_header.description")}
       />
 
       <DataTable
@@ -184,21 +181,26 @@ export default function Sudoers() {
                 disabled={!selected?.length}
               >
                 <MinusCircle className="mr-2 h-4 w-4" />
-                Sil
+                {t("users.sudoers.alert_dialog.delete_btn")}
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Emin misiniz?</AlertDialogTitle>
+                <AlertDialogTitle>
+                  {" "}
+                  {t("users.sudoers.alert_dialog.title")}
+                </AlertDialogTitle>
                 <AlertDialogDescription>
-                  Bu işlem geri alınamaz. Seçilen yetkili kullanıcılar sunucudan
-                  kaldırılacaktır, devam etmek istiyor musunuz?
+                  {t("users.sudoers.alert_dialog.description")}
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>Vazgeç</AlertDialogCancel>
+                <AlertDialogCancel>
+                  {" "}
+                  {t("users.sudoers.alert_dialog.cancel")}
+                </AlertDialogCancel>
                 <AlertDialogAction onClick={() => deleteSelected()}>
-                  Onayla
+                  {t("users.sudoers.alert_dialog.confirm")}
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
@@ -213,6 +215,18 @@ function CreateSudoers() {
   const router = useRouter()
   const { toast } = useToast()
   const emitter = useEmitter()
+  const { t } = useTranslation("servers")
+
+  const formSchema = z.object({
+    name: z
+      .string()
+      .min(2, {
+        message: t("users.sudoers.form_message.min"),
+      })
+      .max(50, {
+        message: t("users.sudoers.form_message.max"),
+      }),
+  })
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -229,24 +243,24 @@ function CreateSudoers() {
       .then((res) => {
         if (res.status === 200) {
           toast({
-            title: "Başarılı",
-            description: "Yetkili kullanıcı başarıyla oluşturuldu.",
+            title: t("users.sudoers.toasts.add.success.title"),
+            description: t("users.sudoers.toasts.add.success.description"),
           })
           emitter.emit("REFETCH_SUDOERS")
           setOpen(false)
           form.reset()
         } else {
           toast({
-            title: "Hata",
-            description: "Yetkili kullanıcı oluşturulurken bir hata oluştu.",
+            title: t("users.sudoers.toasts.add.fail.title"),
+            description: t("users.sudoers.toasts.add.fail.description"),
             variant: "destructive",
           })
         }
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description: "Yetkili kullanıcı oluşturulurken bir hata oluştu.",
+          title: t("users.sudoers.toasts.add.fail.title"),
+          description: t("users.sudoers.toasts.add.fail.description"),
           variant: "destructive",
         })
       })
@@ -257,14 +271,14 @@ function CreateSudoers() {
       <DialogTrigger asChild>
         <Button variant="outline" size="sm" className="ml-auto h-8 lg:flex">
           <PlusCircle className="mr-2 h-4 w-4" />
-          Ekle
+          {t("users.sudoers.dialog.add_btn")}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[525px]">
         <DialogHeader>
-          <DialogTitle>Yetkili Kullanıcı Oluştur</DialogTitle>
+          <DialogTitle>{t("users.sudoers.dialog.title")}</DialogTitle>
           <DialogDescription>
-            Bu işlem sonucu sisteminizde yetkili bir kullanıcı oluşturulacaktır.
+            {t("users.sudoers.dialog.description")}
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -278,7 +292,7 @@ function CreateSudoers() {
               render={({ field }) => (
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="name" className="text-right">
-                    Kullanıcı Adı
+                    {t("users.sudoers.dialog.form.username")}
                   </Label>
                   <div className="col-span-3">
                     <Input id="name" {...field} />
@@ -290,7 +304,7 @@ function CreateSudoers() {
             <DialogFooter>
               <Button type="submit">
                 <PlusCircle className="mr-2 h-4 w-4" />
-                Oluştur
+                {t("users.sudoers.dialog.form.create_btn")}
               </Button>
             </DialogFooter>
           </form>

@@ -1,19 +1,26 @@
-import { useEffect, useState } from "react"
-import { useRouter } from "next/router"
-import { apiService } from "@/services"
-import { FileWarning, Save } from "lucide-react"
+import { apiService } from "@/services";
+import { FileWarning, Save } from "lucide-react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-import { IExtensionSetting, IExtensionVariable } from "@/types/extension"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import Loading from "@/components/ui/loading"
-import PageHeader from "@/components/ui/page-header"
-import { useToast } from "@/components/ui/use-toast"
-import { SelectExtension } from "@/components/selectbox/extension-select"
-import { SelectServerScrollable } from "@/components/selectbox/server-select-scrollable"
+
+
+import { SelectExtension } from "@/components/selectbox/extension-select";
+import { SelectServerScrollable } from "@/components/selectbox/server-select-scrollable";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import Loading from "@/components/ui/loading";
+import PageHeader from "@/components/ui/page-header";
+import { useToast } from "@/components/ui/use-toast";
+import { IExtensionSetting, IExtensionVariable } from "@/types/extension";
+
+
+
+
 
 export default function ExtensionSettingsPage() {
   const router = useRouter()
@@ -24,6 +31,7 @@ export default function ExtensionSettingsPage() {
     [key: string]: string
   }>({})
   const [error, setError] = useState<string>("")
+  const {t} = useTranslation("servers")
 
   useEffect(() => {
     if (!router.query.server_id || !router.query.extension_id) return
@@ -52,8 +60,8 @@ export default function ExtensionSettingsPage() {
       )
       .then(() => {
         toast({
-          title: "Başarılı",
-          description: "Ayarlar başarıyla güncellendi.",
+          title: t("extensions.settings.toast.title"),
+          description: t("extensions.settings.toast.description"),
         })
         setError("")
 
@@ -71,15 +79,15 @@ export default function ExtensionSettingsPage() {
   return (
     <>
       <PageHeader
-        title="Eklenti Ayarları"
-        description="Bu sayfa aracılığı ile eklentinin girmenizi istediği zorunlu ve gelişmiş ayarları yönetebilirsiniz."
+        title={t("extensions.settings.page_header.title")}
+        description={t("extensions.settings.page_header.description")}
       />
 
       <div className="p-8 pt-0">
         {error && (
           <Alert className="mb-8" variant="destructive">
             <FileWarning className="h-4 w-4" />
-            <AlertTitle>Hata</AlertTitle>
+            <AlertTitle>{t("extensions.settings.alert_title")}</AlertTitle>
             <AlertDescription>{error}</AlertDescription>
           </Alert>
         )}
@@ -98,15 +106,15 @@ export default function ExtensionSettingsPage() {
             <Card className="overflow-hidden">
               <div className="grid grid-cols-4">
                 <div className="bg-foreground/5 p-5">
-                  <h3 className="font-semibold">Zorunlu Ayarlar</h3>
+                    <h3 className="font-semibold">{t("extensions.settings.card.obligatory_settings_h3")}</h3>
                   <p className="mt-5 text-sm text-muted-foreground">
-                    Eklentinin çalışması için girilmesi zorunlu olan ayarlar.
+                      {t("extensions.settings.card.obligatory_settings_p")}
                   </p>
                 </div>
                 <div className="col-span-3 p-5">
                   {data.required.length == 0 && (
                     <p className="text-muted-foreground">
-                      Eklenti ayara ihtiyaç duymamaktadır.
+                        {t("extensions.settings.no_need_settings")}
                     </p>
                   )}
                   <form onSubmit={handleSubmit}>
@@ -116,7 +124,7 @@ export default function ExtensionSettingsPage() {
                       setValues={setValues}
                     />
                     <Button type="submit" className="mt-5">
-                      <Save className="mr-2 h-4 w-4" /> Kaydet
+                        <Save className="mr-2 h-4 w-4" /> {t("extensions.settings.save")}
                     </Button>
                   </form>
                 </div>
@@ -126,10 +134,9 @@ export default function ExtensionSettingsPage() {
               <Card className="mt-8 overflow-hidden">
                 <div className="grid grid-cols-4">
                   <div className="bg-foreground/5 p-5">
-                    <h3 className="font-semibold">Gelişmiş Ayarlar</h3>
+                      <h3 className="font-semibold">{t("extensions.settings.card.advanced_settings_h3")}</h3>
                     <p className="mt-5 text-sm text-muted-foreground">
-                      Eklentinin çalışması için girilmesi zorunlu olmayan ancak
-                      eklentinin çalışma biçimini değiştiren ayarlar.
+                        {t("extensions.settings.card.advanced_settings_p")}
                     </p>
                   </div>
                   <div className="col-span-3 p-5">
@@ -140,7 +147,7 @@ export default function ExtensionSettingsPage() {
                         setValues={setValues}
                       />
                       <Button type="submit" className="mt-5">
-                        <Save className="mr-2 h-4 w-4" /> Kaydet
+                          <Save className="mr-2 h-4 w-4" /> {t("extensions.settings.save")}
                       </Button>
                     </form>
                   </div>

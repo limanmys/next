@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { apiService } from "@/services"
+import { useTranslation } from "react-i18next"
 
 import { IPort } from "@/types/port"
 import { DivergentColumn } from "@/types/table"
@@ -12,42 +13,55 @@ export default function ServerExtensionPage() {
   const router = useRouter()
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IPort[]>([])
+  const { t } = useTranslation("servers")
 
   const columns: DivergentColumn<IPort, string>[] = [
     {
       accessorKey: "name",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Program Adı" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("open_ports.accessor_name_title")}
+        />
       ),
-      title: "Program Adı",
+      title: t("open_ports.accessor_name_title"),
     },
     {
       accessorKey: "username",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Kullanıcı" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("open_ports.accessor_username_title")}
+        />
       ),
-      title: "Kullanıcı",
+      title: t("open_ports.accessor_username_title"),
     },
     {
       accessorKey: "ip_type",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="IP Türü" />
+        <DataTableColumnHeader column={column} title={t("")} />
       ),
       title: "IP Türü",
     },
     {
       accessorKey: "packet_type",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Paket Türü" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("open_ports.accessor_packet_type_title")}
+        />
       ),
-      title: "Paket Türü",
+      title: t("open_ports.accessor_packet_type_title"),
     },
     {
       accessorKey: "port",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Port" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("open_ports.accessor_port_title")}
+        />
       ),
-      title: "Port",
+      title: t("open_ports.accessor_port_title"),
     },
   ]
 
@@ -70,8 +84,8 @@ export default function ServerExtensionPage() {
   return (
     <>
       <PageHeader
-        title="Açık Portlar"
-        description="Sunucunuzda aktif yayın yapan portları ve o portu yöneten aktif işlemi görüntüleyebilirsiniz."
+        title={t("open_ports.page_header.title")}
+        description={t("open_ports.page_header.description")}
       />
 
       <DataTable

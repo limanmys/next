@@ -2,6 +2,7 @@ import { useState } from "react"
 import { apiService } from "@/services"
 import { Row } from "@tanstack/react-table"
 import { MoreHorizontal, Trash } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { IExternalNotification } from "@/types/notification"
 import { useEmitter } from "@/hooks/useEmitter"
@@ -33,6 +34,7 @@ export function ExternalNotificationActions({
 }) {
   const externalNotification = row.original
   const [deleteDialog, setDeleteDialog] = useState(false)
+  const { t } = useTranslation("settings")
 
   return (
     <>
@@ -43,13 +45,15 @@ export function ExternalNotificationActions({
             className="flex h-5 w-5 p-0 data-[state=open]:bg-muted"
           >
             <MoreHorizontal className="h-4 w-4" />
-            <span className="sr-only">Open menu</span>
+            <span className="sr-only">
+              {t("external_notifications.actions.open_menu")}
+            </span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
           <DropdownMenuItem onClick={() => setDeleteDialog(true)}>
             <Trash className="mr-2 h-3.5 w-3.5" />
-            Sil
+            {t("external_notifications.actions.delete")}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -74,6 +78,7 @@ function DeleteDialog({
   const emitter = useEmitter()
   const { toast } = useToast()
   const [loading, setLoading] = useState(false)
+  const { t } = useTranslation("settings")
 
   const handleDelete = () => {
     setLoading(true)
@@ -83,16 +88,16 @@ function DeleteDialog({
       .delete(`/settings/notifications/external/${externalNotification.id}`)
       .then(() => {
         toast({
-          title: "Başarılı",
-          description: "Dış bildirim başarıyla silindi.",
+          title: t("external_notifications.actions.success"),
+          description: t("external_notifications.actions.toasts.success"),
         })
         emitter.emit("REFETCH_EXTERNAL_NOTIFICATIONS")
         setOpen(false)
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description: "Dış bildirim silinirken hata oluştu.",
+          title: t("external_notifications.actions.error"),
+          description: t("external_notifications.actions.toasts.error"),
           variant: "destructive",
         })
       })
@@ -107,17 +112,25 @@ function DeleteDialog({
         <AlertDialogHeader>
           <AlertDialogTitle>Emin misiniz?</AlertDialogTitle>
           <AlertDialogDescription>
-            Seçilen dış bildirim{" "}
-            <b className="font-semibold">({externalNotification.name})</b> Liman
-            sisteminden tamamen silinecektir. Bu işlem sonucunda bildirim
-            alışınızda kesinti yaşanabilir. Devam etmek istiyor musunuz?
+            <span
+              dangerouslySetInnerHTML={{
+                // TODO: Localization
+                // Couldn't find a better way to use tags with localized strings
+                // If i find any i'll change it.
+                __html: t("external_notifications.actions.confirm_delete", {
+                  externalNotificationName: externalNotification.name,
+                }),
+              }}
+            />
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Vazgeç</AlertDialogCancel>
+          <AlertDialogCancel>
+            {t("external_notifications.actions.no")}
+          </AlertDialogCancel>
           <AlertDialogAction onClick={() => handleDelete()}>
             {loading && <Icons.spinner className="h-4 w-4 animate-spin" />}
-            Onayla
+            {t("external_notifications.actions.yes")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

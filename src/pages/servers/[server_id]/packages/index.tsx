@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { apiService } from "@/services"
+import { useTranslation } from "react-i18next"
 
 import { IPackage } from "@/types/package"
 import { DivergentColumn } from "@/types/table"
@@ -12,28 +13,38 @@ export default function ServerExtensionPage() {
   const router = useRouter()
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IPackage[]>([])
+  const { t } = useTranslation("servers")
 
   const columns: DivergentColumn<IPackage, string>[] = [
     {
       accessorKey: "name",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Eklenti Adı" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("packages.accessor_name_title")}
+        />
       ),
-      title: "Eklenti Adı",
+      title: t("packages.accessor_name_title"),
     },
     {
       accessorKey: "version",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Versiyon" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("packages.accessor_version_title")}
+        />
       ),
-      title: "Versiyon",
+      title: t("packages.accessor_version_title"),
     },
     {
       accessorKey: "type",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Mimari Uyumluluğu" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("packages.accessor_type_title")}
+        />
       ),
-      title: "Mimari Uyumluluğu",
+      title: t("packages.accessor_type_title"),
     },
   ]
 
@@ -56,8 +67,8 @@ export default function ServerExtensionPage() {
   return (
     <>
       <PageHeader
-        title="Paketler"
-        description="Sunucunuzda yüklü olan paketleri bu sayfa aracılığı ile yönetebilir, yeni paketler ekleyebilirsiniz."
+        title={t("packages.page_header.title")}
+        description={t("packages.page_header.description")}
       />
 
       <DataTable

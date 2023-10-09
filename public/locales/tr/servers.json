@@ -159,6 +159,237 @@
             "description": "Bu pencereyi kullanarak sunucunuza eklenti ekleyebilirsiniz.",
             "name": "Eklenti Adı",
             "version": "Versiyon"
+        },
+        "settings":{
+            "toast":{
+                "title":"Başarılı",
+                "description":"Ayarlar başarıyla güncellendi."
+            },
+            "page_header":{
+                "title":"Eklenti Ayarları",
+                "description":"Bu sayfa aracılığı ile eklentinin girmenizi istediği zorunlu ve gelişmiş ayarları yönetebilirsiniz."
+            },
+            "alert_title":"Hata",
+            "card":{
+                "obligatory_settings_h3":"Zorunlu Ayarlar",
+                "obligatory_settings_p":"Eklentinin çalışması için girilmesi zorunlu olan ayarlar.",
+                "advanced_settings_h3":"Gelişmiş Ayarlar",
+                "advanced_settings_p":"Eklentinin çalışması için girilmesi zorunlu olmayan ancak eklentinin çalışma biçimini değiştiren ayarlar."
+            },
+            "no_need_settings":"Eklenti ayara ihtiyaç duymamaktadır.",
+            "save":"Kaydet"
+            
+        }
+    },
+    "services":{
+        "name":{
+            "title":"Servis Ağı"
+        },
+        "description":{
+            "title":"Açıklama"
+        },
+        "status":{
+            "title":"Durum",
+            "running":{
+                "yes":"Çalışıyor",
+                "no":"Çalışmıyor"
+            },
+            "active":{
+                "yes":"Etkin",
+                "no":"Etkin değil"
+            }
+        },
+        "toast":{
+            "title":"Başarılı",
+            "description":"İşlem istekleri karşı sunucuya başarıyla iletildi."
+        },
+        "page_header":{
+            "title":"Servisler",
+            "description":"Sunucunuzda üzerinde çalışan servisleri başlatma, durdurma gibi işlemleri yapabilirsiniz."
+        },
+        "start":"Başlat",
+        "stop":"Durdur",
+        "restart":"Yeniden Başlat",
+        "activate":"Etkinleştir",
+        "deactivate":"Devre Dışı Bırak",
+        "alert_dialog":{
+            "title":"Emin misiniz?",
+            "description":"Bu servis işlemi geri alınamaz, devam etmek istiyor musunuz?",
+            "cancel":"Vazgeç",
+            "confirm":"Onayla"
+        },
+        "dialog_description":"servisinin servis detayları aşağıdaki gibidir."
+    },
+    "access_logs":{
+        "extension_id":{
+            "title":"Eklenti Adı"
+        },
+        "view":{
+            "title":"Çalıştırılan Fonksiyon"
+        },
+        "user_id":{
+            "title":"İşlem Yapan Kullanıcı"
+        },
+        "ts":{
+            "title":"İşlem Tarihi"
+        },
+        "page_header":{
+            "title":"Erişim Kayıtları",
+            "description":"Liman üzerinden sunucunuza yapılan son 500 isteği bu sayfa üzerinden görüntüleyebilir, detaylı şekilde inceleyebilirsiniz."
+        },
+        "dialog":{
+            "title":"Erişim Kaydı Detayları",
+            "description":"Erişim kaydının detaylı içeriğini görüntüleyebilirsiniz."
+        }
+    },
+    "open_ports":{
+        "accessor_name_title":"Program Adı",
+        "accessor_ip_type_title":"IP Türü",
+        "accessor_packet_type_title":"Paket Türü",
+        "accessor_port_title":"Port",  
+        "page_header":{
+            "title":"Açık Portlar",
+            "description":"Sunucunuzda aktif yayın yapan portları ve o portu yöneten aktif işlemi görüntüleyebilirsiniz."
+        }      
+    },
+    "packages":{
+        "accessor_name_title":"Eklenti Adı",
+        "accessor_version_title":"Versiyon",
+        "accessor_type_title":"Mimari Uyumluluğu",
+        "page_header":{
+            "title":"Paketler",
+            "description":"Sunucunuzda yüklü olan paketleri bu sayfa aracılığı ile yönetebilir, yeni paketler ekleyebilirsiniz."
+        }      
+    },
+    "updates":{
+        "accessor_name_title":"Eklenti Adı",
+        "accessor_version_title":"Güncellenecek Versiyon",
+        "accessor_type_title":"Mimari Uyumluluğu",
+        "accessor_status_title":"Durum",
+        "update":{
+            "title":"Güncellemeler | Liman",
+            "h2":"Güncellemeler",
+            "p":"Sunucunuzdaki güncellemeleri bu sayfa aracılığı ile görüntüleyebilir ve güncelleme işlemlerini yapabilirsiniz."
+        }      
+    },
+    "users":{
+        "groups":{
+            "accessor_group_title":"Grup Adı",
+            "page_header":{
+                "title":"Yerel Gruplar",
+                "description":"Sunucunuzda mevcut bulunan yerel grupları görüntüleyebilir, bu sayfa aracılığı ile yenisini ekleyebilir ve gruplara yeni üyeler dahil edebilirsiniz."
+            },     
+            "form_message":{
+                "min":"Grup adı en az 2 karakter olmalıdır.",
+                "max":"Grup adı en fazla 50 karakter olmalıdır."
+            },
+            "toasts":{
+                "success":{
+                    "title": "Başarılı",
+                    "description": "Yerel grup başarıyla oluşturuldu."
+                },
+                "fail":{
+                     "title": "Hata",
+                     "description": "Yerel grup oluşturulurken bir hata oluştu."
+                }
+            },
+            "dialog":{
+                "add_btn":"Ekle",
+                "title":"Yerel Grup Oluştur",
+                "description":" Bu işlem sonucu sisteminizde yerel bir grup oluşturulacaktır.",
+                "form_label":"Grup Adı",
+                "create_btn":"Oluştur"
+            }
+        },
+        "local":{
+            "accessor_user_title":"Kullanıcı Adı",
+            "page_header":{
+                "title":"Yerel Kullanıcılar",
+                 "description":"Sunucunuzda mevcut bulunan yerel kullanıcıları görüntüleyebilir, bu sayfa aracılığı ile yenisini ekleyebilirsiniz."
+            }, 
+            "form_message":{
+                "username":{
+                    "min":"Kullanıcı adı en az 2 karakter olmalıdır.",
+                    "max":"Kullanıcı adı en fazla 50 karakter olmalıdır."
+                },
+                "password":{
+                    "min":"Şifre en az 8 karakter olmalıdır.",
+                    "max":"Şifre en fazla 50 karakter olmalıdır."
+                },
+                "error_message":"Şifreler eşleşmiyor."
+            },
+              "toasts":{
+                "success":{
+                    "title": "Başarılı",
+                    "description": "Yerel grup başarıyla oluşturuldu."
+                },
+                "fail":{
+                     "title": "Hata",
+                     "description": "Yerel kullanıcı oluşturulurken bir hata oluştu."
+                }
+            },
+              "dialog":{
+                "add_btn":"Ekle",
+                "title":"Yerel Kullanıcı Oluştur",
+                "description":"Bu işlem sonucu sisteminizde yerel bir kullanıcı oluşturulacaktır.",
+                "form_labels":{
+                    "username":"Kullanıcı Adı",
+                    "password":"Şifre",
+                    "confirm_password":"Şifreyi Onayla"
+                },
+                "create_btn":"Oluştur"
+            }    
+        },
+        "sudoers":{
+            "accessor_name_title":"Kural Adı",
+            "accessor_access_title":"Erişim Yetkileri",
+            "toasts":{
+                "delete":{
+                      "success":{
+                            "title": "Başarılı",
+                            "description": "Yetkili kullanıcı başarıyla silindi."
+                        },
+                        "fail":{
+                            "title": "Hata",
+                            "description": "Yetkili kullanıcı silinirken bir hata oluştu."
+                        }
+                },
+                "add":{
+                      "success":{
+                            "title": "Başarılı",
+                            "description": "Yetkili kullanıcı başarıyla eklendi."
+                        },
+                        "fail":{
+                            "title": "Hata",
+                            "description": "Yetkili kullanıcı eklenirken bir hata oluştu."
+                        }
+                }
+            
+            },
+            "page_header":{
+                 "title":"Yetkili Kullanıcılar",
+                 "description":"Sunucunuzda mevcut bulunan yetkili kullanıcı izinlerini görüntüleyebilir ve ekleme, çıkartma işlemleri yapabilirsiniz."
+            },
+            "alert_dialog":{
+              "delete_btn":"Sil",
+              "title":"Emin misiniz?",
+              "description":" Bu işlem geri alınamaz. Seçilen yetkili kullanıcılar sunucudan kaldırılacaktır, devam etmek istiyor musunuz?",
+              "cancel":"Vazgeç",
+              "confirm":"Onayla"
+             },   
+            "form_message":{
+                    "min":"Kullanıcı adı en az 2 karakter olmalıdır.",
+                    "max":"Kullanıcı adı en fazla 50 karakter olmalıdır."
+            },
+            "dialog":{
+                "add_btn":"Ekle",
+                "title":"Yetkili Kullanıcı Oluştur",
+                "description":"Bu işlem sonucu sisteminizde yetkili bir kullanıcı oluşturulacaktır.",
+                "form":{
+                    "username":"Kullanıcı Adı",
+                    "create_btn":"Oluştur"
+                }
+            }
         }
     }
 }

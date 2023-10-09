@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/router"
 import { apiService } from "@/services"
+import { t } from "i18next"
 import {
   CheckCircle,
   ListRestart,
@@ -9,6 +10,7 @@ import {
   StopCircle,
   X,
 } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { IService } from "@/types/service"
 import { DivergentColumn } from "@/types/table"
@@ -47,6 +49,7 @@ export default function ServerExtensionPage() {
   const [selected, setSelected] = useState<IService[]>([])
   const tableRef = useRef<any>()
   const { toast } = useToast()
+  const { t } = useTranslation("settings")
 
   const columns: DivergentColumn<IService, string>[] = [
     {
@@ -73,9 +76,12 @@ export default function ServerExtensionPage() {
     {
       accessorKey: "name",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Servis Adı" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("services.name.title")}
+        />
       ),
-      title: "Servis Adı",
+      title: t("services.name"),
       cell: ({ row }) => (
         <div className="flex items-center gap-2">
           <ServiceStatusWindow name={row.original.name} />
@@ -86,16 +92,22 @@ export default function ServerExtensionPage() {
     {
       accessorKey: "description",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Açıklama" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("services.description.title")}
+        />
       ),
-      title: "Açıklama",
+      title: t("services.description.title"),
     },
     {
       accessorKey: "status",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Durum" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("services.status.title")}
+        />
       ),
-      title: "Durum",
+      title: t("services.status.title"),
       cell: ({ row }) => (
         <div className="flex items-center gap-2">
           <Badge
@@ -106,12 +118,14 @@ export default function ServerExtensionPage() {
             }
           >
             {row.original.status.running === "running"
-              ? "Çalışıyor"
-              : "Çalışmıyor"}
+              ? t("services.status.running.yes")
+              : t("services.status.running.no")}
           </Badge>
 
           <Badge variant={row.original.status.active ? "default" : "secondary"}>
-            {row.original.status.active ? "Etkin" : "Etkin Değil"}
+            {row.original.status.active
+              ? t("services.status.active.yes")
+              : t("services.status.active.no")}
           </Badge>
         </div>
       ),
@@ -146,8 +160,8 @@ export default function ServerExtensionPage() {
       })
       .then(() => {
         toast({
-          title: "Başarılı",
-          description: "İşlem istekleri karşı sunucuya başarıyla iletildi.",
+          title: t("services.toast.title"),
+          description: t("services.toast.description"),
         })
         tableRef.current?.resetRowSelection()
         setSelected([])
@@ -158,8 +172,8 @@ export default function ServerExtensionPage() {
   return (
     <>
       <PageHeader
-        title="Servisler"
-        description="Sunucunuzda üzerinde çalışan servisleri başlatma, durdurma gibi işlemleri yapabilirsiniz."
+        title={t("services.page_header.title")}
+        description={t("services.page_header.description")}
       />
 
       <DataTable
@@ -179,7 +193,7 @@ export default function ServerExtensionPage() {
               disabled={!selected.length}
             >
               <PlayCircle className="mr-2 h-4 w-4" />
-              Başlat
+              {t("services.start")}
             </Button>
           </ServiceAlertWindow>
           <ServiceAlertWindow onAction={() => serviceOperation("stop")}>
@@ -190,7 +204,7 @@ export default function ServerExtensionPage() {
               disabled={!selected.length}
             >
               <StopCircle className="mr-2 h-4 w-4" />
-              Durdur
+              {t("services.stop")}
             </Button>
           </ServiceAlertWindow>
           <ServiceAlertWindow onAction={() => serviceOperation("restart")}>
@@ -201,7 +215,7 @@ export default function ServerExtensionPage() {
               disabled={!selected.length}
             >
               <ListRestart className="mr-2 h-4 w-4" />
-              Yeniden Başlat
+              {t("services.restart")}
             </Button>
           </ServiceAlertWindow>
           <ServiceAlertWindow onAction={() => serviceOperation("enable")}>
@@ -212,7 +226,7 @@ export default function ServerExtensionPage() {
               disabled={!selected.length}
             >
               <CheckCircle className="mr-2 h-4 w-4" />
-              Etkinleştir
+              {t("services.activate")}
             </Button>
           </ServiceAlertWindow>
           <ServiceAlertWindow onAction={() => serviceOperation("disable")}>
@@ -223,7 +237,7 @@ export default function ServerExtensionPage() {
               disabled={!selected.length}
             >
               <X className="mr-2 h-4 w-4" />
-              Devre Dışı Bırak
+              {t("services.deactivate")}
             </Button>
           </ServiceAlertWindow>
         </div>
@@ -244,15 +258,19 @@ function ServiceAlertWindow({
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Emin misiniz?</AlertDialogTitle>
+          <AlertDialogTitle>
+            {t("services.alert_dialog.title")}
+          </AlertDialogTitle>
           <AlertDialogDescription>
-            Bu servis işlemi geri alınamaz, devam etmek istiyor musunuz?
+            {t("services.alert_dialog.description")}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Vazgeç</AlertDialogCancel>
+          <AlertDialogCancel>
+            {t("services.alert_dialog.cancel")}
+          </AlertDialogCancel>
           <AlertDialogAction onClick={() => onAction()}>
-            Onayla
+            {t("services.alert_dialog.confirm")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -290,7 +308,7 @@ function ServiceStatusWindow({ name }: { name: string }) {
         <DialogHeader>
           <DialogTitle>{name}</DialogTitle>
           <DialogDescription>
-            {name} servisinin servis detayları aşağıdaki gibidir.
+            {name} {t("services.dialog_description")}
           </DialogDescription>
         </DialogHeader>
         <div className="relative grid gap-4 py-4">
