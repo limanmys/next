@@ -1,5 +1,4 @@
 import { ReactElement, useEffect } from "react"
-import Head from "next/head"
 import { NextPageWithLayout } from "@/pages/_app"
 import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -70,13 +69,9 @@ const AccessLdapPage: NextPageWithLayout = () => {
 
   return (
     <>
-      <Head>
-        <title>{t("access.ldap.head_title")}</title>
-      </Head>
-
       <PageHeader
         title={t("access.ldap.page_header.title")}
-        description={t("access.ldap.toast.fail.description")}
+        description={t("access.ldap.page_header.description")}
       />
 
       <div className="px-8">

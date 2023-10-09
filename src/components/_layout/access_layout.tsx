@@ -25,27 +25,24 @@ export default function AccessLayout({
     {
       id: "ldap",
       icon: FolderGit2,
-      title: "LDAP Bağlantısı",
-      description:
-        "Liman'a giriş yaparken LDAP bağlantısı kullanabilir ve detaylı şekilde erişim yetkilerini konfigüre edebilirsiniz.",
+      title: t("access.ldap.page_header.title"),
+      description: t("access.ldap.page_header.description"),
       href: `/settings/access/ldap`,
       enabled: true,
     },
     {
       id: "permissions_ldap",
       icon: ScanFace,
-      title: "LDAP Erişim İzinleri",
-      description:
-        "Hangi LDAP gruplarının ve kullanıcılarının Liman'a giriş yapabileceğini veya yapamayacağını bu sayfa aracılığıyla detaylı şekilde ayarlayabilirsiniz.",
+      title: t("access.permissions.title"),
+      description: t("access.permissions.description"),
       href: `/settings/access/permissions_ldap`,
       enabled: enabled,
     },
     {
       id: "keycloak",
       icon: BookKey,
-      title: "Keycloak",
-      description:
-        "Keycloak auth gatewayini kullanarak Liman üzerine kullanıcı girişi yapılmasını sağlayabilirsiniz.",
+      title: t("access.keycloak.page_header.title"),
+      description: t("access.keycloak.page_header.description"),
       href: `/settings/access/keycloak`,
       enabled: true,
     },
@@ -71,7 +68,7 @@ export default function AccessLayout({
     >
       <div className="col-span-1 border-r">
         <div className="flex items-center border-b p-8 text-2xl font-bold">
-          Erişim
+          {t("access.title")}
         </div>
         {access.map((r) => (
           <AccessCard

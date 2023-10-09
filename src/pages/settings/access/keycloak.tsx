@@ -1,5 +1,4 @@
 import { ReactElement, useEffect } from "react"
-import Head from "next/head"
 import { NextPageWithLayout } from "@/pages/_app"
 import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -76,10 +75,6 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
 
   return (
     <>
-      <Head>
-        <title>{t("access.keycloak.head_title")}</title>
-      </Head>
-
       <PageHeader
         title={t("access.keycloak.page_header.title")}
         description={t("access.keycloak.page_header.description")}
