@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { DownloadCloudIcon, Save } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { ICertificateDetails } from "@/types/certificate"
 import { Button } from "@/components/ui/button"
@@ -11,6 +12,7 @@ import PageHeader from "@/components/ui/page-header"
 import { useToast } from "@/components/ui/use-toast"
 
 export default function CertificateInformation() {
+  const { t } = useTranslation("settings")
   const { toast } = useToast()
   const router = useRouter()
 
@@ -33,8 +35,8 @@ export default function CertificateInformation() {
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description: "Sertifika detayları getirilirken bir hata oluştu.",
+          title: t("error"),
+          description: t("advanced.certificates.retrieve.fetch_error"),
           variant: "destructive",
         })
       })
@@ -54,8 +56,8 @@ export default function CertificateInformation() {
       })
       .then((res) => {
         toast({
-          title: "Başarılı",
-          description: "Sertifika başarıyla oluşturuldu.",
+          title: t("success"),
+          description: t("advanced.certificates.retrieve.success"),
         })
         setTimeout(() => {
           router.push("/settings/advanced/certificates")
@@ -63,8 +65,8 @@ export default function CertificateInformation() {
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description: "Sertifika oluşturulurken bir hata oluştu.",
+          title: t("error"),
+          description: t("advanced.certificates.retrieve.success"),
           variant: "destructive",
         })
       })
@@ -76,24 +78,24 @@ export default function CertificateInformation() {
   return (
     <>
       <PageHeader
-        title="Sertifika Ekle"
-        description="Hostname ve port bilgisini sağladığınız sunucunun sertifikası Liman sistemine aktarılacaktır."
+        title={t("advanced.certificates.retrieve.title")}
+        description={t("advanced.certificates.retrieve.description")}
       />
 
       <div className="p-8 pt-0">
         <div className="grid grid-cols-2 gap-6">
           <div className="space-y-2">
             <h2 className="mb-3 w-full border-b text-lg font-semibold">
-              İstemci Detayları
+              {t("advanced.certificates.retrieve.client_details")}
             </h2>
-            <Label>IP Adresi</Label>
+            <Label>{t("advanced.certificates.retrieve.ip_address")}</Label>
             <Input
               value={ipAddress}
               onChange={(e) => setIpAddress(e.target.value)}
             />
             <Button onClick={fetchDetails} className="mb-10" disabled={loading}>
-              <DownloadCloudIcon className="mr-2 h-4 w-4" /> Sertifika
-              Detaylarını Getir
+              <DownloadCloudIcon className="mr-2 h-4 w-4" />{" "}
+              {t("advanced.certificates.retrieve.fetch_details")}
             </Button>
           </div>
           <div className="space-y-2 pt-[40px]">
@@ -103,32 +105,34 @@ export default function CertificateInformation() {
 
           <div className="space-y-2">
             <h2 className="mb-3 w-full border-b text-lg font-semibold">
-              Geçerlilik Süresi
+              {t("advanced.certificates.retrieve.validity")}
             </h2>
-            <Label>Başlangıç</Label>
+            <Label>{t("advanced.certificates.retrieve.valid_from")}</Label>
             <Input value={data?.valid_from} disabled />
           </div>
 
           <div className="space-y-2 pt-[40px]">
-            <Label>Bitiş</Label>
+            <Label>{t("advanced.certificates.retrieve.valid_to")}</Label>
             <Input value={data?.valid_to} disabled />
           </div>
 
           <div className="space-y-2">
             <h2 className="mb-3 w-full border-b text-lg font-semibold">
-              Genel Detaylar
+              {t("advanced.certificates.retrieve.details")}
             </h2>
-            <Label>İstemci</Label>
+            <Label>{t("advanced.certificates.retrieve.issuer_cn")}</Label>
             <Input value={data?.issuer_cn} disabled />
           </div>
 
           <div className="space-y-2 pt-[40px]">
-            <Label>Otorite</Label>
+            <Label>{t("advanced.certificates.retrieve.issuer_dc")}</Label>
             <Input value={data?.issuer_dc} disabled />
           </div>
 
           <div className="space-y-2">
-            <Label>İstemci Parmak İzi</Label>
+            <Label>
+              {t("advanced.certificates.retrieve.subject_key_identifier")}
+            </Label>
             <Input value={data?.subject_key_identifier} disabled />
 
             <Button
@@ -136,12 +140,15 @@ export default function CertificateInformation() {
               className="mb-10"
               disabled={loading || !data || Object.keys(data).length == 0}
             >
-              <Save className="mr-2 h-4 w-4" /> Kaydet
+              <Save className="mr-2 h-4 w-4" />{" "}
+              {t("advanced.certificates.retrieve.save")}
             </Button>
           </div>
 
           <div className="space-y-2">
-            <Label>Otorite Parmak İzi</Label>
+            <Label>
+              {t("advanced.certificates.retrieve.authority_key_identifier")}
+            </Label>
             <Input value={data?.authority_key_identifier} disabled />
           </div>
         </div>

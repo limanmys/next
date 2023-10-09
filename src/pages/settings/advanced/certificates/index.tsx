@@ -20,7 +20,7 @@ const AdvancedCertificateSettingsPage: NextPageWithLayout = () => {
 
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<ICertificate[]>([])
-  const { i18n } = useTranslation()
+  const { t, i18n } = useTranslation("settings")
 
   const emitter = useEmitter()
 
@@ -42,9 +42,12 @@ const AdvancedCertificateSettingsPage: NextPageWithLayout = () => {
     {
       accessorKey: "updated_at",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Son Güncellenme Tarihi" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("advanced.certificates.updated_at")}
+        />
       ),
-      title: "Son Güncellenme Tarihi",
+      title: t("advanced.certificates.updated_at"),
       cell: ({ row }) => (
         <>
           {row.original.updated_at
@@ -58,7 +61,7 @@ const AdvancedCertificateSettingsPage: NextPageWithLayout = () => {
                   minute: "2-digit",
                 }
               )
-            : "Bilinmiyor"}
+            : t("unknown")}
         </>
       ),
     },
@@ -96,8 +99,8 @@ const AdvancedCertificateSettingsPage: NextPageWithLayout = () => {
   return (
     <>
       <PageHeader
-        title="Sertifikalar"
-        description="Liman sunucusunun kabul edeceği sertifikaları buradan ekleyebilirsiniz."
+        title={t("advanced.certificates.title")}
+        description={t("advanced.certificates.description")}
       />
 
       <DataTable
@@ -115,7 +118,7 @@ const AdvancedCertificateSettingsPage: NextPageWithLayout = () => {
           }
         >
           <PlusCircle className="mr-2 h-4 w-4" />
-          Ekle
+          {t("advanced.certificates.add")}
         </Button>
       </DataTable>
     </>

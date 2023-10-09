@@ -4,6 +4,7 @@ import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Save } from "lucide-react"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import * as z from "zod"
 
 import { Button } from "@/components/ui/button"
@@ -14,14 +15,15 @@ import { useToast } from "@/components/ui/use-toast"
 import AdvancedLayout from "@/components/_layout/advanced_layout"
 import { Form, FormField, FormMessage } from "@/components/form/form"
 
-const formSchema = z.object({
-  dns1: z.string().nonempty("DNS 1 alanı boş bırakılamaz."),
-  dns2: z.string().optional(),
-  dns3: z.string().optional(),
-})
-
 const AdvancedDnsSettingsPage: NextPageWithLayout = () => {
+  const { t } = useTranslation("settings")
   const { toast } = useToast()
+
+  const formSchema = z.object({
+    dns1: z.string().min(1, t("advanced.dns.dns1_validation")),
+    dns2: z.string().optional(),
+    dns3: z.string().optional(),
+  })
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -33,14 +35,14 @@ const AdvancedDnsSettingsPage: NextPageWithLayout = () => {
       .post("/settings/advanced/dns", data)
       .then(() => {
         toast({
-          title: "Başarılı",
-          description: "DNS ayarları başarıyla kaydedildi.",
+          title: t("success"),
+          description: t("advanced.dns.success"),
         })
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description: "DNS ayarları kaydedilirken bir hata oluştu.",
+          title: t("error"),
+          description: t("advanced.dns.error"),
           variant: "destructive",
         })
       })
@@ -58,8 +60,8 @@ const AdvancedDnsSettingsPage: NextPageWithLayout = () => {
   return (
     <>
       <PageHeader
-        title="DNS Ayarları"
-        description="Liman'ın bağlanacağı uçları ve aktif dizin sunucuları çözmesini sağlayan DNS ayarlarını buradan yapabilirsiniz."
+        title={t("advanced.dns.title")}
+        description={t("advanced.dns.description")}
       />
 
       <div className="px-8">
@@ -110,7 +112,7 @@ const AdvancedDnsSettingsPage: NextPageWithLayout = () => {
             <div className="flex justify-end">
               <Button type="submit">
                 <Save className="mr-2 h-4 w-4" />
-                Kaydet
+                {t("advanced.dns.save")}
               </Button>
             </div>
           </form>

@@ -28,13 +28,14 @@ export default function ConnectionInformation({
   const informationSchema = z.object({
     ip_address: z
       .string()
-      .nonempty(t("create.steps.connection_information.validation.ip_address")),
+      .min(1, t("create.steps.connection_information.validation.ip_address")),
     port: z
       .string()
       .max(5, {
         message: t("create.steps.connection_information.validation.port.max"),
       })
-      .nonempty(
+      .min(
+        1,
         t("create.steps.connection_information.validation.port.nonempty")
       ),
   })

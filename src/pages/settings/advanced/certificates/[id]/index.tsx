@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { apiService } from "@/services"
+import { useTranslation } from "react-i18next"
 
 import { ICertificateDetails } from "@/types/certificate"
 import { Input } from "@/components/ui/input"
@@ -10,6 +11,7 @@ import { useToast } from "@/components/ui/use-toast"
 
 export default function CertificateInformation() {
   const router = useRouter()
+  const { t } = useTranslation("settings")
   const { toast } = useToast()
 
   const [loading, setLoading] = useState<boolean>(true)
@@ -28,8 +30,8 @@ export default function CertificateInformation() {
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description: "Sertifika detayları getirilirken bir hata oluştu.",
+          title: t("error"),
+          description: t("advanced.certificates.retrieve.fetch_error"),
           variant: "destructive",
         })
       })
@@ -41,17 +43,17 @@ export default function CertificateInformation() {
   return (
     <>
       <PageHeader
-        title="Sertifika Detayları"
-        description="Seçtiğiniz sertifikaya ait detaylı bilgileri görüntüleyebilirsiniz."
+        title={t("advanced.certificates.details.title")}
+        description={t("advanced.certificates.details.description")}
       />
 
       <div className="p-8 pt-0">
         <div className="grid grid-cols-2 gap-6">
           <div className="space-y-2">
             <h2 className="mb-3 w-full border-b text-lg font-semibold">
-              İstemci Detayları
+              {t("advanced.certificates.retrieve.client_details")}
             </h2>
-            <Label>IP Adresi</Label>
+            <Label>{t("advanced.certificates.retrieve.ip_address")}</Label>
             <Input value={data?.ip_address} disabled />
           </div>
           <div className="space-y-2 pt-[40px]">
@@ -61,37 +63,41 @@ export default function CertificateInformation() {
 
           <div className="space-y-2">
             <h2 className="mb-3 w-full border-b text-lg font-semibold">
-              Geçerlilik Süresi
+              {t("advanced.certificates.retrieve.validity")}
             </h2>
-            <Label>Başlangıç</Label>
+            <Label>{t("advanced.certificates.retrieve.valid_from")}</Label>
             <Input value={data?.valid_from} disabled />
           </div>
 
           <div className="space-y-2 pt-[40px]">
-            <Label>Bitiş</Label>
+            <Label>{t("advanced.certificates.retrieve.valid_to")}</Label>
             <Input value={data?.valid_to} disabled />
           </div>
 
           <div className="space-y-2">
             <h2 className="mb-3 w-full border-b text-lg font-semibold">
-              Genel Detaylar
+              {t("advanced.certificates.retrieve.details")}
             </h2>
-            <Label>İstemci</Label>
+            <Label>{t("advanced.certificates.retrieve.issuer_cn")}</Label>
             <Input value={data?.issuer_cn} disabled />
           </div>
 
           <div className="space-y-2 pt-[40px]">
-            <Label>Otorite</Label>
+            <Label>{t("advanced.certificates.retrieve.issuer_dc")}</Label>
             <Input value={data?.issuer_dc} disabled />
           </div>
 
           <div className="space-y-2">
-            <Label>İstemci Parmak İzi</Label>
+            <Label>
+              {t("advanced.certificates.retrieve.subject_key_identifier")}
+            </Label>
             <Input value={data?.subject_key_identifier} disabled />
           </div>
 
           <div className="space-y-2">
-            <Label>Otorite Parmak İzi</Label>
+            <Label>
+              {t("advanced.certificates.retrieve.authority_key_identifier")}
+            </Label>
             <Input value={data?.authority_key_identifier} disabled />
           </div>
         </div>

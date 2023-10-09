@@ -4,6 +4,7 @@ import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Bug, FolderArchive, Puzzle, Save, ShieldCheck } from "lucide-react"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import * as z from "zod"
 
 import { Button } from "@/components/ui/button"
@@ -30,24 +31,25 @@ import {
   FormMessage,
 } from "@/components/form/form"
 
-const formSchema = z.object({
-  APP_LANG: z.string(),
-  OTP_ENABLED: z.boolean(),
-  APP_NOTIFICATION_EMAIL: z.string().email(),
-  APP_URL: z.string().url(),
-  EXTENSION_TIMEOUT: z
-    .string()
-    .refine((val) => !Number.isNaN(parseInt(val, 10)), {
-      message: "Geçerli bir sayı giriniz.",
-    }),
-  APP_DEBUG: z.boolean(),
-  EXTENSION_DEVELOPER_MODE: z.boolean(),
-  NEW_LOG_LEVEL: z.string(),
-  LDAP_IGNORE_CERT: z.boolean(),
-})
-
 const AdvancedTweaksPage: NextPageWithLayout = () => {
+  const { t } = useTranslation("settings")
   const { toast } = useToast()
+
+  const formSchema = z.object({
+    APP_LANG: z.string(),
+    OTP_ENABLED: z.boolean(),
+    APP_NOTIFICATION_EMAIL: z.string().email(),
+    APP_URL: z.string().url(),
+    EXTENSION_TIMEOUT: z
+      .string()
+      .refine((val) => !Number.isNaN(parseInt(val, 10)), {
+        message: t("advanced.tweaks.validation"),
+      }),
+    APP_DEBUG: z.boolean(),
+    EXTENSION_DEVELOPER_MODE: z.boolean(),
+    NEW_LOG_LEVEL: z.string(),
+    LDAP_IGNORE_CERT: z.boolean(),
+  })
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -59,14 +61,14 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
       .post("/settings/advanced/tweaks", data)
       .then(() => {
         toast({
-          title: "Başarılı",
-          description: "İnce ayarlar başarıyla kaydedildi.",
+          title: t("success"),
+          description: t("advanced.tweaks.success"),
         })
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description: "İnce ayarlar kaydedilirken bir hata oluştu.",
+          title: t("error"),
+          description: t("advanced.tweaks.error"),
           variant: "destructive",
         })
       })
@@ -84,8 +86,8 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
   return (
     <>
       <PageHeader
-        title="İnce Ayarlar"
-        description="Liman ile ilgili ince ayarları bu sayfadan değiştirebilirsiniz."
+        title={t("advanced.tweaks.title")}
+        description={t("advanced.tweaks.description")}
       />
 
       <div className="px-8">
@@ -96,11 +98,13 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
               name="APP_LANG"
               render={({ field }) => (
                 <div className="flex flex-col gap-3">
-                  <Label htmlFor="APP_LANG">Sistem Dili</Label>
+                  <Label htmlFor="APP_LANG">
+                    {t("advanced.tweaks.APP_LANG.label")}
+                  </Label>
                   <div className="relative">
                     <Select onValueChange={field.onChange} value={field.value}>
                       <SelectTrigger>
-                        <SelectValue placeholder="Bir şifreleme türü seçiniz." />
+                        <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="tr">Türkçe</SelectItem>
@@ -109,9 +113,7 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
                       </SelectContent>
                     </Select>
                     <small className="italic text-muted-foreground">
-                      Türkçe, İngilizce ve Almanca seçenekleri arasından
-                      değişiklik yaparak varsayılan sistem dilini
-                      değiştirebilirsiniz.
+                      {t("advanced.tweaks.APP_LANG.subtext")}
                     </small>
                   </div>
                   <FormMessage />
@@ -127,11 +129,11 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
                   <div className="flex space-x-3 space-y-0.5">
                     <ShieldCheck className="h-6 w-6 text-muted-foreground" />
                     <div className="flex flex-col space-y-0.5">
-                      <FormLabel>İki Faktörlü Doğrulama</FormLabel>
+                      <FormLabel>
+                        {t("advanced.tweaks.OTP_ENABLED.label")}
+                      </FormLabel>
                       <FormDescription>
-                        Aktif ettiğinizde tüm kullanıcılar zorunlu olarak tercih
-                        ettiğiniz iki faktörlü doğrulama uygulaması aracılığıyla
-                        kodlar alarak giriş yapacaktır.
+                        {t("advanced.tweaks.OTP_ENABLED.subtext")}
                       </FormDescription>
                     </div>
                   </div>
@@ -151,14 +153,13 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
               render={({ field }) => (
                 <div className="flex flex-col gap-3">
                   <Label htmlFor="APP_NOTIFICATION_EMAIL">
-                    Sistem E-Postası
+                    {t("advanced.tweaks.APP_NOTIFICATION_EMAIL.label")}
                   </Label>
                   <div className="relative">
                     <Input id="APP_NOTIFICATION_EMAIL" {...field} />
                   </div>
                   <small className="-mt-2 italic text-muted-foreground">
-                    Bu alana girdiğiniz e-posta adresi Liman tarafından
-                    kullanılarak size bildirimleri ve uyarıları gönderecektir.
+                    {t("advanced.tweaks.APP_NOTIFICATION_EMAIL.subtext")}
                   </small>
                   <FormMessage />
                 </div>
@@ -170,12 +171,14 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
               name="APP_URL"
               render={({ field }) => (
                 <div className="flex flex-col gap-3">
-                  <Label htmlFor="APP_URL">Uygulama Adresi</Label>
+                  <Label htmlFor="APP_URL">
+                    {t("advanced.tweaks.APP_URL.label")}
+                  </Label>
                   <div className="relative">
                     <Input id="APP_URL" {...field} />
                   </div>
                   <small className="-mt-2 italic text-muted-foreground">
-                    Maillerde ve bildimlerde eklenecek Liman sisteminin adresi.
+                    {t("advanced.tweaks.APP_URL.subtext")}
                   </small>
                   <FormMessage />
                 </div>
@@ -188,14 +191,13 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
               render={({ field }) => (
                 <div className="flex flex-col gap-3">
                   <Label htmlFor="EXTENSION_TIMEOUT">
-                    Eklenti İstek Zaman Aşımı
+                    {t("advanced.tweaks.EXTENSION_TIMEOUT.label")}
                   </Label>
                   <div className="relative">
                     <Input id="EXTENSION_TIMEOUT" {...field} type="number" />
                   </div>
                   <small className="-mt-2 italic text-muted-foreground">
-                    Liman&apos;ın eklentilere göndereceği isteklerde
-                    kullanılacak zaman aşımı süresi.
+                    {t("advanced.tweaks.EXTENSION_TIMEOUT.subtext")}
                   </small>
                   <FormMessage />
                 </div>
@@ -210,10 +212,11 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
                   <div className="flex space-x-3 space-y-0.5">
                     <Bug className="h-6 w-6 text-muted-foreground" />
                     <div className="flex flex-col space-y-0.5">
-                      <FormLabel>Geliştirici Modu</FormLabel>
+                      <FormLabel>
+                        {t("advanced.tweaks.APP_DEBUG.label")}
+                      </FormLabel>
                       <FormDescription>
-                        Aktif edildiğinde Liman sistemi daha detaylı loglar
-                        gönderecek ve hata mesajları değişecektir.
+                        {t("advanced.tweaks.APP_DEBUG.subtext")}
                       </FormDescription>
                     </div>
                   </div>
@@ -235,10 +238,11 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
                   <div className="flex space-x-3 space-y-0.5">
                     <Puzzle className="h-6 w-6 text-muted-foreground" />
                     <div className="flex flex-col space-y-0.5">
-                      <FormLabel>Eklenti Geliştirici Modu</FormLabel>
+                      <FormLabel>
+                        {t("advanced.tweaks.EXTENSION_DEVELOPER_MODE.label")}
+                      </FormLabel>
                       <FormDescription>
-                        Aktif edildiğinde eklenti geliştiricileri için daha
-                        detaylı hata mesajları ve loglar gönderilecektir.
+                        {t("advanced.tweaks.EXTENSION_DEVELOPER_MODE.subtext")}
                       </FormDescription>
                     </div>
                   </div>
@@ -257,24 +261,31 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
               name="NEW_LOG_LEVEL"
               render={({ field }) => (
                 <div className="flex flex-col gap-3">
-                  <Label htmlFor="NEW_LOG_LEVEL">Loglama Seviyesi</Label>
+                  <Label htmlFor="NEW_LOG_LEVEL">
+                    {t("advanced.tweaks.NEW_LOG_LEVEL.label")}
+                  </Label>
                   <div className="relative">
                     <Select onValueChange={field.onChange} value={field.value}>
                       <SelectTrigger>
-                        <SelectValue placeholder="Bir şifreleme türü seçiniz." />
+                        <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="1">Minimal</SelectItem>
-                        <SelectItem value="2">Eklenti Log</SelectItem>
-                        <SelectItem value="3">
-                          Detaylı Eklenti Logları
+                        <SelectItem value="1">
+                          {t("advanced.tweaks.NEW_LOG_LEVEL.minimal")}
                         </SelectItem>
-                        <SelectItem value="0">Tüm İşlemleri Logla</SelectItem>
+                        <SelectItem value="2">
+                          {t("advanced.tweaks.NEW_LOG_LEVEL.ext_log")}
+                        </SelectItem>
+                        <SelectItem value="3">
+                          {t("advanced.tweaks.NEW_LOG_LEVEL.detailed_ext_log")}
+                        </SelectItem>
+                        <SelectItem value="0">
+                          {t("advanced.tweaks.NEW_LOG_LEVEL.all")}
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                     <small className="italic text-muted-foreground">
-                      Liman&apos;ın loglanma davranışını bu kısım aracılığıyla
-                      değiştirebilirsiniz.
+                      {t("advanced.tweaks.NEW_LOG_LEVEL.subtext")}
                     </small>
                   </div>
                   <FormMessage />
@@ -291,13 +302,10 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
                     <FolderArchive className="h-6 w-6 text-muted-foreground" />
                     <div className="flex flex-col space-y-0.5">
                       <FormLabel>
-                        LDAP Sertifika Kontrolünü Devre Dışı Bırak
+                        {t("advanced.tweaks.LDAP_IGNORE_CERT.label")}
                       </FormLabel>
                       <FormDescription>
-                        Aktif edildiğinde sisteme sertifika eklenmesine gerek
-                        olmadan LDAP sunucularına bağlanılabilirsiniz. Eklenti
-                        klasörü içerisinde .ignoreme adında bir dosya
-                        oluşturmanız gerekecektir.
+                        {t("advanced.tweaks.LDAP_IGNORE_CERT.subtext")}
                       </FormDescription>
                     </div>
                   </div>
@@ -314,7 +322,7 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
             <div className="flex justify-end pb-10">
               <Button type="submit">
                 <Save className="mr-2 h-4 w-4" />
-                Kaydet
+                {t("advanced.tweaks.save")}
               </Button>
             </div>
           </form>

@@ -4,6 +4,7 @@ import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Save } from "lucide-react"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import * as z from "zod"
 
 import { Button } from "@/components/ui/button"
@@ -21,14 +22,15 @@ import { useToast } from "@/components/ui/use-toast"
 import AdvancedLayout from "@/components/_layout/advanced_layout"
 import { Form, FormField, FormMessage } from "@/components/form/form"
 
-const formSchema = z.object({
-  type: z.string().nonempty("Bir tip seçimi yapınız."),
-  ip_address: z.string().nonempty("IP adresi boş bırakılamaz."),
-  port: z.string().nonempty("Port boş bırakılamaz."),
-})
-
 const AdvancedLogRotationPage: NextPageWithLayout = () => {
+  const { t } = useTranslation("settings")
   const { toast } = useToast()
+
+  const formSchema = z.object({
+    type: z.string().min(1),
+    ip_address: z.string().min(1),
+    port: z.string().min(1),
+  })
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -40,15 +42,14 @@ const AdvancedLogRotationPage: NextPageWithLayout = () => {
       .post("/settings/advanced/log_rotation", data)
       .then(() => {
         toast({
-          title: "Başarılı",
-          description: "Log yönlendirme ayarları başarıyla kaydedildi.",
+          title: t("success"),
+          description: t("advanced.log_rotation.success"),
         })
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description:
-            "Log yönlendirme ayarları kaydedilirken bir hata oluştu.",
+          title: t("error"),
+          description: t("advanced.log_rotation.error"),
           variant: "destructive",
         })
       })
@@ -57,8 +58,8 @@ const AdvancedLogRotationPage: NextPageWithLayout = () => {
   return (
     <>
       <PageHeader
-        title="Log Yönlendirme Ayarları"
-        description="Liman'ın önemli sistem loglarını ve mesajlarını rsyslog aracılığı ile yönlendirmenizi sağlar."
+        title={t("advanced.log_rotation.title")}
+        description={t("advanced.log_rotation.description")}
       />
 
       <div className="px-8">
@@ -69,7 +70,9 @@ const AdvancedLogRotationPage: NextPageWithLayout = () => {
               name="ip_address"
               render={({ field }) => (
                 <div className="flex flex-col gap-3">
-                  <Label htmlFor="ip_address">IP Adresi</Label>
+                  <Label htmlFor="ip_address">
+                    {t("advanced.logrotation.ip_address")}
+                  </Label>
                   <div className="relative">
                     <Input id="ip_address" {...field} />
                   </div>
@@ -97,11 +100,15 @@ const AdvancedLogRotationPage: NextPageWithLayout = () => {
               name="type"
               render={({ field }) => (
                 <div className="flex flex-col gap-3">
-                  <Label htmlFor="type">Bağlantı Türü</Label>
+                  <Label htmlFor="type">{t("advanced.logrotation.type")}</Label>
                   <div className="relative">
                     <Select onValueChange={field.onChange} value={field.value}>
                       <SelectTrigger>
-                        <SelectValue placeholder="Bir bağlantı türü seçiniz." />
+                        <SelectValue
+                          placeholder={t(
+                            "advanced.logrotation.type_placeholder"
+                          )}
+                        />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="tcp">TCP</SelectItem>
@@ -117,7 +124,7 @@ const AdvancedLogRotationPage: NextPageWithLayout = () => {
             <div className="flex justify-end">
               <Button type="submit">
                 <Save className="mr-2 h-4 w-4" />
-                Kaydet
+                {t("advanced.logrotation.save")}
               </Button>
             </div>
           </form>

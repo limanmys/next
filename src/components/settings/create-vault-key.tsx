@@ -40,8 +40,8 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
   const { t } = useTranslation("settings")
 
   const formSchema = z.object({
-    server_id: z.string().nonempty(t("vault.key.validation.server")),
-    type: z.string().nonempty(t("vault.key.validation.type")),
+    server_id: z.string().min(1, t("vault.key.validation.server")),
+    type: z.string().min(1, t("vault.key.validation.type")),
     username: z.string().optional(),
     password: z.string().optional(),
     key_port: z
@@ -49,7 +49,7 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
       .max(5, {
         message: t("vault.key.validation.port"),
       })
-      .nonempty(t("vault.key.validation.port_nonempty")),
+      .min(1, t("vault.key.validation.port_nonempty")),
   })
 
   const form = useForm<z.infer<typeof formSchema>>({

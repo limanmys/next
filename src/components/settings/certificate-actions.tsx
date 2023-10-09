@@ -3,6 +3,7 @@ import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { Row } from "@tanstack/react-table"
 import { Info, MoreHorizontal, Trash } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { ICertificate } from "@/types/certificate"
 import { useEmitter } from "@/hooks/useEmitter"
@@ -28,6 +29,7 @@ import { Icons } from "../ui/icons"
 import { useToast } from "../ui/use-toast"
 
 export function CertificateActions({ row }: { row: Row<ICertificate> }) {
+  const { t } = useTranslation("settings")
   const router = useRouter()
   const certificate = row.original
   const [deleteDialog, setDeleteDialog] = useState(false)
@@ -51,11 +53,11 @@ export function CertificateActions({ row }: { row: Row<ICertificate> }) {
             }
           >
             <Info className="mr-2 h-3.5 w-3.5" />
-            Detaylar
+            {t("advanced.certificates.actions.details")}
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setDeleteDialog(true)}>
             <Trash className="mr-2 h-3.5 w-3.5" />
-            Sil
+            {t("advanced.certificates.actions.delete.button")}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -77,6 +79,7 @@ function DeleteDialog({
   setOpen: (open: boolean) => void
   certificate: ICertificate
 }) {
+  const { t } = useTranslation("settings")
   const emitter = useEmitter()
   const { toast } = useToast()
   const [loading, setLoading] = useState(false)
@@ -89,16 +92,16 @@ function DeleteDialog({
       .delete(`/settings/advanced/certificates/${certificate.id}`)
       .then(() => {
         toast({
-          title: "Başarılı",
-          description: "Sertifika başarıyla silindi.",
+          title: t("success"),
+          description: t("advanced.certificates.actions.delete.success"),
         })
         emitter.emit("REFETCH_CERTIFICATES")
         setOpen(false)
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description: "Sertifika silinirken hata oluştu.",
+          title: t("error"),
+          description: t("advanced.certificates.actions.delete.error"),
           variant: "destructive",
         })
       })
@@ -111,20 +114,29 @@ function DeleteDialog({
     <AlertDialog open={open} onOpenChange={(open) => setOpen(open)}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Emin misiniz?</AlertDialogTitle>
+          <AlertDialogTitle>
+            {t("advanced.certificates.actions.delete.title")}
+          </AlertDialogTitle>
           <AlertDialogDescription>
-            Seçilen sertifika{" "}
-            <b className="font-semibold">({certificate.server_hostname})</b>{" "}
-            Liman sisteminden tamamen silinecektir. Bu işlem sonucunda
-            eklentilere erişimde kesinti yaşanabilir. Devam etmek istiyor
-            musunuz?
+            <span
+              dangerouslySetInnerHTML={{
+                // TODO: Localization
+                // Couldn't find a better way to use tags with localized strings
+                // If i find any i'll change it.
+                __html: t("advanced.certificates.actions.delete.description", {
+                  name: certificate.server_hostname,
+                }),
+              }}
+            />
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Vazgeç</AlertDialogCancel>
+          <AlertDialogCancel>
+            {t("advanced.certificates.actions.delete.cancel")}
+          </AlertDialogCancel>
           <AlertDialogAction onClick={() => handleDelete()}>
             {loading && <Icons.spinner className="h-4 w-4 animate-spin" />}
-            Onayla
+            {t("advanced.certificates.actions.delete.delete")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

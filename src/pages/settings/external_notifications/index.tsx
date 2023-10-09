@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import Head from "next/head"
 import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FileWarning, PlusCircle } from "lucide-react"
@@ -33,7 +32,7 @@ import { ExternalNotificationActions } from "@/components/settings/external-noti
 export default function ExternalNotificationPage() {
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IExternalNotification[]>([])
-  const { i18n } = useTranslation()
+  const { t, i18n } = useTranslation("settings")
 
   const emitter = useEmitter()
 
@@ -41,23 +40,32 @@ export default function ExternalNotificationPage() {
     {
       accessorKey: "name",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="İsim" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("external_notifications.name")}
+        />
       ),
-      title: "İsim",
+      title: t("external_notifications.name"),
     },
     {
       accessorKey: "ip",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="İzin Verilen IP Adresi" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("external_notifications.ip_address")}
+        />
       ),
-      title: "İzin Verilen IP Adresi",
+      title: t("external_notifications.ip_address"),
     },
     {
       accessorKey: "last_used",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Son Erişim Tarihi" />
+        <DataTableColumnHeader
+          column={column}
+          title={t("external_notifications.last_used")}
+        />
       ),
-      title: "Son Erişim Tarihi",
+      title: t("external_notifications.last_used"),
       cell: ({ row }) => (
         <>
           {row.original.last_used
@@ -71,7 +79,7 @@ export default function ExternalNotificationPage() {
                   minute: "2-digit",
                 }
               )
-            : "Bilinmiyor"}
+            : t("external_notifications.unknown")}
         </>
       ),
     },
@@ -108,13 +116,9 @@ export default function ExternalNotificationPage() {
 
   return (
     <>
-      <Head>
-        <title>Dış Bildirimler | Liman</title>
-      </Head>
-
       <PageHeader
-        title="Dış Bildirimler"
-        description="Eklenti sunucularının ve dış uygulamaların Liman'a bildirim göndermesini sağlayabilirsiniz."
+        title={t("external_notifications.title")}
+        description={t("external_notifications.description")}
       />
 
       <DataTable
@@ -129,15 +133,16 @@ export default function ExternalNotificationPage() {
   )
 }
 
-const formSchema = z.object({
-  name: z.string().nonempty("Dış bildirim adı boş bırakılamaz."),
-  ip: z.string().nonempty("İzin verilen IP adresi boş bırakılamaz."),
-})
-
 function CreateExternalNotification() {
+  const { t } = useTranslation("settings")
   const { toast } = useToast()
   const emitter = useEmitter()
   const [token, setToken] = useState<string>("")
+
+  const formSchema = z.object({
+    name: z.string().min(1, t("external_notifications.validation.name")),
+    ip: z.string().min(1, t("external_notifications.validation.ip")),
+  })
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -158,24 +163,24 @@ function CreateExternalNotification() {
       .then((res) => {
         if (res.status === 200) {
           toast({
-            title: "Başarılı",
-            description: "Dış bildirim başarıyla oluşturuldu.",
+            title: t("success"),
+            description: t("external_notifications.toasts.success"),
           })
           setToken(res.data.token)
           emitter.emit("REFETCH_EXTERNAL_NOTIFICATIONS")
           form.reset()
         } else {
           toast({
-            title: "Hata",
-            description: "Dış bildirim oluştulurken bir hata oluştu.",
+            title: t("error"),
+            description: t("external_notifications.toasts.error"),
             variant: "destructive",
           })
         }
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description: "Dış bildirim oluştulurken bir hata oluştu.",
+          title: t("error"),
+          description: t("external_notifications.toasts.error"),
           variant: "destructive",
         })
       })
@@ -186,24 +191,24 @@ function CreateExternalNotification() {
       <DialogTrigger asChild>
         <Button variant="outline" size="sm" className="ml-auto h-8 lg:flex">
           <PlusCircle className="mr-2 h-4 w-4" />
-          Ekle
+          {t("external_notifications.create.button")}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[525px]">
         <DialogHeader>
-          <DialogTitle>Dış Bildirim Oluştur</DialogTitle>
+          <DialogTitle>{t("external_notifications.create.title")}</DialogTitle>
           <DialogDescription>
-            Bu işlem sonucu sisteminizde bir dış bildirim oluşturulacaktır.
+            {t("external_notifications.create.description")}
           </DialogDescription>
         </DialogHeader>
         {token && (
           <Alert>
             <FileWarning className="h-4 w-4" />
-            <AlertTitle>Dış Uygulama Tokeniniz</AlertTitle>
+            <AlertTitle>
+              {t("external_notifications.create.alert_title")}
+            </AlertTitle>
             <AlertDescription>
-              Bu tokeni güvenmediğiniz kimse ile paylaşmayınız. Dış
-              uygulamalarınız bu tokeni kullanarak Liman&apos;a bildirim
-              gönderebilir.
+              {t("external_notifications.create.alert_description")}
               <br />
               <br />
               <b>{token}</b>
@@ -222,7 +227,7 @@ function CreateExternalNotification() {
               render={({ field }) => (
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="name" className="text-right">
-                    Dış Bildirim Adı
+                    {t("external_notifications.create.name")}
                   </Label>
                   <div className="col-span-3">
                     <Input id="name" {...field} />
@@ -238,7 +243,7 @@ function CreateExternalNotification() {
                 <>
                   <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="ip" className="text-right">
-                      IP Adresi
+                      {t("external_notifications.create.ip")}
                     </Label>
                     <div className="col-span-3">
                       <Input id="ip" {...field} />
@@ -250,10 +255,14 @@ function CreateExternalNotification() {
                     <div></div>
                     <div className="col-span-3">
                       <small className="text-sm text-muted-foreground">
-                        Bu bölüme izin vermek istediğiniz bir subnet adresini ya
-                        da IP adresini yazarak erişimi kısıtlayabilirsiniz.
-                        <br />
-                        <b>Örneğin: 192.168.1.0/24</b>
+                        <span
+                          dangerouslySetInnerHTML={{
+                            // TODO: Localization
+                            // Couldn't find a better way to use tags with localized strings
+                            // If i find any i'll change it.
+                            __html: t("external_notifications.create.subtext"),
+                          }}
+                        />
                       </small>
                     </div>
                   </div>
@@ -263,7 +272,7 @@ function CreateExternalNotification() {
             <DialogFooter>
               <Button type="submit">
                 <PlusCircle className="mr-2 h-4 w-4" />
-                Oluştur
+                {t("external_notifications.create.create")}
               </Button>
             </DialogFooter>
           </form>

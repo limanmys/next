@@ -44,6 +44,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       authService.login(name, password, newPassword).then(() => {
         login(name, newPassword)
           .then(() => {
+            setError("")
             setTimeout(() => {
               router.push(redirectUri)
             }, 1000)
@@ -65,6 +66,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     } else {
       login(name, password)
         .then(() => {
+          setError("")
           setTimeout(() => {
             router.push(redirectUri)
           }, 1000)
@@ -76,7 +78,9 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           }
         })
         .finally(() => {
-          setIsLoading(false)
+          setTimeout(() => {
+            setIsLoading(false)
+          }, 1000)
         })
     }
   }
