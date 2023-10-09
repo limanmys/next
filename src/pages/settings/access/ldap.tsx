@@ -5,6 +5,7 @@ import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Fingerprint, Mail, Save, Server, UserCheck2 } from "lucide-react"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import * as z from "zod"
 
 import { Button } from "@/components/ui/button"
@@ -24,17 +25,16 @@ import {
   FormMessage,
 } from "@/components/form/form"
 
-const formSchema = z.object({
-  server_address: z.string().nonempty("LDAP sunucu adresi boş bırakılamaz."),
-  objectguid: z
-    .string()
-    .nonempty("LDAP şemanızdaki objectguid alanının adını yazınız."),
-  mail: z.string().nonempty("LDAP şemanızdaki mail alanının adını yazınız."),
-  active: z.boolean(),
-})
-
 const AccessLdapPage: NextPageWithLayout = () => {
   const { toast } = useToast()
+  const { t } = useTranslation("settings")
+
+  const formSchema = z.object({
+    server_address: z.string().nonempty(t("access.ldap.formScema.address")),
+    objectguid: z.string().nonempty(t("access.ldap.formScema.objectguid")),
+    mail: z.string().nonempty(t("access.ldap.formScema.mail")),
+    active: z.boolean(),
+  })
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -46,15 +46,14 @@ const AccessLdapPage: NextPageWithLayout = () => {
       .post("/settings/access/ldap/configuration", data)
       .then(() => {
         toast({
-          title: "Başarılı",
-          description: "LDAP bağlantısı ayarları başarıyla kaydedildi.",
+          title: t("access.ldap.toast.success.title"),
+          description: t("access.ldap.toast.success.description"),
         })
       })
       .catch(() => {
         toast({
-          title: "Hata",
-          description:
-            "LDAP bağlantısı ayarları kaydedilirken bir hata oluştu.",
+          title: t("access.ldap.toast.success.description"),
+          description: t("access.ldap.toast.fail.description"),
           variant: "destructive",
         })
       })
@@ -72,12 +71,12 @@ const AccessLdapPage: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>LDAP Bağlantısı | Liman</title>
+        <title>{t("access.ldap.head_title")}</title>
       </Head>
 
       <PageHeader
-        title="LDAP Bağlantısı"
-        description="Liman'a giriş yaparken LDAP bağlantısı kullanabilir ve detaylı şekilde erişim yetkilerini konfigüre edebilirsiniz."
+        title={t("access.ldap.page_header.title")}
+        description={t("access.ldap.toast.fail.description")}
       />
 
       <div className="px-8">
@@ -88,7 +87,9 @@ const AccessLdapPage: NextPageWithLayout = () => {
               name="server_address"
               render={({ field }) => (
                 <div className="flex flex-col gap-3">
-                  <Label htmlFor="server_address">Sunucu Adresi</Label>
+                  <Label htmlFor="server_address">
+                    {t("access.ldap.forms.server_address")}
+                  </Label>
                   <div className="relative">
                     <Input
                       id="server_address"
@@ -98,9 +99,7 @@ const AccessLdapPage: NextPageWithLayout = () => {
                     />
                     <Server className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                     <small className="italic text-muted-foreground">
-                      Aktif dizin, Samba veya kullandığınız LDAP sağlayıcının
-                      bağlantı adresini giriniz. Bu bağlantı adresi Liman
-                      sunucunuz tarafından çözülebilir olmalıdır.
+                      {t("access.ldap.forms.server_info")}
                     </small>
                   </div>
                   <FormMessage />
@@ -113,7 +112,9 @@ const AccessLdapPage: NextPageWithLayout = () => {
               name="objectguid"
               render={({ field }) => (
                 <div className="flex flex-col gap-3">
-                  <Label htmlFor="objectguid">Object GUID Alanı</Label>
+                  <Label htmlFor="objectguid">
+                    {t("access.ldap.forms.object_guid")}
+                  </Label>
                   <div className="relative">
                     <Input
                       id="objectguid"
@@ -123,10 +124,7 @@ const AccessLdapPage: NextPageWithLayout = () => {
                     />
                     <Fingerprint className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                     <small className="italic text-muted-foreground">
-                      LDAP şemanızda aktif şekilde kullanımda olan objectguid
-                      alanının adını yazınız. Bu alanın değeri standart olarak
-                      objectguid olmasına rağmen bazı kurulumlarda farklılık
-                      gösterebilir.
+                      {t("access.ldap.forms.object_guid_info")}
                     </small>
                   </div>
 
@@ -140,7 +138,7 @@ const AccessLdapPage: NextPageWithLayout = () => {
               name="mail"
               render={({ field }) => (
                 <div className="flex flex-col gap-3">
-                  <Label htmlFor="mail">Mail Alanı</Label>
+                  <Label htmlFor="mail">{t("access.ldap.forms.mail")}</Label>
                   <div className="relative">
                     <Input
                       id="mail"
@@ -150,9 +148,7 @@ const AccessLdapPage: NextPageWithLayout = () => {
                     />
                     <Mail className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                     <small className="italic text-muted-foreground">
-                      LDAP şemanızda aktif şekilde kullanımda olan mail alanının
-                      adını yazınız. Bu alanın değeri standart olarak mail
-                      olmasına rağmen bazı kurulumlarda farklılık gösterebilir.
+                      {t("access.ldap.forms.mail_info")}
                     </small>
                   </div>
 
@@ -169,11 +165,11 @@ const AccessLdapPage: NextPageWithLayout = () => {
                   <div className="flex space-x-3 space-y-0.5">
                     <UserCheck2 className="h-6 w-6 text-muted-foreground" />
                     <div className="flex flex-col space-y-0.5">
-                      <FormLabel>Entegrasyonu aktifleştir</FormLabel>
+                      <FormLabel>
+                        {t("access.ldap.forms.integration")}
+                      </FormLabel>
                       <FormDescription>
-                        Entegrasyonu aktifleştirdiğinizde izin tanımladığınız
-                        LDAP kullanıcıları Liman&apos;a kullanıcı adlarını
-                        kullanarak giriş yapabilirler.
+                        {t("access.ldap.forms.integration_info")}
                       </FormDescription>
                     </div>
                   </div>
@@ -190,7 +186,7 @@ const AccessLdapPage: NextPageWithLayout = () => {
             <div className="flex justify-end">
               <Button type="submit">
                 <Save className="mr-2 h-4 w-4" />
-                Kaydet
+                {t("access.ldap.forms.save")}
               </Button>
             </div>
           </form>

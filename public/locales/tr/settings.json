@@ -540,7 +540,39 @@
                 "integration":"Entegrasyonu aktifleştir",
                 "integration_info":"Entegrasyonu aktifleştirdiğinizde Keycloak sunucunuz üzerindeki kullanıcılar Liman'a giriş yapabilecektir.",
                 "save":"Kaydet"
-
+            }
+        },
+        "ldap":{
+            "formScema":{
+                "address": "LDAP sunucu adresi boş bırakılamaz.",
+                "objectguid": "LDAP şemanızdaki objectguid alanının adını yazınız.",
+                "mail":"LDAP şemanızdaki mail alanının adını yazınız.",
+            },
+           "toast":{
+                "success":{
+                      "title": "Başarılı",
+                      "description": "LDAP bağlantısı ayarları başarıyla kaydedildi."
+                  },
+                  "fail":{
+                      "title": "Hata",
+                      "description": "LDAP bağlantısı ayarları kaydedilirken bir hata oluştu."
+                  }
+            },
+            "head_title":"LDAP Bağlantısı | Liman",
+            "page_header":{
+                "title":"LDAP Bağlantısı",
+                "description":"Liman'a giriş yaparken LDAP bağlantısı kullanabilir ve detaylı şekilde erişim yetkilerini konfigüre edebilirsiniz."
+            },
+            "forms":{
+                "server_address":"Sunucu Adresi",
+                "server_info":"Aktif dizin, Samba veya kullandığınız LDAP sağlayıcınınbağlantı adresini giriniz. Bu bağlantı adresi Liman sunucunuz tarafından çözülebilir olmalıdır.",
+                "object_guid":"Object GUID Alanı",
+                "object_guid_info":"LDAP şemanızda aktif şekilde kullanımda olan objectguidalanının adını yazınız. Bu alanın değeri standart olarak objectguid olmasına rağmen bazı kurulumlarda farklılık gösterebilir.",
+                "mail":"Mail Alanı",
+                "mail_info":"LDAP şemanızda aktif şekilde kullanımda olan mail alanının adını yazınız. Bu alanın değeri standart olarak mail olmasına rağmen bazı kurulumlarda farklılık gösterebilir.",
+                "integration":"Entegrasyonu aktifleştir",
+                "integration_info":"Entegrasyonu aktifleştirdiğinizde izin tanımladığınız LDAP kullanıcıları Liman'a kullanıcı adlarını kullanarak giriş yapabilirler.",
+                "save":"Kaydet"
             }
         }
     },
