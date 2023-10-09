@@ -39,9 +39,12 @@ export default function ServerExtensionPage() {
     {
       accessorKey: "ip_type",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={t("")} />
+        <DataTableColumnHeader
+          column={column}
+          title={t("open_ports.accessor_ip_type_title")}
+        />
       ),
-      title: "IP Türü",
+      title: t("open_ports.accessor_ip_type_title"),
     },
     {
       accessorKey: "packet_type",

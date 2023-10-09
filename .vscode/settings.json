@@ -12,5 +12,13 @@
     "eslint.executeAutofix": true,
     "source.organizeImports": true,
     "source.fixAll.eslint": true
-  }
+  },
+  "formatFiles.excludedFolders": [
+    "node_modules",
+    ".vscode",
+    ".git",
+    "dist",
+    ".chrome",
+    ".next"
+  ]
 }

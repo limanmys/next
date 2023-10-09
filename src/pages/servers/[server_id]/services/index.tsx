@@ -49,7 +49,7 @@ export default function ServerExtensionPage() {
   const [selected, setSelected] = useState<IService[]>([])
   const tableRef = useRef<any>()
   const { toast } = useToast()
-  const { t } = useTranslation("settings")
+  const { t } = useTranslation("servers")
 
   const columns: DivergentColumn<IService, string>[] = [
     {

@@ -43,13 +43,13 @@ const AdvancedLogRotationPage: NextPageWithLayout = () => {
       .then(() => {
         toast({
           title: t("success"),
-          description: t("advanced.log_rotation.success"),
+          description: t("advanced.logrotation.success"),
         })
       })
       .catch(() => {
         toast({
           title: t("error"),
-          description: t("advanced.log_rotation.error"),
+          description: t("advanced.logrotation.error"),
           variant: "destructive",
         })
       })
@@ -58,8 +58,8 @@ const AdvancedLogRotationPage: NextPageWithLayout = () => {
   return (
     <>
       <PageHeader
-        title={t("advanced.log_rotation.title")}
-        description={t("advanced.log_rotation.description")}
+        title={t("advanced.logrotation.title")}
+        description={t("advanced.logrotation.description")}
       />
 
       <div className="px-8">

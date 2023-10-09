@@ -436,19 +436,19 @@
     "external_notifications": {
         "title": "Dış Bildirimler",
         "description": "Eklenti sunucularının ve dış uygulamaların Liman'a bildirim göndermesini IP kısıtı koyarak sağlayabilirsiniz.",
-        "actions":{
-            "open_menu":"Menüyü aç",
-            "delete":"Sil",
-            "success":"Başarılı",
-            "error":"Hata",
-            "toasts":{
-                "success":"Dış bildirim başarıyla silindi.",
-                "error":"Dış bildirim silinirken hata oluştu."
+        "actions": {
+            "open_menu": "Menüyü aç",
+            "delete": "Sil",
+            "success": "Başarılı",
+            "error": "Hata",
+            "toasts": {
+                "success": "Dış bildirim başarıyla silindi.",
+                "error": "Dış bildirim silinirken hata oluştu."
             },
-            "confirm":"Emin misiniz?",
-            "no":"Vazgeç",
-            "yes":"Onayla",
-            "confirm_delete":"Seçilen dış bildirim{\" \"} <b className=\"font-semibold\">({externalNotificationName})</b> Liman sisteminden tamamen silinecektir. Bu işlem sonucunda bildirim alışınızda kesinti yaşanabilir. Devam etmek istiyor musunuz?"
+            "confirm": "Emin misiniz?",
+            "no": "Vazgeç",
+            "yes": "Onayla",
+            "confirm_delete": "Seçilen dış bildirim{\" \"} <b className=\"font-semibold\">({externalNotificationName})</b> Liman sisteminden tamamen silinecektir. Bu işlem sonucunda bildirim alışınızda kesinti yaşanabilir. Devam etmek istiyor musunuz?"
         },
         "name": "İsim",
         "ip_address": "İzin Verilen IP Adresi",
@@ -472,7 +472,6 @@
             "ip": "IP Adresi",
             "subtext": "Bu bölüme izin vermek istediğiniz bir subnet adresini ya da IP adresini yazarak erişimi kısıtlayabilirsiniz. <br /> <b>Örneğin: 192.168.1.0/24</b>",
             "create": "Oluştur"
-
         }
     },
     "subscriptions": {
@@ -567,77 +566,77 @@
                 "DNS_EDIT": "DNS sunucuları {{dns1}}, {{dns2}}, {{dns3}} olarak güncellendi."
             }
         },
-        "keycloak":{
-            "formScema":{
+        "keycloak": {
+            "formScema": {
                 "client_id": "Client ID alanı boş bırakılamaz.",
                 "client_secret": "Client Secret alanı boş bırakılamaz.",
-                "redirect_uri":"Redirect URI alanı boş bırakılamaz.",
+                "redirect_uri": "Redirect URI alanı boş bırakılamaz.",
                 "base_url": "Base URL alanı boş bırakılamaz.",
-                "realm": "Realm alanı boş bırakılamaz."      
+                "realm": "Realm alanı boş bırakılamaz."
             },
-           "toast":{
-                "success":{
-                      "title": "Başarılı",
-                      "description": "Keycloak ayarları başarıyla kaydedildi."
-                  },
-                  "fail":{
-                      "title": "Hata",
-                      "description": "Keycloak ayarları kaydedilirken bir hata oluştu."
-                  }
+            "toast": {
+                "success": {
+                    "title": "Başarılı",
+                    "description": "Keycloak ayarları başarıyla kaydedildi."
+                },
+                "fail": {
+                    "title": "Hata",
+                    "description": "Keycloak ayarları kaydedilirken bir hata oluştu."
+                }
             },
-            "head_title":"Keycloak | Liman",
-            "page_header":{
-                "title":"Keycloak",
-                "description":"Keycloak auth gatewayini kullanarak Liman üzerine kullanıcı girişi yapılmasını sağlayabilirsiniz."
+            "head_title": "Keycloak | Liman",
+            "page_header": {
+                "title": "Keycloak",
+                "description": "Keycloak auth gatewayini kullanarak Liman üzerine kullanıcı girişi yapılmasını sağlayabilirsiniz."
             },
-            "form":{
-                "client_id":"Client ID",
-                "info_id":"Client ID değeri Keycloak üzerinde oluşturduğunuz client için verilen ID değeridir.",
-                "client_secret":"Client Secret",
-                "info_secret":"Client Secret değeri Keycloak üzerinde oluşturduğunuz client için oluşmuş secret değeridir.",
-                "redirect_url":"Redirect URL",
-                "redirect_info":"Redirect URL değeri Liman URL'niz /keycloak/callback şeklinde olmalıdır ve bu değeri clientinizde de izin verilen redirect URL'ler kısmında belirtmelisiniz.",
-                "base_url":"Base URL",
-                "base_info":"Base URL değeri Keycloak URL'nizdir.",
-                "realm":"Realm",
-                "realm_info":"Realm değeri Keycloak üzerinde oluşturduğunuz realmin adıdır.",
-                "integration":"Entegrasyonu aktifleştir",
-                "integration_info":"Entegrasyonu aktifleştirdiğinizde Keycloak sunucunuz üzerindeki kullanıcılar Liman'a giriş yapabilecektir.",
-                "save":"Kaydet"
+            "form": {
+                "client_id": "Client ID",
+                "info_id": "Client ID değeri Keycloak üzerinde oluşturduğunuz client için verilen ID değeridir.",
+                "client_secret": "Client Secret",
+                "info_secret": "Client Secret değeri Keycloak üzerinde oluşturduğunuz client için oluşmuş secret değeridir.",
+                "redirect_url": "Redirect URL",
+                "redirect_info": "Redirect URL değeri Liman URL'niz /keycloak/callback şeklinde olmalıdır ve bu değeri clientinizde de izin verilen redirect URL'ler kısmında belirtmelisiniz.",
+                "base_url": "Base URL",
+                "base_info": "Base URL değeri Keycloak URL'nizdir.",
+                "realm": "Realm",
+                "realm_info": "Realm değeri Keycloak üzerinde oluşturduğunuz realmin adıdır.",
+                "integration": "Entegrasyonu aktifleştir",
+                "integration_info": "Entegrasyonu aktifleştirdiğinizde Keycloak sunucunuz üzerindeki kullanıcılar Liman'a giriş yapabilecektir.",
+                "save": "Kaydet"
             }
         },
-        "ldap":{
-            "formScema":{
+        "ldap": {
+            "formScema": {
                 "address": "LDAP sunucu adresi boş bırakılamaz.",
                 "objectguid": "LDAP şemanızdaki objectguid alanının adını yazınız.",
-                "mail":"LDAP şemanızdaki mail alanının adını yazınız.",
+                "mail": "LDAP şemanızdaki mail alanının adını yazınız."
             },
-           "toast":{
-                "success":{
-                      "title": "Başarılı",
-                      "description": "LDAP bağlantısı ayarları başarıyla kaydedildi."
-                  },
-                  "fail":{
-                      "title": "Hata",
-                      "description": "LDAP bağlantısı ayarları kaydedilirken bir hata oluştu."
-                  }
+            "toast": {
+                "success": {
+                    "title": "Başarılı",
+                    "description": "LDAP bağlantısı ayarları başarıyla kaydedildi."
+                },
+                "fail": {
+                    "title": "Hata",
+                    "description": "LDAP bağlantısı ayarları kaydedilirken bir hata oluştu."
+                }
             },
-            "head_title":"LDAP Bağlantısı | Liman",
-            "page_header":{
-                "title":"LDAP Bağlantısı",
-                "description":"Liman'a giriş yaparken LDAP bağlantısı kullanabilir ve detaylı şekilde erişim yetkilerini konfigüre edebilirsiniz."
+            "head_title": "LDAP Bağlantısı | Liman",
+            "page_header": {
+                "title": "LDAP Bağlantısı",
+                "description": "Liman'a giriş yaparken LDAP bağlantısı kullanabilir ve detaylı şekilde erişim yetkilerini konfigüre edebilirsiniz."
             },
-            "forms":{
-                "server_address":"Sunucu Adresi",
-                "server_info":"Aktif dizin, Samba veya kullandığınız LDAP sağlayıcınınbağlantı adresini giriniz. Bu bağlantı adresi Liman sunucunuz tarafından çözülebilir olmalıdır.",
-                "object_guid":"Object GUID Alanı",
-                "object_guid_info":"LDAP şemanızda aktif şekilde kullanımda olan objectguidalanının adını yazınız. Bu alanın değeri standart olarak objectguid olmasına rağmen bazı kurulumlarda farklılık gösterebilir.",
-                "mail":"Mail Alanı",
-                "mail_info":"LDAP şemanızda aktif şekilde kullanımda olan mail alanının adını yazınız. Bu alanın değeri standart olarak mail olmasına rağmen bazı kurulumlarda farklılık gösterebilir.",
-                "integration":"Entegrasyonu aktifleştir",
-                "integration_info":"Entegrasyonu aktifleştirdiğinizde izin tanımladığınız LDAP kullanıcıları Liman'a kullanıcı adlarını kullanarak giriş yapabilirler.",
-                "save":"Kaydet"
-            },
+            "forms": {
+                "server_address": "Sunucu Adresi",
+                "server_info": "Aktif dizin, Samba veya kullandığınız LDAP sağlayıcınınbağlantı adresini giriniz. Bu bağlantı adresi Liman sunucunuz tarafından çözülebilir olmalıdır.",
+                "object_guid": "Object GUID Alanı",
+                "object_guid_info": "LDAP şemanızda aktif şekilde kullanımda olan objectguidalanının adını yazınız. Bu alanın değeri standart olarak objectguid olmasına rağmen bazı kurulumlarda farklılık gösterebilir.",
+                "mail": "Mail Alanı",
+                "mail_info": "LDAP şemanızda aktif şekilde kullanımda olan mail alanının adını yazınız. Bu alanın değeri standart olarak mail olmasına rağmen bazı kurulumlarda farklılık gösterebilir.",
+                "integration": "Entegrasyonu aktifleştir",
+                "integration_info": "Entegrasyonu aktifleştirdiğinizde izin tanımladığınız LDAP kullanıcıları Liman'a kullanıcı adlarını kullanarak giriş yapabilirler.",
+                "save": "Kaydet"
+            }
         },
         "permissions": {
             "title": "LDAP Erişim İzinleri",
