@@ -63,6 +63,7 @@ export function DropdownServerItem({
     link: string
     exact?: boolean
     name: string
+    disabled?: boolean
   }[]
   disabled?: boolean
 }) {
@@ -111,6 +112,7 @@ export function DropdownServerItem({
                 "flex items-center justify-between",
                 checkIfActiveFromItemsProps(item.link) && "bg-gray-100"
               )}
+              disabled={item.disabled}
             >
               <span className="font-medium">{item.name}</span>
             </DropdownMenuItem>

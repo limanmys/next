@@ -2,6 +2,8 @@
     "error": "Fehler",
     "success": "Erfolg",
     "information": "Information",
+    "warning": "Warnung",
+    "not_supported": "Windows-Serverdetails werden noch nicht unterstützt.",
     "ssh": "SSH (verschlüsselt)",
     "ssh_certificate": "SSH (Zertifikat)",
     "winrm": "WinRM",

@@ -1,3 +1,4 @@
+import Head from "next/head"
 import { Clock, Network, User } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
@@ -27,6 +28,10 @@ export default function ServerDetails({
         minHeight: "var(--container-height)",
       }}
     >
+      <Head>
+        <title>{data.server?.name} | Liman</title>
+      </Head>
+
       <h2 className="p-[24px] text-2xl font-bold tracking-tight">
         {t("system_status.details")}
       </h2>

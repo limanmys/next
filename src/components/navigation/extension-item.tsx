@@ -35,10 +35,7 @@ function ExtensionButton({
     <Button
       variant={isCollapsed ? "ghost" : "secondary"}
       size="sm"
-      className={cn(
-        "w-full justify-start",
-        extension.menus && extension.menus.length > 0 && "mb-1"
-      )}
+      className={cn("w-full justify-start", !isCollapsed && "mb-1")}
       disabled={disabled}
       onClick={() => onClick}
     >
@@ -168,7 +165,7 @@ const MenuButton: React.FC<IMenuButtonProps> = ({ menu, hash }) => {
   }, [hash, menu.url])
 
   return (
-    <div className="my-1">
+    <div>
       {!menu.children && (
         <a href={menu.url} key={menu.url}>
           <Button
@@ -197,7 +194,7 @@ const MenuButton: React.FC<IMenuButtonProps> = ({ menu, hash }) => {
               )}
             </Button>
           </CollapsibleTrigger>
-          <CollapsibleContent className="mt-1 rounded-md border p-1">
+          <CollapsibleContent className="my-1 rounded-md border p-1">
             {menu.children.map((childMenu: IMenu) => (
               <MenuButton menu={childMenu} hash={hash} key={childMenu.url} />
             ))}

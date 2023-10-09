@@ -183,14 +183,20 @@ export default function SidebarSelected() {
               <>
                 <ServerItem
                   link={`/servers/${selected}/packages`}
-                  disabled={elementIsActive(selectedData)}
+                  disabled={
+                    elementIsActive(selectedData) ||
+                    selectedData.os === "windows"
+                  }
                 >
                   <PackageOpen className="mr-2 h-4 w-4" />
                   {t("sidebar.packages")}
                 </ServerItem>
                 <ServerItem
                   link={`/servers/${selected}/updates`}
-                  disabled={elementIsActive(selectedData)}
+                  disabled={
+                    elementIsActive(selectedData) ||
+                    selectedData.os === "windows"
+                  }
                 >
                   <PackageSearch className="mr-2 h-4 w-4" />
                   {t("sidebar.updates")}
@@ -212,6 +218,7 @@ export default function SidebarSelected() {
                         link: `/servers/${selected}/users/sudoers`,
                         name: t("sidebar.user_management.sudoers"),
                         exact: true,
+                        disabled: selectedData.os === "windows",
                       },
                     ]}
                     disabled={elementIsActive(selectedData)}
@@ -222,7 +229,10 @@ export default function SidebarSelected() {
                 </div>
                 <ServerItem
                   link={`/servers/${selected}/open_ports`}
-                  disabled={elementIsActive(selectedData)}
+                  disabled={
+                    elementIsActive(selectedData) ||
+                    selectedData.os === "windows"
+                  }
                 >
                   <Network className="mr-2 h-4 w-4" />
                   {t("sidebar.open_ports")}

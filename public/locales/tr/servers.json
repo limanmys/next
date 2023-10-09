@@ -2,6 +2,8 @@
     "error": "Hata",
     "success": "Başarılı",
     "information": "Bilgilendirme",
+    "warning": "Uyarı",
+    "not_supported": "Windows sunucuların detayları henüz desteklenmemektedir.",
     "ssh": "SSH (Şifreli)",
     "ssh_certificate": "SSH (Sertifikalı)",
     "winrm": "WinRM",
