@@ -141,7 +141,10 @@ function CreateExternalNotification() {
 
   const formSchema = z.object({
     name: z.string().min(1, t("external_notifications.validation.name")),
-    ip: z.string().min(1, t("external_notifications.validation.ip")),
+    ip: z.string().ip({
+      version: "v4",
+      message: t("external_notifications.validation.ip"),
+    }),
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
