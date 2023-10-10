@@ -41,21 +41,33 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         return
       }
 
-      authService.login(name, password, newPassword).then(() => {
-        login(name, newPassword)
-          .then(() => {
-            setError("")
-            setTimeout(() => {
-              router.push(redirectUri)
-            }, 1000)
-          })
-          .catch((e) => {
-            setError(e.response.data.message)
-          })
-          .finally(() => {
+      authService
+        .login(name, password, newPassword)
+        .then(() => {
+          login(name, newPassword)
+            .then(() => {
+              setError("")
+              setTimeout(() => {
+                router.push(redirectUri)
+              }, 1000)
+            })
+            .catch((e) => {
+              setError(e.response.data.message)
+            })
+            .finally(() => {
+              setIsLoading(false)
+            })
+        })
+        .catch((e) => {
+          if (e.response && e.response.status === 422) {
+            setError(e.response.data[Object.keys(e.response.data)[0]][0])
             setIsLoading(false)
-          })
-      })
+            return
+          }
+
+          setError(e.response.data.message)
+          setIsLoading(false)
+        })
 
       return
     }
