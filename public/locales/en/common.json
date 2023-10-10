@@ -24,6 +24,7 @@
     },
     "sidebar": {
         "servers": "Servers",
+        "favorite": "Add/Remove from Favorites",
         "all_servers": "All servers",
         "add_server": "Add new server",
         "admin_message": "Add a server from the top to start using Liman.",

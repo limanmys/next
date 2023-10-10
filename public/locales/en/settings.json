@@ -448,7 +448,7 @@
             "confirm": "Are you sure?",
             "no": "Cancel",
             "yes": "Confirm",
-            "confirm_delete": "The selected external notification {\" \"} <b className=\"font-semibold\">({externalNotificationName})</b> will be completely deleted from the Liman system. As a result of this process, your notification reception may be interrupted. Do you want to continue?"
+            "confirm_delete": "The selected external notification <b>({{external_notification}})</b> will be permanently deleted from the Liman system. This process may cause interruptions in your notifications. Do you want to continue?"
         },
         "name": "Name",
         "ip_address": "Allowed IP Address",
@@ -456,7 +456,7 @@
         "unknown": "Unknown",
         "validation": {
             "name": "External declaration name cannot be empty.",
-            "ip": "The allowed IP address cannot be empty."
+            "ip": "IP address is not valid."
         },
         "toasts": {
             "success": "The external notification has been created successfully.",

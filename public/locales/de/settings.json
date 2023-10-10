@@ -448,7 +448,7 @@
             "confirm": "Bist du sicher?",
             "no": "Abbrechen",
             "yes": "Bestätigen",
-            "confirm_delete": "Die ausgewählte externe Benachrichtigung {\" \"} <b className=\"font-semibold\">({externalNotificationName})</b> wird vollständig aus dem Liman-System gelöscht. Als Folge dieses Vorgangs kann der Empfang von Benachrichtigungen unterbrochen werden. Möchten Sie fortfahren?"
+            "confirm_delete": "Die ausgewählte externe Benachrichtigung <b>({{external_notification}})</b> wird dauerhaft aus dem Liman-System gelöscht. Dieser Vorgang kann Unterbrechungen in Ihren Benachrichtigungen verursachen. Möchten Sie fortfahren?"
         },
         "name": "Name",
         "ip_address": "Zulässige IP-Adresse",
@@ -456,7 +456,7 @@
         "unknown": "Unbekannt",
         "validation": {
             "name": "Der Name der externen Deklaration darf nicht leer sein.",
-            "ip": "Die zulässige IP-Adresse darf nicht leer sein."
+            "ip": "IP-Adresse ist ungültig."
         },
         "toasts": {
             "success": "Die externe Benachrichtigung wurde erfolgreich erstellt.",

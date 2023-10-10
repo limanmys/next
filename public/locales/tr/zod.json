@@ -10,6 +10,7 @@
         "invalid_arguments": "Geçersiz fonksiyon argümanları",
         "invalid_return_type": "Geçersiz fonksiyon dönüş değeri",
         "invalid_date": "Geçersiz tarih",
+        "invalid_ip": "Geçersiz IP adresi",
         "custom": "Geçersiz girdi",
         "invalid_intersection_types": "Kesişim sonuçları birleştirilemedi",
         "not_multiple_of": "{{multipleOf}} ve katları olmalı",
@@ -85,7 +86,8 @@
         "uuid": "uuid",
         "cuid": "cuid",
         "regex": "regex",
-        "datetime": "tarih ve zaman"
+        "datetime": "tarih ve zaman",
+        "ip": "IP adresi"
     },
     "types": {
         "function": "fonksiyon",
@@ -107,6 +109,7 @@
         "void": "void",
         "never": "never",
         "map": "map",
-        "set": "set"
+        "set": "set",
+        "ip": "IP adresi"
     }
 }

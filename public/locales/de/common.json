@@ -24,6 +24,7 @@
     },
     "sidebar": {
         "servers": "Server",
+        "favorite": "Zu Favoriten hinzufügen/entfernen",
         "all_servers": "Alle Server",
         "add_server": "Neuen Server hinzufügen",
         "admin_message": "Fügen Sie einen Server von oben hinzu, um Liman zu verwenden.",

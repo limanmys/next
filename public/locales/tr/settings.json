@@ -448,7 +448,7 @@
             "confirm": "Emin misiniz?",
             "no": "Vazgeç",
             "yes": "Onayla",
-            "confirm_delete": "Seçilen dış bildirim{\" \"} <b className=\"font-semibold\">({externalNotificationName})</b> Liman sisteminden tamamen silinecektir. Bu işlem sonucunda bildirim alışınızda kesinti yaşanabilir. Devam etmek istiyor musunuz?"
+            "confirm_delete": "Seçilen dış bildirim <b>({{external_notification}})</b> Liman sisteminden tamamen silinecektir. Bu işlem sonucunda bildirim alışınızda kesinti yaşanabilir. Devam etmek istiyor musunuz?"
         },
         "name": "İsim",
         "ip_address": "İzin Verilen IP Adresi",
@@ -456,7 +456,7 @@
         "unknown": "Bilinmiyor",
         "validation": {
             "name": "Dış bildirim adı boş bırakılamaz.",
-            "ip": "İzin verilen IP adresi boş bırakılamaz."
+            "ip": "Geçersiz IP adresi girdiniz."
         },
         "toasts": {
             "success": "Dış bildirim başarıyla oluşturuldu.",

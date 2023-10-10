@@ -24,6 +24,7 @@
     },
     "sidebar": {
         "servers": "Sunucular",
+        "favorite": "Favorilere ekle/çıkar",
         "all_servers": "Tüm sunucuları gör",
         "add_server": "Yeni sunucu ekle",
         "admin_message": "Liman'ı aktif şekilde kullanmaya başlamak için yukarıdan sunucu ekleyin.",
