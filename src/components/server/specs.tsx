@@ -63,7 +63,7 @@ export default function ServerSpecs() {
                   </div>
                 </CardTitle>
               </CardHeader>
-              <CardContent>{data?.ram} GB</CardContent>
+              <CardContent>{data?.ram}</CardContent>
             </Card>
 
             <Card>
