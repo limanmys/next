@@ -152,6 +152,8 @@ const AccessAuditLogsPage: NextPageWithLayout = () => {
         loading={loading}
         selectable={false}
       ></DataTable>
+
+      <div className="mb-5"></div>
     </>
   )
 }

@@ -75,11 +75,11 @@ export default function UserSettingsPage() {
           title={t("users.status")}
           filterPresets={[
             {
-              key: "Yönetici",
+              key: t("users.admin"),
               value: "1",
             },
             {
-              key: "Kullanıcı",
+              key: t("users.user"),
               value: "0",
             },
           ]}
@@ -92,14 +92,14 @@ export default function UserSettingsPage() {
             <div className="flex items-center">
               <UserCog2 className="h-5 w-5" />
               <Badge className="ml-2" variant="outline">
-                Yönetici
+                {t("users.admin")}
               </Badge>
             </div>
           ) : (
             <div className="flex items-center">
               <User2 className="h-5 w-5" />
               <Badge className="ml-2" variant="outline">
-                Kullanıcı
+                {t("users.user")}
               </Badge>
             </div>
           )}

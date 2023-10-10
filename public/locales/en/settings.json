@@ -318,7 +318,7 @@
             "error": "An error occurred while updating users."
         },
         "liman": {
-            "title": "liman Permits",
+            "title": "Liman Permissions",
             "description": "Authorize functions performed on Liman.",
             "left": "All Permissions",
             "right": "Permissions Granted",
@@ -368,7 +368,7 @@
             }
         },
         "variables": {
-            "title": "Private Data",
+            "title": "Variables",
             "description": "Set the custom data that this role will share with the extension.",
             "key": "Name",
             "value": "Value",
