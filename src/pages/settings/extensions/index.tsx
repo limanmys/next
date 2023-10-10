@@ -45,7 +45,7 @@ export default function ExtensionSettingsPage() {
       accessorKey: "licensed",
       accessorFn: (row) => {
         return row.licensed
-          ? t("extensions.licensed")
+          ? 0 + t("extensions.licensed")
           : t("extensions.not_licensed")
       },
       header: ({ column }) => (
@@ -55,7 +55,7 @@ export default function ExtensionSettingsPage() {
           filterPresets={[
             {
               key: t("extensions.licensed"),
-              value: t("extensions.licensed"),
+              value: 0 + t("extensions.licensed"),
             },
             {
               key: t("extensions.not_licensed"),
