@@ -110,7 +110,9 @@ function DeleteDialog({
     <AlertDialog open={open} onOpenChange={(open) => setOpen(open)}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Emin misiniz?</AlertDialogTitle>
+          <AlertDialogTitle>
+            {t("external_notifications.actions.confirm")}
+          </AlertDialogTitle>
           <AlertDialogDescription>
             <span
               dangerouslySetInnerHTML={{
@@ -118,7 +120,7 @@ function DeleteDialog({
                 // Couldn't find a better way to use tags with localized strings
                 // If i find any i'll change it.
                 __html: t("external_notifications.actions.confirm_delete", {
-                  externalNotificationName: externalNotification.name,
+                  external_notification: externalNotification.name,
                 }),
               }}
             />

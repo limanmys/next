@@ -26,6 +26,12 @@ import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 
 import { Icons } from "../ui/icons"
 import { Skeleton } from "../ui/skeleton"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip"
 import ExtensionItem from "./extension-item"
 import ServerItem, { DropdownServerItem } from "./server-item"
 
@@ -125,13 +131,22 @@ export default function SidebarSelected() {
                 selectedData.is_online ? "text-green-500" : "text-red-500"
               )}
             />
-            <Star
-              className={cn(
-                "absolute right-0 top-6 h-4 w-4",
-                selectedData.is_favorite ? "text-yellow-500" : "text-gray-500"
-              )}
-              onClick={() => toggleFavorite(selectedData.id)}
-            />
+            <TooltipProvider>
+              <Tooltip delayDuration={200}>
+                <TooltipTrigger asChild>
+                  <Star
+                    className={cn(
+                      "absolute right-0 top-6 h-4 w-4",
+                      selectedData.is_favorite
+                        ? "text-yellow-500"
+                        : "text-gray-500"
+                    )}
+                    onClick={() => toggleFavorite(selectedData.id)}
+                  />
+                </TooltipTrigger>
+                <TooltipContent>{t("sidebar.favorite")}</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
           <div>
             {user.permissions.server_details && (
