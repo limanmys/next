@@ -197,14 +197,14 @@ export default function ServerCreatePage() {
         sidebarCtx[SIDEBARCTX_STATES.refreshServers]()
         toast({
           title: t("success"),
-          description: t("errors.success"),
+          description: t("create.errors.success"),
         })
         router.push("/servers")
       })
       .catch(() => {
         toast({
           title: t("error"),
-          description: t("errors.error"),
+          description: t("create.errors.error"),
           variant: "destructive",
         })
       })
