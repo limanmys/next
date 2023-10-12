@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react"
 import { Table } from "@tanstack/react-table"
 import { Search, X } from "lucide-react"
 import { useTranslation } from "react-i18next"
@@ -22,9 +23,16 @@ export function DataTableToolbar<TData, TValue>({
 }: DataTableToolbarProps<TData, TValue>) {
   const { t } = useTranslation("components")
 
-  const isFiltered =
-    table.getPreFilteredRowModel().rows.length >
-    table.getFilteredRowModel().rows.length
+  const [isFiltered, setIsFiltered] = useState<boolean>(false)
+  useEffect(() => {
+    setIsFiltered(
+      table.getPreFilteredRowModel().rows.length >
+        table.getFilteredRowModel().rows.length
+    )
+  }, [
+    table.getPreFilteredRowModel().rows.length,
+    table.getFilteredRowModel().rows.length,
+  ])
 
   return (
     <div className="flex items-center justify-between px-8">
