@@ -38,24 +38,27 @@ function ExtensionButton({
       className={cn("w-full justify-start", !isCollapsed && "mb-1")}
       disabled={disabled}
       onClick={() => onClick}
+      asChild
     >
-      <div className="flex items-center gap-2">
-        <div className="flex w-[18px] items-center justify-center">
-          {extension.icon ? (
-            <i className={`fa-solid fa-${extension.icon} fa-fw`}></i>
-          ) : (
-            <ToyBrick className="h-4 w-4" />
-          )}
+      <div>
+        <div className="flex items-center gap-2">
+          <div className="flex w-[18px] items-center justify-center">
+            {extension.icon ? (
+              <i className={`fa-solid fa-${extension.icon} fa-fw`}></i>
+            ) : (
+              <ToyBrick className="h-4 w-4" />
+            )}
+          </div>
+          <span>{truncatedName}</span>
         </div>
-        <span>{truncatedName}</span>
+        {extension.menus &&
+          extension.menus.length > 0 &&
+          (isCollapsed ? (
+            <ChevronRight className="absolute right-6 h-4 w-4" />
+          ) : (
+            <ChevronDown className="absolute right-6 h-4 w-4" />
+          ))}
       </div>
-      {extension.menus &&
-        extension.menus.length > 0 &&
-        (isCollapsed ? (
-          <ChevronRight className="absolute right-6 h-4 w-4" />
-        ) : (
-          <ChevronDown className="absolute right-6 h-4 w-4" />
-        ))}
     </Button>
   )
 }
@@ -137,7 +140,7 @@ export default function ExtensionItem({
         extension.menus &&
         extension.menus.length > 0 && (
           <>
-            <CollapsibleContent className="mb-1 rounded-md border p-1">
+            <CollapsibleContent className="mb-1 flex flex-col gap-y-[3px] rounded-md border p-1">
               {extension.menus.map((menu: IMenu) => (
                 <MenuButton menu={menu} hash={hash} key={menu.url} />
               ))}
@@ -194,11 +197,13 @@ const MenuButton: React.FC<IMenuButtonProps> = ({ menu, hash }) => {
               )}
             </Button>
           </CollapsibleTrigger>
-          <CollapsibleContent className="my-1 rounded-md border p-1">
-            {menu.children.map((childMenu: IMenu) => (
-              <MenuButton menu={childMenu} hash={hash} key={childMenu.url} />
-            ))}
-          </CollapsibleContent>
+          {!isCollapsed && (
+            <CollapsibleContent className="my-1 flex flex-col gap-y-[3px] rounded-md border p-1">
+              {menu.children.map((childMenu: IMenu) => (
+                <MenuButton menu={childMenu} hash={hash} key={childMenu.url} />
+              ))}
+            </CollapsibleContent>
+          )}
         </Collapsible>
       )}
     </div>
