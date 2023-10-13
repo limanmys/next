@@ -16,7 +16,12 @@ export class AuthService {
     })
   }
 
-  login = (email: string, password: string, newPassword?: string) => {
+  login = (
+    email: string,
+    password: string,
+    newPassword?: string,
+    token?: string
+  ) => {
     if (newPassword) {
       return this.instance.post("/change_password", {
         email,
@@ -27,6 +32,15 @@ export class AuthService {
 
     return this.instance.post("/login", {
       email,
+      password,
+      token,
+    })
+  }
+
+  saveTwoFactorToken = (secret: string, username: string, password: string) => {
+    return this.instance.post("/setup_mfa", {
+      secret,
+      email: username,
       password,
     })
   }

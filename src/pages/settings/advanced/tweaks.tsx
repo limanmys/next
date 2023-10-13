@@ -2,7 +2,7 @@ import { ReactElement, useEffect } from "react"
 import { NextPageWithLayout } from "@/pages/_app"
 import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Bug, FolderArchive, Puzzle, Save, ShieldCheck } from "lucide-react"
+import { Bug, FolderArchive, Puzzle, Save } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import * as z from "zod"
@@ -37,7 +37,6 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
 
   const formSchema = z.object({
     APP_LANG: z.string(),
-    OTP_ENABLED: z.boolean(),
     APP_NOTIFICATION_EMAIL: z.string().email(),
     APP_URL: z.string().url(),
     EXTENSION_TIMEOUT: z
@@ -118,32 +117,6 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
                   </div>
                   <FormMessage />
                 </div>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="OTP_ENABLED"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4 shadow-sm">
-                  <div className="flex space-x-3 space-y-0.5">
-                    <ShieldCheck className="h-6 w-6 text-muted-foreground" />
-                    <div className="flex flex-col space-y-0.5">
-                      <FormLabel>
-                        {t("advanced.tweaks.OTP_ENABLED.label")}
-                      </FormLabel>
-                      <FormDescription>
-                        {t("advanced.tweaks.OTP_ENABLED.subtext")}
-                      </FormDescription>
-                    </div>
-                  </div>
-                  <FormControl className="mt-[0!important]">
-                    <Switch
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                </FormItem>
               )}
             />
 

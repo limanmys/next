@@ -761,7 +761,7 @@
             },
             "OTP_ENABLED": {
                 "label": "İki Faktörlü Doğrulama",
-                "subtext": "Aktif ettiğinizde tüm kullanıcılar zorunlu olarak tercih ettiğiniz iki faktörlü doğrulama uygulaması aracılığıyla kodlar alarak giriş yapacaktır."
+                "subtext": "Aktif ettiğinizde bir sonraki girişinizde telefonunuza gelen kodu girmeniz gerekecektir."
             },
             "APP_NOTIFICATION_EMAIL": {
                 "label": "Sistem E-Postası",

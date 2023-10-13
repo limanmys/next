@@ -25,75 +25,94 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [newPassword, setNewPassword] = React.useState("")
   const [newPasswordConfirm, setNewPasswordConfirm] = React.useState("")
 
+  const [otpSetup, setOtpSetup] = React.useState(false)
+  const [otpData, setOtpData] = React.useState<{
+    secret: string
+    image: string
+    message: string
+  }>()
+
+  const [enableOtp, setEnableOtp] = React.useState(false)
+  const [otp, setOtp] = React.useState("")
+
   const [error, setError] = React.useState("")
   const { login } = useLogin()
-  const onSubmit = (e: React.SyntheticEvent) => {
+  const onSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault()
     setIsLoading(true)
 
     let redirectUri = (router.query.redirect || "/") as string
     redirectUri = redirectUri.replace("http", "")
 
-    if (forceChange) {
-      if (newPassword !== newPasswordConfirm) {
-        setError("Girdiğiniz şifreler uyuşmuyor.")
-        setIsLoading(false)
-        return
+    try {
+      if (forceChange) {
+        if (newPassword !== newPasswordConfirm) {
+          throw new Error("Girdiğiniz şifreler uyuşmuyor.")
+        }
+
+        await authService.login(name, password, newPassword)
+        await login(name, newPassword, otp)
+      } else {
+        if (!name || !password) {
+          throw new Error("Kullanıcı adı veya şifre boş olamaz.")
+        }
+
+        await login(name, password, otp)
+
+        if (forceChange) {
+          setForceChange(false)
+        }
       }
 
-      authService
-        .login(name, password, newPassword)
-        .then(() => {
-          login(name, newPassword)
-            .then(() => {
-              setError("")
-              setTimeout(() => {
-                router.push(redirectUri)
-              }, 1000)
-            })
-            .catch((e) => {
-              setError(e.response.data.message)
-            })
-            .finally(() => {
-              setIsLoading(false)
-            })
-        })
-        .catch((e) => {
-          if (e.response && e.response.status === 422) {
-            setError(e.response.data[Object.keys(e.response.data)[0]][0])
-            setIsLoading(false)
-            return
-          }
+      setError("")
+      setTimeout(() => {
+        router.push(redirectUri)
+      }, 1000)
+    } catch (e: any) {
+      if (e.response.data.message) {
+        setError(e.response.data.message)
+      } else {
+        setError(e.message)
+      }
 
-          setError(e.response.data.message)
-          setIsLoading(false)
-        })
+      if (e.response.status === 405) {
+        setForceChange(true)
+      }
 
-      return
-    }
+      if (e.response.status === 402) {
+        setOtpData(e.response.data)
+        setOtpSetup(true)
+      }
 
-    if (!name || !password) {
-      setError("Kullanıcı adı veya şifre boş olamaz.")
+      if (e.response.status === 406) {
+        setEnableOtp(true)
+      }
+    } finally {
       setIsLoading(false)
-    } else {
-      login(name, password)
-        .then(() => {
-          setError("")
-          setTimeout(() => {
-            router.push(redirectUri)
-          }, 1000)
+    }
+  }
+
+  const saveTwoFactorToken = async (
+    secret: string,
+    username: string,
+    password: string
+  ) => {
+    try {
+      setIsLoading(true)
+      authService
+        .saveTwoFactorToken(secret, username, password)
+        .then((res) => {
+          setError("Kurulum başarılı. Tekrar giriş yapınız.")
         })
-        .catch((e) => {
-          setError(e.response.data.message)
-          if (e.response.status === 405) {
-            setForceChange(true)
-          }
+        .catch((err) => {
+          setError(err.response.data.message)
         })
         .finally(() => {
-          setTimeout(() => {
-            setIsLoading(false)
-          }, 1000)
+          setIsLoading(false)
         })
+      setOtpSetup(false)
+    } catch (e: any) {
+      setError(e.message)
     }
   }
 
@@ -109,37 +128,42 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             </Alert>
           )}
 
-          <div className="grid gap-1">
-            <Label className="sr-only" htmlFor="email">
-              Kullanıcı Adı
-            </Label>
-            <Input
-              id="email"
-              placeholder="example@liman.dev"
-              autoCapitalize="none"
-              autoComplete="email"
-              autoCorrect="off"
-              disabled={isLoading}
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-          <div className="grid gap-1">
-            <Label className="sr-only" htmlFor="password">
-              Şifre
-            </Label>
-            <Input
-              id="password"
-              placeholder="***********"
-              type="password"
-              autoCapitalize="none"
-              autoComplete="password"
-              autoCorrect="off"
-              disabled={isLoading}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
+          {!otpSetup && !enableOtp && (
+            <>
+              <div className="grid gap-1">
+                <Label className="sr-only" htmlFor="email">
+                  Kullanıcı Adı
+                </Label>
+                <Input
+                  id="email"
+                  placeholder="example@liman.dev"
+                  autoCapitalize="none"
+                  autoComplete="email"
+                  autoCorrect="off"
+                  disabled={isLoading}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+              <div className="grid gap-1">
+                <Label className="sr-only" htmlFor="password">
+                  Şifre
+                </Label>
+                <Input
+                  id="password"
+                  placeholder="***********"
+                  type="password"
+                  autoCapitalize="none"
+                  autoComplete="password"
+                  autoCorrect="off"
+                  disabled={isLoading}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+            </>
+          )}
+
           {forceChange && (
             <>
               <div className="mt-5 grid gap-1">
@@ -178,12 +202,62 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             </>
           )}
 
-          <Button disabled={isLoading} className="mt-4">
-            {isLoading && (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-            )}
-            Giriş Yap
-          </Button>
+          {otpSetup && (
+            <div className="mt-5 flex grow flex-col items-center justify-center">
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: otpData?.image || "",
+                }}
+              ></div>
+
+              <p className="mt-5 text-center">
+                Google Authenticator uygulamasına QR kodu tarattıktan sonra
+                kaydet düğmesine basınız.
+              </p>
+
+              <Button
+                disabled={isLoading}
+                className="mt-8 w-full"
+                onClick={() =>
+                  saveTwoFactorToken(otpData?.secret || "", name, password)
+                }
+              >
+                {isLoading && (
+                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                Kurulumu Tamamla
+              </Button>
+            </div>
+          )}
+
+          {enableOtp && (
+            <>
+              <div className="grid gap-1">
+                <Label className="sr-only" htmlFor="otp">
+                  İki Aşamalı Doğrulama Kodu
+                </Label>
+                <Input
+                  id="otp"
+                  placeholder="******"
+                  autoCapitalize="none"
+                  autoComplete="otp"
+                  autoCorrect="off"
+                  disabled={isLoading}
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                />
+              </div>
+            </>
+          )}
+
+          {!otpSetup && (
+            <Button disabled={isLoading} className="mt-4">
+              {isLoading && (
+                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              Giriş Yap
+            </Button>
+          )}
         </div>
       </form>
     </div>
