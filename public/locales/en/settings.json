@@ -216,6 +216,9 @@
         "auth_type": "Login Type",
         "admin": "Administrator",
         "user": "User",
+        "otp": "Two-Factor Authentication",
+        "otp_enabled": "Enabled",
+        "otp_disabled": "Disabled",
         "toasts": {
             "success_msg": "The user has been created successfully.",
             "error_msg": "An error occurred while creating the user."

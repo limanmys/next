@@ -1,18 +1,18 @@
-import * as React from "react"
-import { useRouter } from "next/router"
 import { authService } from "@/services"
 import { AlertCircle } from "lucide-react"
+import { useRouter } from "next/router"
+import * as React from "react"
 
-import { cn } from "@/lib/utils"
-import { useLogin } from "@/hooks/auth/useLogin"
 import { Button } from "@/components/ui/button"
 import { Icons } from "@/components/ui/icons"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useLogin } from "@/hooks/auth/useLogin"
+import { cn } from "@/lib/utils"
 
 import { Alert, AlertDescription, AlertTitle } from "./alert"
 
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const router = useRouter()
@@ -207,6 +207,10 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               <div
                 dangerouslySetInnerHTML={{
                   __html: otpData?.image || "",
+                }}
+                style={{
+                  borderRadius: "24px",
+                  overflow: "hidden"
                 }}
               ></div>
 

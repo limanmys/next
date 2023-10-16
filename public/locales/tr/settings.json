@@ -216,6 +216,9 @@
         "auth_type": "Giriş Türü",
         "admin": "Yönetici",
         "user": "Kullanıcı",
+        "otp": "İki Aşamalı Giriş",
+        "otp_enabled": "Aktif",
+        "otp_disabled": "Pasif",
         "toasts": {
             "success_msg": "Kullanıcı başarıyla oluşturuldu.",
             "error_msg": "Kullanıcı oluşturulurken bir hata oluştu."
