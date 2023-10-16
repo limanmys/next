@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import md5 from "blueimp-md5"
-import { Save } from "lucide-react"
+import { Save, ShieldCheck } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
@@ -15,8 +15,17 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Loading from "@/components/ui/loading"
 import PageHeader from "@/components/ui/page-header"
+import { Switch } from "@/components/ui/switch"
 import { useToast } from "@/components/ui/use-toast"
-import { Form, FormField, FormMessage } from "@/components/form/form"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/form/form"
 import AuthLog from "@/components/profile/auth_log"
 
 export default function ProfilePage() {
@@ -26,6 +35,7 @@ export default function ProfilePage() {
     .object({
       name: z.string().min(3, t("profile.validations.name")),
       email: z.string().email(t("profile.validations.email")),
+      otp_enabled: z.boolean(),
       old_password: z.string().optional(),
       password: z.string().optional(),
       password_confirmation: z.string().optional(),
@@ -172,6 +182,32 @@ export default function ProfilePage() {
                             />
                             <FormMessage className="mt-1" />
                           </div>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="otp_enabled"
+                        render={({ field }) => (
+                          <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4 shadow-sm">
+                            <div className="flex space-x-3 space-y-0.5">
+                              <ShieldCheck className="h-6 w-6 text-muted-foreground" />
+                              <div className="flex flex-col space-y-0.5">
+                                <FormLabel>
+                                  {t("advanced.tweaks.OTP_ENABLED.label")}
+                                </FormLabel>
+                                <FormDescription>
+                                  {t("advanced.tweaks.OTP_ENABLED.subtext")}
+                                </FormDescription>
+                              </div>
+                            </div>
+                            <FormControl className="mt-[0!important]">
+                              <Switch
+                                checked={field.value}
+                                onCheckedChange={field.onChange}
+                              />
+                            </FormControl>
+                          </FormItem>
                         )}
                       />
 

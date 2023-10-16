@@ -1,12 +1,11 @@
-import { useEffect, useState } from "react"
-import { useRouter } from "next/router"
 import { apiService } from "@/services"
-import { Footprints, User2, UserCog2 } from "lucide-react"
+import { Check, Footprints, User2, UserCog2, X } from "lucide-react"
+import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { DivergentColumn } from "@/types/table"
-import { IAuthLog, IUser } from "@/types/user"
-import { useEmitter } from "@/hooks/useEmitter"
+import CreateUser from "@/components/settings/create-user"
+import { UserRowActions } from "@/components/settings/user-actions"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/data-table/data-table"
@@ -19,8 +18,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import CreateUser from "@/components/settings/create-user"
-import { UserRowActions } from "@/components/settings/user-actions"
+import { useEmitter } from "@/hooks/useEmitter"
+import { DivergentColumn } from "@/types/table"
+import { IAuthLog, IUser } from "@/types/user"
 
 const getType = (type: string) => {
   switch (type) {
@@ -130,6 +130,50 @@ export default function UserSettingsPage() {
       ),
       title: t("users.auth_type"),
       cell: ({ row }) => <>{getType(row.original.auth_type)}</>,
+    },
+    {
+      accessorKey: "otp_enabled",
+      accessorFn: (row) => {
+        return row.otp_enabled
+          ? 0 + t("users.otp_enabled")
+          : t("users.otp_disabled")
+      },
+      header: ({ column }) => (
+        <DataTableColumnHeader
+          column={column}
+          title={t("users.otp")}
+          filterPresets={[
+            {
+              key: t("users.otp_enabled"),
+              value: 0 + t("users.otp_enabled"),
+            },
+            {
+              key: t("users.otp_disabled"),
+              value: t("users.otp_disabled"),
+            },
+          ]}
+        />
+      ),
+      title: t("users.otp"),
+      cell: ({ row }) => (
+        <>
+          {row.original.otp_enabled ? (
+            <div className="flex items-center">
+              <Check className="h-5 w-5 text-green-500" />
+              <Badge className="ml-2" variant="success">
+                {t("users.otp_enabled")}
+              </Badge>
+            </div>
+          ) : (
+            <div className="flex items-center">
+              <X className="h-5 w-5 text-red-500" />
+              <Badge className="ml-2" variant="outline">
+                {t("users.otp_disabled")}
+              </Badge>
+            </div>
+          )}
+        </>
+      ),
     },
     {
       id: "actions",
@@ -248,15 +292,15 @@ function AuthLogDialog() {
         <>
           {row.original.created_at
             ? new Date(row.original.created_at).toLocaleDateString(
-                i18n.language,
-                {
-                  day: "2-digit",
-                  month: "long",
-                  year: "numeric",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                }
-              )
+              i18n.language,
+              {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+              }
+            )
             : t("users.auth_log.unknown")}
         </>
       ),

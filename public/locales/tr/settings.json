@@ -216,6 +216,9 @@
         "auth_type": "Giriş Türü",
         "admin": "Yönetici",
         "user": "Kullanıcı",
+        "otp": "İki Aşamalı Giriş",
+        "otp_enabled": "Aktif",
+        "otp_disabled": "Pasif",
         "toasts": {
             "success_msg": "Kullanıcı başarıyla oluşturuldu.",
             "error_msg": "Kullanıcı oluşturulurken bir hata oluştu."
@@ -761,7 +764,7 @@
             },
             "OTP_ENABLED": {
                 "label": "İki Faktörlü Doğrulama",
-                "subtext": "Aktif ettiğinizde tüm kullanıcılar zorunlu olarak tercih ettiğiniz iki faktörlü doğrulama uygulaması aracılığıyla kodlar alarak giriş yapacaktır."
+                "subtext": "Aktif ettiğinizde bir sonraki girişinizde telefonunuza gelen kodu girmeniz gerekecektir."
             },
             "APP_NOTIFICATION_EMAIL": {
                 "label": "Sistem E-Postası",

@@ -12,6 +12,7 @@ export interface IUser {
   auth_type: string
   username: string
   locale: string
+  otp_enabled: boolean
   permissions: ILimanPermissions
 }
 
