@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react"
-import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { FileWarning, Save } from "lucide-react"
+import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { IExtensionSetting, IExtensionVariable } from "@/types/extension"
+import { SelectExtension } from "@/components/selectbox/extension-select"
+import { SelectServerScrollable } from "@/components/selectbox/server-select-scrollable"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -13,8 +14,7 @@ import { Label } from "@/components/ui/label"
 import Loading from "@/components/ui/loading"
 import PageHeader from "@/components/ui/page-header"
 import { useToast } from "@/components/ui/use-toast"
-import { SelectExtension } from "@/components/selectbox/extension-select"
-import { SelectServerScrollable } from "@/components/selectbox/server-select-scrollable"
+import { IExtensionSetting, IExtensionVariable } from "@/types/extension"
 
 export default function ExtensionSettingsPage() {
   const router = useRouter()
@@ -108,7 +108,7 @@ export default function ExtensionSettingsPage() {
                   </p>
                 </div>
                 <div className="col-span-3 p-5">
-                  {data.required.length == 0 && (
+                  {data.required && data.required.length == 0 && (
                     <p className="text-muted-foreground">
                       {t("extensions.settings.no_need_settings")}
                     </p>
@@ -127,7 +127,7 @@ export default function ExtensionSettingsPage() {
                 </div>
               </div>
             </Card>
-            {data.advanced.length != 0 && (
+            {data.advanced && data.advanced.length != 0 && (
               <Card className="mt-8 overflow-hidden">
                 <div className="grid grid-cols-4">
                   <div className="bg-foreground/5 p-5">

@@ -1,18 +1,18 @@
-import { useEffect, useState } from "react"
-import Link from "next/link"
 import { apiService } from "@/services"
 import { Link2, Server } from "lucide-react"
+import Link from "next/link"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { IServer } from "@/types/server"
-import { DivergentColumn } from "@/types/table"
-import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
-import { useEmitter } from "@/hooks/useEmitter"
+import { ServerRowActions } from "@/components/settings/server-actions"
 import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
 import PageHeader from "@/components/ui/page-header"
-import { ServerRowActions } from "@/components/settings/server-actions"
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
+import { useEmitter } from "@/hooks/useEmitter"
+import { IServer } from "@/types/server"
+import { DivergentColumn } from "@/types/table"
 
 export default function Servers() {
   const [loading, setLoading] = useState<boolean>(true)
@@ -30,12 +30,12 @@ export default function Servers() {
       title: t("index.table.name"),
       enableSorting: true,
       enableHiding: true,
-      cell: ({ row }) => (
+      cell: ({ row }) => user.permissions.server_details ? (
         <Link href={`/servers/${row.original.id}`}>
           {row.original.name}
           <Link2 className="ml-2 inline-block h-4 w-4" />
         </Link>
-      ),
+      ) : row.original.name,
     },
     {
       accessorKey: "ip_address",
@@ -71,7 +71,7 @@ export default function Servers() {
           <ServerRowActions row={row} />
         </div>
       ),
-    },
+    }
   ]
 
   useEffect(() => {

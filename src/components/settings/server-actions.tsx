@@ -1,11 +1,9 @@
-import { useState } from "react"
 import { apiService } from "@/services"
 import { Row } from "@tanstack/react-table"
 import { Edit2, MoreHorizontal, Trash } from "lucide-react"
+import { useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { IServer } from "@/types/server"
-import { useEmitter } from "@/hooks/useEmitter"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,7 +21,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useEmitter } from "@/hooks/useEmitter"
+import { IServer } from "@/types/server"
 
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 import {
   Dialog,
   DialogContent,
@@ -38,12 +39,12 @@ import { useToast } from "../ui/use-toast"
 
 export function ServerRowActions({ row }: { row: Row<IServer> }) {
   const server = row.original
+  const user = useCurrentUser()
   const [deleteDialog, setDeleteDialog] = useState(false)
   const [editDialog, setEditDialog] = useState(false)
-  const { toast } = useToast()
   const { t } = useTranslation("settings")
 
-  return (
+  return user.permissions.update_server && (
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
