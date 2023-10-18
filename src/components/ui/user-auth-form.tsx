@@ -69,6 +69,11 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         router.push(redirectUri)
       }, 1000)
     } catch (e: any) {
+      if (!e.response) {
+        setError(e.message)
+        return
+      }
+
       if (e.response.data.message) {
         setError(e.response.data.message)
       } else {
@@ -121,9 +126,9 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       <form onSubmit={onSubmit}>
         <div className="grid gap-2">
           {error && (
-            <Alert variant="destructive">
+            <Alert>
               <AlertCircle className="h-4 w-4" />
-              <AlertTitle>Hata</AlertTitle>
+              <AlertTitle>Bilgi</AlertTitle>
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
