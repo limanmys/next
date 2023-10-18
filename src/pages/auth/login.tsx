@@ -10,7 +10,7 @@ export default function AuthenticationPage() {
             className="absolute inset-0 bg-cover"
             style={{
               backgroundImage:
-                "url(https://images.unsplash.com/photo-1639066648921-82d4500abf1a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80)",
+                "url(/images/auth-bg.jpg)",
             }}
           />
           <div className="relative z-20 flex items-center text-lg font-medium">
