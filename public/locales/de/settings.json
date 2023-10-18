@@ -224,6 +224,8 @@
             "error_msg": "Beim Anlegen des Benutzers ist ein Fehler aufgetreten."
         },
         "validation": {
+            "n_min": "Der Name muss mindestens 2 Zeichen lang sein.",
+            "n_max": "Der Name darf maximal 50 Zeichen lang sein.",
             "name_min": "Der Benutzername muss mindestens 2 Zeichen lang sein.",
             "name_max": "Der Benutzername darf maximal 50 Zeichen lang sein.",
             "email": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",

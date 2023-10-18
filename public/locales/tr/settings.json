@@ -224,6 +224,8 @@
             "error_msg": "Kullanıcı oluşturulurken bir hata oluştu."
         },
         "validation": {
+            "n_min": "İsim en az 2 karakter olmalıdır.",
+            "n_max": "İsim en fazla 50 karakter olmalıdır.",
             "name_min": "Kullanıcı adı en az 2 karakter olmalıdır.",
             "name_max": "Kullanıcı adı en fazla 50 karakter olmalıdır.",
             "email": "Geçerli bir e-posta adresi giriniz.",
@@ -306,7 +308,7 @@
             "edit": "Düzenle",
             "delete": "Sil",
             "title": "Emin misiniz?",
-            "subtext": "Seçilen rol <b>({{role_name}})</b> Liman sisteminden tamamen kaldırılacaktır. şDevam etmek istiyor musunuz?",
+            "subtext": "Seçilen rol <b>({{role_name}})</b> Liman sisteminden tamamen kaldırılacaktır. Devam etmek istiyor musunuz?",
             "no": "Vazgeç",
             "yes": "Onayla",
             "success": "Rol başarıyla silindi.",
@@ -325,7 +327,7 @@
             "description": "Liman üzerinde gerçekleştirilen fonksiyonlara yetki verin.",
             "left": "Tüm İzinler",
             "right": "Verilmiş İzinler",
-            "success": "Liman izinleri başarıyla güncellendi.",
+            "success": "Liman izinleri başarıyla güncellendi, yetkilerin uygulanması için kullanıcıların tekrardan giriş yapması gereklidir.",
             "error": "Liman izinleri güncellenirken bir hata oluştu."
         },
         "servers": {

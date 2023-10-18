@@ -224,6 +224,8 @@
             "error_msg": "An error occurred while creating the user."
         },
         "validation": {
+            "n_min": "Name must be at least 2 characters.",
+            "n_max": "Name must be at most 50 characters.",
             "name_min": "Username must be at least 2 characters.",
             "name_max": "Username must be at most 50 characters.",
             "email": "Please enter a valid e-mail address.",

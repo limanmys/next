@@ -1,12 +1,12 @@
-import { useState } from "react"
 import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { PlusCircle } from "lucide-react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
-import { useEmitter } from "@/hooks/useEmitter"
+import { Form, FormField, FormMessage } from "@/components/form/form"
 import {
   Sheet,
   SheetContent,
@@ -16,7 +16,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { Form, FormField, FormMessage } from "@/components/form/form"
+import { useEmitter } from "@/hooks/useEmitter"
 
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
@@ -40,12 +40,19 @@ export default function CreateUser() {
       name: z
         .string()
         .min(2, {
+          message: t("users.validation.n_min"),
+        })
+        .max(50, {
+          message: t("users.validation.n_max"),
+        }),
+      username: z
+        .string()
+        .min(2, {
           message: t("users.validation.name_min"),
         })
         .max(50, {
           message: t("users.validation.name_max"),
         }),
-      username: z.string(),
       email: z.string().email({
         message: t("users.validation.email"),
       }),
