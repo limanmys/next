@@ -220,6 +220,8 @@
         "otp_enabled": "Aktiviert",
         "otp_disabled": "Deaktiviert",
         "toasts": {
+            "edit_success_msg": "Der Benutzer wurde erfolgreich bearbeitet.",
+            "edit_error_msg": "Beim Bearbeiten des Benutzers ist ein Fehler aufgetreten.",
             "success_msg": "Der Benutzer wurde erfolgreich erstellt.",
             "error_msg": "Beim Anlegen des Benutzers ist ein Fehler aufgetreten."
         },
@@ -247,6 +249,12 @@
             "password": "Ihr Passwort",
             "password_confirmation": "Bestätigung des Passworts",
             "create": "Schaffen"
+        },
+        "edit": {
+            "title": "Benutzer bearbeiten",
+            "description": "Sie können die Benutzerinformationen mit diesem Fenster bearbeiten.",
+            "roles": "Rollen",
+            "submit": "Bearbeiten"
         },
         "auth_log": {
             "user": "Benutzer",
@@ -557,6 +565,7 @@
                 "EXTENSION_ASSIGNED_TO_SERVER": "{{extension_name}} Erweiterung, die {{server_name}} Server zugewiesen ist.",
                 "EXTENSION_UNASSIGNED_FROM_SERVER": "{{extension_name}} Erweiterung, {{server_name}} Server nicht zugewiesen ist.",
                 "USER_CREATED": "{{user_name}} Benutzer erstellt.",
+                "USER_UPDATED": "{{user_name}} Benutzer aktualisiert.",
                 "USER_DELETED": "{{user_name}} Benutzer gelöscht.",
                 "EXTENSION_UPLOAD": "{{extension_name}} Erweiterung hochgeladen.",
                 "EXTENSION_DELETE": "{{extension_name}} Extension gelöscht.",

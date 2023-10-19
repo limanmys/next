@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
 import CreateUser from "@/components/settings/create-user"
+import EditUser from "@/components/settings/edit-user"
 import { UserRowActions } from "@/components/settings/user-actions"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -221,6 +222,7 @@ export default function UserSettingsPage() {
       >
         <div className="flex gap-3">
           <CreateUser />
+          <EditUser />
           <AuthLogDialog />
           <Button
             variant="outline"

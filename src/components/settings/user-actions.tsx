@@ -1,11 +1,9 @@
-import { useState } from "react"
 import { apiService } from "@/services"
 import { Row } from "@tanstack/react-table"
-import { Footprints, MoreHorizontal, Trash } from "lucide-react"
+import { Edit2, Footprints, MoreHorizontal, Trash } from "lucide-react"
+import { useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { IUser } from "@/types/user"
-import { useEmitter } from "@/hooks/useEmitter"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,6 +21,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useEmitter } from "@/hooks/useEmitter"
+import { IUser } from "@/types/user"
 
 import { Icons } from "../ui/icons"
 import { useToast } from "../ui/use-toast"
@@ -46,6 +46,12 @@ export function UserRowActions({ row }: { row: Row<IUser> }) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
+          <DropdownMenuItem
+            onClick={() => emitter.emit("EDIT_USER", user)}
+          >
+            <Edit2 className="mr-2 h-3.5 w-3.5" />
+            {t("roles.actions.edit")}
+          </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => emitter.emit("AUTH_LOG_DIALOG", user.id)}
           >

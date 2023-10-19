@@ -221,7 +221,9 @@
         "otp_disabled": "Pasif",
         "toasts": {
             "success_msg": "Kullanıcı başarıyla oluşturuldu.",
-            "error_msg": "Kullanıcı oluşturulurken bir hata oluştu."
+            "edit_success_msg": "Kullanıcı başarıyla düzenlendi.",
+            "error_msg": "Kullanıcı oluşturulurken bir hata oluştu.",
+            "edit_error_msg": "Kullanıcı düzenlenirken bir hata oluştu."
         },
         "validation": {
             "n_min": "İsim en az 2 karakter olmalıdır.",
@@ -247,6 +249,12 @@
             "password": "Parolanız",
             "password_confirmation": "Parola Onayı",
             "create": "Oluştur"
+        },
+        "edit": {
+            "title": "Kullanıcı Düzenle",
+            "description": "Bu pencereyi kullanarak kullanıcı bilgilerini düzenleyebilirsiniz.",
+            "roles": "Roller",
+            "submit": "Düzenle"
         },
         "auth_log": {
             "user": "Kullanıcı",
@@ -557,6 +565,7 @@
                 "EXTENSION_ASSIGNED_TO_SERVER": "{{extension_name}} eklentisi {{server_name}} sunucusuna atandı.",
                 "EXTENSION_UNASSIGNED_FROM_SERVER": "{{extension_name}} eklentisi {{server_name}} sunucusundan kaldırıldı.",
                 "USER_CREATED": "{{user_name}} isimli kullanıcı oluşturuldu.",
+                "USER_UPDATED": "{{user_name}} isimli kullanıcı düzenlendi.",
                 "USER_DELETED": "{{user_name}} isimli kullanıcı silindi.",
                 "EXTENSION_UPLOAD": "{{extension_name}} eklentisi yüklendi.",
                 "EXTENSION_DELETE": "{{extension_name}} eklentisi silindi.",

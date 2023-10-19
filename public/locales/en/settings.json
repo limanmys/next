@@ -221,7 +221,9 @@
         "otp_disabled": "Disabled",
         "toasts": {
             "success_msg": "The user has been created successfully.",
-            "error_msg": "An error occurred while creating the user."
+            "edit_success_msg": "The user has been edited successfully.",
+            "error_msg": "An error occurred while creating the user.",
+            "edit_error_msg": "An error occurred while editing the user."
         },
         "validation": {
             "n_min": "Name must be at least 2 characters.",
@@ -247,6 +249,12 @@
             "password": "Your Password",
             "password_confirmation": "Password Confirmation",
             "create": "Create"
+        },
+        "edit": {
+            "title": "Edit User",
+            "description": "You can edit the user's information using this window.",
+            "roles": "Roles",
+            "submit": "Edit"
         },
         "auth_log": {
             "user": "User",
@@ -557,6 +565,7 @@
                 "EXTENSION_ASSIGNED_TO_SERVER": "{{extension_name}} extension assigned to {{server_name}} server.",
                 "EXTENSION_UNASSIGNED_FROM_SERVER": "{{extension_name}} extension unassigned from {{server_name}} server.",
                 "USER_CREATED": "{{user_name}} user created.",
+                "USER_UPDATED": "{{user_name}} user updated.",
                 "USER_DELETED": "{{user_name}} user deleted.",
                 "EXTENSION_UPLOAD": "{{extension_name}} extension uploaded.",
                 "EXTENSION_DELETE": "{{extension_name}} extension deleted.",
