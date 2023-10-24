@@ -1,11 +1,23 @@
-import { ReactNode } from "react"
+import { ReactNode, useEffect, useState } from "react"
+import Link from "next/link"
 import { Router, useRouter } from "next/router"
 import {
   SIDEBARCTX_STATES,
   useSidebarContext,
 } from "@/providers/sidebar-provider"
+import Cookies from "js-cookie"
 import nProgress from "nprogress"
+import { useTranslation } from "react-i18next"
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Sidebar } from "@/components/navigation/sidebar"
 import { SiteHeader } from "@/components/navigation/site-header"
@@ -15,6 +27,7 @@ import GradientSvg from "../bg/gradient"
 const Layout = ({ Component, pageProps }: any) => {
   const router = useRouter()
   const sidebarCtx = useSidebarContext()
+  const { t } = useTranslation("common")
 
   Router.events.on("routeChangeStart", () => nProgress.start())
   Router.events.on("routeChangeComplete", () => {
@@ -24,6 +37,32 @@ const Layout = ({ Component, pageProps }: any) => {
   Router.events.on("routeChangeError", () => nProgress.done())
 
   const getLayout = Component.getLayout ?? ((page: ReactNode) => page)
+  const [open, setOpen] = useState<boolean>(false)
+
+  useEffect(() => {
+    let authChecker = setInterval(() => {
+      let currentUser = Cookies.get("currentUser")
+      if (currentUser) {
+        currentUser = JSON.parse(currentUser)
+      }
+
+      if (currentUser && currentUser.expired_at) {
+        // expired_at is unix epoch milliseconds time
+        // check if expired_at is less than current time
+        // if it is, then logout
+        if (currentUser.expired_at < Date.now()) {
+          setOpen(true)
+          Cookies.remove("currentUser")
+        }
+      } else {
+        clearInterval(authChecker)
+      }
+    }, 30000)
+
+    return () => {
+      clearInterval(authChecker)
+    }
+  }, [])
 
   return (
     <>
@@ -52,6 +91,21 @@ const Layout = ({ Component, pageProps }: any) => {
           </ScrollArea>
         </div>
       </div>
+      <AlertDialog open={open} onOpenChange={setOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t("logout_title")}</AlertDialogTitle>
+            <AlertDialogDescription>
+              {t("logout_description")}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <Link href="/auth/login">
+              <AlertDialogAction>{t("logout")}</AlertDialogAction>
+            </Link>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   )
 }

@@ -1,5 +1,8 @@
 {
     "page_title": "Liman Zentrales Management System",
+    "logout_title": "Information",
+    "logout_description": "Sie werden abgemeldet, da Ihre Sitzung abgelaufen ist. Bitte melden Sie sich erneut an.",
+    "logout": "Anmelden",
     "command_menu": {
         "search": "Suche...",
         "search_placeholder": "Suche...",

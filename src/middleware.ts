@@ -18,6 +18,14 @@ export function middleware(request: NextRequest) {
 
   const currentUser = request.cookies.get("currentUser")?.value
 
+  if (!currentUser && request.nextUrl.pathname.includes("forgot_password")) {
+    return NextResponse.next()
+  }
+
+  if (!currentUser && request.nextUrl.pathname.includes("reset_password")) {
+    return NextResponse.next()
+  }
+
   if (!currentUser && !authRoutes.includes(request.nextUrl.pathname)) {
     return NextResponse.redirect(
       new URL("/auth/login?redirect=" + request.nextUrl.pathname, request.url)

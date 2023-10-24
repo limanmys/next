@@ -1,5 +1,8 @@
 {
     "page_title": "Liman Merkezi Yönetim Sistemi",
+    "logout_title": "Bilgilendirme",
+    "logout_description": "Oturum süreniz dolduğu için sistemden çıkış yapıyorsunuz. Lütfen tekrar giriş yapınız.",
+    "logout": "Giriş Yap",
     "command_menu": {
         "search": "Arama...",
         "search_placeholder": "Arama yapın...",
