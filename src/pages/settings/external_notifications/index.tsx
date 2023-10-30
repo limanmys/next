@@ -189,6 +189,12 @@ function CreateExternalNotification() {
       })
   }
 
+  useEffect(() => {
+    if (open) {
+      setToken("")
+    }
+  }, [open])
+
   return (
     <Dialog onOpenChange={(open) => setOpen(open)} open={open}>
       <DialogTrigger asChild>
