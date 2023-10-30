@@ -172,7 +172,11 @@ function License({
           <Label htmlFor="license">
             {t("extensions.actions.license.form.license")}
           </Label>
-          <Textarea id="license" onChange={(e) => setData(e.target.value)} />
+          <Textarea
+            id="license"
+            onChange={(e) => setData(e.target.value)}
+            maxLength={750}
+          />
         </div>
 
         <div className="mt-6 flex justify-end">

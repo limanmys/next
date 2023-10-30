@@ -201,7 +201,11 @@ function EditVaultKey({
 
         <div className="mt-3 grid w-full items-center gap-1.5">
           <Label htmlFor="license">{t("vault.actions.edit.data")}</Label>
-          <Textarea id="license" onChange={(e) => setData(e.target.value)} />
+          <Textarea
+            id="license"
+            onChange={(e) => setData(e.target.value)}
+            maxLength={750}
+          />
         </div>
 
         <div className="mt-6 flex justify-end">
