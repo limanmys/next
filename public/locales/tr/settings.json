@@ -750,7 +750,7 @@
             "description": "Liman'ın bağlanacağı uçları ve aktif dizin sunucuları çözmesini sağlayan DNS ayarlarını buradan yapabilirsiniz.",
             "dns1_validation": "DNS 1 alanı boş bırakılamaz.",
             "success": "DNS ayarları başarıyla güncellendi.",
-            "error": "DNS ayarları güncellenirken bir hata oluştu.",
+            "error": "DNS ayarları güncellenirken bir hata oluştu, girdilerinizi kontrol edin.",
             "save": "Kaydet"
         },
         "logrotation": {
