@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next"
 
 import { ICertificate } from "@/types/certificate"
 import { DivergentColumn } from "@/types/table"
+import { compareNumericString } from "@/lib/utils"
 import { useEmitter } from "@/hooks/useEmitter"
 import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/data-table/data-table"
@@ -48,22 +49,15 @@ const AdvancedCertificateSettingsPage: NextPageWithLayout = () => {
         />
       ),
       title: t("advanced.certificates.updated_at"),
-      cell: ({ row }) => (
-        <>
-          {row.original.updated_at
-            ? new Date(row.original.updated_at).toLocaleDateString(
-                i18n.language,
-                {
-                  day: "2-digit",
-                  month: "long",
-                  year: "numeric",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                }
-              )
-            : t("unknown")}
-        </>
-      ),
+      accessorFn: (row) =>
+        new Date(row.updated_at).toLocaleDateString(i18n.language, {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+      sortingFn: compareNumericString,
     },
     {
       id: "actions",
