@@ -27,6 +27,7 @@ const AdvancedDnsSettingsPage: NextPageWithLayout = () => {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    mode: "onChange",
   })
 
   const handleSave = (data: z.infer<typeof formSchema>) => {
@@ -110,7 +111,10 @@ const AdvancedDnsSettingsPage: NextPageWithLayout = () => {
             />
 
             <div className="flex justify-end">
-              <Button type="submit">
+              <Button
+                type="submit"
+                disabled={!form.formState.isDirty || !form.formState.isValid}
+              >
                 <Save className="mr-2 h-4 w-4" />
                 {t("advanced.dns.save")}
               </Button>
