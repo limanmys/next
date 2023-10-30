@@ -140,7 +140,10 @@ function CreateExternalNotification() {
   const [token, setToken] = useState<string>("")
 
   const formSchema = z.object({
-    name: z.string().min(1, t("external_notifications.validation.name")),
+    name: z
+      .string()
+      .min(1, t("external_notifications.validation.name"))
+      .max(50, t("external_notifications.validation.name")),
     ip: z.string().ip({
       version: "v4",
       message: t("external_notifications.validation.ip"),
@@ -239,7 +242,7 @@ function CreateExternalNotification() {
                     {t("external_notifications.create.name")}
                   </Label>
                   <div className="col-span-3">
-                    <Input id="name" {...field} />
+                    <Input id="name" {...field} maxLength={50} />
                     <FormMessage className="mt-1" />
                   </div>
                 </div>
