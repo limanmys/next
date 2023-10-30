@@ -26,6 +26,10 @@ export function DataTableViewOptions<TData, TValue>({
 }: DataTableViewOptionsProps<TData, TValue>) {
   const { t } = useTranslation("components")
 
+  const visibleColumnCount = table.getAllColumns().filter((column) => {
+    return column.getIsVisible()
+  }).length
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -50,6 +54,7 @@ export function DataTableViewOptions<TData, TValue>({
                 className="capitalize"
                 checked={column.getIsVisible()}
                 onCheckedChange={(value) => column.toggleVisibility(!!value)}
+                disabled={visibleColumnCount === 2 && column.getIsVisible()}
               >
                 {
                   columns.find((c: any) => {
