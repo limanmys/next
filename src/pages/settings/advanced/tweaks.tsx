@@ -37,10 +37,11 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
 
   const formSchema = z.object({
     APP_LANG: z.string(),
-    APP_NOTIFICATION_EMAIL: z.string().email(),
-    APP_URL: z.string().url(),
+    APP_NOTIFICATION_EMAIL: z.string().max(300).email(),
+    APP_URL: z.string().max(300).url(),
     EXTENSION_TIMEOUT: z
       .string()
+      .max(3, { message: t("advanced.tweaks.validation") })
       .refine((val) => !Number.isNaN(parseInt(val, 10)), {
         message: t("advanced.tweaks.validation"),
       }),
