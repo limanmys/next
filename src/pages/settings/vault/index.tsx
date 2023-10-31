@@ -47,7 +47,7 @@ export default function VaultPage() {
     },
   ]
 
-  const fetchData = () => {
+  const fetchData = (user: string) => {
     apiService
       .getInstance()
       .get(`/settings/vault?user_id=${user}`)
@@ -58,18 +58,17 @@ export default function VaultPage() {
   }
 
   useEffect(() => {
-    fetchData()
+    fetchData(user)
+    emitter.on("REFETCH_VAULT", () => {
+      fetchData(user)
+    })
+    return () => emitter.off("REFETCH_VAULT")
   }, [user])
 
   useEffect(() => {
     if (currentUser.status === 1 && currentUser.id !== undefined) {
       setUser(currentUser.id)
     }
-
-    emitter.on("REFETCH_VAULT", () => {
-      fetchData()
-    })
-    return () => emitter.off("REFETCH_VAULT")
   }, [])
 
   useEffect(() => {
