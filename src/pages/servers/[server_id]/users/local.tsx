@@ -9,6 +9,7 @@ import * as z from "zod"
 
 import { ILocalUser } from "@/types/server_user"
 import { DivergentColumn } from "@/types/table"
+import { setFormErrors } from "@/lib/utils"
 import { useEmitter } from "@/hooks/useEmitter"
 import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/data-table/data-table"
@@ -153,12 +154,14 @@ function CreateLocalUser() {
           })
         }
       })
-      .catch(() => {
-        toast({
-          title: t("users.local.toasts.fail.title"),
-          description: t("users.local.toasts.fail.description"),
-          variant: "destructive",
-        })
+      .catch((e) => {
+        if (!setFormErrors(e, form)) {
+          toast({
+            title: t("users.local.toasts.fail.title"),
+            description: t("users.local.toasts.fail.description"),
+            variant: "destructive",
+          })
+        }
       })
   }
 

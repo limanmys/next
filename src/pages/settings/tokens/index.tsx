@@ -8,6 +8,7 @@ import { z } from "zod"
 
 import { DivergentColumn } from "@/types/table"
 import { IToken } from "@/types/token"
+import { setFormErrors } from "@/lib/utils"
 import { useEmitter } from "@/hooks/useEmitter"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
@@ -144,8 +145,14 @@ function CreateAccessToken() {
   const [token, setToken] = useState<string>("")
 
   const formSchema = z.object({
-    name: z.string().min(1, t("tokens.validation.name")),
-    ip_range: z.string().min(1, t("tokens.validation.ip_range")),
+    name: z
+      .string()
+      .min(1, t("tokens.validation.name"))
+      .max(75, t("tokens.validation.name")),
+    ip_range: z
+      .string()
+      .min(1, t("tokens.validation.ip_range"))
+      .max(16, t("tokens.validation.ip_range")),
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -157,6 +164,12 @@ function CreateAccessToken() {
   })
 
   const [open, setOpen] = useState<boolean>(false)
+  useEffect(() => {
+    if (open) {
+      setToken("")
+    }
+  }, [open])
+
   const handleCreate = (values: z.infer<typeof formSchema>) => {
     apiService
       .getInstance()
@@ -181,12 +194,14 @@ function CreateAccessToken() {
           })
         }
       })
-      .catch(() => {
-        toast({
-          title: t("error"),
-          description: t("tokens.toasts.create_error"),
-          variant: "destructive",
-        })
+      .catch((e) => {
+        if (!setFormErrors(e, form)) {
+          toast({
+            title: t("error"),
+            description: t("tokens.toasts.create_error"),
+            variant: "destructive",
+          })
+        }
       })
   }
 
@@ -232,7 +247,7 @@ function CreateAccessToken() {
                     {t("tokens.create.form.name")}
                   </Label>
                   <div className="col-span-3">
-                    <Input id="name" {...field} />
+                    <Input id="name" {...field} maxLength={75} />
                     <FormMessage className="mt-1" />
                   </div>
                 </div>

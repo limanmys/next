@@ -9,7 +9,7 @@ import { z } from "zod"
 
 import { IRole } from "@/types/role"
 import { DivergentColumn } from "@/types/table"
-import { compareNumericString } from "@/lib/utils"
+import { compareNumericString, setFormErrors } from "@/lib/utils"
 import { useEmitter } from "@/hooks/useEmitter"
 import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/data-table/data-table"
@@ -173,12 +173,14 @@ function CreateRole() {
           })
         }
       })
-      .catch(() => {
-        toast({
-          title: t("error"),
-          description: t("roles.create.error"),
-          variant: "destructive",
-        })
+      .catch((e) => {
+        if (!setFormErrors(e, form)) {
+          toast({
+            title: t("error"),
+            description: t("roles.create.error"),
+            variant: "destructive",
+          })
+        }
       })
   }
 

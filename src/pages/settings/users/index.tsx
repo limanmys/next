@@ -1,12 +1,12 @@
+import { useEffect, useState } from "react"
+import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { Check, Footprints, User2, UserCog2, X } from "lucide-react"
-import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import CreateUser from "@/components/settings/create-user"
-import EditUser from "@/components/settings/edit-user"
-import { UserRowActions } from "@/components/settings/user-actions"
+import { DivergentColumn } from "@/types/table"
+import { IAuthLog, IUser } from "@/types/user"
+import { useEmitter } from "@/hooks/useEmitter"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/data-table/data-table"
@@ -19,9 +19,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { useEmitter } from "@/hooks/useEmitter"
-import { DivergentColumn } from "@/types/table"
-import { IAuthLog, IUser } from "@/types/user"
+import CreateUser from "@/components/settings/create-user"
+import EditUser from "@/components/settings/edit-user"
+import { UserRowActions } from "@/components/settings/user-actions"
 
 const getType = (type: string) => {
   switch (type) {
@@ -290,19 +290,27 @@ function AuthLogDialog() {
         />
       ),
       title: t("users.auth_log.created_at"),
+      accessorFn: (row) =>
+        new Date(row.created_at).toLocaleDateString(i18n.language, {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
       cell: ({ row }) => (
         <>
           {row.original.created_at
             ? new Date(row.original.created_at).toLocaleDateString(
-              i18n.language,
-              {
-                day: "2-digit",
-                month: "long",
-                year: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-              }
-            )
+                i18n.language,
+                {
+                  day: "2-digit",
+                  month: "long",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                }
+              )
             : t("users.auth_log.unknown")}
         </>
       ),

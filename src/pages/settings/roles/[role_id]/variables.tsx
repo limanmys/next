@@ -10,6 +10,7 @@ import * as z from "zod"
 
 import { IFunction } from "@/types/function"
 import { DivergentColumn } from "@/types/table"
+import { setFormErrors } from "@/lib/utils"
 import { useEmitter } from "@/hooks/useEmitter"
 import {
   AlertDialog,
@@ -254,12 +255,14 @@ function CreateVariable() {
           })
         }
       })
-      .catch(() => {
-        toast({
-          title: t("error"),
-          description: t("roles.variables.create.error"),
-          variant: "destructive",
-        })
+      .catch((e) => {
+        if (!setFormErrors(e, form)) {
+          toast({
+            title: t("error"),
+            description: t("roles.variables.create.error"),
+            variant: "destructive",
+          })
+        }
       })
   }
 

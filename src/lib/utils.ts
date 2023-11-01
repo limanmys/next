@@ -2,6 +2,7 @@
 
 import { clsx, type ClassValue } from "clsx"
 import Cookies from "js-cookie"
+import { UseFormReturn } from "react-hook-form"
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
@@ -50,4 +51,19 @@ export function generateUUID() {
     }
     return (c === "x" ? r : (r & 0x3) | 0x8).toString(16)
   })
+}
+
+export function setFormErrors(e: Error, form: UseFormReturn<any>) {
+  if (e.response && e.response.status === 422) {
+    Object.keys(e.response.data).forEach((key) => {
+      form.setError(key as keyof typeof values, {
+        type: "manual",
+        message: e.response.data[key],
+      })
+    })
+
+    return true
+  }
+
+  return false
 }

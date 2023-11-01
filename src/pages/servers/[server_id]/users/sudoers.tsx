@@ -9,6 +9,7 @@ import * as z from "zod"
 
 import { ISudoers } from "@/types/server_user"
 import { DivergentColumn } from "@/types/table"
+import { setFormErrors } from "@/lib/utils"
 import { useEmitter } from "@/hooks/useEmitter"
 import {
   AlertDialog,
@@ -257,12 +258,14 @@ function CreateSudoers() {
           })
         }
       })
-      .catch(() => {
-        toast({
-          title: t("users.sudoers.toasts.add.fail.title"),
-          description: t("users.sudoers.toasts.add.fail.description"),
-          variant: "destructive",
-        })
+      .catch((e) => {
+        if (!setFormErrors(e, form)) {
+          toast({
+            title: t("users.sudoers.toasts.add.fail.title"),
+            description: t("users.sudoers.toasts.add.fail.description"),
+            variant: "destructive",
+          })
+        }
       })
   }
 

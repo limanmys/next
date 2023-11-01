@@ -8,6 +8,7 @@ import { z } from "zod"
 
 import { IExternalNotification } from "@/types/notification"
 import { DivergentColumn } from "@/types/table"
+import { setFormErrors } from "@/lib/utils"
 import { useEmitter } from "@/hooks/useEmitter"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
@@ -183,12 +184,14 @@ function CreateExternalNotification() {
           })
         }
       })
-      .catch(() => {
-        toast({
-          title: t("error"),
-          description: t("external_notifications.toasts.error"),
-          variant: "destructive",
-        })
+      .catch((e) => {
+        if (!setFormErrors(e, form)) {
+          toast({
+            title: t("error"),
+            description: t("external_notifications.toasts.error"),
+            variant: "destructive",
+          })
+        }
       })
   }
 

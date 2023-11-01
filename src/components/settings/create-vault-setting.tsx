@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
+import { setFormErrors } from "@/lib/utils"
 import { useEmitter } from "@/hooks/useEmitter"
 import {
   Sheet,
@@ -69,12 +70,14 @@ export default function CreateVaultSetting({ userId }: { userId: string }) {
           })
         }
       })
-      .catch(() => {
-        toast({
-          title: t("vault.create.toasts.error"),
-          description: t("vault.create.toasts.error_msg"),
-          variant: "destructive",
-        })
+      .catch((e) => {
+        if (!setFormErrors(e, form)) {
+          toast({
+            title: t("vault.create.toasts.error"),
+            description: t("vault.create.toasts.error_msg"),
+            variant: "destructive",
+          })
+        }
       })
   }
 

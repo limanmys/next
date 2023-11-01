@@ -1,12 +1,13 @@
+import { useState } from "react"
 import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { PlusCircle } from "lucide-react"
-import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
-import { Form, FormField, FormMessage } from "@/components/form/form"
+import { setFormErrors } from "@/lib/utils"
+import { useEmitter } from "@/hooks/useEmitter"
 import {
   Sheet,
   SheetContent,
@@ -16,7 +17,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { useEmitter } from "@/hooks/useEmitter"
+import { Form, FormField, FormMessage } from "@/components/form/form"
 
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
@@ -106,12 +107,14 @@ export default function CreateUser() {
           })
         }
       })
-      .catch(() => {
-        toast({
-          title: t("error"),
-          description: t("users.toasts.error_msg"),
-          variant: "destructive",
-        })
+      .catch((e) => {
+        if (!setFormErrors(e, form)) {
+          toast({
+            title: t("error"),
+            description: t("users.toasts.error_msg"),
+            variant: "destructive",
+          })
+        }
       })
   }
 

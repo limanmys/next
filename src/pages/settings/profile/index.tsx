@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
 import { IUser } from "@/types/user"
+import { setFormErrors } from "@/lib/utils"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle } from "@/components/ui/card"
@@ -87,12 +88,14 @@ export default function ProfilePage() {
           })
         }
       })
-      .catch(() => {
-        toast({
-          title: t("error"),
-          description: t("profile.toasts.error"),
-          variant: "destructive",
-        })
+      .catch((e) => {
+        if (!setFormErrors(e, form)) {
+          toast({
+            title: t("error"),
+            description: t("profile.toasts.error"),
+            variant: "destructive",
+          })
+        }
       })
   }
 

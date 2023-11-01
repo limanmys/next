@@ -9,6 +9,7 @@ import * as z from "zod"
 
 import { ILocalGroup } from "@/types/server_user"
 import { DivergentColumn } from "@/types/table"
+import { setFormErrors } from "@/lib/utils"
 import { useEmitter } from "@/hooks/useEmitter"
 import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/data-table/data-table"
@@ -138,12 +139,14 @@ function CreateLocalGroup() {
           })
         }
       })
-      .catch(() => {
-        toast({
-          title: t("users.groups.toasts.fail.title"),
-          description: t("users.groups.toasts.fail.description"),
-          variant: "destructive",
-        })
+      .catch((e) => {
+        if (!setFormErrors(e, form)) {
+          toast({
+            title: t("users.groups.toasts.fail.title"),
+            description: t("users.groups.toasts.fail.description"),
+            variant: "destructive",
+          })
+        }
       })
   }
 

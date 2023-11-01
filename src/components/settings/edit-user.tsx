@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
 import { IUser } from "@/types/user"
+import { setFormErrors } from "@/lib/utils"
 import { useEmitter } from "@/hooks/useEmitter"
 import {
   Sheet,
@@ -99,12 +100,14 @@ export default function EditUser() {
           })
         }
       })
-      .catch(() => {
-        toast({
-          title: t("error"),
-          description: t("users.toasts.edit_error_msg"),
-          variant: "destructive",
-        })
+      .catch((e) => {
+        if (!setFormErrors(e, form)) {
+          toast({
+            title: t("error"),
+            description: t("users.toasts.edit_error_msg"),
+            variant: "destructive",
+          })
+        }
       })
   }
 

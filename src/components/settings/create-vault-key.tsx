@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
+import { setFormErrors } from "@/lib/utils"
 import { useEmitter } from "@/hooks/useEmitter"
 import { Icons } from "@/components/ui/icons"
 import { Label } from "@/components/ui/label"
@@ -88,12 +89,14 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
           })
         }
       })
-      .catch(() => {
-        toast({
-          title: t("vault.key.toasts.error"),
-          description: t("vault.key.toasts.error_msg"),
-          variant: "destructive",
-        })
+      .catch((e) => {
+        if (!setFormErrors(e, form)) {
+          toast({
+            title: t("vault.key.toasts.error"),
+            description: t("vault.key.toasts.error_msg"),
+            variant: "destructive",
+          })
+        }
       })
   }
 
