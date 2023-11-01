@@ -64,22 +64,14 @@ export default function AuthLog() {
         />
       ),
       title: t("profile.auth_log.date"),
-      cell: ({ row }) => (
-        <>
-          {row.original.created_at
-            ? new Date(row.original.created_at).toLocaleDateString(
-                i18n.language,
-                {
-                  day: "2-digit",
-                  month: "long",
-                  year: "numeric",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                }
-              )
-            : "Bilinmiyor"}
-        </>
-      ),
+      accessorFn: (row) =>
+        new Date(row.created_at).toLocaleDateString(i18n.language, {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
     },
   ]
 

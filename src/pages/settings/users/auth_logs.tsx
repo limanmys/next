@@ -82,6 +82,14 @@ export default function AuthLogsPage() {
         />
       ),
       title: t("users.auth_log.created_at"),
+      accessorFn: (row) =>
+        new Date(row.created_at).toLocaleDateString(i18n.language, {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
       cell: ({ row }) => (
         <>
           {row.original.created_at
