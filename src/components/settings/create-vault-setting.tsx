@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { PlusCircle, Settings } from "lucide-react"
@@ -32,7 +32,7 @@ export default function CreateVaultSetting({ userId }: { userId: string }) {
 
   const formSchema = z.object({
     server_id: z.string().min(1, t("vault.create.validation.server")),
-    name: z.string().min(1, t("vault.create.validation.key")),
+    name: z.string().min(1, t("vault.create.validation.key")).max(65),
     value: z.string().min(1, t("vault.create.validation.value")),
   })
 
@@ -46,6 +46,12 @@ export default function CreateVaultSetting({ userId }: { userId: string }) {
   })
 
   const [open, setOpen] = useState<boolean>(false)
+  useEffect(() => {
+    if (!open) {
+      form.reset()
+    }
+  }, [open])
+
   const handleCreate = (values: z.infer<typeof formSchema>) => {
     apiService
       .getInstance()
@@ -122,7 +128,7 @@ export default function CreateVaultSetting({ userId }: { userId: string }) {
               render={({ field }) => (
                 <div className="flex flex-col gap-2">
                   <Label htmlFor="name">{t("vault.create.form.key")}</Label>
-                  <Input id="name" {...field} />
+                  <Input id="name" {...field} maxLength={70} />
                   <FormMessage className="mt-1" />
                 </div>
               )}

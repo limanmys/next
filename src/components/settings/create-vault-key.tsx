@@ -278,7 +278,7 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
                       <Label htmlFor="username">
                         {t("vault.key.form.username")}
                       </Label>
-                      <Input id="username" {...field} />
+                      <Input id="username" {...field} maxLength={125} />
                       <FormMessage className="mt-1" />
                     </div>
                   )}
@@ -293,9 +293,14 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
                         {t("vault.key.form.password")}
                       </Label>
                       {form.watch("type") === "ssh_certificate" ? (
-                        <Textarea id="password" {...field} />
+                        <Textarea id="password" {...field} maxLength={2500} />
                       ) : (
-                        <Input id="password" type="password" {...field} />
+                        <Input
+                          id="password"
+                          type="password"
+                          {...field}
+                          maxLength={200}
+                        />
                       )}
                       <FormMessage className="mt-1" />
                     </div>
