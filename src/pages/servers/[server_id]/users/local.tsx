@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
+import {
+  SIDEBARCTX_STATES,
+  useSidebarContext,
+} from "@/providers/sidebar-provider"
 import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { PlusCircle } from "lucide-react"
@@ -34,6 +38,7 @@ export default function LocalUsersPage() {
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<ILocalUser[]>([])
   const { t } = useTranslation("servers")
+  const sidebarCtx = useSidebarContext()
 
   const emitter = useEmitter()
 
@@ -86,7 +91,10 @@ export default function LocalUsersPage() {
         loading={loading}
         selectable={false}
       >
-        <CreateLocalUser />
+        {!(
+          sidebarCtx[SIDEBARCTX_STATES.selectedData].type &&
+          sidebarCtx[SIDEBARCTX_STATES.selectedData].type.includes("winrm")
+        ) && <CreateLocalUser />}
       </DataTable>
     </>
   )

@@ -1,9 +1,16 @@
+import { useState } from "react"
+import {
+  SIDEBARCTX_STATES,
+  useSidebarContext,
+} from "@/providers/sidebar-provider"
 import { apiService } from "@/services"
 import { Row } from "@tanstack/react-table"
 import { Edit2, MoreHorizontal, Trash } from "lucide-react"
-import { useState } from "react"
 import { useTranslation } from "react-i18next"
 
+import { IServer } from "@/types/server"
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
+import { useEmitter } from "@/hooks/useEmitter"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,10 +28,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useEmitter } from "@/hooks/useEmitter"
-import { IServer } from "@/types/server"
 
-import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 import {
   Dialog,
   DialogContent,
@@ -44,36 +48,38 @@ export function ServerRowActions({ row }: { row: Row<IServer> }) {
   const [editDialog, setEditDialog] = useState(false)
   const { t } = useTranslation("settings")
 
-  return user.permissions.update_server && (
-    <>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            variant="ghost"
-            className="flex h-5 w-5 p-0 data-[state=open]:bg-muted"
-          >
-            <MoreHorizontal className="h-4 w-4" />
-            <span className="sr-only">Open menu</span>
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-[160px]">
-          <DropdownMenuItem onClick={() => setEditDialog(true)}>
-            <Edit2 className="mr-2 h-3.5 w-3.5" />
-            {t("servers.actions.edit_btn")}
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setDeleteDialog(true)}>
-            <Trash className="mr-2 h-3.5 w-3.5" />
-            {t("servers.actions.delete")}
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-      <DeleteServer
-        open={deleteDialog}
-        setOpen={setDeleteDialog}
-        server={server}
-      />
-      <Edit open={editDialog} setOpen={setEditDialog} server={server} />
-    </>
+  return (
+    user.permissions.update_server && (
+      <>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
+              className="flex h-5 w-5 p-0 data-[state=open]:bg-muted"
+            >
+              <MoreHorizontal className="h-4 w-4" />
+              <span className="sr-only">Open menu</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-[160px]">
+            <DropdownMenuItem onClick={() => setEditDialog(true)}>
+              <Edit2 className="mr-2 h-3.5 w-3.5" />
+              {t("servers.actions.edit_btn")}
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setDeleteDialog(true)}>
+              <Trash className="mr-2 h-3.5 w-3.5" />
+              {t("servers.actions.delete")}
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <DeleteServer
+          open={deleteDialog}
+          setOpen={setDeleteDialog}
+          server={server}
+        />
+        <Edit open={editDialog} setOpen={setEditDialog} server={server} />
+      </>
+    )
   )
 }
 
@@ -92,6 +98,7 @@ function Edit({
   const [name, setName] = useState<string>(server.name)
   const [ipAddress, setIpAddress] = useState<string>(server.ip_address)
   const { t } = useTranslation("settings")
+  const sidebarCtx = useSidebarContext()
 
   const handleEdit = () => {
     setLoading(true)
@@ -105,6 +112,7 @@ function Edit({
           description: t("servers.actions.edit.success_msg"),
         })
         emitter.emit("REFETCH_SERVERS")
+        sidebarCtx[SIDEBARCTX_STATES.refreshServers]()
         setOpen(false)
       })
       .catch(() => {
@@ -184,6 +192,7 @@ function DeleteServer({
   const { toast } = useToast()
   const [loading, setLoading] = useState(false)
   const { t } = useTranslation("settings")
+  const sidebarCtx = useSidebarContext()
 
   const handleDelete = () => {
     setLoading(true)
@@ -197,6 +206,7 @@ function DeleteServer({
           description: t("servers.actions.delete_dialog.success_msg"),
         })
         emitter.emit("REFETCH_SERVERS")
+        sidebarCtx[SIDEBARCTX_STATES.refreshServers]()
         setOpen(false)
       })
       .catch(() => {
