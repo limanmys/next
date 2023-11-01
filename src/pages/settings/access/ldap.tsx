@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import * as z from "zod"
 
+import { setFormErrors } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -49,12 +50,14 @@ const AccessLdapPage: NextPageWithLayout = () => {
           description: t("access.ldap.toast.success.description"),
         })
       })
-      .catch(() => {
-        toast({
-          title: t("access.ldap.toast.success.description"),
-          description: t("access.ldap.toast.fail.description"),
-          variant: "destructive",
-        })
+      .catch((e) => {
+        if (!setFormErrors(e, form)) {
+          toast({
+            title: t("access.ldap.toast.success.description"),
+            description: t("access.ldap.toast.fail.description"),
+            variant: "destructive",
+          })
+        }
       })
   }
 

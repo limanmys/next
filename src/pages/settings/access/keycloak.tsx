@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import * as z from "zod"
 
+import { setFormErrors } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -55,12 +56,14 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
           description: t("access.keycloak.toasts.success.description"),
         })
       })
-      .catch(() => {
-        toast({
-          title: t("access.keycloak.toasts.fail.title"),
-          description: t("access.keycloak.toasts.fail.description"),
-          variant: "destructive",
-        })
+      .catch((e) => {
+        if (!setFormErrors(e, form)) {
+          toast({
+            title: t("access.keycloak.toasts.fail.title"),
+            description: t("access.keycloak.toasts.fail.description"),
+            variant: "destructive",
+          })
+        }
       })
   }
 

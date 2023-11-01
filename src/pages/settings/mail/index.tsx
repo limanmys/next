@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import * as z from "zod"
 
+import { setFormErrors } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -36,7 +37,11 @@ export default function MailSettingsPage() {
   const formSchema = z.object({
     encryption: z.enum(["tls", "ssl", "none"]),
     host: z.string().min(1, "Sunucu adresi boş bırakılamaz."),
-    port: z.string().min(1, "Port boş bırakılamaz."),
+    port: z
+      .string()
+      .min(1, "Port boş bırakılamaz.")
+      .max(5, "Port geçersiz.")
+      .refine((val) => !Number.isNaN(parseInt(val, 10))),
     username: z.string().min(1, "Kullanıcı adı boş bırakılamaz."),
     password: z.string().optional(),
     active: z.boolean(),
@@ -57,11 +62,13 @@ export default function MailSettingsPage() {
         })
       })
       .catch((err) => {
-        toast({
-          title: "Hata",
-          description: err.response.data.message,
-          variant: "destructive",
-        })
+        if (!setFormErrors(err, form)) {
+          toast({
+            title: "Hata",
+            description: err.response.data.message,
+            variant: "destructive",
+          })
+        }
       })
   }
 
@@ -97,6 +104,7 @@ export default function MailSettingsPage() {
                         className="pl-10"
                         placeholder="mail.liman.dev"
                         {...field}
+                        maxLength={255}
                       />
                       <Server className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                       <small className="italic text-muted-foreground">
@@ -115,7 +123,12 @@ export default function MailSettingsPage() {
                   <div className="flex flex-col gap-3">
                     <Label htmlFor="port">{t("email.form.port.label")}</Label>
                     <div className="relative">
-                      <Input id="port" placeholder="587" {...field} />
+                      <Input
+                        id="port"
+                        placeholder="587"
+                        {...field}
+                        maxLength={5}
+                      />
                       <small className="italic text-muted-foreground">
                         {t("email.form.port.subtext")}
                       </small>
@@ -140,6 +153,7 @@ export default function MailSettingsPage() {
                       className="pl-10"
                       placeholder="noreply@liman.dev"
                       {...field}
+                      maxLength={255}
                     />
                     <User2 className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                     <small className="italic text-muted-foreground">
@@ -166,6 +180,7 @@ export default function MailSettingsPage() {
                       placeholder="*******************"
                       type="password"
                       {...field}
+                      maxLength={255}
                     />
                     <Key className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                     <small className="italic text-muted-foreground">
