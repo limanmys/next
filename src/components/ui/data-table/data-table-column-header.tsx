@@ -13,6 +13,13 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 import { Input } from "../input"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../select"
 
 interface DataTableColumnHeaderProps<TData, TValue>
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -25,11 +32,13 @@ export function DataTableColumnHeader<TData, TValue>({
   title,
   className,
   filterPresets,
+  showFilterAsSelect,
 }: DataTableColumnHeaderProps<TData, TValue> & {
   filterPresets?: {
     key: string
     value: string
   }[]
+  showFilterAsSelect?: boolean
 }) {
   const { t } = useTranslation("components")
 
@@ -79,18 +88,44 @@ export function DataTableColumnHeader<TData, TValue>({
       )}
       {filterPresets && (
         <div className="mb-3 flex gap-2">
-          {filterPresets.map((preset) => (
-            <Button
-              key={preset.key}
-              variant={
-                column.getFilterValue() === preset.value ? "default" : "outline"
-              }
-              onClick={() => column.setFilterValue(preset.value)}
-              className="h-8"
-            >
-              {preset.key}
-            </Button>
-          ))}
+          {showFilterAsSelect && (
+            <>
+              <Select
+                defaultValue={(column.getFilterValue() as string) ?? ""}
+                value={(column.getFilterValue() as string) ?? ""}
+                onValueChange={(value) => column.setFilterValue(value)}
+              >
+                <SelectTrigger className="bg-background h-8 min-w-[165px]">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {filterPresets.map((preset) => (
+                    <SelectItem key={preset.key} value={preset.value}>
+                      {preset.value}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </>
+          )}
+          {!showFilterAsSelect && (
+            <>
+              {filterPresets.map((preset) => (
+                <Button
+                  key={preset.key}
+                  variant={
+                    column.getFilterValue() === preset.value
+                      ? "default"
+                      : "outline"
+                  }
+                  onClick={() => column.setFilterValue(preset.value)}
+                  className="h-8"
+                >
+                  {preset.key}
+                </Button>
+              ))}
+            </>
+          )}
         </div>
       )}
     </>

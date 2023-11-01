@@ -61,6 +61,37 @@ const AccessAuditLogsPage: NextPageWithLayout = () => {
         <DataTableColumnHeader
           column={column}
           title={t("access.audit.action")}
+          filterPresets={[
+            {
+              key: "delete",
+              value: t(`access.audit.actions.delete`) as string,
+            },
+            {
+              key: "upload",
+              value: t(`access.audit.actions.upload`) as string,
+            },
+            {
+              key: "users",
+              value: t(`access.audit.actions.users`) as string,
+            },
+            {
+              key: "assign",
+              value: t(`access.audit.actions.assign`) as string,
+            },
+            {
+              key: "unassign",
+              value: t(`access.audit.actions.unassign`) as string,
+            },
+            {
+              key: "update",
+              value: t(`access.audit.actions.update`) as string,
+            },
+            {
+              key: "create",
+              value: t(`access.audit.actions.create`) as string,
+            },
+          ]}
+          showFilterAsSelect={true}
         />
       ),
       title: t("access.audit.action"),
@@ -106,22 +137,14 @@ const AccessAuditLogsPage: NextPageWithLayout = () => {
         />
       ),
       title: t("access.audit.timestamp"),
-      cell: ({ row }) => (
-        <>
-          {row.original.created_at
-            ? new Date(row.original.created_at).toLocaleDateString(
-                i18n.language,
-                {
-                  day: "2-digit",
-                  month: "long",
-                  year: "numeric",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                }
-              )
-            : "Bilinmiyor"}
-        </>
-      ),
+      accessorFn: (row) =>
+        new Date(row.created_at).toLocaleDateString(i18n.language, {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
     },
   ]
 
