@@ -133,7 +133,7 @@ export default function Sudoers() {
         if (res.status === 200) {
           toast({
             title: t("users.sudoers.toasts.success.title"),
-            description: t("users.sudoers.toasts.success"),
+            description: t("users.sudoers.toasts.success.description"),
           })
           fetchData()
           tableRef.current?.resetRowSelection()
@@ -141,7 +141,7 @@ export default function Sudoers() {
         } else {
           toast({
             title: t("users.sudoers.toasts.fail.title"),
-            description: t("users.sudoers.toasts.fail"),
+            description: t("users.sudoers.toasts.fail.description"),
             variant: "destructive",
           })
         }
@@ -149,7 +149,7 @@ export default function Sudoers() {
       .catch(() => {
         toast({
           title: t("users.sudoers.toasts.fail.title"),
-          description: t("users.sudoers.toasts.fail"),
+          description: t("users.sudoers.toasts.fail.description"),
           variant: "destructive",
         })
       })

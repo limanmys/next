@@ -365,6 +365,14 @@
                         "title": "Hata",
                         "description": "Yetkili kullanıcı eklenirken bir hata oluştu."
                     }
+                },
+                "success": {
+                    "title": "Başarılı",
+                    "description": "Yetkili kullanıcı başarıyla silindi."
+                },
+                "fail": {
+                    "title": "Hata",
+                    "description": "Yetkili kullanıcı silinirken bir hata oluştu."
                 }
             },
             "page_header": {

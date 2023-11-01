@@ -235,7 +235,7 @@ function CreateLocalUser() {
               render={({ field }) => (
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="password_confirmation" className="text-right">
-                    {t("users.local.dialog.form_labels.confirm_passsword")}
+                    {t("users.local.dialog.form_labels.confirm_password")}
                   </Label>
                   <div className="col-span-3">
                     <Input

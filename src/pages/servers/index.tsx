@@ -68,6 +68,7 @@ export default function Servers() {
       ),
       title: t("index.table.extension_count"),
       sortingFn: compareNumericString,
+      filterFn: "weakEquals",
     },
     {
       id: "actions",

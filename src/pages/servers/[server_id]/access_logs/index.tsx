@@ -168,7 +168,7 @@ function AccessLogDetailsWindow({ id }: { id: string }) {
                   <AccordionItem value={index + 1} key={index + 1}>
                     <AccordionTrigger>{item.title}</AccordionTrigger>
                     <AccordionContent>
-                      <pre>{item.message}</pre>
+                      <pre className="max-w-0">{item.message}</pre>
                     </AccordionContent>
                   </AccordionItem>
                 )

@@ -128,6 +128,17 @@ export default function ServerExtensionPage() {
           </Badge>
         </div>
       ),
+      accessorFn: (row) => {
+        return `${
+          row.status.running === "running"
+            ? t("services.status.running.yes")
+            : t("services.status.running.no")
+        } ${
+          row.status.active
+            ? t("services.status.active.yes")
+            : t("services.status.active.no")
+        }`
+      },
     },
   ]
 

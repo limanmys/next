@@ -42,6 +42,11 @@ export default function ServerExtensionPage() {
         <DataTableColumnHeader
           column={column}
           title={t("open_ports.accessor_ip_type_title")}
+          showFilterAsSelect
+          filterPresets={[
+            { key: "ipv4", value: "IPv4" },
+            { key: "ipv6", value: "IPv6" },
+          ]}
         />
       ),
       title: t("open_ports.accessor_ip_type_title"),
@@ -52,6 +57,11 @@ export default function ServerExtensionPage() {
         <DataTableColumnHeader
           column={column}
           title={t("open_ports.accessor_packet_type_title")}
+          showFilterAsSelect
+          filterPresets={[
+            { key: "tcp", value: "TCP" },
+            { key: "udp", value: "UDP" },
+          ]}
         />
       ),
       title: t("open_ports.accessor_packet_type_title"),
