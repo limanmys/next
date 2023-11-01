@@ -100,7 +100,7 @@ const Layout = ({ Component, pageProps }: any) => {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <Link href="/auth/login">
+            <Link href={`/auth/login?redirect=${router.asPath}`}>
               <AlertDialogAction>{t("logout")}</AlertDialogAction>
             </Link>
           </AlertDialogFooter>
