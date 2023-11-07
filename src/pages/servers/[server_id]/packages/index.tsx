@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { apiService } from "@/services"
+import { UploadCloud } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
 import { IPackage } from "@/types/package"
 import { DivergentColumn } from "@/types/table"
+import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
 import PageHeader from "@/components/ui/page-header"
@@ -76,7 +78,17 @@ export default function ServerExtensionPage() {
         data={data}
         loading={loading}
         selectable={false}
-      />
+      >
+        <Button
+          variant="outline"
+          size="sm"
+          className="ml-auto h-8 lg:flex"
+          onClick={() => router.push(`${router.asPath}/install`)}
+        >
+          <UploadCloud className="mr-2 h-4 w-4" />
+          {t("packages.upload")}
+        </Button>
+      </DataTable>
     </>
   )
 }

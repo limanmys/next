@@ -51,7 +51,7 @@ export default function HealthPage() {
         setData(response.data)
       })
       .catch((error) => {
-        console.log(error)
+        //
       })
       .finally(() => {
         setLoading(false)

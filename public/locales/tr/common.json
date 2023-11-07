@@ -1,5 +1,7 @@
 {
     "page_title": "Liman Merkezi Yönetim Sistemi",
+    "information": "Bilgilendirme",
+    "upload": "Yükle",
     "logout_title": "Bilgilendirme",
     "logout_description": "Oturum süreniz dolduğu için sistemden çıkış yapıyorsunuz. Lütfen tekrar giriş yapınız.",
     "logout": "Giriş Yap",

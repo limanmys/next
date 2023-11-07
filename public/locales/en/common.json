@@ -1,5 +1,7 @@
 {
     "page_title": "Liman Central Management System",
+    "information": "Information",
+    "upload": "Upload",
     "logout_title": "Information",
     "logout_description": "You are logging out of the system because your session has expired. Please log in again.",
     "logout": "Log In",

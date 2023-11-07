@@ -9,7 +9,9 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function getAuthorizationHeader() {
+export function getAuthorizationHeader(): {
+  Authorization: string
+} {
   const currentUser = Cookies.get("currentUser")
 
   if (!currentUser) return {}

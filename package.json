@@ -63,6 +63,8 @@
     "sharp": "^0.31.3",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
+    "tus-js-client": "^2.3.2",
+    "use-tus": "^0.7.3",
     "zod": "^3.22.4",
     "zod-i18n-map": "^2.20.0"
   },
