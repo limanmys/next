@@ -4,16 +4,6 @@ import { UploadCloud } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
 import { useEmitter } from "@/hooks/useEmitter"
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -34,7 +24,6 @@ export default function UploadExtension() {
   const [open, setOpen] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   const [file, setFile] = useState<File | null>(null)
-  const [alertOpen, setAlertOpen] = useState<boolean>(false)
   const { t } = useTranslation("settings")
 
   const upload = async (customRequest: any) => {
@@ -63,20 +52,30 @@ export default function UploadExtension() {
             emitter.emit("REFETCH_EXTENSIONS")
             setOpen(false)
             resolve(res.status)
-          } else {
-            if (res.status === 203) {
-              reject(res.status)
-            } else {
-              toast({
-                title: t("error"),
-                description: JSON.stringify(res.data),
-                variant: "destructive",
-              })
-              reject(res.status)
-            }
           }
         })
         .catch((error) => {
+          if (error.response && error.response.status === 413) {
+            toast({
+              title: t("error"),
+              description: t("extensions.upload.file_too_large"),
+              variant: "destructive",
+            })
+            reject(413)
+            return
+          }
+
+          if (error.response && error.response.status === 422) {
+            toast({
+              title: t("error"),
+              description:
+                error.response.data[Object.keys(error.response.data)[0]],
+              variant: "destructive",
+            })
+            reject(422)
+            return
+          }
+
           toast({
             title: t("error"),
             description: JSON.stringify(error.response.data),
@@ -89,18 +88,12 @@ export default function UploadExtension() {
   }
 
   const handleCreate = () => {
-    upload({})
-      .then((status) => {
-        if (status === 200) {
-          setFile(null)
-          setOpen(false)
-        }
-      })
-      .catch((status) => {
-        if (status === 203) {
-          setAlertOpen(true)
-        }
-      })
+    upload({}).then((status) => {
+      if (status === 200) {
+        setFile(null)
+        setOpen(false)
+      }
+    })
   }
 
   return (
@@ -146,30 +139,6 @@ export default function UploadExtension() {
             {t("extensions.upload.upload")}
           </Button>
         </div>
-
-        <AlertDialog
-          open={alertOpen}
-          onOpenChange={(open) => setAlertOpen(open)}
-        >
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>
-                {t("extensions.upload.dialog_title")}
-              </AlertDialogTitle>
-              <AlertDialogDescription>
-                {t("extensions.upload.dialog_description")}
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>
-                {t("extensions.upload.cancel")}
-              </AlertDialogCancel>
-              <AlertDialogAction onClick={() => upload({ force: true })}>
-                {t("extensions.upload.accept")}
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
       </DialogContent>
     </Dialog>
   )

@@ -176,7 +176,8 @@
             "description": "Es wird nicht empfohlen, .zip Dateien hochzuladen, denen Sie nicht vertrauen.",
             "file": "Datei",
             "dialog_title": "Bist du sicher?",
-            "dialog_description": "Diese Erweiterungsdatei scheint unsigniert zu sein. Sind Sie sicher, dass Sie diese Erweiterung installieren möchten?"
+            "dialog_description": "Diese Erweiterungsdatei scheint unsigniert zu sein. Sind Sie sicher, dass Sie diese Erweiterung installieren möchten?",
+            "file_too_large": "Die Dateigröße darf nicht größer als 99 MB sein."
         },
         "actions": {
             "download_start": "Der Download wurde gestartet.",

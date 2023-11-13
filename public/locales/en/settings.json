@@ -176,7 +176,8 @@
             "description": "We do not recommend uploading .zip files that you do not trust.",
             "file": "File",
             "dialog_title": "Are you sure?",
-            "dialog_description": "This extension file appears to be unsigned. Are you sure you want to install this extension?"
+            "dialog_description": "This extension file appears to be unsigned. Are you sure you want to install this extension?",
+            "file_too_large": "File size cannot be larger than 99 MB."
         },
         "actions": {
             "download_start": "Download has started.",

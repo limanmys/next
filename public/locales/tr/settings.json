@@ -176,7 +176,8 @@
             "description": "Güvenmediğiniz .zip dosyalarını yüklemenizi tavsiye etmiyoruz.",
             "file": "Dosya",
             "dialog_title": "Emin misiniz?",
-            "dialog_description": "Bu eklenti dosyası imzalanmamış görünüyor. Bu eklentiyi yüklemek istediğinize emin misiniz?"
+            "dialog_description": "Bu eklenti dosyası imzalanmamış görünüyor. Bu eklentiyi yüklemek istediğinize emin misiniz?",
+            "file_too_large": "Dosya boyutu 99MB'dan büyük olamaz."
         },
         "actions": {
             "download_start": "İndirme başladı.",
@@ -350,7 +351,7 @@
             "title": "Eklenti İzinleri",
             "description": "Bu rolün hangi eklentilere erişim sağlayabileceğini belirleyin.",
             "left": "Kullanılabilir eklentiler",
-            "right": "Kullanılabilir sunucular",
+            "right": "İzin verilen eklentiler",
             "success": "Eklentiler başarıyla güncellendi.",
             "error": "Eklentiler güncellenirken bir hata oluştu."
         },
