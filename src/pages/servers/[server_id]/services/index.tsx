@@ -80,7 +80,7 @@ export default function ServerExtensionPage() {
           title={t("services.name.title")}
         />
       ),
-      title: t("services.name"),
+      title: t("services.name.title"),
       cell: ({ row }) => (
         <div className="flex items-center gap-2">
           <ServiceStatusWindow name={row.original.name} />
@@ -99,14 +99,24 @@ export default function ServerExtensionPage() {
       title: t("services.description.title"),
     },
     {
-      accessorKey: "status",
+      accessorKey: "running",
       header: ({ column }) => (
         <DataTableColumnHeader
           column={column}
-          title={t("services.status.title")}
+          title={t("services.status.running.title")}
+          filterPresets={[
+            {
+              key: t("services.status.running.yes"),
+              value: 0 + t("services.status.running.yes"),
+            },
+            {
+              key: t("services.status.running.no"),
+              value: 1 + t("services.status.running.no"),
+            },
+          ]}
         />
       ),
-      title: t("services.status.title"),
+      title: t("services.status.running.title"),
       cell: ({ row }) => (
         <div className="flex items-center gap-2">
           <Badge
@@ -120,7 +130,37 @@ export default function ServerExtensionPage() {
               ? t("services.status.running.yes")
               : t("services.status.running.no")}
           </Badge>
-
+        </div>
+      ),
+      accessorFn: (row) => {
+        return `${
+          row.status.running === "running"
+            ? 0 + t("services.status.running.yes")
+            : 1 + t("services.status.running.no")
+        }`
+      },
+    },
+    {
+      accessorKey: "active",
+      header: ({ column }) => (
+        <DataTableColumnHeader
+          column={column}
+          title={t("services.status.active.title")}
+          filterPresets={[
+            {
+              key: t("services.status.active.yes"),
+              value: 0 + t("services.status.active.yes"),
+            },
+            {
+              key: t("services.status.active.no"),
+              value: 1 + t("services.status.active.no"),
+            },
+          ]}
+        />
+      ),
+      title: t("services.status.active.title"),
+      cell: ({ row }) => (
+        <div className="flex items-center gap-2">
           <Badge variant={row.original.status.active ? "default" : "secondary"}>
             {row.original.status.active
               ? t("services.status.active.yes")
@@ -130,13 +170,9 @@ export default function ServerExtensionPage() {
       ),
       accessorFn: (row) => {
         return `${
-          row.status.running === "running"
-            ? t("services.status.running.yes")
-            : t("services.status.running.no")
-        } ${
           row.status.active
-            ? t("services.status.active.yes")
-            : t("services.status.active.no")
+            ? 0 + t("services.status.active.yes")
+            : 1 + t("services.status.active.no")
         }`
       },
     },

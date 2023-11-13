@@ -192,12 +192,14 @@
         "status": {
             "title": "Durum",
             "running": {
+                "title": "Çalışma Durumu",
                 "yes": "Çalışıyor",
                 "no": "Çalışmıyor"
             },
             "active": {
-                "yes": "Etkin",
-                "no": "Etkin değil"
+                "title": "Aktiflik Durumu",
+                "yes": "Aktif",
+                "no": "Devre Dışı"
             }
         },
         "toast": {

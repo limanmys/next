@@ -192,10 +192,12 @@
         "status": {
             "title": "Status",
             "running": {
+                "title": "Is Running?",
                 "yes": "Running",
                 "no": "Not Running"
             },
             "active": {
+                "title": "Is Active?",
                 "yes": "Active",
                 "no": "Inactive"
             }

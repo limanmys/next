@@ -192,10 +192,12 @@
         "status": {
             "title": "Status",
             "running": {
+                "title": "Läuft?",
                 "yes": "Ausgeführte",
                 "no": "Läuft nicht"
             },
             "active": {
+                "title": "Ist aktiv?",
                 "yes": "Aktiv",
                 "no": "Inaktiv"
             }
