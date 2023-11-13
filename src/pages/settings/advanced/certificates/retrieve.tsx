@@ -66,7 +66,7 @@ export default function CertificateInformation() {
       .catch(() => {
         toast({
           title: t("error"),
-          description: t("advanced.certificates.retrieve.success"),
+          description: t("advanced.certificates.retrieve.error"),
           variant: "destructive",
         })
       })
