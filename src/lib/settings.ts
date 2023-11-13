@@ -95,7 +95,7 @@ export const Settings = {
       description:
         "Giriş yapılabilecek giriş araçlarını ayarlamanızı sağlar. Keycloak ve LDAP girişlerini bu sayfa üzerinden ayarlayabilirsiniz.",
       icon: SquareAsterisk,
-      href: "/settings/access",
+      href: "/settings/access/audit",
     },
     {
       id: "health",
@@ -111,7 +111,7 @@ export const Settings = {
       description:
         "Sistemin DNS ayarlarını, sertifika kurulumları ve log yönlendirme gibi değişiklikleri bu sayfa üzerinden yapabilirsiniz.",
       icon: Cog,
-      href: "/settings/advanced",
+      href: "/settings/advanced/certificates",
     },
   ],
 }

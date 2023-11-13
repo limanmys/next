@@ -228,7 +228,7 @@ export default function UserSettingsPage() {
             variant="outline"
             size="sm"
             className="ml-auto h-8 lg:flex"
-            onClick={() => router.push("/settings/users/auth_logs")}
+            onClick={() => router.push("/settings/users/logs")}
           >
             <Footprints className="mr-2 h-4 w-4" />
             {t("users.auth_log.title")}
