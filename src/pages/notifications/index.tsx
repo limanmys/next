@@ -8,6 +8,7 @@ import PageHeader from "@/components/ui/page-header"
 import StatusBadge, { Status } from "@/components/ui/status-badge"
 
 export default function NotificationsPage() {
+  const { t } = useTranslation("common")
   const [notifications, setNotifications] = useState<INotification[]>([])
 
   useEffect(() => {
@@ -22,8 +23,8 @@ export default function NotificationsPage() {
   return (
     <>
       <PageHeader
-        title="Bildirimler"
-        description="Geçmişe dönük okuduğunuz tüm bildirimleri bu sayfa aracılığı ile görüntüleyebilirsiniz."
+        title={t("notifications.title")}
+        description={t("notifications.description")}
       />
       <div className="ml-3 p-8 pt-2">
         <ol className="relative border-l">

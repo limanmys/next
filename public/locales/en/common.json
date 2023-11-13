@@ -15,6 +15,7 @@
     },
     "notifications": {
         "title": "Notifications",
+        "description": "You can view all the notifications you have read in the past through this page.",
         "mark_all_as_read": "Mark All as Read",
         "empty": "No Notifications",
         "empty_message": "Your notifications will appear here.",

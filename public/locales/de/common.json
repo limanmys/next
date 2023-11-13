@@ -15,6 +15,7 @@
     },
     "notifications": {
         "title": "Benachrichtigungen",
+        "description": "Sie können alle Benachrichtigungen anzeigen, die Sie in der Vergangenheit gelesen haben, über diese Seite.",
         "mark_all_as_read": "Alle als gelesen markieren",
         "empty": "Keine Benachrichtigungen",
         "empty_message": "Ihre Benachrichtigungen werden hier angezeigt.",

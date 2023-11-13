@@ -15,6 +15,7 @@
     },
     "notifications": {
         "title": "Bildirimleriniz",
+        "description": "Geçmişe dönük okuduğunuz tüm bildirimleri bu sayfa aracılığı ile görüntüleyebilirsiniz.",
         "mark_all_as_read": "Tümünü Okundu Olarak İşaretle",
         "empty": "Bildirim Yok",
         "empty_message": "Bildirimleriniz burada görünecektir.",
