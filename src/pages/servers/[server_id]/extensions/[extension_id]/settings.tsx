@@ -5,7 +5,7 @@ import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
 import { SelectExtension } from "@/components/selectbox/extension-select"
-import { SelectServerScrollable } from "@/components/selectbox/server-select-scrollable"
+import { SelectServer } from "@/components/selectbox/server-select"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -245,7 +245,7 @@ function ExtensionSettings({
                 {input.name}{" "}
                 {input.required && <span className="text-red-500">*</span>}
               </Label>
-              <SelectServerScrollable
+              <SelectServer
                 defaultValue={values[input.variable]}
                 onValueChange={(value) =>
                   setValues({ ...values, [input.variable]: value })

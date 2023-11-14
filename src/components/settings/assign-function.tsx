@@ -1,28 +1,14 @@
-import { useState } from "react"
-import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { PlusCircle } from "lucide-react"
+import { useRouter } from "next/router"
+import { useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { IExtension } from "@/types/extension"
-import { IMiniFunction } from "@/types/function"
-import { DivergentColumn } from "@/types/table"
-import { useEmitter } from "@/hooks/useEmitter"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
 import { Label } from "@/components/ui/label"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import {
   Sheet,
   SheetClose,
@@ -34,6 +20,10 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { useToast } from "@/components/ui/use-toast"
+import { useEmitter } from "@/hooks/useEmitter"
+import { IMiniFunction } from "@/types/function"
+import { DivergentColumn } from "@/types/table"
+import { SelectExtension } from "../selectbox/extension-select"
 
 export default function AssignFunction() {
   const router = useRouter()
@@ -42,26 +32,12 @@ export default function AssignFunction() {
   const { toast } = useToast()
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IMiniFunction[]>([])
-  const [extensions, setExtensions] = useState<IExtension[]>([])
   const [selectedExtension, setSelectedExtension] = useState<string>()
   const [selected, setSelected] = useState<IMiniFunction[]>([])
 
-  const fetchExtensionList = () => {
-    setLoading(true)
-
-    apiService
-      .getInstance()
-      .get(`/settings/roles/${router.query.role_id}/extensions`)
-      .then((res) => {
-        setExtensions(res.data.selected)
-      })
-      .finally(() => {
-        setLoading(false)
-        setSelected([])
-      })
-  }
-
   const fetchFunctionList = (extension: string) => {
+    if (!extension) return;
+
     setLoading(true)
     setSelectedExtension(extension)
 
@@ -142,7 +118,6 @@ export default function AssignFunction() {
           variant="outline"
           size="sm"
           className="ml-auto h-8 lg:flex"
-          onClick={fetchExtensionList}
         >
           <PlusCircle className="mr-2 h-4 w-4" />
           {t("roles.functions.assign.add")}
@@ -157,27 +132,10 @@ export default function AssignFunction() {
         </SheetHeader>
         <div className="mt-5 flex flex-col gap-3">
           <Label>{t("roles.functions.assign.extension_selection")}</Label>
-          <Select onValueChange={(value) => fetchFunctionList(value)}>
-            <SelectTrigger className="mb-3 h-8 w-full ">
-              <SelectValue
-                placeholder={t("roles.functions.assign.extension_placeholder")}
-              />
-            </SelectTrigger>
-            <SelectContent>
-              <ScrollArea className="h-48">
-                <SelectGroup>
-                  <SelectLabel>
-                    {t("roles.functions.assign.extensions")}
-                  </SelectLabel>
-                  {extensions.map((extension) => (
-                    <SelectItem key={extension.id} value={extension.id}>
-                      {extension.display_name}
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
-              </ScrollArea>
-            </SelectContent>
-          </Select>
+          <SelectExtension
+            onValueChange={(value) => fetchFunctionList(value)}
+            endpoint={`/settings/roles/${router.query.role_id}/extensions`}
+          />
         </div>
 
         <div className="-mx-6 my-8">

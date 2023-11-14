@@ -1,10 +1,11 @@
-import * as React from "react"
 import { DialogProps } from "@radix-ui/react-dialog"
 import { Command as CommandPrimitive } from "cmdk"
 import { Search } from "lucide-react"
+import * as React from "react"
 
-import { cn } from "@/lib/utils"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
+import { cn } from "@/lib/utils"
+import { ScrollArea } from "./scroll-area"
 
 const Command = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive>,
@@ -57,12 +58,14 @@ CommandInput.displayName = CommandPrimitive.Input.displayName
 const CommandList = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.List>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.List>
->(({ className, ...props }, ref) => (
-  <CommandPrimitive.List
-    ref={ref}
-    className={cn("max-h-[300px] overflow-y-auto overflow-x-hidden", className)}
-    {...props}
-  />
+  >(({ className, ...props }, ref) => (
+  <ScrollArea className="max-h-[300px]">
+    <CommandPrimitive.List
+      ref={ref}
+      className={cn("overflow-y-auto overflow-x-hidden", className)}
+      {...props}
+    />
+  </ScrollArea>
 ))
 
 CommandList.displayName = CommandPrimitive.List.displayName
@@ -149,5 +152,6 @@ export {
   CommandItem,
   CommandList,
   CommandSeparator,
-  CommandShortcut,
+  CommandShortcut
 }
+
