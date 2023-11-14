@@ -1,11 +1,9 @@
-import { useState } from "react"
 import { apiService } from "@/services"
 import { Row } from "@tanstack/react-table"
 import { Edit, MoreHorizontal, Trash } from "lucide-react"
+import { useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { IVault } from "@/types/vault"
-import { useEmitter } from "@/hooks/useEmitter"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,8 +19,11 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useEmitter } from "@/hooks/useEmitter"
+import { IVault } from "@/types/vault"
 
 import {
   Dialog,
@@ -62,6 +63,7 @@ export function VaultRowActions({ row }: { row: Row<IVault> }) {
             <Edit className="mr-2 h-3.5 w-3.5" />
             {t("vault.actions.edit.button")}
           </DropdownMenuItem>
+          <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setDeleteDialog(true)}>
             <Trash className="mr-2 h-3.5 w-3.5" />
             {t("vault.actions.delete.button")}

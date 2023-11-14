@@ -1,12 +1,10 @@
-import { useState } from "react"
-import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { Row } from "@tanstack/react-table"
 import { Edit, MoreHorizontal, Trash } from "lucide-react"
+import { useRouter } from "next/router"
+import { useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { IRole } from "@/types/role"
-import { useEmitter } from "@/hooks/useEmitter"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -22,8 +20,11 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useEmitter } from "@/hooks/useEmitter"
+import { IRole } from "@/types/role"
 
 import { Icons } from "../ui/icons"
 import { useToast } from "../ui/use-toast"
@@ -53,6 +54,7 @@ export function RoleRowActions({ row }: { row: Row<IRole> }) {
             <Edit className="mr-2 h-3.5 w-3.5" />
             {t("roles.actions.edit")}
           </DropdownMenuItem>
+          <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setDeleteDialog(true)}>
             <Trash className="mr-2 h-3.5 w-3.5" />
             {t("roles.actions.delete")}

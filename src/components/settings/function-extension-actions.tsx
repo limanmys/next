@@ -1,9 +1,6 @@
-import { useRouter } from "next/router"
 import { Column } from "@tanstack/react-table"
 import { ChevronsUpDown, EyeOff, SortAsc, SortDesc } from "lucide-react"
 
-import { IExtension } from "@/types/extension"
-import { cn } from "@/lib/utils"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,6 +8,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { cn } from "@/lib/utils"
+import { IExtension } from "@/types/extension"
 
 import { ScrollArea } from "../ui/scroll-area"
 import {
@@ -37,8 +36,6 @@ export function FunctionExtensionActions<TData, TValue>({
 }: FunctionExtensionActionsProps<TData, TValue> & {
   extensions: IExtension[]
 }) {
-  const router = useRouter()
-
   return (
     <>
       <div className={cn("mt-1 flex items-center space-x-2", className)}>

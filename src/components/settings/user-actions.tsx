@@ -19,6 +19,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useEmitter } from "@/hooks/useEmitter"
@@ -58,6 +59,7 @@ export function UserRowActions({ row }: { row: Row<IUser> }) {
             <Footprints className="mr-2 h-3.5 w-3.5" />
             {t("users.auth_log.title")}
           </DropdownMenuItem>
+          <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setDeleteDialog(true)}>
             <Trash className="mr-2 h-3.5 w-3.5" />
             {t("delete")}

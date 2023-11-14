@@ -1,4 +1,3 @@
-import { useState } from "react"
 import {
   SIDEBARCTX_STATES,
   useSidebarContext,
@@ -6,11 +5,9 @@ import {
 import { apiService } from "@/services"
 import { Row } from "@tanstack/react-table"
 import { Edit2, MoreHorizontal, Trash } from "lucide-react"
+import { useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { IServer } from "@/types/server"
-import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
-import { useEmitter } from "@/hooks/useEmitter"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -26,8 +23,12 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
+import { useEmitter } from "@/hooks/useEmitter"
+import { IServer } from "@/types/server"
 
 import {
   Dialog,
@@ -66,6 +67,7 @@ export function ServerRowActions({ row }: { row: Row<IServer> }) {
               <Edit2 className="mr-2 h-3.5 w-3.5" />
               {t("servers.actions.edit_btn")}
             </DropdownMenuItem>
+            <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => setDeleteDialog(true)}>
               <Trash className="mr-2 h-3.5 w-3.5" />
               {t("servers.actions.delete")}
