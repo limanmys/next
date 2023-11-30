@@ -1,5 +1,5 @@
 import { apiService } from "@/services"
-import { FileWarning, Save } from "lucide-react"
+import { FileWarning, Loader2, Save } from "lucide-react"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
@@ -20,6 +20,7 @@ export default function ExtensionSettingsPage() {
   const router = useRouter()
   const { toast } = useToast()
   const [loading, setLoading] = useState<boolean>(true)
+  const [formLoading, setFormLoading] = useState<boolean>(false)
   const [data, setData] = useState<IExtensionSetting>({} as IExtensionSetting)
   const [values, setValues] = useState<{
     [key: string]: string
@@ -45,6 +46,7 @@ export default function ExtensionSettingsPage() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setFormLoading(true)
 
     apiService
       .getInstance()
@@ -67,6 +69,14 @@ export default function ExtensionSettingsPage() {
       })
       .catch((err) => {
         setError(err.response.data.message)
+        toast({
+          title: t("extensions.settings.alert_title"),
+          description: err.response.data.message,
+          variant: "destructive"
+        })
+      })
+      .finally(() => {
+        setFormLoading(false)
       })
   }
 
@@ -119,8 +129,9 @@ export default function ExtensionSettingsPage() {
                       values={values}
                       setValues={setValues}
                     />
-                    <Button type="submit" className="mt-5">
-                      <Save className="mr-2 h-4 w-4" />{" "}
+                    <Button type="submit" className="mt-5" disabled={formLoading}>
+                      {!formLoading ? <Save className="mr-2 h-4 w-4" /> : <Loader2 className="animate-spin h-4 w-4 mr-2" />}
+                      {" "}
                       {t("extensions.settings.save")}
                     </Button>
                   </form>
@@ -145,10 +156,11 @@ export default function ExtensionSettingsPage() {
                         values={values}
                         setValues={setValues}
                       />
-                      <Button type="submit" className="mt-5">
-                        <Save className="mr-2 h-4 w-4" />{" "}
-                        {t("extensions.settings.save")}
-                      </Button>
+                        <Button type="submit" className="mt-5" disabled={formLoading}>
+                          {!formLoading ? <Save className="mr-2 h-4 w-4" /> : <Loader2 className="animate-spin h-4 w-4 mr-2" />}
+                          {" "}
+                          {t("extensions.settings.save")}
+                        </Button>
                     </form>
                   </div>
                 </div>
