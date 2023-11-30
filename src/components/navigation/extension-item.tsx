@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react"
+import { ChevronDown, ChevronRight, ToyBrick } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { ChevronDown, ChevronRight, ToyBrick } from "lucide-react"
+import { useEffect, useState } from "react"
 
+import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 import { IExtension } from "@/types/extension"
 import { IMenu } from "@/types/server"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
 
 import {
   Collapsible,
@@ -97,7 +97,7 @@ export default function ExtensionItem({
   }, [extension.id, router.asPath])
 
   const isCollapsed =
-    !router.asPath.includes(extension.id) || !router.asPath.includes(server_id)
+    (!router.asPath.includes(extension.id) || !router.asPath.includes(server_id)) || router.asPath.includes(`${server_id}/settings/${extension.id}`)
 
   const onClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (disabled) {
@@ -137,6 +137,7 @@ export default function ExtensionItem({
       </CollapsibleTrigger>
       {router.asPath.includes(extension.id) &&
         router.asPath.includes(server_id) &&
+        !router.asPath.includes(`${server_id}/settings/${extension.id}`) &&
         extension.menus &&
         extension.menus.length > 0 && (
           <>

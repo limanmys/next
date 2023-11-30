@@ -1,17 +1,15 @@
-import { useEffect, useRef, useState } from "react"
-import Link from "next/link"
-import { useRouter } from "next/router"
 import {
   SIDEBARCTX_STATES,
   useSidebarContext,
 } from "@/providers/sidebar-provider"
 import { apiService } from "@/services"
 import { Link2, MinusCircle, Sliders, UploadCloud } from "lucide-react"
+import Link from "next/link"
+import { useRouter } from "next/router"
+import { useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { IExtension } from "@/types/extension"
-import { DivergentColumn } from "@/types/table"
-import { compareNumericString } from "@/lib/utils"
+import AssignExtension from "@/components/server/assign-extension"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -29,7 +27,9 @@ import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
 import PageHeader from "@/components/ui/page-header"
 import { useToast } from "@/components/ui/use-toast"
-import AssignExtension from "@/components/server/assign-extension"
+import { compareNumericString } from "@/lib/utils"
+import { IExtension } from "@/types/extension"
+import { DivergentColumn } from "@/types/table"
 
 export default function ServerExtensionPage() {
   const router = useRouter()
@@ -82,7 +82,7 @@ export default function ServerExtensionPage() {
           <Link
             href={`/servers/${
               sidebarCtx[SIDEBARCTX_STATES.selected]
-            }/extensions/${row.original.id}/settings`}
+            }/settings/${row.original.id}`}
           >
             <Sliders className="ml-2 inline-block h-4 w-4" />
           </Link>

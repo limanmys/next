@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from "react"
-import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { ArrowLeft } from "lucide-react"
 import { useTheme } from "next-themes"
+import { useRouter } from "next/router"
+import { useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 
 import { Button } from "../ui/button"
@@ -136,7 +136,7 @@ export default function ExtensionRenderer() {
 
           if (err.response && err.response.status === 406) {
             router.push(
-              `/servers/${router.query.server_id}/extensions/${router.query.extension_id}/settings/`
+              `/servers/${router.query.server_id}/settings/${router.query.extension_id}`
             )
             return
           }
