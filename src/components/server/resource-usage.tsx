@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import dynamic from "next/dynamic"
 import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { Cpu, Download, HardDrive, MemoryStick, Upload } from "lucide-react"
+import { useTheme } from "next-themes"
 import { useTranslation } from "react-i18next"
 
 import { IServerStats } from "@/types/server"
@@ -13,47 +14,50 @@ import { Skeleton } from "../ui/skeleton"
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false })
 
 export default function ResourceUsage() {
+  const { resolvedTheme: theme } = useTheme()
   const { t } = useTranslation("servers")
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState([] as IServerStats[])
   let tempData = useRef([] as IServerStats[])
-  const chartOptions = {
-    chart: {
-      fontFamily: "Inter, var(--font-sans)",
-      type: "area",
-      sparkline: {
-        enabled: true,
+  const chartOptions = useMemo(
+    () => ({
+      theme: {
+        mode: theme,
       },
-      animations: {
-        enabled: true,
-        easing: "linear",
-        dynamicAnimation: {
+      chart: {
+        background: "transparent",
+        fontFamily: "Inter, var(--font-sans)",
+        type: "area",
+        sparkline: {
           enabled: true,
-          speed: 1,
+        },
+        animations: {
+          enabled: false,
         },
       },
-    },
-    stroke: {
-      curve: "smooth",
-    },
-    fill: {
-      opacity: 0.3,
-    },
-    xaxis: {
-      type: "datetime",
-      crosshairs: {
-        width: 1,
+      stroke: {
+        curve: "straight",
       },
-    },
-    colors: ["#008ffb", "#00e396"],
-    tooltip: {
-      enabled: true,
-      x: {
-        format: "dd MMM yyyy HH:mm:ss",
+      fill: {
+        opacity: 0.3,
       },
-    },
-  }
+      xaxis: {
+        type: "datetime",
+        crosshairs: {
+          width: 1,
+        },
+      },
+      colors: ["#008ffb", "#00e396"],
+      tooltip: {
+        enabled: true,
+        x: {
+          format: "dd MMM yyyy HH:mm:ss",
+        },
+      },
+    }),
+    [theme]
+  )
 
   useEffect(() => {
     if (!router.query.server_id) return
@@ -137,7 +141,7 @@ export default function ResourceUsage() {
                   options={
                     {
                       ...chartOptions,
-                      colors: ["#06d48b"],
+                      colors: ["#10b981"],
                       yaxis: {
                         show: false,
                         min: 0,
@@ -264,7 +268,7 @@ export default function ResourceUsage() {
                   options={
                     {
                       ...chartOptions,
-                      colors: ["#008ffb", "#00e396"],
+                      colors: ["#c026d3", "#9333ea"],
                     } as any
                   }
                 />
