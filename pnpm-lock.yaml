@@ -156,8 +156,8 @@ dependencies:
     specifier: ^2.3.2
     version: 2.3.2
   use-tus:
-    specifier: ^0.7.3
-    version: 0.7.3(react@18.2.0)(tus-js-client@2.3.2)
+    specifier: ^0.8.0
+    version: 0.8.0(react@18.2.0)(tus-js-client@2.3.2)
   zod:
     specifier: ^3.22.4
     version: 3.22.4
@@ -5085,8 +5085,8 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /use-tus@0.7.3(react@18.2.0)(tus-js-client@2.3.2):
-    resolution: {integrity: sha512-fNf1JHc7dmA7j6aKA6a4g5sTXsJmROuzDse/Yrx8riuboUZ8VJKH0nvdST9zziw5oj++BM3nuTOv83THuM1AeA==}
+  /use-tus@0.8.0(react@18.2.0)(tus-js-client@2.3.2):
+    resolution: {integrity: sha512-ofPzNjnSPVTsN/7OtBJq9K25rym0fJG3RxlAexfDTw7wZuZnTgCeVK6mQAt3kjUnpJNWgM6g0sMC0xxCL3MaMA==}
     peerDependencies:
       react: '>=16.8'
       tus-js-client: ^2.2.0

@@ -1,7 +1,7 @@
-import { ChangeEvent, useCallback, useMemo, useRef, useState } from "react"
+import { ChangeEvent, useCallback, useState } from "react"
 import { AlertCircle, UploadCloud } from "lucide-react"
 import { useTranslation } from "react-i18next"
-import { UploadOptions, useTus } from "use-tus"
+import { TusHooksUploadOptions, useTus } from "use-tus"
 
 import { getAuthorizationHeader } from "@/lib/utils"
 
@@ -17,24 +17,25 @@ export const TusUpload = ({
   onSuccess: (filename: string | undefined) => void
 }) => {
   const { t } = useTranslation("common")
-  const { upload, setUpload, isSuccess } = useTus({
+  const {
+    upload,
+    setUpload,
+    isUploading: uploading,
+  } = useTus({
     autoAbort: true,
   })
   const [progress, setProgress] = useState<number>(0)
-  const [uploading, setUploading] = useState<boolean>(false)
   const [error, setError] = useState<string>("")
 
-  const defaultOpts: UploadOptions = {
+  const defaultOpts: TusHooksUploadOptions = {
     endpoint: "/upload",
     retryDelays: [0, 1000, 3000, 5000, 10000],
     overridePatchMethod: true,
     chunkSize: 1000 * 1000,
     onProgress: (bytesUploaded, bytesTotal) => {
-      setUploading(true)
       setProgress((bytesUploaded / bytesTotal) * 100)
     },
     onError: (error) => {
-      setUploading(false)
       setError(error.message)
     },
     headers: {
@@ -42,14 +43,6 @@ export const TusUpload = ({
       Accept: "application/json",
     },
   }
-
-  const urlRef = useRef<string | null | undefined>("")
-
-  const uploadedUrl = useMemo(() => {
-    urlRef.current = isSuccess ? upload?.url : ""
-
-    return isSuccess && upload?.url
-  }, [upload, isSuccess])
 
   const handleSetUpload = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -67,17 +60,12 @@ export const TusUpload = ({
           filetype: file.type,
         },
 
-        onSuccess: async function () {
-          setTimeout(() => {
-            setUploading(false)
-            onSuccess(
-              urlRef.current?.substring(urlRef.current?.lastIndexOf("/") + 1)
-            )
-          }, 2000)
+        onSuccess: async function (upload) {
+          onSuccess(upload.url?.substring(upload.url.lastIndexOf("/") + 1))
         },
       })
     },
-    [setUpload, uploadedUrl]
+    [setUpload]
   )
 
   const handleStart = useCallback(() => {
@@ -86,7 +74,6 @@ export const TusUpload = ({
     }
 
     // Start upload the file.
-    setUploading(true)
     upload.start()
   }, [upload])
 
