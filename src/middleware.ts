@@ -54,6 +54,7 @@ export function middleware(request: NextRequest) {
     if (
       user.status === 0 &&
       request.nextUrl.pathname.includes("settings/") &&
+      !request.nextUrl.pathname.startsWith("/servers/") &&
       !request.nextUrl.pathname.includes("profile") &&
       !request.nextUrl.pathname.includes("vault") &&
       !request.nextUrl.pathname.includes("tokens")
