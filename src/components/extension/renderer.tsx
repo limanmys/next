@@ -1,8 +1,8 @@
+import { useEffect, useRef, useState } from "react"
+import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { ArrowLeft } from "lucide-react"
 import { useTheme } from "next-themes"
-import { useRouter } from "next/router"
-import { useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 
 import { Button } from "../ui/button"
@@ -56,6 +56,11 @@ export default function ExtensionRenderer() {
         )
         .then((res) => {
           deleteAllIframes(container.current as HTMLDivElement)
+
+          if (res.status === 201) {
+            setError(res.data)
+            setLoading(false)
+          }
 
           const iframeElement = document.createElement("iframe")
           container.current!.appendChild(iframeElement)

@@ -1,11 +1,10 @@
+import { useEffect, useState } from "react"
+import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { FileWarning, Loader2, Save } from "lucide-react"
-import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { SelectExtension } from "@/components/selectbox/extension-select"
-import { SelectServer } from "@/components/selectbox/server-select"
+import { IExtensionSetting, IExtensionVariable } from "@/types/extension"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -14,7 +13,8 @@ import { Label } from "@/components/ui/label"
 import Loading from "@/components/ui/loading"
 import PageHeader from "@/components/ui/page-header"
 import { useToast } from "@/components/ui/use-toast"
-import { IExtensionSetting, IExtensionVariable } from "@/types/extension"
+import { SelectExtension } from "@/components/selectbox/extension-select"
+import { SelectServer } from "@/components/selectbox/server-select"
 
 export default function ExtensionSettingsPage() {
   const router = useRouter()
@@ -71,13 +71,20 @@ export default function ExtensionSettingsPage() {
         setError(err.response.data.message)
         toast({
           title: t("extensions.settings.alert_title"),
-          description: err.response.data.message,
-          variant: "destructive"
+          description: removeTags(err.response.data.message),
+          variant: "destructive",
         })
       })
       .finally(() => {
         setFormLoading(false)
       })
+  }
+
+  function removeTags(str: string) {
+    if (str === null || str === "") return false
+    else str = str.toString()
+
+    return str.replace(/(<([^>]+)>|<script([^>]+)>)/gi, "")
   }
 
   return (
@@ -92,7 +99,7 @@ export default function ExtensionSettingsPage() {
           <Alert className="mb-8" variant="destructive">
             <FileWarning className="h-4 w-4" />
             <AlertTitle>{t("extensions.settings.alert_title")}</AlertTitle>
-            <AlertDescription>{error}</AlertDescription>
+            <AlertDescription>{removeTags(error)}</AlertDescription>
           </Alert>
         )}
 
@@ -129,9 +136,16 @@ export default function ExtensionSettingsPage() {
                       values={values}
                       setValues={setValues}
                     />
-                    <Button type="submit" className="mt-5" disabled={formLoading}>
-                      {!formLoading ? <Save className="mr-2 h-4 w-4" /> : <Loader2 className="animate-spin h-4 w-4 mr-2" />}
-                      {" "}
+                    <Button
+                      type="submit"
+                      className="mt-5"
+                      disabled={formLoading}
+                    >
+                      {!formLoading ? (
+                        <Save className="mr-2 h-4 w-4" />
+                      ) : (
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      )}{" "}
                       {t("extensions.settings.save")}
                     </Button>
                   </form>
@@ -156,11 +170,18 @@ export default function ExtensionSettingsPage() {
                         values={values}
                         setValues={setValues}
                       />
-                        <Button type="submit" className="mt-5" disabled={formLoading}>
-                          {!formLoading ? <Save className="mr-2 h-4 w-4" /> : <Loader2 className="animate-spin h-4 w-4 mr-2" />}
-                          {" "}
-                          {t("extensions.settings.save")}
-                        </Button>
+                      <Button
+                        type="submit"
+                        className="mt-5"
+                        disabled={formLoading}
+                      >
+                        {!formLoading ? (
+                          <Save className="mr-2 h-4 w-4" />
+                        ) : (
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        )}{" "}
+                        {t("extensions.settings.save")}
+                      </Button>
                     </form>
                   </div>
                 </div>

@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next"
 import { IExtension } from "@/types/extension"
 import { IServer } from "@/types/server"
 import { ISubscription } from "@/types/subscription"
+import { useEmitter } from "@/hooks/useEmitter"
 
 import { Button, buttonVariants } from "../ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
@@ -51,6 +52,7 @@ export default function SubscriptionCard({
   const [servers, setServers] = useState<IServer[]>()
   const [selectedServer, setSelectedServer] = useState<string>("")
   const [serverLoading, setServerLoading] = useState<boolean>(true)
+  const emitter = useEmitter()
 
   const fetchData = (server_id: string) => {
     setLoading(true)
@@ -112,6 +114,13 @@ export default function SubscriptionCard({
   useEffect(() => {
     if (extension && extension.id && selectedServer) {
       fetchData(selectedServer)
+      emitter.on("SUBSCRIPTION_REFRESH_" + extension.id, () =>
+        fetchData(selectedServer)
+      )
+    }
+
+    return () => {
+      emitter.off("SUBSCRIPTION_REFRESH_" + extension.id)
     }
   }, [extension, selectedServer])
 
@@ -239,25 +248,29 @@ export default function SubscriptionCard({
                       {t("subscriptions.subcard.remaining")}
                     </h5>
                     <div className="flex items-center gap-5">
-                      <div
-                        className="radial-progress "
-                        style={
-                          {
-                            "--value": calculateRemaining(data.timestamp),
-                            color:
-                              calculateRemaining(data.timestamp) < 6 &&
-                              "red!important",
-                          } as any
-                        }
-                      >
-                        <b className="font-semibold">
-                          {Math.floor(calculateRemaining(data.timestamp))}%
-                        </b>
-                      </div>
+                      {data.type !== "php" && (
+                        <div
+                          className="radial-progress "
+                          style={
+                            {
+                              "--value": calculateRemaining(data.timestamp),
+                              color:
+                                calculateRemaining(data.timestamp) < 6 &&
+                                "red!important",
+                            } as any
+                          }
+                        >
+                          <b className="font-semibold">
+                            {Math.floor(calculateRemaining(data.timestamp))}%
+                          </b>
+                        </div>
+                      )}
 
                       <div className="flex flex-col">
                         <span className="text-3xl font-bold">
-                          {calculateRemainingDays(data.timestamp)}
+                          {data.type != "php"
+                            ? calculateRemainingDays(data.timestamp)
+                            : data.timestamp}
                         </span>
                         <small className="text-foreground/60">
                           {t("subscriptions.subcard.days_remaining")}
@@ -278,7 +291,7 @@ export default function SubscriptionCard({
                       <h5 className="mb-1 font-semibold tracking-tight">
                         {t("subscriptions.subcard.allowed_device_count")}
                       </h5>
-                      {data.client_count}
+                      {data.type === "php" ? data.functions : data.client_count}
                     </div>
                   </div>
                 </div>
@@ -320,6 +333,7 @@ function License({
   const { toast } = useToast()
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState<string>("")
+  const emitter = useEmitter()
 
   const handleCreate = () => {
     setLoading(true)
@@ -335,6 +349,7 @@ function License({
           title: t("success"),
           description: t("subscriptions.subcard.success"),
         })
+        emitter.emit("SUBSCRIPTION_REFRESH_" + extension.id)
         setOpen(false)
       })
       .catch(() => {

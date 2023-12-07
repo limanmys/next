@@ -208,7 +208,7 @@ export default function SubscriptionPage() {
             {t("subscriptions.extension")}
           </h3>
         )}
-        <div className="grid grid-cols-2 gap-8">
+        <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
           {loading && <Skeleton />}
           {!loading &&
             data.map((extension) => (

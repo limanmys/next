@@ -1,8 +1,10 @@
 export interface ISubscription {
+  type: string
   owner: string
   valid: boolean
   client_count: number
   timestamp: number
+  functions: string
 }
 
 export interface ILimanSubscription {
