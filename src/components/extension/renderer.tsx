@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useReducer, useRef, useState } from "react"
 import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { ArrowLeft } from "lucide-react"
@@ -11,7 +11,7 @@ import Loading from "../ui/loading"
 
 export default function ExtensionRenderer() {
   const router = useRouter()
-  const [keyval, setKeyval] = useState<number>(0)
+  const [key, forceUpdate] = useReducer((x) => x + 1, 0)
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<any>()
   const container = useRef<HTMLDivElement>(null)
@@ -104,11 +104,9 @@ export default function ExtensionRenderer() {
           }
 
           if (iframeElement.contentWindow) {
-            iframeElement.contentWindow.onbeforeunload = () => {
-              setKeyval((prevState) => {
-                return prevState + 1
-              })
-            }
+            iframeElement.contentWindow.addEventListener("beforeunload", () => {
+              forceUpdate()
+            })
 
             iframeElement.contentWindow.addEventListener(
               "limanHashChange",
@@ -147,8 +145,8 @@ export default function ExtensionRenderer() {
     router.query.extension_id,
     router.query.slug,
     container.current,
-    keyval,
     i18n.language,
+    key,
   ])
 
   useEffect(() => {
@@ -184,7 +182,7 @@ export default function ExtensionRenderer() {
     <div
       id="iframe-container"
       ref={container}
-      key={`${router.query.server_id} + ${router.query.extension_id} + ${keyval}`}
+      key={`${router.query.server_id} + ${router.query.extension_id} + ${key}`}
     >
       {loading && (
         <div
