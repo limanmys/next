@@ -104,19 +104,11 @@ export default function ExtensionRenderer() {
           }
 
           if (iframeElement.contentWindow) {
-            iframeElement.contentWindow.addEventListener(
-              "beforeunload",
-              (e) => {
-                debugger
-                e.preventDefault()
-                e.stopPropagation()
-                e.stopImmediatePropagation()
-                setKeyval((prevState) => {
-                  return prevState + 1
-                })
-                return
-              }
-            )
+            iframeElement.contentWindow.onbeforeunload = () => {
+              setKeyval((prevState) => {
+                return prevState + 1
+              })
+            }
 
             iframeElement.contentWindow.addEventListener(
               "limanHashChange",
