@@ -189,8 +189,7 @@ const MenuButton: React.FC<IMenuButtonProps> = ({ menu, hash }) => {
 
             {menu.name instanceof String
               ? menu.name
-              : menu.name[i18n.language as keyof typeof menu.name] ||
-                menu.name["tr" as keyof typeof menu.name]}
+              : menu.name[i18n.language as keyof typeof menu.name] || menu.name}
           </Button>
         </a>
       )}
@@ -206,7 +205,7 @@ const MenuButton: React.FC<IMenuButtonProps> = ({ menu, hash }) => {
               {menu.name instanceof String
                 ? menu.name
                 : menu.name[i18n.language as keyof typeof menu.name] ||
-                  menu.name["tr" as keyof typeof menu.name]}
+                  menu.name}
               {isCollapsed ? (
                 <ChevronRight className="h-4 w-4" />
               ) : (
