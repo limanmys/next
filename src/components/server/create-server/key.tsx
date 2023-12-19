@@ -33,7 +33,7 @@ export default function KeyInputs({
     defaultValues: {
       username: "",
       password: "",
-      shared: "false",
+      shared: "true",
       ...data,
     },
     mode: "onChange",
