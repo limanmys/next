@@ -1,12 +1,13 @@
-import { ChevronDown, ChevronRight, ToyBrick } from "lucide-react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import { ChevronDown, ChevronRight, ToyBrick } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
-import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
 import { IExtension } from "@/types/extension"
 import { IMenu } from "@/types/server"
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
 
 import {
   Collapsible,
@@ -97,7 +98,9 @@ export default function ExtensionItem({
   }, [extension.id, router.asPath])
 
   const isCollapsed =
-    (!router.asPath.includes(extension.id) || !router.asPath.includes(server_id)) || router.asPath.includes(`${server_id}/settings/${extension.id}`)
+    !router.asPath.includes(extension.id) ||
+    !router.asPath.includes(server_id) ||
+    router.asPath.includes(`${server_id}/settings/${extension.id}`)
 
   const onClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (disabled) {
@@ -158,6 +161,7 @@ interface IMenuButtonProps {
 }
 
 const MenuButton: React.FC<IMenuButtonProps> = ({ menu, hash }) => {
+  const { i18n } = useTranslation()
   const [isCollapsed, setIsCollapsed] = useState(true)
 
   const toggleCollapsed = () => {
@@ -177,7 +181,16 @@ const MenuButton: React.FC<IMenuButtonProps> = ({ menu, hash }) => {
             size="sm"
             className="w-full justify-start"
           >
-            {menu.name}
+            {menu.icon && (
+              <div className="flex w-[18px] items-center justify-center mr-1 fa-sm">
+                <i className={`${menu.icon} fa-fw`}></i>
+              </div>
+            )}
+
+            {menu.name instanceof String
+              ? menu.name
+              : menu.name[i18n.language as keyof typeof menu.name] ||
+                menu.name["tr" as keyof typeof menu.name]}
           </Button>
         </a>
       )}
@@ -190,7 +203,10 @@ const MenuButton: React.FC<IMenuButtonProps> = ({ menu, hash }) => {
               className="flex w-full justify-between"
               onClick={toggleCollapsed}
             >
-              {menu.name}
+              {menu.name instanceof String
+                ? menu.name
+                : menu.name[i18n.language as keyof typeof menu.name] ||
+                  menu.name["tr" as keyof typeof menu.name]}
               {isCollapsed ? (
                 <ChevronRight className="h-4 w-4" />
               ) : (

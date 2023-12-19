@@ -21,8 +21,15 @@ export interface IServer {
 }
 
 export interface IMenu {
-  name: string
+  name:
+    | string
+    | {
+        tr: string
+        en: string
+        de: string
+      }
   url: string
+  icon: string | undefined
   children?: IMenu[]
 }
 
