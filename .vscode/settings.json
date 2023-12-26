@@ -9,9 +9,9 @@
   "eslint.packageManager": "pnpm",
   "eslint.problems.shortenToSingleLine": true,
   "editor.codeActionsOnSave": {
-    "eslint.executeAutofix": true,
-    "source.organizeImports": true,
-    "source.fixAll.eslint": true
+    "eslint.executeAutofix": "explicit",
+    "source.organizeImports": "explicit",
+    "source.fixAll.eslint": "explicit"
   },
   "formatFiles.excludedFolders": [
     "node_modules",

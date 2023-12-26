@@ -1,6 +1,9 @@
 {
     "page_title": "Liman Zentrales Management System",
     "information": "Information",
+    "success": "Erfolg",
+    "error": "Fehler",
+    "warning": "Warnung",
     "upload": "Hochladen",
     "logout_title": "Information",
     "logout_description": "Sie werden abgemeldet, da Ihre Sitzung abgelaufen ist. Bitte melden Sie sich erneut an.",

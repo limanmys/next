@@ -5,6 +5,7 @@ import "@/styles/fontawesome.css"
 import "@/styles/globals.css"
 import "@/styles/nprogress.css"
 import "@/styles/radial-progress.css"
+
 import { ReactElement, ReactNode } from "react"
 import { NextPage } from "next"
 import { AppProps, AppType } from "next/app"
@@ -19,7 +20,7 @@ import { makeZodI18nMap } from "zod-i18n-map"
 import { cn } from "@/lib/utils"
 import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 import { NotificationCreator } from "@/components/ui/notificationcreator"
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from "@/components/ui/sonner"
 
 import Layout from "../components/_layout/app_layout"
 
@@ -64,8 +65,8 @@ const RootLayout: AppType = ({ Component, pageProps }: AppPropsWithLayout) => {
             <Component {...pageProps} key={router.route} />
           )}
         </div>
-        <Toaster />
         <NotificationCreator />
+        <Toaster />
       </ThemeProvider>
     </>
   )
