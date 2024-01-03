@@ -101,7 +101,7 @@ export default function SubscriptionPage() {
         </h3>
 
         <Card className="mb-10">
-          {subscriptionStatus && (
+          {subscriptionStatus && getPercentageOfUsedDays() > 0 && (
             <div className="flex items-center gap-16">
               <div className="flex flex-col gap-5 p-6">
                 <div className="item">
@@ -188,19 +188,20 @@ export default function SubscriptionPage() {
               </div>
             </div>
           )}
-          {!subscriptionStatus && (
-            <div className="my-16 flex flex-col items-center justify-center gap-4">
-              <CheckCircle className="h-12 w-12 text-green-500" />
-              <h5 className="mb-1 font-semibold tracking-tight">
-                {t("subscriptions.open_source_warning")}
-              </h5>
-              <Button onClick={() => setOpen(true)}>
-                <Plus className="mr-2 h-4 w-4" />{" "}
-                {t("subscriptions.add_license")}
-              </Button>
-              <LimanLicense open={open} setOpen={setOpen} />
-            </div>
-          )}
+          {!subscriptionStatus ||
+            (getPercentageOfUsedDays() < 0 && (
+              <div className="my-16 flex flex-col items-center justify-center gap-4">
+                <CheckCircle className="h-12 w-12 text-green-500" />
+                <h5 className="mb-1 font-semibold tracking-tight">
+                  {t("subscriptions.open_source_warning")}
+                </h5>
+                <Button onClick={() => setOpen(true)}>
+                  <Plus className="mr-2 h-4 w-4" />{" "}
+                  {t("subscriptions.add_license")}
+                </Button>
+                <LimanLicense open={open} setOpen={setOpen} />
+              </div>
+            ))}
         </Card>
 
         {data.length > 0 && (

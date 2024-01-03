@@ -202,10 +202,18 @@ const MenuButton: React.FC<IMenuButtonProps> = ({ menu, hash }) => {
               className="flex w-full justify-between"
               onClick={toggleCollapsed}
             >
-              {menu.name instanceof String
-                ? menu.name
-                : menu.name[i18n.language as keyof typeof menu.name] ||
-                  menu.name}
+              <div className="flex">
+                {menu.icon && (
+                  <div className="flex w-[18px] items-center justify-center mr-1 fa-sm">
+                    <i className={`${menu.icon} fa-fw`}></i>
+                  </div>
+                )}
+
+                {menu.name instanceof String
+                  ? menu.name
+                  : menu.name[i18n.language as keyof typeof menu.name] ||
+                    menu.name}
+              </div>
               {isCollapsed ? (
                 <ChevronRight className="h-4 w-4" />
               ) : (
