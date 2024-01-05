@@ -57,14 +57,14 @@ export default function MailSettingsPage() {
       .post("/settings/mail", data)
       .then(() => {
         toast({
-          title: "Başarılı",
-          description: "Mail ayarları başarıyla kaydedildi.",
+          title: t("success"),
+          description: t("email.toasts.success"),
         })
       })
       .catch((err) => {
         if (!setFormErrors(err, form)) {
           toast({
-            title: "Hata",
+            title: t("error"),
             description: err.response.data.message,
             variant: "destructive",
           })
