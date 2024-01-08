@@ -43,7 +43,9 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     setIsLoading(true)
 
     let redirectUri = (router.query.redirect || "/") as string
-    redirectUri = redirectUri.replace("http", "")
+    redirectUri = redirectUri.replace("http://", "")
+    redirectUri = redirectUri.replace("https://", "")
+    redirectUri = redirectUri.replace("www.", "")
 
     try {
       if (forceChange) {
@@ -269,7 +271,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 Giriş Yap
               </Button>
 
-              <small className="text-center text-muted-foreground mt-5 italic">
+              <small className="mt-5 text-center italic text-muted-foreground">
                 <Link href="/auth/forgot_password">
                   Şifrenizi mi unuttunuz?
                 </Link>
