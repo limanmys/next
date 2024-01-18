@@ -1,4 +1,5 @@
 import { useEffect, useReducer, useRef, useState } from "react"
+import Head from "next/head"
 import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { ArrowLeft } from "lucide-react"
@@ -17,6 +18,7 @@ export default function ExtensionRenderer() {
   const container = useRef<HTMLDivElement>(null)
   const { theme } = useTheme()
   const { i18n } = useTranslation()
+  const [title, setTitle] = useState<string>("")
 
   const deleteAllIframes = (node: HTMLDivElement) => {
     const iframes = node.querySelectorAll("iframe")
@@ -73,6 +75,9 @@ export default function ExtensionRenderer() {
           if (iframeDoc) {
             iframeDoc.open()
             iframeDoc.write(res.data.html)
+            setTitle(
+              `${res.data.extension_name} - ${res.data.server_name} | Liman`
+            )
             iframeDoc.close()
 
             const colorSchemeMeta = document.createElement("meta")
@@ -184,6 +189,11 @@ export default function ExtensionRenderer() {
       ref={container}
       key={`${router.query.server_id} + ${router.query.extension_id} + ${key}`}
     >
+      {!loading && !error && title && (
+        <Head>
+          <title>{title}</title>
+        </Head>
+      )}
       {loading && (
         <div
           className="flex w-full items-center justify-center"
