@@ -824,7 +824,9 @@
                     "name": "Name",
                     "ip_address": "IP Address",
                     "submit": "Edit",
-                    "cancel": "Cancel"
+                    "cancel": "Cancel",
+                    "shared_key": "Shared Key",
+                    "shared_key_message": "If there is a key attached to this server, it allows sharing with other users."
                 },
                 "success_msg": "Server edited successfully.",
                 "error_msg": "An error occurred while editing the server."

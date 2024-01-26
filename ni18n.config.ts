@@ -21,6 +21,12 @@ export const ni18nConfig: Ni18nOptions = {
         backendOptions: [
           {
             expirationTime: 24 * 60 * 60 * 1000,
+            defaultVersion: "v1",
+            versions: {
+              en: "v2",
+              tr: "v2",
+              de: "v2",
+            },
           },
           {
             loadPath: "/locales/{{lng}}/{{ns}}.json",

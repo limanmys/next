@@ -1,13 +1,16 @@
+import { useState } from "react"
 import {
   SIDEBARCTX_STATES,
   useSidebarContext,
 } from "@/providers/sidebar-provider"
 import { apiService } from "@/services"
 import { Row } from "@tanstack/react-table"
-import { Edit2, MoreHorizontal, Trash } from "lucide-react"
-import { useState } from "react"
+import { Edit2, Key, MoreHorizontal, Trash } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
+import { IServer } from "@/types/server"
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
+import { useEmitter } from "@/hooks/useEmitter"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -26,9 +29,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
-import { useEmitter } from "@/hooks/useEmitter"
-import { IServer } from "@/types/server"
 
 import {
   Dialog,
@@ -40,6 +40,7 @@ import {
 import { Icons } from "../ui/icons"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
+import { Switch } from "../ui/switch"
 import { useToast } from "../ui/use-toast"
 
 export function ServerRowActions({ row }: { row: Row<IServer> }) {
@@ -99,6 +100,7 @@ function Edit({
   const [loading, setLoading] = useState(false)
   const [name, setName] = useState<string>(server.name)
   const [ipAddress, setIpAddress] = useState<string>(server.ip_address)
+  const [sharedKey, setSharedKey] = useState<number>(server.shared_key)
   const { t } = useTranslation("settings")
   const sidebarCtx = useSidebarContext()
 
@@ -107,7 +109,11 @@ function Edit({
 
     apiService
       .getInstance()
-      .patch(`/servers/${server.id}`, { name: name, ip_address: ipAddress })
+      .patch(`/servers/${server.id}`, {
+        name: name,
+        ip_address: ipAddress,
+        shared_key: sharedKey,
+      })
       .then(() => {
         toast({
           title: t("success"),
@@ -157,6 +163,25 @@ function Edit({
             onChange={(e) => setIpAddress(e.target.value)}
             value={ipAddress}
           />
+        </div>
+
+        <div className="mt-3 grid w-full items-center gap-1.5">
+          <div className="flex flex-row items-center justify-between rounded-lg border p-4 shadow-sm">
+            <div className="flex space-x-3 space-y-0.5">
+              <Key className="h-6 w-6 text-muted-foreground" />
+              <div className="flex flex-col space-y-0.5">
+                <Label>{t("servers.actions.edit.form.shared_key")}</Label>
+                <p className="text-sm text-muted-foreground">
+                  {t("servers.actions.edit.form.shared_key_message")}
+                </p>
+              </div>
+            </div>
+            <Switch
+              id="shared_key"
+              checked={sharedKey == 1 ? true : false}
+              onCheckedChange={() => setSharedKey(sharedKey == 1 ? 0 : 1)}
+            />
+          </div>
         </div>
 
         <div className="mt-6 flex justify-end">

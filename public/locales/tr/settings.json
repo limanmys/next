@@ -824,7 +824,9 @@
                     "name": "İsim",
                     "ip_address": "IP Adresi",
                     "submit": "Düzenle",
-                    "cancel": "İptal"
+                    "cancel": "İptal",
+                    "shared_key": "Paylaşımlı Anahtar",
+                    "shared_key_message": "Eğer bu sunucu için ekli bir anahtar mevcut ise diğer kullanıcılarla paylaşılmasını sağlar."
                 },
                 "success_msg": "Sunucu başarıyla düzenlendi.",
                 "error_msg": "Sunucu düzenlenirken bir hata oluştu."
