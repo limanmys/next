@@ -149,10 +149,10 @@ function CreateAccessToken() {
       .string()
       .min(1, t("tokens.validation.name"))
       .max(75, t("tokens.validation.name")),
-    ip_range: z
-      .string()
-      .min(1, t("tokens.validation.ip_range"))
-      .max(16, t("tokens.validation.ip_range")),
+    ip_range: z.string().ip({
+      version: "v4",
+      message: t("external_notifications.validation.ip"),
+    }),
   })
 
   const form = useForm<z.infer<typeof formSchema>>({

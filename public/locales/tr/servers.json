@@ -338,7 +338,7 @@
             "toasts": {
                 "success": {
                     "title": "Başarılı",
-                    "description": "Yerel grup başarıyla oluşturuldu."
+                    "description": "Yerel kullanıcı başarıyla oluşturuldu."
                 },
                 "fail": {
                     "title": "Hata",

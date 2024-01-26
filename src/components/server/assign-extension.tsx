@@ -128,6 +128,7 @@ export default function AssignExtension({
               onClick={() => onAssign(selected)}
               type="submit"
               className="rounded-full"
+              disabled={selected.length === 0}
             >
               <PlusCircle className="mr-2 h-4 w-4" /> Ekle
             </Button>
