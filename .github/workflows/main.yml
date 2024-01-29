@@ -45,7 +45,7 @@ jobs:
 
       - name: Build Next application
         run: |
-          pnpm ci
+          pnpm i --force --frozen-lockfile
           pnpm run build
 
           [ "$GITHUB_REF" == "refs/heads/master" ] && PRERELEASE=false || PRERELEASE=true
