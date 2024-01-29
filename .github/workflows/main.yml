@@ -45,7 +45,7 @@ jobs:
 
       - name: Build Next application
         run: |
-          pnpm ci --ignore-scripts
+          pnpm ci
           pnpm run build
 
           [ "$GITHUB_REF" == "refs/heads/master" ] && PRERELEASE=false || PRERELEASE=true
