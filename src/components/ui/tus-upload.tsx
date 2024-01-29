@@ -3,8 +3,6 @@ import { AlertCircle, UploadCloud } from "lucide-react"
 import { useTranslation } from "react-i18next"
 import { TusHooksUploadOptions, useTus } from "use-tus"
 
-import { getAuthorizationHeader } from "@/lib/utils"
-
 import { Alert, AlertDescription, AlertTitle } from "./alert"
 import { Button } from "./button"
 import { Icons } from "./icons"
@@ -32,6 +30,13 @@ export const TusUpload = ({
     retryDelays: [0, 1000, 3000, 5000, 10000],
     overridePatchMethod: true,
     chunkSize: 1000 * 1000,
+    onBeforeRequest(req, upload) {
+      return new Promise((resolve) => {
+        var xhr = req.getUnderlyingObject()
+        xhr.withCredentials = true
+        resolve()
+      })
+    },
     onProgress: (bytesUploaded, bytesTotal) => {
       setProgress((bytesUploaded / bytesTotal) * 100)
     },
@@ -39,7 +44,6 @@ export const TusUpload = ({
       setError(error.message)
     },
     headers: {
-      ...getAuthorizationHeader(),
       Accept: "application/json",
     },
   }

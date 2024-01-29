@@ -1,7 +1,5 @@
 import axios, { AxiosInstance } from "axios"
 
-import { getAuthorizationHeader } from "@/lib/utils"
-
 export class AuthService {
   protected readonly instance: AxiosInstance
   public constructor(url: string) {
@@ -46,14 +44,6 @@ export class AuthService {
   }
 
   logout = () => {
-    return this.instance.post(
-      "/logout",
-      {},
-      {
-        headers: {
-          ...getAuthorizationHeader(),
-        },
-      }
-    )
+    return this.instance.post("/logout")
   }
 }

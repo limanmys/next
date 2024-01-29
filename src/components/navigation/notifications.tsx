@@ -88,11 +88,9 @@ export default function Notifications() {
 
       auth: {
         headers: {
-          Authorization: "Bearer " + JSON.parse(currentUser).access_token,
           Accept: "application/json",
         },
       },
-
       pusher: Pusher,
     })
 

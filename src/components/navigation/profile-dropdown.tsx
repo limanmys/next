@@ -113,8 +113,9 @@ export default function ProfileDropdown() {
             className="w-full"
             variant="secondary"
             onClick={() => {
-              logout()
-              router.replace("/auth/login?redirect=" + router.asPath)
+              logout().then(() => {
+                router.replace("/auth/login?redirect=" + router.asPath)
+              })
             }}
           >
             <LogOut className="mr-2 h-4 w-4" /> {t("profile_dropdown.logout")}

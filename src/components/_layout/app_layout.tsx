@@ -9,6 +9,7 @@ import Cookies from "js-cookie"
 import nProgress from "nprogress"
 import { useTranslation } from "react-i18next"
 
+import { useLogout } from "@/hooks/auth/useLogout"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -38,6 +39,7 @@ const Layout = ({ Component, pageProps }: any) => {
 
   const getLayout = Component.getLayout ?? ((page: ReactNode) => page)
   const [open, setOpen] = useState<boolean>(false)
+  const { logout } = useLogout()
 
   useEffect(() => {
     let authChecker = setInterval(() => {
@@ -52,7 +54,7 @@ const Layout = ({ Component, pageProps }: any) => {
         // if it is, then logout
         if (currentUser.expired_at < Date.now()) {
           setOpen(true)
-          Cookies.remove("currentUser")
+          logout()
         }
       } else {
         clearInterval(authChecker)
