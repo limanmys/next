@@ -54,7 +54,14 @@ const AsyncTransferList = <T extends ITransferListItem>(
           !props.selected?.some((object2) => object1.id === object2.id)
       )
     )
-    setRight(props.selected)
+    setRight([
+      ...right,
+      ...props.selected.filter(
+        (object1) =>
+          !right.some((object2) => object1.id === object2.id) &&
+          !left.some((object2) => object1.id === object2.id)
+      ),
+    ])
   }
 
   useEffect(() => {
