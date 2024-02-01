@@ -5,6 +5,7 @@ import {
   useSidebarContext,
 } from "@/providers/sidebar-provider"
 import { apiService } from "@/services"
+import axios, { CancelTokenSource } from "axios"
 import {
   CircleDot,
   FileClock,
@@ -49,15 +50,38 @@ export default function SidebarSelected() {
   const user = useCurrentUser()
   const { t } = useTranslation("common")
 
+  let cancelToken: CancelTokenSource | undefined
+
   useEffect(() => {
+    // Cancel the previous request before making a new request
+    if (cancelToken) {
+      cancelToken.cancel()
+    }
+
+    // Create a new CancelToken
+    cancelToken = axios.CancelToken.source()
+
     setSelectedLoading(true)
     apiService
       .getInstance()
-      .get(`/menu/servers/${selected}`)
+      .get(`/menu/servers/${selected}`, {
+        cancelToken: cancelToken.token,
+      })
       .then((res) => {
         setSelectedData(res.data)
         setSelectedLoading(false)
       })
+      .catch((err) => {
+        if (!axios.isCancel(err)) {
+          console.error(err)
+        }
+      })
+
+    return () => {
+      if (cancelToken) {
+        cancelToken.cancel()
+      }
+    }
   }, [selected])
 
   const toggleFavorite = (id: string) => {
