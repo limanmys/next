@@ -4,7 +4,6 @@ import { apiService } from "@/services"
 import { useTranslation } from "react-i18next"
 
 import { IServer, IServerDetails } from "@/types/server"
-import Loading from "@/components/ui/loading"
 import CpuTable from "@/components/server/cpu-table"
 import ServerDetails from "@/components/server/details"
 import DiskTable from "@/components/server/disk-table"
@@ -68,8 +67,29 @@ export default function ServerStatus() {
         ) : (
           <>
             {loading ? (
-              <div className="col-span-4 flex items-center justify-center">
-                <Loading />
+              <div className="col-span-4 flex flex-col">
+                <ServerSpecs loader />
+                <ResourceUsage loader />
+                <div className="flex flex-[2] divide-x border-t">
+                  <div className="w-1/3 pb-[24px]">
+                    <h2 className="p-[24px] text-xl font-bold tracking-tight">
+                      {t("system_status.cpu_usage")}
+                    </h2>
+                    <CpuTable loader />
+                  </div>
+                  <div className="w-1/3 pb-[24px]">
+                    <h2 className="p-[24px] text-xl font-bold tracking-tight">
+                      {t("system_status.ram_usage")}
+                    </h2>
+                    <RamTable loader />
+                  </div>
+                  <div className="w-1/3 pb-[24px]">
+                    <h2 className="p-[24px] text-xl font-bold tracking-tight">
+                      {t("system_status.disk_status")}
+                    </h2>
+                    <DiskTable loader />
+                  </div>
+                </div>
               </div>
             ) : (
               <div className="col-span-4 flex items-center justify-center">

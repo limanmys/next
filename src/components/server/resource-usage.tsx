@@ -13,7 +13,7 @@ import { Skeleton } from "../ui/skeleton"
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false })
 
-export default function ResourceUsage() {
+export default function ResourceUsage({ loader = false }) {
   const { resolvedTheme: theme } = useTheme()
   const { t } = useTranslation("servers")
   const router = useRouter()
@@ -60,6 +60,8 @@ export default function ResourceUsage() {
   )
 
   useEffect(() => {
+    setLoading(true)
+    if (loader) return
     if (!router.query.server_id) return
 
     const f = () =>

@@ -17,7 +17,7 @@ import {
   TableRow,
 } from "../ui/table"
 
-export default function DiskTable() {
+export default function DiskTable({ loader = false }) {
   const router = useRouter()
   const { t } = useTranslation("servers")
   const [loading, setLoading] = useState(true)
@@ -25,6 +25,7 @@ export default function DiskTable() {
 
   useEffect(() => {
     setLoading(true)
+    if (loader) return
     if (!router.query.server_id) return
 
     const f = () =>

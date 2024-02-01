@@ -9,13 +9,14 @@ import { IServerSpecs } from "@/types/server"
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 import { Skeleton } from "../ui/skeleton"
 
-export default function ServerSpecs() {
+export default function ServerSpecs({ loader = false }: { loader?: boolean }) {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState<IServerSpecs>()
   const { t } = useTranslation("servers")
 
   useEffect(() => {
+    if (loader) return
     if (!router.query.server_id) return
 
     apiService
