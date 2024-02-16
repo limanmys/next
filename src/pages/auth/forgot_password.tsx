@@ -27,14 +27,14 @@ export default function ForgotPasswordPage() {
       })
       .catch((err) => {
         setLoading(false)
-        setError(err.response.data.message)
+        setError(err.response.data.email || err.response.data.message)
       })
   }
 
   return (
     <>
       <div className="container relative h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
-        <div className="relative h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
+        <div className="relative h-full flex-col bg-muted p-10 text-white lg:flex dark:border-r">
           <div
             className="absolute inset-0 bg-cover"
             style={{
@@ -92,7 +92,7 @@ export default function ForgotPasswordPage() {
                   Şifre Sıfırlama Bağlantısı Gönder
                 </Button>
 
-                <small className="text-center text-muted-foreground mt-5 italic">
+                <small className="mt-5 text-center italic text-muted-foreground">
                   <Link href="/auth/login">Giriş yap</Link>
                 </small>
               </div>
