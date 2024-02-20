@@ -36,7 +36,7 @@ function ExtensionButton({
     <Button
       variant={isCollapsed ? "ghost" : "secondary"}
       size="sm"
-      className={cn("w-full justify-start", !isCollapsed && "mb-1")}
+      className={cn("w-full justify-start relative", !isCollapsed && "mb-1")}
       disabled={disabled}
       onClick={() => onClick}
       asChild
@@ -55,9 +55,9 @@ function ExtensionButton({
         {extension.menus &&
           extension.menus.length > 0 &&
           (isCollapsed ? (
-            <ChevronRight className="absolute right-6 h-4 w-4" />
+            <ChevronRight className="absolute right-3 h-4 w-4" />
           ) : (
-            <ChevronDown className="absolute right-6 h-4 w-4" />
+            <ChevronDown className="absolute right-3 h-4 w-4" />
           ))}
       </div>
     </Button>
@@ -179,7 +179,7 @@ const MenuButton: React.FC<IMenuButtonProps> = ({ menu, hash }) => {
           <Button
             variant={hash.includes(menu.url) ? "secondary" : "ghost"}
             size="sm"
-            className="w-full justify-start"
+            className="w-full justify-start relative"
           >
             {menu.icon && (
               <div className="flex w-[18px] items-center justify-center mr-1 fa-sm">
@@ -199,7 +199,7 @@ const MenuButton: React.FC<IMenuButtonProps> = ({ menu, hash }) => {
             <Button
               variant={isCollapsed ? "ghost" : "secondary"}
               size="sm"
-              className="flex w-full justify-between"
+              className="flex w-full justify-between relative"
               onClick={toggleCollapsed}
             >
               <div className="flex">

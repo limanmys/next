@@ -20,5 +20,8 @@
     "dist",
     ".chrome",
     ".next"
+  ],
+  "i18n-ally.localesPaths": [
+    "public/locales"
   ]
 }
