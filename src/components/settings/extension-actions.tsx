@@ -26,6 +26,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
+import { SelectServer } from "../selectbox/server-select"
 import {
   Dialog,
   DialogContent,
@@ -130,6 +131,7 @@ function License({
   const { toast } = useToast()
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState<string>("")
+  const [server, setServer] = useState<string>("")
   const { t } = useTranslation("settings")
 
   const handleCreate = () => {
@@ -137,7 +139,10 @@ function License({
 
     apiService
       .getInstance()
-      .post(`/settings/extensions/${extension.id}/license`, { license: data })
+      .post(`/settings/extensions/${extension.id}/license`, {
+        license: data,
+        server_id: server,
+      })
       .then(() => {
         toast({
           title: t("success"),
@@ -168,6 +173,12 @@ function License({
           </DialogDescription>
         </DialogHeader>
 
+        {extension.license_type === "golang_standard" && (
+          <SelectServer
+            defaultValue=""
+            onValueChange={(value) => setServer(value)}
+          />
+        )}
         <div className="mt-3 grid w-full items-center gap-1.5">
           <Label htmlFor="license">
             {t("extensions.actions.license.form.license")}

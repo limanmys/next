@@ -20,6 +20,7 @@ export interface IExtension {
   menus: IMenu[]
   updated: number
   licensed: boolean
+  license_type: "golang_standard" | "php"
 }
 
 export interface IExtensionSetting {
