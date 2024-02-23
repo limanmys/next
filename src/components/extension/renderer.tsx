@@ -189,6 +189,33 @@ export default function ExtensionRenderer() {
     }
   }, [theme])
 
+  useEffect(() => {
+    window.addEventListener(
+      "message",
+      (
+        e: MessageEvent<{
+          type: string
+          data: string
+        }>
+      ) => {
+        if (!e.data || !e.data.type) return
+
+        if (e.data.type !== "setSearchParams") return
+
+        // Set search params to the browser from e.data.data
+        const searchParams = new URLSearchParams(e.data.data)
+        const newUrl = `${window.location.pathname}?${searchParams.toString()}`
+        window.history.pushState({}, "", newUrl)
+        forceUpdate()
+      },
+      false
+    )
+
+    return () => {
+      window.removeEventListener("message", (e) => {}, false)
+    }
+  }, [])
+
   return (
     <div
       id="iframe-container"
