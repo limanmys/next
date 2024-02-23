@@ -51,6 +51,12 @@ export default function ExtensionRenderer() {
         }
       }
 
+      // Add browser search queries to the slug
+      const searchParams = new URLSearchParams(window.location.search)
+      if (searchParams.toString()) {
+        slug += `?${searchParams.toString()}`
+      }
+
       apiService
         .getInstance()
         .post(
