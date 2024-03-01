@@ -83,6 +83,14 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         setError(e.message)
       }
 
+      if (e.response.data.new_password) {
+        setError(
+          e.response.data.new_password[1] ||
+            e.response.data.new_password[0] ||
+            e.response.data.new_password
+        )
+      }
+
       if (e.response.status === 405) {
         setForceChange(true)
       }
