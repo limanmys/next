@@ -183,19 +183,18 @@ const AccessLdapPermissionsPage: NextPageWithLayout = () => {
         password: loginData.password,
         groups: groups.map((it) => it.id),
       })
-      .then((res) => {
-        if (res.data.status) {
-          toast({
-            title: t("success"),
-            description: t("access.permissions.group_success"),
-          })
-        } else {
-          toast({
-            title: t("error"),
-            description: t("access.permissions.group_error"),
-            variant: "destructive",
-          })
-        }
+      .then(() => {
+        toast({
+          title: t("success"),
+          description: t("access.permissions.group_success"),
+        })
+      })
+      .catch(() => {
+        toast({
+          title: t("error"),
+          description: t("access.permissions.group_error"),
+          variant: "destructive",
+        })
       })
   }
 
