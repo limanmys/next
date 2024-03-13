@@ -33,6 +33,7 @@
     },
     "sidebar": {
         "servers": "Server",
+        "management": "Server Verwaltung",
         "favorite": "Zu Favoriten hinzufügen/entfernen",
         "all_servers": "Alle Server",
         "add_server": "Neuen Server hinzufügen",

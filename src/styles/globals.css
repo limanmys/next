@@ -189,3 +189,32 @@
 [data-sonner-toast] [data-icon] {
   margin-top: 3px;
 }
+
+.animated-collapsible {
+  overflow: hidden;
+  transition: all 0.3s ease-out;
+}
+.animated-collapsible[data-state="open"] {
+  animation: slideDown 300ms ease-out;
+}
+.animated-collapsible[data-state="closed"] {
+  animation: slideUp 300ms ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-collapsible-content-height);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    height: var(--radix-collapsible-content-height);
+  }
+  to {
+    height: 0;
+  }
+}

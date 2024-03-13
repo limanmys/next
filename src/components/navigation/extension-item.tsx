@@ -1,7 +1,7 @@
 import { MouseEvent, useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { ChevronDown, ChevronRight, ToyBrick } from "lucide-react"
+import { ChevronRight, ToyBrick } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
 import { IExtension } from "@/types/extension"
@@ -36,12 +36,21 @@ function ExtensionButton({
     <Button
       variant={isCollapsed ? "ghost" : "secondary"}
       size="sm"
-      className={cn("relative w-full justify-start", !isCollapsed && "mb-1")}
+      className={cn(
+        "relative w-full justify-start",
+        !isCollapsed && extension.menus.length > 0 && "mb-1"
+      )}
       disabled={disabled}
       onClick={() => onClick}
       asChild
     >
-      <div>
+      <div
+        className={cn(
+          disabled
+            ? "opacity-50 pointer-events-none cursor-not-allowed"
+            : "opacity-100"
+        )}
+      >
         <div className="flex items-center gap-2">
           <div className="flex w-[18px] items-center justify-center">
             {extension.icon ? (
@@ -52,13 +61,14 @@ function ExtensionButton({
           </div>
           <span>{truncatedName}</span>
         </div>
-        {extension.menus &&
-          extension.menus.length > 0 &&
-          (isCollapsed ? (
-            <ChevronRight className="absolute right-3 h-4 w-4" />
-          ) : (
-            <ChevronDown className="absolute right-3 h-4 w-4" />
-          ))}
+        {extension.menus && extension.menus.length > 0 && (
+          <ChevronRight
+            className={cn(
+              "absolute right-3 h-4 w-4 transition-transform",
+              !isCollapsed && "transform rotate-90"
+            )}
+          />
+        )}
       </div>
     </Button>
   )
@@ -113,44 +123,36 @@ export default function ExtensionItem({
   return (
     <Collapsible open={router.asPath.includes(extension.id)}>
       <CollapsibleTrigger className="w-full">
-        {isCollapsed ? (
-          <Link
-            href={`/servers/${server_id}/extensions/${extension.id}${
-              extension.menus && extension.menus.length > 0
-                ? extension.menus[0].url
-                : ""
-            }`}
-            onClick={onClick}
-          >
-            <ExtensionButton
-              extension={extension}
-              disabled={disabled}
-              isCollapsed={isCollapsed}
-              onClick={onClick}
-            />
-          </Link>
-        ) : (
+        <Link
+          href={`/servers/${server_id}/extensions/${extension.id}${
+            extension.menus && extension.menus.length > 0
+              ? extension.menus[0].url
+              : ""
+          }`}
+          onClick={onClick}
+        >
           <ExtensionButton
             extension={extension}
             disabled={disabled}
             isCollapsed={isCollapsed}
             onClick={onClick}
           />
-        )}
+        </Link>
       </CollapsibleTrigger>
-      {router.asPath.includes(extension.id) &&
-        router.asPath.includes(server_id) &&
-        !router.asPath.includes(`${server_id}/settings/${extension.id}`) &&
-        extension.menus &&
-        extension.menus.length > 0 && (
-          <>
-            <CollapsibleContent className="mb-1 flex flex-col gap-y-[3px] rounded-md border p-1">
+
+      <CollapsibleContent className="animated-collapsible">
+        {router.asPath.includes(extension.id) &&
+          router.asPath.includes(server_id) &&
+          !router.asPath.includes(`${server_id}/settings/${extension.id}`) &&
+          extension.menus &&
+          extension.menus.length > 0 && (
+            <div className="mb-1 flex flex-col gap-y-[3px] rounded-md border p-1">
               {extension.menus.map((menu: IMenu) => (
                 <MenuButton menu={menu} hash={hash} key={menu.url} />
               ))}
-            </CollapsibleContent>
-          </>
-        )}
+            </div>
+          )}
+      </CollapsibleContent>
     </Collapsible>
   )
 }
@@ -214,20 +216,21 @@ const MenuButton = ({ menu, hash }: IMenuButtonProps) => {
                   : menu.name[i18n.language as keyof typeof menu.name] ||
                     menu.name}
               </div>
-              {isCollapsed ? (
-                <ChevronRight className="h-4 w-4" />
-              ) : (
-                <ChevronDown className="h-4 w-4" />
-              )}
+              <ChevronRight
+                className={cn(
+                  "h-4 w-4 transition-transform",
+                  !isCollapsed && "rotate-90"
+                )}
+              />
             </Button>
           </CollapsibleTrigger>
-          {!isCollapsed && (
-            <CollapsibleContent className="my-1 flex flex-col gap-y-[3px] rounded-md border p-1">
+          <CollapsibleContent className="animated-collapsible">
+            <div className="my-1 flex flex-col gap-y-[3px] rounded-md border p-1">
               {menu.children.map((childMenu: IMenu) => (
                 <MenuButton menu={childMenu} hash={hash} key={childMenu.url} />
               ))}
-            </CollapsibleContent>
-          )}
+            </div>
+          </CollapsibleContent>
         </Collapsible>
       )}
     </div>

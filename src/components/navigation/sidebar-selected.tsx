@@ -1,5 +1,4 @@
-import { useEffect } from "react"
-import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
 import {
   SIDEBARCTX_STATES,
   useSidebarContext,
@@ -7,6 +6,7 @@ import {
 import { apiService } from "@/services"
 import axios, { CancelTokenSource } from "axios"
 import {
+  ChevronRight,
   CircleDot,
   FileClock,
   Network,
@@ -25,6 +25,11 @@ import { IServer } from "@/types/server"
 import { cn } from "@/lib/utils"
 import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "../ui/collapsible"
 import { Icons } from "../ui/icons"
 import { Skeleton } from "../ui/skeleton"
 import {
@@ -101,6 +106,18 @@ export default function SidebarSelected() {
   const elementIsActive = (server: IServer): boolean => {
     return !server.is_online || !server.can_run_command
   }
+
+  // Toggle server opts
+  // store it on the localstorage if it's collapsed or not
+  const [isCollapsed, setIsCollapsed] = useState(true)
+  const toggleCollapsed = () => {
+    setIsCollapsed(!isCollapsed)
+    localStorage.setItem("serverSettingsCollapsed", (!isCollapsed).toString())
+  }
+
+  useEffect(() => {
+    setIsCollapsed(localStorage.getItem("serverSettingsCollapsed") == "true")
+  }, [])
 
   return (
     <>
@@ -193,84 +210,109 @@ export default function SidebarSelected() {
               </>
             )}
 
-            {user.permissions.server_services && (
-              <ServerItem
-                link={`/servers/${selected}/services`}
-                disabled={elementIsActive(selectedData)}
-              >
-                <ServerCog className="mr-2 h-4 w-4" />
-                {t("sidebar.services")}
-              </ServerItem>
-            )}
-            {user.permissions.server_details && (
-              <>
-                <ServerItem
-                  link={`/servers/${selected}/packages`}
-                  disabled={
-                    elementIsActive(selectedData) ||
-                    selectedData.os === "windows"
-                  }
+            {(user.permissions.server_services ||
+              user.permissions.server_details ||
+              user.permissions.view_logs) && (
+              <Collapsible open={!isCollapsed}>
+                <CollapsibleTrigger
+                  className="w-full text-left mt-3 px-2"
+                  onClick={() => toggleCollapsed()}
                 >
-                  <PackageOpen className="mr-2 h-4 w-4" />
-                  {t("sidebar.packages")}
-                </ServerItem>
-                <ServerItem
-                  link={`/servers/${selected}/updates`}
-                  disabled={
-                    elementIsActive(selectedData) ||
-                    selectedData.os === "windows"
-                  }
-                >
-                  <PackageSearch className="mr-2 h-4 w-4" />
-                  {t("sidebar.updates")}
-                </ServerItem>
-                <div className="mb-1">
-                  <DropdownServerItem
-                    items={[
-                      {
-                        link: `/servers/${selected}/users/local`,
-                        name: t("sidebar.user_management.local_users"),
-                        exact: true,
-                      },
-                      {
-                        link: `/servers/${selected}/users/groups`,
-                        name: t("sidebar.user_management.local_groups"),
-                        exact: true,
-                      },
-                      {
-                        link: `/servers/${selected}/users/sudoers`,
-                        name: t("sidebar.user_management.sudoers"),
-                        exact: true,
-                        disabled: selectedData.os === "windows",
-                      },
-                    ]}
-                    disabled={elementIsActive(selectedData)}
-                  >
-                    <Users className="mr-2 h-4 w-4" />
-                    {t("sidebar.user_management.title")}
-                  </DropdownServerItem>
-                </div>
-                <ServerItem
-                  link={`/servers/${selected}/open_ports`}
-                  disabled={
-                    elementIsActive(selectedData) ||
-                    selectedData.os === "windows"
-                  }
-                >
-                  <Network className="mr-2 h-4 w-4" />
-                  {t("sidebar.open_ports")}
-                </ServerItem>
-              </>
-            )}
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-lg font-semibold tracking-tight">
+                      {t("sidebar.management")}
+                    </h2>
+                    <ChevronRight
+                      className={cn(
+                        "h-4 w-4 transition-transform",
+                        !isCollapsed && "transform rotate-90"
+                      )}
+                    />
+                  </div>
+                </CollapsibleTrigger>
 
-            {user.permissions.view_logs && (
-              <ServerItem
-                link={`/servers/${selected}/access_logs`}
-                disabled={!selectedData.is_online}
-              >
-                <FileClock className="mr-2 h-4 w-4" />
-                {t("sidebar.access_logs")}
-              </ServerItem>
+                <CollapsibleContent className="animated-collapsible mt-3">
+                  {user.permissions.server_services && (
+                    <ServerItem
+                      link={`/servers/${selected}/services`}
+                      disabled={elementIsActive(selectedData)}
+                    >
+                      <ServerCog className="mr-2 h-4 w-4" />
+                      {t("sidebar.services")}
+                    </ServerItem>
+                  )}
+                  {user.permissions.server_details && (
+                    <>
+                      <ServerItem
+                        link={`/servers/${selected}/packages`}
+                        disabled={
+                          elementIsActive(selectedData) ||
+                          selectedData.os === "windows"
+                        }
+                      >
+                        <PackageOpen className="mr-2 h-4 w-4" />
+                        {t("sidebar.packages")}
+                      </ServerItem>
+                      <ServerItem
+                        link={`/servers/${selected}/updates`}
+                        disabled={
+                          elementIsActive(selectedData) ||
+                          selectedData.os === "windows"
+                        }
+                      >
+                        <PackageSearch className="mr-2 h-4 w-4" />
+                        {t("sidebar.updates")}
+                      </ServerItem>
+                      <div className="mb-1">
+                        <DropdownServerItem
+                          items={[
+                            {
+                              link: `/servers/${selected}/users/local`,
+                              name: t("sidebar.user_management.local_users"),
+                              exact: true,
+                            },
+                            {
+                              link: `/servers/${selected}/users/groups`,
+                              name: t("sidebar.user_management.local_groups"),
+                              exact: true,
+                            },
+                            {
+                              link: `/servers/${selected}/users/sudoers`,
+                              name: t("sidebar.user_management.sudoers"),
+                              exact: true,
+                              disabled: selectedData.os === "windows",
+                            },
+                          ]}
+                          disabled={elementIsActive(selectedData)}
+                        >
+                          <Users className="mr-2 h-4 w-4" />
+                          {t("sidebar.user_management.title")}
+                        </DropdownServerItem>
+                      </div>
+                      <ServerItem
+                        link={`/servers/${selected}/open_ports`}
+                        disabled={
+                          elementIsActive(selectedData) ||
+                          selectedData.os === "windows"
+                        }
+                      >
+                        <Network className="mr-2 h-4 w-4" />
+                        {t("sidebar.open_ports")}
+                      </ServerItem>
+                    </>
+                  )}
+
+                  {user.permissions.view_logs && (
+                    <ServerItem
+                      link={`/servers/${selected}/access_logs`}
+                      disabled={!selectedData.is_online}
+                    >
+                      <FileClock className="mr-2 h-4 w-4" />
+                      {t("sidebar.access_logs")}
+                    </ServerItem>
+                  )}
+                </CollapsibleContent>
+              </Collapsible>
             )}
           </div>
 

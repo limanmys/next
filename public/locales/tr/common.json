@@ -33,6 +33,7 @@
     },
     "sidebar": {
         "servers": "Sunucular",
+        "management": "Sunucu Yönetimi",
         "favorite": "Favorilere ekle/çıkar",
         "all_servers": "Tüm sunucuları gör",
         "add_server": "Yeni sunucu ekle",
