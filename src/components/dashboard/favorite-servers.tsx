@@ -26,6 +26,9 @@ export default function FavoriteServers() {
       .then((res) => {
         setData(res.data)
       })
+      .catch(() => {
+        // Do nothing
+      })
       .finally(() => {
         setLoading(false)
       })

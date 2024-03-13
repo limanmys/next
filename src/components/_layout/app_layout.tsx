@@ -5,6 +5,7 @@ import {
   SIDEBARCTX_STATES,
   useSidebarContext,
 } from "@/providers/sidebar-provider"
+import { useAutoAnimate } from "@formkit/auto-animate/react"
 import Cookies from "js-cookie"
 import nProgress from "nprogress"
 import { useTranslation } from "react-i18next"
@@ -29,6 +30,7 @@ const Layout = ({ Component, pageProps }: any) => {
   const router = useRouter()
   const sidebarCtx = useSidebarContext()
   const { t } = useTranslation("common")
+  const [animated] = useAutoAnimate()
 
   Router.events.on("routeChangeStart", () => nProgress.start())
   Router.events.on("routeChangeComplete", () => {
@@ -79,7 +81,7 @@ const Layout = ({ Component, pageProps }: any) => {
             }}
           >
             <main>
-              <div className="relative z-10">
+              <div className="relative z-10" ref={animated}>
                 {getLayout(<Component {...pageProps} key={router.route} />)}
               </div>
               <div className="pointer-events-none absolute top-0 z-10 -ml-48 mt-40 flex h-[2px] w-96 rotate-90">

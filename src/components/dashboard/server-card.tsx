@@ -20,6 +20,9 @@ export default function ServerCard({ item }: { item: IServer }) {
       .then((res) => {
         setData(res.data)
       })
+      .catch(() => {
+        // Do nothing
+      })
       .finally(() => {
         setLoading(false)
       })

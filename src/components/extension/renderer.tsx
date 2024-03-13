@@ -2,6 +2,7 @@ import { useEffect, useReducer, useRef, useState } from "react"
 import Head from "next/head"
 import { useRouter } from "next/router"
 import { apiService } from "@/services"
+import autoAnimate from "@formkit/auto-animate"
 import { ArrowLeft } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useTranslation } from "react-i18next"
@@ -33,6 +34,7 @@ export default function ExtensionRenderer() {
     ) {
       return
     }
+    autoAnimate(container.current)
 
     setLoading(true)
     deleteAllIframes(container.current)
