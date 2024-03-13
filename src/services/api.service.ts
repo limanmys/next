@@ -1,5 +1,7 @@
 import axios, { AxiosInstance } from "axios"
 
+import { useLogout } from "@/hooks/auth/useLogout"
+
 export class ApiService {
   protected readonly instance: AxiosInstance
   public constructor(url: string) {
@@ -20,8 +22,15 @@ export class ApiService {
       },
       (error) => {
         if (error.response && error.response.status === 401) {
-          window.location.href =
-            "/auth/login?redirect=" + window.location.pathname
+          if (window.location.pathname == "/auth/login") {
+            return Promise.reject(error)
+          }
+
+          const { logout } = useLogout()
+          logout().finally(() => {
+            window.location.href =
+              "/auth/login?redirect=" + window.location.pathname
+          })
         }
         if (error.response && error.response.status === 504) {
           window.location.href = "/504"
