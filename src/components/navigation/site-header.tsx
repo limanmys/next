@@ -12,6 +12,7 @@ import { ThemeToggle } from "@/components/theme-toggle"
 
 import { Icons } from "../ui/icons"
 import CommandMenu from "./command-menu"
+import FullScreenToggle from "./full-screen-toggle"
 import LanguageSelector from "./language-selector"
 import ProfileDropdown from "./profile-dropdown"
 
@@ -49,6 +50,8 @@ export function SiteHeader() {
 
         <div className="flex items-center justify-end space-x-4">
           <nav className="flex items-center space-x-1">
+            <FullScreenToggle />
+
             <ThemeToggle />
 
             <LanguageSelector />
