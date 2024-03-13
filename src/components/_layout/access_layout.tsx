@@ -1,15 +1,11 @@
-import { useEffect, useState } from "react"
+import { ReactNode, useEffect, useState } from "react"
 import { apiService } from "@/services"
 import { BookKey, FolderGit2, ScanFace, ScrollText } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
 import AccessCard from "../settings/access-card"
 
-export default function AccessLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function AccessLayout({ children }: { children: ReactNode }) {
   const [enabled, setEnabled] = useState(false)
   const { t } = useTranslation("settings")
 

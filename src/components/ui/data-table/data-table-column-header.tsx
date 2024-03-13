@@ -95,7 +95,7 @@ export function DataTableColumnHeader<TData, TValue>({
                 value={(column.getFilterValue() as string) ?? ""}
                 onValueChange={(value) => column.setFilterValue(value)}
               >
-                <SelectTrigger className="bg-background h-8 min-w-[165px]">
+                <SelectTrigger className="h-8 min-w-[165px] bg-background">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>

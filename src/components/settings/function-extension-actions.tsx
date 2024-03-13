@@ -1,6 +1,9 @@
+import { HTMLAttributes } from "react"
 import { Column } from "@tanstack/react-table"
 import { ChevronsUpDown, EyeOff, SortAsc, SortDesc } from "lucide-react"
 
+import { IExtension } from "@/types/extension"
+import { cn } from "@/lib/utils"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,8 +11,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { cn } from "@/lib/utils"
-import { IExtension } from "@/types/extension"
 
 import { ScrollArea } from "../ui/scroll-area"
 import {
@@ -23,7 +24,7 @@ import {
 } from "../ui/select"
 
 interface FunctionExtensionActionsProps<TData, TValue>
-  extends React.HTMLAttributes<HTMLDivElement> {
+  extends HTMLAttributes<HTMLDivElement> {
   column: Column<TData, TValue>
   title: string
 }

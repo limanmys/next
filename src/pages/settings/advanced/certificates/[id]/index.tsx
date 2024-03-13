@@ -14,7 +14,7 @@ export default function CertificateInformation() {
   const { t } = useTranslation("settings")
   const { toast } = useToast()
 
-  const [loading, setLoading] = useState<boolean>(true)
+  const [_, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<ICertificateDetails>()
 
   useEffect(() => {

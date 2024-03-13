@@ -82,7 +82,7 @@ export default function ServerCreatePage() {
       description: t("create.steps.key_selection.description"),
       ref: useRef<any>(),
       component: KeySelection,
-      validation: async (data: any) => {
+      validation: async () => {
         return {
           isValid: true,
           message: "",
@@ -123,7 +123,7 @@ export default function ServerCreatePage() {
       description: t("create.steps.summary.description"),
       ref: useRef<any>(),
       component: Summary,
-      validation: async (data: any) => {
+      validation: async () => {
         return {
           isValid: true,
           message: "",

@@ -44,7 +44,8 @@ export function Sidebar({ className }: { className?: string }) {
     <div
       className={cn(
         "fixed z-30 w-full shrink-0 overflow-y-auto bg-background print:hidden md:sticky md:block",
-        sidebarCtx[SIDEBARCTX_STATES.collapsed] && "hidden border-r"
+        sidebarCtx[SIDEBARCTX_STATES.collapsed] && "hidden border-r",
+        className
       )}
     >
       <ScrollArea

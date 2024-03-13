@@ -212,7 +212,7 @@ export default function ExtensionRenderer() {
     )
 
     return () => {
-      window.removeEventListener("message", (e) => {}, false)
+      window.removeEventListener("message", () => {}, false)
     }
   }, [])
 
@@ -243,7 +243,7 @@ export default function ExtensionRenderer() {
           >
             <div className="mx-auto flex max-w-sm flex-col items-center text-center">
               <Icons.dugumluLogo className="w-18 mb-10 h-12" />
-              <h1 className="mt-3 text-2xl font-semibold text-gray-800 dark:text-white md:text-3xl">
+              <h1 className="mt-3 text-2xl font-semibold text-gray-800 md:text-3xl dark:text-white">
                 Bir hata oluştu
               </h1>
               <p className="mt-4 text-gray-500 dark:text-gray-400">

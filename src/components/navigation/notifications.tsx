@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import Cookies from "js-cookie"
 import Echo from "laravel-echo"
@@ -24,7 +23,6 @@ import StatusBadge, { Status } from "../ui/status-badge"
 import { useNotification } from "../ui/use-notification"
 
 export default function Notifications() {
-  const router = useRouter()
   const { sendNotification } = useNotification()
   const user = useCurrentUser()
   const { t, i18n } = useTranslation("common")

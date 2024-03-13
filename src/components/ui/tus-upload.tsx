@@ -30,7 +30,7 @@ export const TusUpload = ({
     retryDelays: [0, 1000, 3000, 5000, 10000],
     overridePatchMethod: true,
     chunkSize: 1000 * 1000,
-    onBeforeRequest(req, upload) {
+    onBeforeRequest(req) {
       return new Promise((resolve) => {
         var xhr = req.getUnderlyingObject()
         xhr.withCredentials = true

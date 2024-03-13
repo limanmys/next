@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { MouseEvent, useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { ChevronDown, ChevronRight, ToyBrick } from "lucide-react"
@@ -28,7 +28,7 @@ function ExtensionButton({
   extension: IExtension
   disabled?: boolean
   isCollapsed: boolean
-  onClick: (e: React.MouseEvent<HTMLAnchorElement>) => void
+  onClick: (e: MouseEvent<HTMLAnchorElement>) => void
 }) {
   const truncatedName = truncate(extension.display_name, 25)
 
@@ -36,7 +36,7 @@ function ExtensionButton({
     <Button
       variant={isCollapsed ? "ghost" : "secondary"}
       size="sm"
-      className={cn("w-full justify-start relative", !isCollapsed && "mb-1")}
+      className={cn("relative w-full justify-start", !isCollapsed && "mb-1")}
       disabled={disabled}
       onClick={() => onClick}
       asChild
@@ -102,7 +102,7 @@ export default function ExtensionItem({
     !router.asPath.includes(server_id) ||
     router.asPath.includes(`${server_id}/settings/${extension.id}`)
 
-  const onClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const onClick = (e: MouseEvent<HTMLAnchorElement>) => {
     if (disabled) {
       e.preventDefault()
     } else {
@@ -160,7 +160,7 @@ interface IMenuButtonProps {
   hash: string
 }
 
-const MenuButton: React.FC<IMenuButtonProps> = ({ menu, hash }) => {
+const MenuButton = ({ menu, hash }: IMenuButtonProps) => {
   const { i18n } = useTranslation()
   const [isCollapsed, setIsCollapsed] = useState(true)
 
@@ -179,10 +179,10 @@ const MenuButton: React.FC<IMenuButtonProps> = ({ menu, hash }) => {
           <Button
             variant={hash.includes(menu.url) ? "secondary" : "ghost"}
             size="sm"
-            className="w-full justify-start relative"
+            className="relative w-full justify-start"
           >
             {menu.icon && (
-              <div className="flex w-[18px] items-center justify-center mr-1 fa-sm">
+              <div className="fa-sm mr-1 flex w-[18px] items-center justify-center">
                 <i className={`${menu.icon} fa-fw`}></i>
               </div>
             )}
@@ -199,12 +199,12 @@ const MenuButton: React.FC<IMenuButtonProps> = ({ menu, hash }) => {
             <Button
               variant={isCollapsed ? "ghost" : "secondary"}
               size="sm"
-              className="flex w-full justify-between relative"
+              className="relative flex w-full justify-between"
               onClick={toggleCollapsed}
             >
               <div className="flex">
                 {menu.icon && (
-                  <div className="flex w-[18px] items-center justify-center mr-1 fa-sm">
+                  <div className="fa-sm mr-1 flex w-[18px] items-center justify-center">
                     <i className={`${menu.icon} fa-fw`}></i>
                   </div>
                 )}

@@ -37,7 +37,6 @@ import ExtensionItem from "./extension-item"
 import ServerItem, { DropdownServerItem } from "./server-item"
 
 export default function SidebarSelected() {
-  const router = useRouter()
   const [
     selected,
     setSelected,

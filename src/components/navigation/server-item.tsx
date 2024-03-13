@@ -71,7 +71,7 @@ export function DropdownServerItem({
 
   const checkIfActive = () => {
     return items.some((item) => {
-      if (item.exact) {
+      if (exact || item.exact) {
         return router.asPath === item.link
       } else {
         return router.asPath.includes(item.link)
@@ -81,7 +81,7 @@ export function DropdownServerItem({
 
   const checkIfActiveFromItemsProps = (link: string) => {
     return items.some((item) => {
-      if (item.exact) {
+      if (exact || item.exact) {
         return router.asPath === link
       } else {
         return router.asPath.includes(link)

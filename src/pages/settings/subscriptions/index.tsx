@@ -41,7 +41,7 @@ export default function SubscriptionPage() {
         setLimanSubscription(response.data)
         setSubscriptionStatus(true)
       })
-      .catch((err) => {
+      .catch(() => {
         // Do nothing
       })
   }

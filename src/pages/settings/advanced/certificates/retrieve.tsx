@@ -54,7 +54,7 @@ export default function CertificateInformation() {
         hostname: ipAddress,
         port: port,
       })
-      .then((res) => {
+      .then(() => {
         toast({
           title: t("success"),
           description: t("advanced.certificates.retrieve.success"),

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import {
   ExternalLink,
@@ -37,7 +36,6 @@ function HealthStatus({ status }: { status: boolean }) {
 }
 
 export default function HealthPage() {
-  const router = useRouter()
   const { t } = useTranslation("settings")
 
   const [data, setData] = useState<IHealthCheck>()
@@ -50,7 +48,7 @@ export default function HealthPage() {
       .then((response) => {
         setData(response.data)
       })
-      .catch((error) => {
+      .catch(() => {
         //
       })
       .finally(() => {

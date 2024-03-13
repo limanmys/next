@@ -117,7 +117,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       setIsLoading(true)
       authService
         .saveTwoFactorToken(secret, username, password)
-        .then((res) => {
+        .then(() => {
           setError("Kurulum başarılı. Tekrar giriş yapınız.")
         })
         .catch((err) => {

@@ -94,7 +94,7 @@ export default function ServerStatus() {
             ) : (
               <div className="col-span-4 flex items-center justify-center">
                 <div className="mx-auto flex max-w-sm flex-col items-center text-center">
-                  <h1 className="text-2xl font-semibold text-gray-800 dark:text-white md:text-3xl">
+                  <h1 className="text-2xl font-semibold text-gray-800 md:text-3xl dark:text-white">
                     {t("warning")}
                   </h1>
                   <p className="mt-4 text-gray-500 dark:text-gray-400">

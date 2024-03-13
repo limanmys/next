@@ -1,9 +1,12 @@
+import { useState } from "react"
+import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { PlusCircle } from "lucide-react"
-import { useRouter } from "next/router"
-import { useState } from "react"
 import { useTranslation } from "react-i18next"
 
+import { IMiniFunction } from "@/types/function"
+import { DivergentColumn } from "@/types/table"
+import { useEmitter } from "@/hooks/useEmitter"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import DataTable from "@/components/ui/data-table/data-table"
@@ -20,9 +23,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { useToast } from "@/components/ui/use-toast"
-import { useEmitter } from "@/hooks/useEmitter"
-import { IMiniFunction } from "@/types/function"
-import { DivergentColumn } from "@/types/table"
+
 import { SelectExtension } from "../selectbox/extension-select"
 
 export default function AssignFunction() {
@@ -36,7 +37,7 @@ export default function AssignFunction() {
   const [selected, setSelected] = useState<IMiniFunction[]>([])
 
   const fetchFunctionList = (extension: string) => {
-    if (!extension) return;
+    if (!extension) return
 
     setLoading(true)
     setSelectedExtension(extension)
@@ -94,7 +95,7 @@ export default function AssignFunction() {
         functions: selected.map((item) => item.name),
         extension_id: selectedExtension,
       })
-      .then((res) => {
+      .then(() => {
         toast({
           title: t("success"),
           description: t("roles.functions.assign.success"),
@@ -102,7 +103,7 @@ export default function AssignFunction() {
         emitter.emit("REFETCH_FUNCTIONS", router.query.role_id)
         emitter.emit("REFETCH_ROLE", router.query.role_id)
       })
-      .catch((err) => {
+      .catch(() => {
         toast({
           title: t("error"),
           description: t("roles.functions.assign.error"),
@@ -114,11 +115,7 @@ export default function AssignFunction() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button
-          variant="outline"
-          size="sm"
-          className="ml-auto h-8 lg:flex"
-        >
+        <Button variant="outline" size="sm" className="ml-auto h-8 lg:flex">
           <PlusCircle className="mr-2 h-4 w-4" />
           {t("roles.functions.assign.add")}
         </Button>

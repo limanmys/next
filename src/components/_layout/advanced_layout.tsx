@@ -1,13 +1,10 @@
+import { ReactNode } from "react"
 import { Award, CloudCog, Cog, ScrollText } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
 import AccessCard from "../settings/access-card"
 
-export default function AdvancedLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function AdvancedLayout({ children }: { children: ReactNode }) {
   const { t } = useTranslation("settings")
 
   const advanced = [

@@ -27,9 +27,9 @@ export default function UploadExtension() {
   const { t } = useTranslation("settings")
 
   const upload = async (customRequest: any) => {
-    return new Promise<number>(async (resolve, reject) => {
+    return new Promise<number>((resolve, reject) => {
       setLoading(true)
-      await apiService
+      apiService
         .getInstance()
         .post(
           `/settings/extensions/upload`,

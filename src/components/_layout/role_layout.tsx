@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { ReactNode, useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import {
@@ -16,11 +16,7 @@ import { useEmitter } from "@/hooks/useEmitter"
 import { Icons } from "@/components/ui/icons"
 import RoleCard from "@/components/settings/role-card"
 
-export default function RoleLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RoleLayout({ children }: { children: ReactNode }) {
   const router = useRouter()
   const emitter = useEmitter()
   const { t } = useTranslation("settings")
