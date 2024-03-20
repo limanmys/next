@@ -125,6 +125,15 @@ export default function EditUser() {
       const d = data as IUser
       setUser(d)
       setOpen(true)
+      form.reset({
+        id: d.id,
+        name: d.name,
+        username: d.username,
+        email: d.email,
+        status: d.status,
+        password: "",
+        roles: [],
+      })
 
       apiService
         .getInstance()
@@ -132,7 +141,12 @@ export default function EditUser() {
         .then((res) => {
           setRoles(res.data)
           form.reset({
-            ...d,
+            id: d.id,
+            name: d.name,
+            username: d.username,
+            email: d.email,
+            status: d.status,
+            password: "",
             roles: res.data
               .filter((r: any) => r.selected)
               .map((r: any) => r.id),
