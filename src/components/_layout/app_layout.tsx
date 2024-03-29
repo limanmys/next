@@ -10,6 +10,7 @@ import Cookies from "js-cookie"
 import nProgress from "nprogress"
 import { useTranslation } from "react-i18next"
 
+import { cn } from "@/lib/utils"
 import { useLogout } from "@/hooks/auth/useLogout"
 import {
   AlertDialog,
@@ -25,12 +26,20 @@ import { Sidebar } from "@/components/navigation/sidebar"
 import { SiteHeader } from "@/components/navigation/site-header"
 
 import GradientSvg from "../bg/gradient"
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "../ui/resizable"
 
 const Layout = ({ Component, pageProps }: any) => {
   const router = useRouter()
   const sidebarCtx = useSidebarContext()
   const { t } = useTranslation("common")
-  const [animated] = useAutoAnimate()
+  const [animated] = useAutoAnimate({
+    duration: 150,
+    easing: "linear",
+  })
 
   Router.events.on("routeChangeStart", () => nProgress.start())
   Router.events.on("routeChangeComplete", () => {
@@ -72,28 +81,45 @@ const Layout = ({ Component, pageProps }: any) => {
     <>
       <SiteHeader />
       <div className="flex-1">
-        <div className="flex-1 items-start md:grid md:grid-cols-[300px_minmax(0,1fr)] lg:grid-cols-[300px_minmax(0,1fr)]">
-          <Sidebar />
-          <ScrollArea
-            className="relative"
-            style={{
-              height: "var(--container-height)",
-            }}
+        <ResizablePanelGroup
+          className="min-h-[var(--container-height)]"
+          direction="horizontal"
+          autoSaveId="limanLayout"
+        >
+          <ResizablePanel
+            defaultSize={18}
+            minSize={15}
+            collapsible={true}
+            className={cn(
+              "md:block",
+              sidebarCtx[SIDEBARCTX_STATES.collapsed] && "hidden"
+            )}
           >
-            <main>
-              <div className="relative z-10" ref={animated}>
-                {getLayout(<Component {...pageProps} key={router.route} />)}
-              </div>
-              <div className="pointer-events-none absolute top-0 z-10 -ml-48 mt-40 flex h-[2px] w-96 rotate-90">
-                <div className="gradient w-full flex-none blur-sm"></div>
-                <div className="gradient ml-[-100%] w-full flex-none blur-[1px]"></div>
-                <div className="gradient ml-[-100%] w-full flex-none blur-sm"></div>
-                <div className="gradient ml-[-100%] w-full flex-none blur-[1px]"></div>
-              </div>
-              <GradientSvg className="-mt-18 pointer-events-none absolute top-0 z-0 h-auto w-full rotate-180 opacity-30 dark:opacity-60" />
-            </main>
-          </ScrollArea>
-        </div>
+            <Sidebar />
+          </ResizablePanel>
+          <ResizableHandle withHandle />
+          <ResizablePanel defaultSize={82} minSize={75}>
+            <ScrollArea
+              className="relative"
+              style={{
+                height: "var(--container-height)",
+              }}
+            >
+              <main>
+                <div className="relative z-10" ref={animated}>
+                  {getLayout(<Component {...pageProps} key={router.route} />)}
+                </div>
+                <div className="pointer-events-none absolute top-0 z-10 -ml-48 mt-40 flex h-[2px] w-96 rotate-90">
+                  <div className="gradient w-full flex-none blur-sm"></div>
+                  <div className="gradient ml-[-100%] w-full flex-none blur-[1px]"></div>
+                  <div className="gradient ml-[-100%] w-full flex-none blur-sm"></div>
+                  <div className="gradient ml-[-100%] w-full flex-none blur-[1px]"></div>
+                </div>
+                <GradientSvg className="-mt-18 pointer-events-none absolute top-0 z-0 h-auto w-full rotate-180 opacity-30 dark:opacity-60" />
+              </main>
+            </ScrollArea>
+          </ResizablePanel>
+        </ResizablePanelGroup>
       </div>
       <AlertDialog open={open} onOpenChange={setOpen}>
         <AlertDialogContent>

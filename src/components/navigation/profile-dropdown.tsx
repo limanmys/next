@@ -2,10 +2,11 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import md5 from "blueimp-md5"
 import Cookies from "js-cookie"
-import { LogOut, User } from "lucide-react"
+import { ChevronDown, LogOut, User } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
 import { IUser } from "@/types/user"
+import { cn } from "@/lib/utils"
 import { useLogout } from "@/hooks/auth/useLogout"
 import { Button, buttonVariants } from "@/components/ui/button"
 
@@ -36,20 +37,29 @@ export default function ProfileDropdown() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <div
-          className={buttonVariants({
-            size: "sm",
-            variant: "ghost",
-          })}
+          className={cn(
+            buttonVariants({
+              size: "sm",
+              variant: "ghost",
+            }),
+            "h-9 flex items-center gap-2"
+          )}
         >
-          <Avatar className="h-6 w-6">
+          <Avatar className="size-6">
             <AvatarImage
               src={`https://gravatar.com/avatar/${md5(user.email)}?d=404`}
               alt={user.name}
             />
-            <AvatarFallback>
-              {Object.keys(user).length > 0 && user.name[0]}
+            <AvatarFallback className="text-xs">
+              {Object.keys(user).length > 0 &&
+                (user.name ?? "")
+                  .split(" ")
+                  .map((n: string) => n[0])
+                  .join("")}
             </AvatarFallback>
           </Avatar>
+          {user.name || ""}
+          <ChevronDown className="size-3 text-muted-foreground" />
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-5 w-[420px]">

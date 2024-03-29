@@ -17,7 +17,7 @@ export default function SettingsPage() {
         <h2 className="mb-3 text-xl font-bold tracking-tight">
           {t("user_settings")}
         </h2>
-        <div className="mb-8 grid grid-cols-3 gap-8">
+        <div className="mb-8 grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
           {Settings.user.map((setting) => (
             <SettingCard
               href={setting.href}
@@ -33,7 +33,7 @@ export default function SettingsPage() {
             <h2 className="mb-3 text-xl font-bold tracking-tight">
               {t("system_settings")}
             </h2>
-            <div className="grid grid-cols-3 gap-8">
+            <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
               {Settings.system.map((setting) => (
                 <SettingCard
                   href={setting.href}

@@ -72,8 +72,8 @@ export function FunctionExtensionActions<TData, TValue>({
       </div>
       <Select
         onValueChange={(value) => column.setFilterValue(value)}
-        value={column.getFilterValue() as string}
-        defaultValue=""
+        value={(column.getFilterValue() as string) || " "}
+        defaultValue=" "
         key={column.getFilterValue() as string}
       >
         <SelectTrigger className="mb-3 h-8 w-full ">
@@ -83,7 +83,7 @@ export function FunctionExtensionActions<TData, TValue>({
           <ScrollArea className="h-48">
             <SelectGroup>
               <SelectLabel>Eklentiler</SelectLabel>
-              <SelectItem value="">Tümü</SelectItem>
+              <SelectItem value=" ">Tümü</SelectItem>
               {extensions.map((extension) => (
                 <SelectItem key={extension.id} value={extension.display_name}>
                   {extension.display_name}

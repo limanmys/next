@@ -66,7 +66,7 @@ export default function CommandMenu() {
   return (
     <>
       <div
-        className="relative px-2 sm:w-[250px] lg:w-[500px] "
+        className="relative px-2 hidden md:block lg:w-[500px]"
         onClick={() => setOpen(true)}
       >
         <Input type="text" placeholder={t("command_menu.search")} />

@@ -34,7 +34,7 @@ export default function IndexPage() {
 
       <div className="flex w-full flex-[2] flex-col divide-x xl:flex-row">
         <div
-          className={cn("w-full", user.status === 1 ? "lg:w-1/3" : "lg:w-1/2")}
+          className={cn("w-full", user.status === 1 ? "xl:w-1/3" : "xl:w-1/2")}
         >
           <MostUsedExtensions />
         </div>
@@ -42,14 +42,14 @@ export default function IndexPage() {
           <div
             className={cn(
               "w-full",
-              user.status === 1 ? "lg:w-1/3" : "lg:w-1/2"
+              user.status === 1 ? "xl:w-1/3" : "xl:w-1/2"
             )}
           >
             <LatestLoggedInUsers />
           </div>
         )}
         <div
-          className={cn("w-full", user.status === 1 ? "lg:w-1/3" : "lg:w-1/2")}
+          className={cn("w-full", user.status === 1 ? "xl:w-1/3" : "xl:w-1/2")}
         >
           <FavoriteServers />
         </div>

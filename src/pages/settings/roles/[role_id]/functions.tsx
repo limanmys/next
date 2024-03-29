@@ -199,10 +199,10 @@ const RoleFunctionsList: NextPageWithLayout = () => {
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>
-                  {t("roles.functions.cancel")}
+                  {t("roles.functions.delete_dialog.cancel")}
                 </AlertDialogCancel>
                 <AlertDialogAction onClick={() => deleteSelected()}>
-                  {t("roles.functions.delete")}
+                  {t("roles.functions.delete_dialog.delete")}
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>

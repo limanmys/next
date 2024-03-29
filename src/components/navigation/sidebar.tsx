@@ -44,7 +44,8 @@ export function Sidebar({ className }: { className?: string }) {
     <div
       className={cn(
         "fixed z-30 w-full shrink-0 overflow-y-auto bg-background print:hidden md:sticky md:block",
-        sidebarCtx[SIDEBARCTX_STATES.collapsed] && "hidden border-r",
+        sidebarCtx[SIDEBARCTX_STATES.collapsed] && "hidden",
+        !sidebarCtx[SIDEBARCTX_STATES.collapsed] && "z-40",
         className
       )}
     >
@@ -168,8 +169,8 @@ export function Sidebar({ className }: { className?: string }) {
           </div>
         </div>
       </ScrollArea>
-      <div className="aciklab flex items-center justify-center border-t py-4">
-        <Icons.aciklab className="h-[2rem] w-[12rem] opacity-80" />
+      <div className="aciklab flex items-center justify-center py-4">
+        <Icons.aciklab className="h-[2rem] w-[12rem]" />
       </div>
     </div>
   )
