@@ -12,6 +12,7 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandList,
 } from "@/components/ui/command"
 import {
   Popover,
@@ -89,27 +90,29 @@ export function SelectUser({
         <Command>
           <CommandInput placeholder={t("select.user.search_placeholder")} />
           <CommandEmpty>{t("select.user.not_found")}</CommandEmpty>
-          <ScrollArea className="h-[300px]">
-            <CommandGroup>
-              {users.map((user) => (
-                <CommandItem
-                  key={user.id}
-                  onSelect={() => {
-                    setValue(user.id === value ? "" : user.id)
-                    setOpen(false)
-                  }}
-                >
-                  <Check
-                    className={cn(
-                      "mr-2 h-4 w-4",
-                      value === user.id ? "opacity-100" : "opacity-0"
-                    )}
-                  />
-                  {user.name}
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </ScrollArea>
+          <CommandList>
+            <ScrollArea className="h-[300px]">
+              <CommandGroup>
+                {users.map((user) => (
+                  <CommandItem
+                    key={user.id}
+                    onSelect={() => {
+                      setValue(user.id === value ? "" : user.id)
+                      setOpen(false)
+                    }}
+                  >
+                    <Check
+                      className={cn(
+                        "mr-2 h-4 w-4",
+                        value === user.id ? "opacity-100" : "opacity-0"
+                      )}
+                    />
+                    {user.name}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </ScrollArea>
+          </CommandList>
         </Command>
       </PopoverContent>
     </Popover>

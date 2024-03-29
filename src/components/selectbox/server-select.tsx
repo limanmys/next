@@ -1,7 +1,9 @@
+import * as React from "react"
 import { apiService } from "@/services"
 import { Check, ChevronsUpDown, Server } from "lucide-react"
-import * as React from "react"
 
+import { IServer } from "@/types/server"
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -9,14 +11,13 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandList,
 } from "@/components/ui/command"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { cn } from "@/lib/utils"
-import { IServer } from "@/types/server"
 
 import { Icons } from "../ui/icons"
 import { ScrollArea } from "../ui/scroll-area"
@@ -91,27 +92,29 @@ export function SelectServer({
         <Command>
           <CommandInput placeholder="Sunucu ara..." />
           <CommandEmpty>Sunucu bulunamadı.</CommandEmpty>
-          <CommandGroup>
-            <ScrollArea className="h-[350px]">
-              {servers.map((server) => (
-                <CommandItem
-                  key={server.id}
-                  onSelect={() => {
-                    setValue(server.id === value ? "" : server.id)
-                    setOpen(false)
-                  }}
-                >
-                  <Check
-                    className={cn(
-                      "mr-2 h-4 w-4",
-                      value === server.id ? "opacity-100" : "opacity-0"
-                    )}
-                  />
-                  {server.name}
-                </CommandItem>
-              ))}
-            </ScrollArea>
-          </CommandGroup>
+          <CommandList>
+            <CommandGroup>
+              <ScrollArea className="h-[350px]">
+                {servers.map((server) => (
+                  <CommandItem
+                    key={server.id}
+                    onSelect={() => {
+                      setValue(server.id === value ? "" : server.id)
+                      setOpen(false)
+                    }}
+                  >
+                    <Check
+                      className={cn(
+                        "mr-2 h-4 w-4",
+                        value === server.id ? "opacity-100" : "opacity-0"
+                      )}
+                    />
+                    {server.name}
+                  </CommandItem>
+                ))}
+              </ScrollArea>
+            </CommandGroup>
+          </CommandList>
         </Command>
       </PopoverContent>
     </Popover>

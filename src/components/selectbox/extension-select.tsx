@@ -1,7 +1,9 @@
+import * as React from "react"
 import { apiService } from "@/services"
 import { Check, ChevronsUpDown, ToyBrick } from "lucide-react"
-import * as React from "react"
 
+import { IExtension } from "@/types/extension"
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -9,14 +11,13 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandList,
 } from "@/components/ui/command"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { cn } from "@/lib/utils"
-import { IExtension } from "@/types/extension"
 
 import { Icons } from "../ui/icons"
 import { ScrollArea } from "../ui/scroll-area"
@@ -43,9 +44,14 @@ export function SelectExtension({
       .then((res) => {
         if (res.data.selected) {
           setExtensions(res.data.selected)
-          if (!defaultValue) setValue(res.data.selected && res.data.selected[0].id)
+          if (!defaultValue)
+            setValue(
+              res.data.selected &&
+                res.data.selected.length &&
+                res.data.selected[0].id
+            )
           return
-        } 
+        }
         setExtensions(res.data)
       })
       .finally(() => {
@@ -75,7 +81,9 @@ export function SelectExtension({
           <div className="flex items-center gap-2">
             <ToyBrick className="h-4 w-4 shrink-0" />
             {value ? (
-              extensions.find((extension) => extension.id === value)?.display_name || extensions.find((extension) => extension.id === value)?.name
+              extensions.find((extension) => extension.id === value)
+                ?.display_name ||
+              extensions.find((extension) => extension.id === value)?.name
             ) : (
               <>
                 <span className="text-muted-foreground">
@@ -97,27 +105,29 @@ export function SelectExtension({
         <Command>
           <CommandInput placeholder="Eklenti ara..." />
           <CommandEmpty>Eklenti bulunamadı.</CommandEmpty>
-          <CommandGroup>
-            <ScrollArea className="h-[350px]">
-              {extensions.map((extension) => (
-                <CommandItem
-                  key={extension.id}
-                  onSelect={() => {
-                    setValue(extension.id === value ? "" : extension.id)
-                    setOpen(false)
-                  }}
-                >
-                  <Check
-                    className={cn(
-                      "mr-2 h-4 w-4",
-                      value === extension.id ? "opacity-100" : "opacity-0"
-                    )}
-                  />
-                  {extension.display_name || extension.name}
-                </CommandItem>
-              ))}
-            </ScrollArea>
-          </CommandGroup>
+          <CommandList>
+            <CommandGroup>
+              <ScrollArea className="h-[350px]">
+                {extensions.map((extension) => (
+                  <CommandItem
+                    key={extension.id}
+                    onSelect={() => {
+                      setValue(extension.id === value ? "" : extension.id)
+                      setOpen(false)
+                    }}
+                  >
+                    <Check
+                      className={cn(
+                        "mr-2 h-4 w-4",
+                        value === extension.id ? "opacity-100" : "opacity-0"
+                      )}
+                    />
+                    {extension.display_name || extension.name}
+                  </CommandItem>
+                ))}
+              </ScrollArea>
+            </CommandGroup>
+          </CommandList>
         </Command>
       </PopoverContent>
     </Popover>
