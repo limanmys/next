@@ -24,7 +24,7 @@ function HealthStatus({ status }: { status: boolean }) {
   return (
     <div className="ml-2 flex items-center">
       <span
-        className={`mr-2 h-2 w-2 rounded-full ${
+        className={`mr-2 size-2 rounded-full ${
           status ? "bg-green-500" : "bg-orange-500"
         }`}
       ></span>
@@ -85,13 +85,13 @@ export default function HealthPage() {
               <CardTitle>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <User2 className="h-6 w-6" />{" "}
+                    <User2 className="size-6" />{" "}
                     {t("health.admin_account_title")}{" "}
                     <HealthStatus status={data.admin_account} />
                   </div>
                   <Link href="/settings/users">
                     <Button size="sm">
-                      <ExternalLink className="mr-2 h-4 w-4" />{" "}
+                      <ExternalLink className="mr-2 size-4" />{" "}
                       {t("health.go_to_user_settings")}
                     </Button>
                   </Link>
@@ -106,13 +106,12 @@ export default function HealthPage() {
               <CardTitle>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <Network className="h-6 w-6" />{" "}
-                    {t("health.dns_check_title")}{" "}
+                    <Network className="size-6" /> {t("health.dns_check_title")}{" "}
                     <HealthStatus status={data.dns_check} />
                   </div>
                   <Link href="/settings/advanced/dns">
                     <Button size="sm">
-                      <ExternalLink className="mr-2 h-4 w-4" />{" "}
+                      <ExternalLink className="mr-2 size-4" />{" "}
                       {t("health.go_to_dns_settings")}
                     </Button>
                   </Link>
@@ -126,7 +125,7 @@ export default function HealthPage() {
             <CardHeader>
               <CardTitle>
                 <div className="flex items-center gap-3">
-                  <Lock className="h-6 w-6" /> {t("health.ssl_check_title")}{" "}
+                  <Lock className="size-6" /> {t("health.ssl_check_title")}{" "}
                   <HealthStatus status={data.ssl_check} />
                 </div>
               </CardTitle>
@@ -138,7 +137,7 @@ export default function HealthPage() {
             <CardHeader>
               <CardTitle>
                 <div className="flex items-center gap-3">
-                  <Lock className="h-6 w-6" /> {t("health.ssl_self_title")}{" "}
+                  <Lock className="size-6" /> {t("health.ssl_self_title")}{" "}
                   <HealthStatus status={data.self_signed} />
                 </div>
               </CardTitle>
@@ -151,13 +150,13 @@ export default function HealthPage() {
               <CardTitle>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <ServerCrash className="h-6 w-6" />{" "}
+                    <ServerCrash className="size-6" />{" "}
                     {t("health.high_availability_service_title")}{" "}
                     <HealthStatus status={data.high_availability_service} />
                   </div>
 
                   <Button size="sm" onClick={() => manualSync()}>
-                    <RefreshCw className="mr-2 h-4 w-4" />{" "}
+                    <RefreshCw className="mr-2 size-4" />{" "}
                     {t("health.manual_sync")}
                   </Button>
                 </div>

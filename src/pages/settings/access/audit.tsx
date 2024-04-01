@@ -200,7 +200,7 @@ function AuditLogDetails({ id }: { id: string }) {
     <Dialog>
       <DialogTrigger asChild>
         <ScrollText
-          className="h-4 w-4 cursor-pointer"
+          className="size-4 cursor-pointer"
           onClick={() => fetchStatus()}
         />
       </DialogTrigger>

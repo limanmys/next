@@ -104,7 +104,7 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
     <Sheet open={open} onOpenChange={(o) => setOpen(o)}>
       <SheetTrigger asChild>
         <Button variant="outline" size="sm" className="ml-auto h-8 lg:flex">
-          <Key className="mr-2 h-4 w-4" />
+          <Key className="mr-2 size-4" />
           {t("vault.key.button")}
         </Button>
       </SheetTrigger>
@@ -159,11 +159,11 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
                               <span>{t("vault.key.form.ssh_pw")}</span>
                               <div className="details flex justify-between">
                                 <div className="icons">
-                                  <Key className="h-4 w-4" />
+                                  <Key className="size-4" />
                                 </div>
                                 <div className="icons flex gap-2">
-                                  <Icons.windows className="h-4 w-4" />
-                                  <Icons.linux className="h-4 w-4" />
+                                  <Icons.windows className="size-4" />
+                                  <Icons.linux className="size-4" />
                                 </div>
                               </div>
                             </div>
@@ -184,11 +184,11 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
                               <span>{t("vault.key.form.ssh_cert")}</span>
                               <div className="details flex justify-between">
                                 <div className="icons">
-                                  <FileKey2 className="h-4 w-4" />
+                                  <FileKey2 className="size-4" />
                                 </div>
                                 <div className="icons flex gap-2">
-                                  <Icons.windows className="h-4 w-4" />
-                                  <Icons.linux className="h-4 w-4" />
+                                  <Icons.windows className="size-4" />
+                                  <Icons.linux className="size-4" />
                                 </div>
                               </div>
                             </div>
@@ -206,10 +206,10 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
                               <span>WinRM</span>
                               <div className="details flex justify-between">
                                 <div className="icons">
-                                  <Key className="h-4 w-4" />
+                                  <Key className="size-4" />
                                 </div>
                                 <div className="icons flex gap-2">
-                                  <Icons.windows className="h-4 w-4" />
+                                  <Icons.windows className="size-4" />
                                 </div>
                               </div>
                             </div>
@@ -230,10 +230,10 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
                               <span>{t("vault.key.form.winrm_insecure")}</span>
                               <div className="details flex justify-between">
                                 <div className="icons">
-                                  <Key className="h-4 w-4" />
+                                  <Key className="size-4" />
                                 </div>
                                 <div className="icons flex gap-2">
-                                  <Icons.windows className="h-4 w-4" />
+                                  <Icons.windows className="size-4" />
                                 </div>
                               </div>
                             </div>
@@ -254,7 +254,7 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
                               <span>{t("vault.key.form.no_key")}</span>
                               <div className="details flex justify-between">
                                 <div className="icons">
-                                  <Ban className="h-4 w-4" />
+                                  <Ban className="size-4" />
                                 </div>
                               </div>
                             </div>
@@ -334,8 +334,8 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
                               <div className="details flex justify-between">
                                 <span className="text-foreground/50">22</span>
                                 <div className="icons flex gap-2">
-                                  <Icons.windows className="h-4 w-4" />
-                                  <Icons.linux className="h-4 w-4" />
+                                  <Icons.windows className="size-4" />
+                                  <Icons.linux className="size-4" />
                                 </div>
                               </div>
                             </div>
@@ -354,7 +354,7 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
                               <div className="details flex justify-between">
                                 <span className="text-foreground/50">5986</span>
                                 <div className="icons flex gap-2">
-                                  <Icons.windows className="h-4 w-4" />
+                                  <Icons.windows className="size-4" />
                                 </div>
                               </div>
                             </div>
@@ -373,7 +373,7 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
                               <div className="details flex justify-between">
                                 <span className="text-foreground/50">636</span>
                                 <div className="icons flex gap-2">
-                                  <Icons.windows className="h-4 w-4" />
+                                  <Icons.windows className="size-4" />
                                 </div>
                               </div>
                             </div>
@@ -395,7 +395,7 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
             />
             <SheetFooter>
               <Button type="submit">
-                <PlusCircle className="mr-2 h-4 w-4" />{" "}
+                <PlusCircle className="mr-2 size-4" />{" "}
                 {t("vault.key.form.submit")}
               </Button>
             </SheetFooter>

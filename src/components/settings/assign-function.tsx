@@ -116,7 +116,7 @@ export default function AssignFunction() {
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="outline" size="sm" className="ml-auto h-8 lg:flex">
-          <PlusCircle className="mr-2 h-4 w-4" />
+          <PlusCircle className="mr-2 size-4" />
           {t("roles.functions.assign.add")}
         </Button>
       </SheetTrigger>
@@ -152,7 +152,7 @@ export default function AssignFunction() {
               className="rounded-full"
               onClick={() => handleAddPermission()}
             >
-              <PlusCircle className="mr-2 h-4 w-4" />{" "}
+              <PlusCircle className="mr-2 size-4" />{" "}
               {t("roles.functions.assign.add")}
             </Button>
           </SheetClose>

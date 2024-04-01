@@ -138,7 +138,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         <div className="grid gap-2">
           {error && (
             <Alert>
-              <AlertCircle className="h-4 w-4" />
+              <AlertCircle className="size-4" />
               <AlertTitle>Bilgi</AlertTitle>
               <AlertDescription>{error}</AlertDescription>
             </Alert>
@@ -243,7 +243,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 }
               >
                 {isLoading && (
-                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                  <Icons.spinner className="mr-2 size-4 animate-spin" />
                 )}
                 Kurulumu Tamamla
               </Button>
@@ -274,7 +274,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             <>
               <Button disabled={isLoading} className="mt-4">
                 {isLoading && (
-                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                  <Icons.spinner className="mr-2 size-4 animate-spin" />
                 )}
                 Giriş Yap
               </Button>

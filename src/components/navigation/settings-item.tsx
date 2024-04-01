@@ -31,7 +31,7 @@ export default function SettingsItem(props: ISettingsItemProps) {
         size="sm"
         className={cn("mb-1 w-full justify-start gap-2", props.classNames)}
       >
-        <props.icon className="h-4 w-4" />
+        <props.icon className="size-4" />
         {props.title}
       </Button>
     </Link>

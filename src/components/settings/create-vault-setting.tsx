@@ -91,7 +91,7 @@ export default function CreateVaultSetting({ userId }: { userId: string }) {
     <Sheet open={open} onOpenChange={(o) => setOpen(o)}>
       <SheetTrigger asChild>
         <Button variant="outline" size="sm" className="ml-auto h-8 lg:flex">
-          <Settings className="mr-2 h-4 w-4" />
+          <Settings className="mr-2 size-4" />
           {t("vault.create.button")}
         </Button>
       </SheetTrigger>
@@ -146,7 +146,7 @@ export default function CreateVaultSetting({ userId }: { userId: string }) {
             />
             <SheetFooter>
               <Button type="submit">
-                <PlusCircle className="mr-2 h-4 w-4" />{" "}
+                <PlusCircle className="mr-2 size-4" />{" "}
                 {t("vault.create.form.submit")}
               </Button>
             </SheetFooter>

@@ -101,7 +101,7 @@ export default function AssignExtension({
           className="ml-auto h-8 lg:flex"
           onClick={fetchData}
         >
-          <PlusCircle className="mr-2 h-4 w-4" />
+          <PlusCircle className="mr-2 size-4" />
           {t("extensions.assign.button")}
         </Button>
       </SheetTrigger>
@@ -130,7 +130,7 @@ export default function AssignExtension({
               className="rounded-full"
               disabled={selected.length === 0}
             >
-              <PlusCircle className="mr-2 h-4 w-4" /> Ekle
+              <PlusCircle className="mr-2 size-4" /> Ekle
             </Button>
           </SheetClose>
         </SheetFooter>

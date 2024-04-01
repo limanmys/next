@@ -190,12 +190,12 @@ export default function SubscriptionPage() {
           )}
           {(!subscriptionStatus || getPercentageOfUsedDays() < 0) && (
             <div className="my-16 flex flex-col items-center justify-center gap-4">
-              <CheckCircle className="h-12 w-12 text-green-500" />
+              <CheckCircle className="size-12 text-green-500" />
               <h5 className="mb-1 font-semibold tracking-tight">
                 {t("subscriptions.open_source_warning")}
               </h5>
               <Button onClick={() => setOpen(true)}>
-                <Plus className="mr-2 h-4 w-4" />{" "}
+                <Plus className="mr-2 size-4" />{" "}
                 {t("subscriptions.add_license")}
               </Button>
               <LimanLicense open={open} setOpen={setOpen} />
@@ -292,9 +292,9 @@ function LimanLicense({
           </Button>
           <Button disabled={loading} onClick={() => handleCreate()}>
             {!loading ? (
-              <PlusCircle className="mr-2 h-4 w-4" />
+              <PlusCircle className="mr-2 size-4" />
             ) : (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              <Icons.spinner className="mr-2 size-4 animate-spin" />
             )}
             {t("subscriptions.license_dialog.ok")}
           </Button>

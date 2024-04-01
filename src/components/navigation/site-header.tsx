@@ -24,7 +24,7 @@ export function SiteHeader() {
 
   return (
     <header className="top-0 z-40 w-full border-b bg-background print:hidden">
-      <div className="flex xl:grid xl:grid-cols-3 h-16 items-center space-x-4 px-6 sm:justify-between sm:space-x-0">
+      <div className="flex h-16 items-center space-x-4 px-6 sm:justify-between sm:space-x-0 xl:grid xl:grid-cols-3">
         <div className="flex">
           <div className="md:hidden">
             <Button
@@ -32,7 +32,7 @@ export function SiteHeader() {
               className="mr-3 p-0"
               onClick={() => sidebarCtx[SIDEBARCTX_STATES.toggleSidebar]()}
             >
-              <Menu className="h-6 w-6" />
+              <Menu className="size-6" />
             </Button>
           </div>
           <Link
@@ -67,7 +67,7 @@ export function SiteHeader() {
                     : "ghost",
                 })}
               >
-                <Settings className="h-5 w-5" />
+                <Settings className="size-5" />
                 <span className="sr-only">Settings</span>
               </div>
             </Link>

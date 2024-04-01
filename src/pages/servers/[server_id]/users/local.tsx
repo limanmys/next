@@ -177,7 +177,7 @@ function CreateLocalUser() {
     <Dialog onOpenChange={(open) => setOpen(open)} open={open}>
       <DialogTrigger asChild>
         <Button variant="outline" size="sm" className="ml-auto h-8 lg:flex">
-          <PlusCircle className="mr-2 h-4 w-4" />
+          <PlusCircle className="mr-2 size-4" />
           {t("users.local.dialog.add_btn")}
         </Button>
       </DialogTrigger>
@@ -251,7 +251,7 @@ function CreateLocalUser() {
             />
             <DialogFooter>
               <Button type="submit">
-                <PlusCircle className="mr-2 h-4 w-4" />
+                <PlusCircle className="mr-2 size-4" />
                 {t("users.local.dialog.create_btn")}
               </Button>
             </DialogFooter>

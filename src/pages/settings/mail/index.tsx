@@ -106,7 +106,7 @@ export default function MailSettingsPage() {
                         {...field}
                         maxLength={255}
                       />
-                      <Server className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Server className="pointer-events-none absolute left-3 top-3 size-4 text-muted-foreground" />
                       <small className="italic text-muted-foreground">
                         {t("email.form.host.subtext")}
                       </small>
@@ -155,7 +155,7 @@ export default function MailSettingsPage() {
                       {...field}
                       maxLength={255}
                     />
-                    <User2 className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <User2 className="pointer-events-none absolute left-3 top-3 size-4 text-muted-foreground" />
                     <small className="italic text-muted-foreground">
                       {t("email.form.username.subtext")}
                     </small>
@@ -182,7 +182,7 @@ export default function MailSettingsPage() {
                       {...field}
                       maxLength={255}
                     />
-                    <Key className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Key className="pointer-events-none absolute left-3 top-3 size-4 text-muted-foreground" />
                     <small className="italic text-muted-foreground">
                       {t("email.form.password.subtext")}
                     </small>
@@ -228,7 +228,7 @@ export default function MailSettingsPage() {
               render={({ field }) => (
                 <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4 shadow-sm">
                   <div className="flex space-x-3 space-y-0.5">
-                    <UserCheck2 className="h-6 w-6 text-muted-foreground" />
+                    <UserCheck2 className="size-6 text-muted-foreground" />
                     <div className="flex flex-col space-y-0.5">
                       <FormLabel>{t("email.form.active.label")}</FormLabel>
                       <FormDescription>
@@ -248,7 +248,7 @@ export default function MailSettingsPage() {
 
             <div className="flex justify-end">
               <Button type="submit">
-                <Save className="mr-2 h-4 w-4" />
+                <Save className="mr-2 size-4" />
                 {t("email.form.save")}
               </Button>
             </div>

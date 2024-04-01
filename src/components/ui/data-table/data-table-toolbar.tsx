@@ -49,7 +49,7 @@ export function DataTableToolbar<TData, TValue>({
               className="h-8 px-2 lg:px-3"
             >
               {t("table.toolbar.clear_filters")}
-              <X className="ml-2 h-4 w-4" />
+              <X className="ml-2 size-4" />
             </Button>
           )}
 
@@ -62,7 +62,7 @@ export function DataTableToolbar<TData, TValue>({
               }}
               className="h-8 w-[150px] lg:w-[250px]"
             />
-            <Search className="absolute right-2 top-2 h-4 w-4 text-gray-400" />
+            <Search className="absolute right-2 top-2 size-4 text-gray-400" />
           </div>
         </div>
         <DataTableViewOptions table={table} columns={columns} />

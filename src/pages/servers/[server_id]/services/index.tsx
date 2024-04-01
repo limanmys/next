@@ -238,7 +238,7 @@ export default function ServerExtensionPage() {
               className="ml-auto h-8 lg:flex"
               disabled={!selected.length}
             >
-              <PlayCircle className="mr-2 h-4 w-4" />
+              <PlayCircle className="mr-2 size-4" />
               {t("services.start")}
             </Button>
           </ServiceAlertWindow>
@@ -249,7 +249,7 @@ export default function ServerExtensionPage() {
               className="ml-auto h-8 lg:flex"
               disabled={!selected.length}
             >
-              <StopCircle className="mr-2 h-4 w-4" />
+              <StopCircle className="mr-2 size-4" />
               {t("services.stop")}
             </Button>
           </ServiceAlertWindow>
@@ -260,7 +260,7 @@ export default function ServerExtensionPage() {
               className="ml-auto h-8 lg:flex"
               disabled={!selected.length}
             >
-              <ListRestart className="mr-2 h-4 w-4" />
+              <ListRestart className="mr-2 size-4" />
               {t("services.restart")}
             </Button>
           </ServiceAlertWindow>
@@ -271,7 +271,7 @@ export default function ServerExtensionPage() {
               className="ml-auto h-8 lg:flex"
               disabled={!selected.length}
             >
-              <CheckCircle className="mr-2 h-4 w-4" />
+              <CheckCircle className="mr-2 size-4" />
               {t("services.activate")}
             </Button>
           </ServiceAlertWindow>
@@ -282,7 +282,7 @@ export default function ServerExtensionPage() {
               className="ml-auto h-8 lg:flex"
               disabled={!selected.length}
             >
-              <X className="mr-2 h-4 w-4" />
+              <X className="mr-2 size-4" />
               {t("services.deactivate")}
             </Button>
           </ServiceAlertWindow>
@@ -349,7 +349,7 @@ function ServiceStatusWindow({ name }: { name: string }) {
     <Dialog>
       <DialogTrigger asChild>
         <ScrollText
-          className="h-4 w-4 cursor-pointer"
+          className="size-4 cursor-pointer"
           onClick={() => fetchStatus()}
         />
       </DialogTrigger>

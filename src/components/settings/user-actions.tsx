@@ -1,9 +1,11 @@
+import { useState } from "react"
 import { apiService } from "@/services"
 import { Row } from "@tanstack/react-table"
 import { Edit2, Footprints, MoreHorizontal, Trash } from "lucide-react"
-import { useState } from "react"
 import { useTranslation } from "react-i18next"
 
+import { IUser } from "@/types/user"
+import { useEmitter } from "@/hooks/useEmitter"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -22,8 +24,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useEmitter } from "@/hooks/useEmitter"
-import { IUser } from "@/types/user"
 
 import { Icons } from "../ui/icons"
 import { useToast } from "../ui/use-toast"
@@ -40,28 +40,26 @@ export function UserRowActions({ row }: { row: Row<IUser> }) {
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="flex h-5 w-5 p-0 data-[state=open]:bg-muted"
+            className="flex size-5 p-0 data-[state=open]:bg-muted"
           >
-            <MoreHorizontal className="h-4 w-4" />
+            <MoreHorizontal className="size-4" />
             <span className="sr-only">Open menu</span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
-          <DropdownMenuItem
-            onClick={() => emitter.emit("EDIT_USER", user)}
-          >
-            <Edit2 className="mr-2 h-3.5 w-3.5" />
+          <DropdownMenuItem onClick={() => emitter.emit("EDIT_USER", user)}>
+            <Edit2 className="mr-2 size-3.5" />
             {t("roles.actions.edit")}
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => emitter.emit("AUTH_LOG_DIALOG", user.id)}
           >
-            <Footprints className="mr-2 h-3.5 w-3.5" />
+            <Footprints className="mr-2 size-3.5" />
             {t("users.auth_log.title")}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setDeleteDialog(true)}>
-            <Trash className="mr-2 h-3.5 w-3.5" />
+            <Trash className="mr-2 size-3.5" />
             {t("delete")}
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -132,7 +130,7 @@ function DeleteDialog({
         <AlertDialogFooter>
           <AlertDialogCancel>{t("users.delete.no")}</AlertDialogCancel>
           <AlertDialogAction onClick={() => handleDelete()}>
-            {loading && <Icons.spinner className="h-4 w-4 animate-spin" />}
+            {loading && <Icons.spinner className="size-4 animate-spin" />}
             {t("users.delete.yes")}
           </AlertDialogAction>
         </AlertDialogFooter>

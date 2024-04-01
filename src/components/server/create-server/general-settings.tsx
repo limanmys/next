@@ -112,7 +112,7 @@ export default function GeneralSettings({
                                 <span>Microsoft Windows</span>
                                 <div className="details flex justify-between">
                                   <div className="icons flex gap-2">
-                                    <Icons.windows className="h-4 w-4" />
+                                    <Icons.windows className="size-4" />
                                   </div>
                                 </div>
                               </div>
@@ -133,7 +133,7 @@ export default function GeneralSettings({
                                 <span>GNU/Linux</span>
                                 <div className="details flex justify-between">
                                   <div className="icons flex gap-2">
-                                    <Icons.linux className="h-4 w-4" />
+                                    <Icons.linux className="size-4" />
                                   </div>
                                 </div>
                               </div>

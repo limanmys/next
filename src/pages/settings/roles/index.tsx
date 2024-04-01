@@ -52,7 +52,7 @@ export default function RoleSettingsPage() {
             router.push(`/settings/roles/${row.original.id}/users`)
           }
         >
-          {row.original.name} <Link2 className="h-4 w-4"></Link2>
+          {row.original.name} <Link2 className="size-4"></Link2>
         </div>
       ),
     },
@@ -125,7 +125,7 @@ export default function RoleSettingsPage() {
             className="ml-auto h-8 lg:flex"
             onClick={() => router.push("/settings/roles/details")}
           >
-            <Footprints className="mr-2 h-4 w-4" />
+            <Footprints className="mr-2 size-4" />
             {t("roles.detailed_view")}
           </Button>
         </div>
@@ -188,7 +188,7 @@ function CreateRole() {
     <Dialog onOpenChange={(open) => setOpen(open)} open={open}>
       <DialogTrigger asChild>
         <Button variant="outline" size="sm" className="ml-auto h-8 lg:flex">
-          <PlusCircle className="mr-2 h-4 w-4" />
+          <PlusCircle className="mr-2 size-4" />
           {t("roles.create.button")}
         </Button>
       </DialogTrigger>
@@ -219,7 +219,7 @@ function CreateRole() {
             />
             <DialogFooter>
               <Button type="submit">
-                <PlusCircle className="mr-2 h-4 w-4" />
+                <PlusCircle className="mr-2 size-4" />
                 {t("roles.create.create")}
               </Button>
             </DialogFooter>

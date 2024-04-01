@@ -39,7 +39,7 @@ function AccessCardContent(props: IAccessCardProps) {
       )}
     >
       <div className="icon self-start rounded-md bg-secondary p-3 dark:bg-secondary/10">
-        <props.icon className="h-5 w-5 text-secondary-foreground/70 dark:text-white/70" />
+        <props.icon className="size-5 text-secondary-foreground/70 dark:text-white/70" />
       </div>
       <div className={cn(!props.enabled && "text-muted-foreground")}>
         <h3 className="font-semibold tracking-tight">{props.title}</h3>

@@ -94,7 +94,7 @@ export default function CertificateInformation() {
               onChange={(e) => setIpAddress(e.target.value)}
             />
             <Button onClick={fetchDetails} className="mb-10" disabled={loading}>
-              <DownloadCloudIcon className="mr-2 h-4 w-4" />{" "}
+              <DownloadCloudIcon className="mr-2 size-4" />{" "}
               {t("advanced.certificates.retrieve.fetch_details")}
             </Button>
           </div>
@@ -140,7 +140,7 @@ export default function CertificateInformation() {
               className="mb-10"
               disabled={loading || !data || Object.keys(data).length == 0}
             >
-              <Save className="mr-2 h-4 w-4" />{" "}
+              <Save className="mr-2 size-4" />{" "}
               {t("advanced.certificates.retrieve.save")}
             </Button>
           </div>

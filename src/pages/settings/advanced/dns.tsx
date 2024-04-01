@@ -118,7 +118,7 @@ const AdvancedDnsSettingsPage: NextPageWithLayout = () => {
                 type="submit"
                 disabled={!form.formState.isDirty || !form.formState.isValid}
               >
-                <Save className="mr-2 h-4 w-4" />
+                <Save className="mr-2 size-4" />
                 {t("advanced.dns.save")}
               </Button>
             </div>

@@ -1,10 +1,12 @@
+import { useState } from "react"
+import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { Row } from "@tanstack/react-table"
 import { Edit, MoreHorizontal, Trash } from "lucide-react"
-import { useRouter } from "next/router"
-import { useState } from "react"
 import { useTranslation } from "react-i18next"
 
+import { IRole } from "@/types/role"
+import { useEmitter } from "@/hooks/useEmitter"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,8 +25,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useEmitter } from "@/hooks/useEmitter"
-import { IRole } from "@/types/role"
 
 import { Icons } from "../ui/icons"
 import { useToast } from "../ui/use-toast"
@@ -41,9 +41,9 @@ export function RoleRowActions({ row }: { row: Row<IRole> }) {
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="flex h-5 w-5 p-0 data-[state=open]:bg-muted"
+            className="flex size-5 p-0 data-[state=open]:bg-muted"
           >
-            <MoreHorizontal className="h-4 w-4" />
+            <MoreHorizontal className="size-4" />
             <span className="sr-only">Open menu</span>
           </Button>
         </DropdownMenuTrigger>
@@ -51,12 +51,12 @@ export function RoleRowActions({ row }: { row: Row<IRole> }) {
           <DropdownMenuItem
             onClick={() => router.push(`/settings/roles/${role.id}/users`)}
           >
-            <Edit className="mr-2 h-3.5 w-3.5" />
+            <Edit className="mr-2 size-3.5" />
             {t("roles.actions.edit")}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setDeleteDialog(true)}>
-            <Trash className="mr-2 h-3.5 w-3.5" />
+            <Trash className="mr-2 size-3.5" />
             {t("roles.actions.delete")}
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -127,7 +127,7 @@ function DeleteRole({
         <AlertDialogFooter>
           <AlertDialogCancel>{t("roles.actions.no")}</AlertDialogCancel>
           <AlertDialogAction onClick={() => handleDelete()}>
-            {loading && <Icons.spinner className="h-4 w-4 animate-spin" />}
+            {loading && <Icons.spinner className="size-4 animate-spin" />}
             {t("roles.actions.yes")}
           </AlertDialogAction>
         </AlertDialogFooter>

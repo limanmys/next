@@ -111,7 +111,7 @@ const AdvancedCertificateSettingsPage: NextPageWithLayout = () => {
             router.push("/settings/advanced/certificates/retrieve")
           }
         >
-          <PlusCircle className="mr-2 h-4 w-4" />
+          <PlusCircle className="mr-2 size-4" />
           {t("advanced.certificates.add")}
         </Button>
       </DataTable>

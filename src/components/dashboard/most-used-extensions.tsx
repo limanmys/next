@@ -59,8 +59,8 @@ export default function MostUsedExtensions() {
       </div>
 
       {!loading && data.length === 0 && (
-        <div className="flex h-[50%] w-full flex-col items-center justify-center gap-3">
-          <FolderX className="h-8 w-8 text-muted-foreground" />
+        <div className="flex h-1/2 w-full flex-col items-center justify-center gap-3">
+          <FolderX className="size-8 text-muted-foreground" />
           <div className="flex flex-col items-center justify-center gap-1">
             <h5 className="font-semibold text-muted-foreground">
               {t("most_used_extensions.empty_title")}

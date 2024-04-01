@@ -97,7 +97,7 @@ export default function ExtensionSettingsPage() {
       <div className="p-8 pt-0">
         {error && (
           <Alert className="mb-8" variant="destructive">
-            <FileWarning className="h-4 w-4" />
+            <FileWarning className="size-4" />
             <AlertTitle>{t("extensions.settings.alert_title")}</AlertTitle>
             <AlertDescription>{removeTags(error)}</AlertDescription>
           </Alert>
@@ -142,9 +142,9 @@ export default function ExtensionSettingsPage() {
                       disabled={formLoading}
                     >
                       {!formLoading ? (
-                        <Save className="mr-2 h-4 w-4" />
+                        <Save className="mr-2 size-4" />
                       ) : (
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        <Loader2 className="mr-2 size-4 animate-spin" />
                       )}{" "}
                       {t("extensions.settings.save")}
                     </Button>
@@ -176,9 +176,9 @@ export default function ExtensionSettingsPage() {
                         disabled={formLoading}
                       >
                         {!formLoading ? (
-                          <Save className="mr-2 h-4 w-4" />
+                          <Save className="mr-2 size-4" />
                         ) : (
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          <Loader2 className="mr-2 size-4 animate-spin" />
                         )}{" "}
                         {t("extensions.settings.save")}
                       </Button>

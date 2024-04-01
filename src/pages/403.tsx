@@ -9,7 +9,7 @@ export default function AccessDenied() {
       }}
     >
       <h2 className="border-r p-[24px] text-3xl font-bold tracking-tight">
-        <AlertTriangle className="inline-block h-12 w-12" />
+        <AlertTriangle className="inline-block size-12" />
       </h2>
       <h2 className="p-[24px] text-xl tracking-tight">
         Bu sayfaya erişim izniniz bulunmamaktadır.

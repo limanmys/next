@@ -38,7 +38,7 @@ export default function NotificationsPage() {
 
         {notifications.length === 0 && (
           <div className="flex h-[50vh] w-full flex-col items-center justify-center gap-3">
-            <BellOff className="h-10 w-10 text-muted-foreground" />
+            <BellOff className="size-10 text-muted-foreground" />
             <div className="flex flex-col items-center justify-center gap-1">
               <h5 className="font-semibold text-muted-foreground">
                 Bildirim yok
@@ -62,7 +62,7 @@ function NotificationItem({ notification }: { notification: INotification }) {
       className="mb-10 ml-6"
       id={`notification-${notification.notification_id}`}
     >
-      <span className="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 ring-4 ring-white dark:bg-blue-900 dark:ring-gray-900"></span>
+      <span className="absolute -left-3 flex size-6 items-center justify-center rounded-full bg-blue-100 ring-4 ring-white dark:bg-blue-900 dark:ring-gray-900"></span>
       <time className="text-sm font-normal leading-none text-muted-foreground">
         {new Date(notification.send_at).toLocaleDateString(i18n.language, {
           day: "2-digit",

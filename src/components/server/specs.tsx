@@ -48,7 +48,7 @@ export default function ServerSpecs({ loader = false }: { loader?: boolean }) {
                 <CardTitle>
                   <div className="flex items-center justify-between">
                     {t("system_status.cpu")}
-                    <Cpu className="ml-2 inline-block h-4 w-4" />
+                    <Cpu className="ml-2 inline-block size-4" />
                   </div>
                 </CardTitle>
               </CardHeader>
@@ -60,7 +60,7 @@ export default function ServerSpecs({ loader = false }: { loader?: boolean }) {
                 <CardTitle>
                   <div className="flex items-center justify-between">
                     {t("system_status.ram_size")}
-                    <MemoryStick className="ml-2 inline-block h-4 w-4" />
+                    <MemoryStick className="ml-2 inline-block size-4" />
                   </div>
                 </CardTitle>
               </CardHeader>
@@ -72,7 +72,7 @@ export default function ServerSpecs({ loader = false }: { loader?: boolean }) {
                 <CardTitle>
                   <div className="flex items-center justify-between">
                     {t("system_status.vendor")}
-                    <PackageSearch className="ml-2 inline-block h-4 w-4" />
+                    <PackageSearch className="ml-2 inline-block size-4" />
                   </div>
                 </CardTitle>
               </CardHeader>
@@ -84,7 +84,7 @@ export default function ServerSpecs({ loader = false }: { loader?: boolean }) {
                 <CardTitle>
                   <div className="flex items-center justify-between">
                     {t("system_status.model")}
-                    <Server className="ml-2 inline-block h-4 w-4" />
+                    <Server className="ml-2 inline-block size-4" />
                   </div>
                 </CardTitle>
               </CardHeader>

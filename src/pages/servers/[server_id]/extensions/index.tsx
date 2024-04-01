@@ -1,15 +1,17 @@
+import { useEffect, useRef, useState } from "react"
+import Link from "next/link"
+import { useRouter } from "next/router"
 import {
   SIDEBARCTX_STATES,
   useSidebarContext,
 } from "@/providers/sidebar-provider"
 import { apiService } from "@/services"
 import { Link2, MinusCircle, Sliders, UploadCloud } from "lucide-react"
-import Link from "next/link"
-import { useRouter } from "next/router"
-import { useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import AssignExtension from "@/components/server/assign-extension"
+import { IExtension } from "@/types/extension"
+import { DivergentColumn } from "@/types/table"
+import { compareNumericString } from "@/lib/utils"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -27,9 +29,7 @@ import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
 import PageHeader from "@/components/ui/page-header"
 import { useToast } from "@/components/ui/use-toast"
-import { compareNumericString } from "@/lib/utils"
-import { IExtension } from "@/types/extension"
-import { DivergentColumn } from "@/types/table"
+import AssignExtension from "@/components/server/assign-extension"
 
 export default function ServerExtensionPage() {
   const router = useRouter()
@@ -77,14 +77,14 @@ export default function ServerExtensionPage() {
             }/extensions/${row.original.id}`}
           >
             {row.original.display_name}
-            <Link2 className="ml-2 inline-block h-4 w-4" />
+            <Link2 className="ml-2 inline-block size-4" />
           </Link>
           <Link
             href={`/servers/${
               sidebarCtx[SIDEBARCTX_STATES.selected]
             }/settings/${row.original.id}`}
           >
-            <Sliders className="ml-2 inline-block h-4 w-4" />
+            <Sliders className="ml-2 inline-block size-4" />
           </Link>
         </>
       ),
@@ -185,7 +185,7 @@ export default function ServerExtensionPage() {
         rightSide={
           <Link href="/settings/extensions">
             <Button className="rounded-full">
-              <UploadCloud className="mr-2 h-4 w-4" />
+              <UploadCloud className="mr-2 size-4" />
               {t("extensions.upload")}
             </Button>
           </Link>
@@ -214,7 +214,7 @@ export default function ServerExtensionPage() {
                 className="ml-auto h-8 lg:flex"
                 disabled={selected.length === 0}
               >
-                <MinusCircle className="mr-2 h-4 w-4" />
+                <MinusCircle className="mr-2 size-4" />
                 {t("extensions.remove")}
               </Button>
             </AlertDialogTrigger>

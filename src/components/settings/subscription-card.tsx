@@ -137,7 +137,7 @@ export default function SubscriptionCard({
                   defaultValue={selectedServer}
                 >
                   <SelectTrigger className="h-18 w-[200px]">
-                    <Server className="h-4 w-4 text-muted-foreground" />
+                    <Server className="size-4 text-muted-foreground" />
                     <SelectValue
                       placeholder={t(
                         "subscriptions.subcard.server.placeholder"
@@ -173,7 +173,7 @@ export default function SubscriptionCard({
                   variant: "ghost",
                 })}
               >
-                <MoreHorizontal className="h-5 w-5" />
+                <MoreHorizontal className="size-5" />
                 <span className="sr-only">
                   {t("subscriptions.subcard.subscription_settings")}
                 </span>
@@ -189,11 +189,11 @@ export default function SubscriptionCard({
                   window.open("mailto:aciklab@havelsan.com.tr", "_blank")
                 }
               >
-                <Send className="mr-2 h-4 w-4" />{" "}
+                <Send className="mr-2 size-4" />{" "}
                 {t("subscriptions.subcard.renew")}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setLicenseDialog(true)}>
-                <PlusCircle className="mr-2 h-4 w-4" />{" "}
+                <PlusCircle className="mr-2 size-4" />{" "}
                 {t("subscriptions.subcard.add_license")}
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -209,7 +209,7 @@ export default function SubscriptionCard({
                   {t("subscriptions.subcard.remaining")}
                 </h5>
                 <div className="flex items-center gap-5">
-                  <Skeleton className="h-20 w-20 rounded-full" />
+                  <Skeleton className="size-20 rounded-full" />
 
                   <div className="flex flex-col">
                     <span className="text-3xl font-bold">
@@ -298,7 +298,7 @@ export default function SubscriptionCard({
               )}
               {!data.valid && (
                 <div className="flex flex-col items-center justify-center gap-4">
-                  <XCircle className="h-12 w-12 text-red-500" />
+                  <XCircle className="size-12 text-red-500" />
                   <h5 className="mb-1 font-semibold tracking-tight">
                     {t("subscriptions.subcard.no_sub")}
                   </h5>
@@ -395,9 +395,9 @@ function License({
           </Button>
           <Button disabled={loading} onClick={() => handleCreate()}>
             {!loading ? (
-              <PlusCircle className="mr-2 h-4 w-4" />
+              <PlusCircle className="mr-2 size-4" />
             ) : (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              <Icons.spinner className="mr-2 size-4 animate-spin" />
             )}
             {t("subscriptions.license_dialog.ok")}
           </Button>

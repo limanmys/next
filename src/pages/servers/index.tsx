@@ -35,7 +35,7 @@ export default function Servers() {
         user.permissions.server_details && row.original.type != "none" ? (
           <Link href={`/servers/${row.original.id}`}>
             {row.original.name}
-            <Link2 className="ml-2 inline-block h-4 w-4" />
+            <Link2 className="ml-2 inline-block size-4" />
           </Link>
         ) : (
           row.original.name
@@ -117,7 +117,7 @@ export default function Servers() {
           user.permissions.add_server && (
             <Link href="/servers/create">
               <Button className="rounded-full">
-                <Server className="mr-2 h-4 w-4" />
+                <Server className="mr-2 size-4" />
                 {t("index.create")}
               </Button>
             </Link>

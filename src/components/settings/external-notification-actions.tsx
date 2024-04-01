@@ -42,9 +42,9 @@ export function ExternalNotificationActions({
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="flex h-5 w-5 p-0 data-[state=open]:bg-muted"
+            className="flex size-5 p-0 data-[state=open]:bg-muted"
           >
-            <MoreHorizontal className="h-4 w-4" />
+            <MoreHorizontal className="size-4" />
             <span className="sr-only">
               {t("external_notifications.actions.open_menu")}
             </span>
@@ -52,7 +52,7 @@ export function ExternalNotificationActions({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
           <DropdownMenuItem onClick={() => setDeleteDialog(true)}>
-            <Trash className="mr-2 h-3.5 w-3.5" />
+            <Trash className="mr-2 size-3.5" />
             {t("external_notifications.actions.delete")}
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -131,7 +131,7 @@ function DeleteDialog({
             {t("external_notifications.actions.no")}
           </AlertDialogCancel>
           <AlertDialogAction onClick={() => handleDelete()}>
-            {loading && <Icons.spinner className="h-4 w-4 animate-spin" />}
+            {loading && <Icons.spinner className="size-4 animate-spin" />}
             {t("external_notifications.actions.yes")}
           </AlertDialogAction>
         </AlertDialogFooter>

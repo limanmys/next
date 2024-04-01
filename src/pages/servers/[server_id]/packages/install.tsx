@@ -1,10 +1,13 @@
+import { useEffect, useState } from "react"
+import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { Check, ChevronLeft, Clock, Loader, UploadCloud, X } from "lucide-react"
-import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { TusClientProvider } from "use-tus"
 
+import { IQueue } from "@/types/queue"
+import { DivergentColumn } from "@/types/table"
+import { compareNumericString } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/data-table/data-table"
@@ -20,9 +23,6 @@ import {
 import PageHeader from "@/components/ui/page-header"
 import { TusUpload } from "@/components/ui/tus-upload"
 import { useToast } from "@/components/ui/use-toast"
-import { compareNumericString } from "@/lib/utils"
-import { IQueue } from "@/types/queue"
-import { DivergentColumn } from "@/types/table"
 
 export default function PackageInstallPage() {
   const router = useRouter()
@@ -64,26 +64,26 @@ export default function PackageInstallPage() {
           status === "done"
             ? "green"
             : status === "failed"
-            ? "red"
-            : status === "pending" || status === "processing"
-            ? "yellow"
-            : "gray"
+              ? "red"
+              : status === "pending" || status === "processing"
+                ? "yellow"
+                : "gray"
 
         const Icon =
           status === "done"
             ? Check
             : status === "failed"
-            ? X
-            : status === "pending"
-            ? Clock
-            : Loader
+              ? X
+              : status === "pending"
+                ? Clock
+                : Loader
 
         return (
           <div className="flex items-center gap-2">
             <div
               className={`${status === "processing" && "animate-spin-slow"}`}
             >
-              <Icon className={`text-${color}-500 h-4 w-4 `} />
+              <Icon className={`text-${color}-500 size-4 `} />
             </div>
 
             <Badge className={`bg-${color}-500 hover:bg-${color}-700`}>
@@ -107,12 +107,12 @@ export default function PackageInstallPage() {
 
         return error ? (
           <div className="flex items-center gap-2">
-            <X className="h-4 w-4 text-red-500" />
+            <X className="size-4 text-red-500" />
             <span>{error}</span>
           </div>
         ) : (
           <div className="flex items-center gap-2">
-            <Check className="h-4 w-4 text-green-500" />
+            <Check className="size-4 text-green-500" />
             <span>{t("packages.no_error")}</span>
           </div>
         )
@@ -182,7 +182,7 @@ export default function PackageInstallPage() {
             className="ml-auto h-8 lg:flex"
             onClick={() => router.back()}
           >
-            <ChevronLeft className="mr-2 h-4 w-4" />
+            <ChevronLeft className="mr-2 size-4" />
             {t("packages.go_back")}
           </Button>
           <TusClientProvider>
@@ -220,7 +220,10 @@ function UploadPackage() {
       .catch((err) => {
         toast({
           title: t("error"),
-          description: err.response.data.file || err.response.data.message || err.response.data,
+          description:
+            err.response.data.file ||
+            err.response.data.message ||
+            err.response.data,
         })
       })
   }
@@ -229,7 +232,7 @@ function UploadPackage() {
     <Dialog onOpenChange={(open) => setOpen(open)} open={open}>
       <DialogTrigger asChild>
         <Button variant="default" size="sm" className="ml-auto h-8 lg:flex">
-          <UploadCloud className="mr-2 h-4 w-4" />
+          <UploadCloud className="mr-2 size-4" />
           {t("packages.upload")}
         </Button>
       </DialogTrigger>

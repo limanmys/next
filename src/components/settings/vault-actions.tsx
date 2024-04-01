@@ -1,9 +1,11 @@
+import { useState } from "react"
 import { apiService } from "@/services"
 import { Row } from "@tanstack/react-table"
 import { Edit, MoreHorizontal, Trash } from "lucide-react"
-import { useState } from "react"
 import { useTranslation } from "react-i18next"
 
+import { IVault } from "@/types/vault"
+import { useEmitter } from "@/hooks/useEmitter"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -22,8 +24,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useEmitter } from "@/hooks/useEmitter"
-import { IVault } from "@/types/vault"
 
 import {
   Dialog,
@@ -49,9 +49,9 @@ export function VaultRowActions({ row }: { row: Row<IVault> }) {
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="flex h-5 w-5 p-0 data-[state=open]:bg-muted"
+            className="flex size-5 p-0 data-[state=open]:bg-muted"
           >
-            <MoreHorizontal className="h-4 w-4" />
+            <MoreHorizontal className="size-4" />
             <span className="sr-only">Open menu</span>
           </Button>
         </DropdownMenuTrigger>
@@ -60,12 +60,12 @@ export function VaultRowActions({ row }: { row: Row<IVault> }) {
             onClick={() => setEditDialog(true)}
             disabled={vault.type == "key"}
           >
-            <Edit className="mr-2 h-3.5 w-3.5" />
+            <Edit className="mr-2 size-3.5" />
             {t("vault.actions.edit.button")}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setDeleteDialog(true)}>
-            <Trash className="mr-2 h-3.5 w-3.5" />
+            <Trash className="mr-2 size-3.5" />
             {t("vault.actions.delete.button")}
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -141,7 +141,7 @@ function DeleteDialog({
             {t("vault.actions.delete.cancel")}
           </AlertDialogCancel>
           <AlertDialogAction onClick={() => handleDelete()}>
-            {loading && <Icons.spinner className="h-4 w-4 animate-spin" />}
+            {loading && <Icons.spinner className="size-4 animate-spin" />}
             {t("vault.actions.delete.delete")}
           </AlertDialogAction>
         </AlertDialogFooter>
@@ -220,9 +220,9 @@ function EditVaultKey({
           </Button>
           <Button disabled={loading} onClick={() => handleCreate()}>
             {!loading ? (
-              <Edit className="mr-2 h-4 w-4" />
+              <Edit className="mr-2 size-4" />
             ) : (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              <Icons.spinner className="mr-2 size-4 animate-spin" />
             )}
             {t("vault.actions.edit.edit")}
           </Button>

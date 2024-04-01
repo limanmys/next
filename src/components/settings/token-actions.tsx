@@ -39,15 +39,15 @@ export function TokenActions({ row }: { row: Row<IToken> }) {
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="flex h-5 w-5 p-0 data-[state=open]:bg-muted"
+            className="flex size-5 p-0 data-[state=open]:bg-muted"
           >
-            <MoreHorizontal className="h-4 w-4" />
+            <MoreHorizontal className="size-4" />
             <span className="sr-only">Open menu</span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
           <DropdownMenuItem onClick={() => setDeleteDialog(true)}>
-            <Trash className="mr-2 h-3.5 w-3.5" />
+            <Trash className="mr-2 size-3.5" />
             {t("delete")}
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -122,7 +122,7 @@ function DeleteDialog({
         <AlertDialogFooter>
           <AlertDialogCancel>{t("tokens.delete.cancel")}</AlertDialogCancel>
           <AlertDialogAction onClick={() => handleDelete()}>
-            {loading && <Icons.spinner className="h-4 w-4 animate-spin" />}
+            {loading && <Icons.spinner className="size-4 animate-spin" />}
             {t("tokens.delete.delete")}
           </AlertDialogAction>
         </AlertDialogFooter>

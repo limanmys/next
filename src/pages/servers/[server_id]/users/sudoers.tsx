@@ -181,7 +181,7 @@ export default function Sudoers() {
                 className="ml-auto h-8 lg:flex"
                 disabled={!selected?.length}
               >
-                <MinusCircle className="mr-2 h-4 w-4" />
+                <MinusCircle className="mr-2 size-4" />
                 {t("users.sudoers.alert_dialog.delete_btn")}
               </Button>
             </AlertDialogTrigger>
@@ -273,7 +273,7 @@ function CreateSudoers() {
     <Dialog onOpenChange={(open) => setOpen(open)} open={open}>
       <DialogTrigger asChild>
         <Button variant="outline" size="sm" className="ml-auto h-8 lg:flex">
-          <PlusCircle className="mr-2 h-4 w-4" />
+          <PlusCircle className="mr-2 size-4" />
           {t("users.sudoers.dialog.add_btn")}
         </Button>
       </DialogTrigger>
@@ -306,7 +306,7 @@ function CreateSudoers() {
             />
             <DialogFooter>
               <Button type="submit">
-                <PlusCircle className="mr-2 h-4 w-4" />
+                <PlusCircle className="mr-2 size-4" />
                 {t("users.sudoers.dialog.form.create_btn")}
               </Button>
             </DialogFooter>

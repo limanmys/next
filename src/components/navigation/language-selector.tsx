@@ -43,7 +43,7 @@ export default function LanguageSelector() {
             variant: "ghost",
           })}
         >
-          <Globe2 className="h-5 w-5" />
+          <Globe2 className="size-5" />
           <span className="sr-only">Localization</span>
         </div>
       </DropdownMenuTrigger>

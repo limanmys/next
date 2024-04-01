@@ -81,24 +81,24 @@ export function ExtensionRowActions({ row }: { row: Row<IExtension> }) {
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="flex h-5 w-5 p-0 data-[state=open]:bg-muted"
+            className="flex size-5 p-0 data-[state=open]:bg-muted"
           >
-            <MoreHorizontal className="h-4 w-4" />
+            <MoreHorizontal className="size-4" />
             <span className="sr-only">Open menu</span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
           <DropdownMenuItem onClick={() => setLicenseDialog(true)}>
-            <PlusCircle className="mr-2 h-3.5 w-3.5" />
+            <PlusCircle className="mr-2 size-3.5" />
             {t("extensions.actions.add_license")}
           </DropdownMenuItem>
           <DropdownMenuItem onClick={download}>
-            <Download className="mr-2 h-3.5 w-3.5" />
+            <Download className="mr-2 size-3.5" />
             {t("extensions.actions.download")}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setDeleteDialog(true)}>
-            <Trash className="mr-2 h-3.5 w-3.5" />
+            <Trash className="mr-2 size-3.5" />
             {t("extensions.actions.delete")}
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -200,9 +200,9 @@ function License({
           </Button>
           <Button disabled={loading} onClick={() => handleCreate()}>
             {!loading ? (
-              <PlusCircle className="mr-2 h-4 w-4" />
+              <PlusCircle className="mr-2 size-4" />
             ) : (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              <Icons.spinner className="mr-2 size-4 animate-spin" />
             )}
             {t("extensions.actions.license.form.submit")}
           </Button>
@@ -277,7 +277,7 @@ function DeleteExtension({
             {t("extensions.actions.delete_dialog.cancel")}
           </AlertDialogCancel>
           <AlertDialogAction onClick={() => handleDelete()}>
-            {loading && <Icons.spinner className="h-4 w-4 animate-spin" />}
+            {loading && <Icons.spinner className="size-4 animate-spin" />}
             {t("extensions.actions.delete_dialog.delete")}
           </AlertDialogAction>
         </AlertDialogFooter>

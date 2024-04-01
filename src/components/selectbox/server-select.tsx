@@ -70,7 +70,7 @@ export function SelectServer({
           ref={popoverRef}
         >
           <div className="flex items-center gap-2">
-            <Server className="h-4 w-4 shrink-0" />
+            <Server className="size-4 shrink-0" />
             {value ? (
               servers.find((server) => server.id === value)?.name
             ) : (
@@ -81,10 +81,10 @@ export function SelectServer({
           </div>
 
           {!loading && (
-            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
           )}
           {loading && (
-            <Icons.spinner className="ml-2 h-4 w-4 shrink-0 animate-spin opacity-50" />
+            <Icons.spinner className="ml-2 size-4 shrink-0 animate-spin opacity-50" />
           )}
         </Button>
       </PopoverTrigger>
@@ -105,7 +105,7 @@ export function SelectServer({
                   >
                     <Check
                       className={cn(
-                        "mr-2 h-4 w-4",
+                        "mr-2 size-4",
                         value === server.id ? "opacity-100" : "opacity-0"
                       )}
                     />

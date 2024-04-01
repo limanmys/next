@@ -26,7 +26,7 @@ export default function RoleCard(props: IRoleCardProps) {
         )}
       >
         <div className="icon self-start rounded-md bg-secondary p-3 dark:bg-secondary/10">
-          <props.icon className="h-5 w-5 text-secondary-foreground/70 dark:text-white/70" />
+          <props.icon className="size-5 text-secondary-foreground/70 dark:text-white/70" />
         </div>
         <div className="content w-full">
           <div className="mb-1 flex justify-between">

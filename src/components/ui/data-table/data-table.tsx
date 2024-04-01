@@ -3,8 +3,6 @@
 import * as React from "react"
 import {
   ColumnFiltersState,
-  SortingState,
-  VisibilityState,
   flexRender,
   getCoreRowModel,
   getFacetedRowModel,
@@ -12,7 +10,9 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  SortingState,
   useReactTable,
+  VisibilityState,
 } from "@tanstack/react-table"
 import { FolderOpen } from "lucide-react"
 import { useTranslation } from "react-i18next"
@@ -167,7 +167,7 @@ const DataTable = <TData, TValue>({
                       colSpan={columns.length}
                       className="h-72 text-center"
                     >
-                      <FolderOpen className="mx-auto mb-2 h-12 w-12 text-black/50 dark:text-white/80" />
+                      <FolderOpen className="mx-auto mb-2 size-12 text-black/50 dark:text-white/80" />
                       {t("table.no_records")}
                     </TableCell>
                   </TableRow>

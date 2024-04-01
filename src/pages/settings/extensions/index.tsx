@@ -69,14 +69,14 @@ export default function ExtensionSettingsPage() {
         <>
           {row.original.licensed ? (
             <div className="flex items-center">
-              <Check className="h-5 w-5 text-green-500" />
+              <Check className="size-5 text-green-500" />
               <Badge className="ml-2" variant="success">
                 {t("extensions.licensed")}
               </Badge>
             </div>
           ) : (
             <div className="flex items-center">
-              <X className="h-5 w-5 text-red-500" />
+              <X className="size-5 text-red-500" />
               <Badge className="ml-2" variant="outline">
                 {t("extensions.not_licensed")}
               </Badge>

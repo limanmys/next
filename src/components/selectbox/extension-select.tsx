@@ -79,7 +79,7 @@ export function SelectExtension({
           disabled={loading}
         >
           <div className="flex items-center gap-2">
-            <ToyBrick className="h-4 w-4 shrink-0" />
+            <ToyBrick className="size-4 shrink-0" />
             {value ? (
               extensions.find((extension) => extension.id === value)
                 ?.display_name ||
@@ -94,10 +94,10 @@ export function SelectExtension({
           </div>
 
           {!loading && (
-            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
           )}
           {loading && (
-            <Icons.spinner className="ml-2 h-4 w-4 shrink-0 animate-spin opacity-50" />
+            <Icons.spinner className="ml-2 size-4 shrink-0 animate-spin opacity-50" />
           )}
         </Button>
       </PopoverTrigger>
@@ -118,7 +118,7 @@ export function SelectExtension({
                   >
                     <Check
                       className={cn(
-                        "mr-2 h-4 w-4",
+                        "mr-2 size-4",
                         value === extension.id ? "opacity-100" : "opacity-0"
                       )}
                     />

@@ -70,7 +70,7 @@ export function SelectUser({
           className="ml-auto h-8 lg:flex"
           disabled={loading}
         >
-          <User className="mr-2 h-4 w-4 shrink-0" />
+          <User className="mr-2 size-4 shrink-0" />
           {value ? (
             users.find((user) => user.id === value)?.name
           ) : (
@@ -79,10 +79,10 @@ export function SelectUser({
             </span>
           )}
           {!loading && (
-            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
           )}
           {loading && (
-            <Icons.spinner className="ml-2 h-4 w-4 shrink-0 animate-spin opacity-50" />
+            <Icons.spinner className="ml-2 size-4 shrink-0 animate-spin opacity-50" />
           )}
         </Button>
       </PopoverTrigger>
@@ -103,7 +103,7 @@ export function SelectUser({
                   >
                     <Check
                       className={cn(
-                        "mr-2 h-4 w-4",
+                        "mr-2 size-4",
                         value === user.id ? "opacity-100" : "opacity-0"
                       )}
                     />

@@ -33,9 +33,9 @@ export default function ServerCard({ item }: { item: IServer }) {
         <div className="flex">
           <div className="icon self-start rounded-md bg-secondary p-3 dark:bg-secondary/10">
             {item.os === "linux" ? (
-              <Icons.linux className="h-6 w-6 text-secondary-foreground/70 dark:text-white/70" />
+              <Icons.linux className="size-6 text-secondary-foreground/70 dark:text-white/70" />
             ) : (
-              <Icons.windows className="h-6 w-6 text-secondary-foreground/70 dark:text-white/70" />
+              <Icons.windows className="size-6 text-secondary-foreground/70 dark:text-white/70" />
             )}
           </div>
         </div>
@@ -43,11 +43,11 @@ export default function ServerCard({ item }: { item: IServer }) {
         <span className="text-xs text-muted-foreground">{item.ip_address}</span>
 
         <div className="absolute right-6 top-6 ">
-          {loading && <Skeleton className="h-4 w-4 rounded-full" />}
+          {loading && <Skeleton className="size-4 rounded-full" />}
           {!loading && (
             <CircleDot
               className={cn(
-                "absolute right-0 top-[1px] h-4 w-4",
+                "absolute right-0 top-px size-4",
                 data?.is_online ? "text-green-500" : "text-red-500"
               )}
             />

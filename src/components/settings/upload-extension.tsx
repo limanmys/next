@@ -100,7 +100,7 @@ export default function UploadExtension() {
     <Dialog onOpenChange={(open) => setOpen(open)} open={open}>
       <DialogTrigger asChild>
         <Button variant="default" size="sm" className="ml-auto h-8 lg:flex">
-          <UploadCloud className="mr-2 h-4 w-4" />
+          <UploadCloud className="mr-2 size-4" />
           {t("extensions.upload.upload")}
         </Button>
       </DialogTrigger>
@@ -132,9 +132,9 @@ export default function UploadExtension() {
           </Button>
           <Button onClick={handleCreate} disabled={loading}>
             {!loading ? (
-              <UploadCloud className="mr-2 h-4 w-4" />
+              <UploadCloud className="mr-2 size-4" />
             ) : (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              <Icons.spinner className="mr-2 size-4 animate-spin" />
             )}
             {t("extensions.upload.upload")}
           </Button>

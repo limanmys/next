@@ -221,7 +221,7 @@ export default function ServerCreatePage() {
         rightSide={
           <Link href="/servers">
             <Button className="rounded-full">
-              <Server className="mr-2 h-4 w-4" />
+              <Server className="mr-2 size-4" />
               {t("create.servers")}
             </Button>
           </Link>
@@ -245,7 +245,7 @@ export default function ServerCreatePage() {
               onClick={() => setStep(step - 1)}
               disabled={step === 0}
             >
-              <ChevronLeft className="mr-2 h-4 w-4" />
+              <ChevronLeft className="mr-2 size-4" />
               {t("create.back")}
             </Button>
             {step !== steps.length - 1 ? (
@@ -255,10 +255,10 @@ export default function ServerCreatePage() {
                 disabled={step === steps.length - 1 || loading}
               >
                 {loading && (
-                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                  <Icons.spinner className="mr-2 size-4 animate-spin" />
                 )}
                 {t("create.next")}
-                <ChevronRight className="ml-2 h-4 w-4" />
+                <ChevronRight className="ml-2 size-4" />
               </Button>
             ) : (
               <Button
@@ -267,9 +267,9 @@ export default function ServerCreatePage() {
                 disabled={loading}
               >
                 {loading && (
-                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                  <Icons.spinner className="mr-2 size-4 animate-spin" />
                 )}
-                {!loading && <PlusCircle className="mr-2 h-4 w-4" />}
+                {!loading && <PlusCircle className="mr-2 size-4" />}
                 {t("create.create")}
               </Button>
             )}

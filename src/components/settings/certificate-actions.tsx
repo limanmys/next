@@ -1,10 +1,12 @@
+import { useState } from "react"
+import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { Row } from "@tanstack/react-table"
 import { Info, MoreHorizontal, Trash } from "lucide-react"
-import { useRouter } from "next/router"
-import { useState } from "react"
 import { useTranslation } from "react-i18next"
 
+import { ICertificate } from "@/types/certificate"
+import { useEmitter } from "@/hooks/useEmitter"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,8 +25,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useEmitter } from "@/hooks/useEmitter"
-import { ICertificate } from "@/types/certificate"
 
 import { Icons } from "../ui/icons"
 import { useToast } from "../ui/use-toast"
@@ -41,9 +41,9 @@ export function CertificateActions({ row }: { row: Row<ICertificate> }) {
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="flex h-5 w-5 p-0 data-[state=open]:bg-muted"
+            className="flex size-5 p-0 data-[state=open]:bg-muted"
           >
-            <MoreHorizontal className="h-4 w-4" />
+            <MoreHorizontal className="size-4" />
             <span className="sr-only">Open menu</span>
           </Button>
         </DropdownMenuTrigger>
@@ -53,12 +53,12 @@ export function CertificateActions({ row }: { row: Row<ICertificate> }) {
               router.push(`/settings/advanced/certificates/${row.original.id}`)
             }
           >
-            <Info className="mr-2 h-3.5 w-3.5" />
+            <Info className="mr-2 size-3.5" />
             {t("advanced.certificates.actions.details")}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setDeleteDialog(true)}>
-            <Trash className="mr-2 h-3.5 w-3.5" />
+            <Trash className="mr-2 size-3.5" />
             {t("advanced.certificates.actions.delete.button")}
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -137,7 +137,7 @@ function DeleteDialog({
             {t("advanced.certificates.actions.delete.cancel")}
           </AlertDialogCancel>
           <AlertDialogAction onClick={() => handleDelete()}>
-            {loading && <Icons.spinner className="h-4 w-4 animate-spin" />}
+            {loading && <Icons.spinner className="size-4 animate-spin" />}
             {t("advanced.certificates.actions.delete.delete")}
           </AlertDialogAction>
         </AlertDialogFooter>

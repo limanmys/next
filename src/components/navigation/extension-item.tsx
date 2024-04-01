@@ -47,7 +47,7 @@ function ExtensionButton({
       <div
         className={cn(
           disabled
-            ? "opacity-50 pointer-events-none cursor-not-allowed"
+            ? "pointer-events-none cursor-not-allowed opacity-50"
             : "opacity-100"
         )}
       >
@@ -56,7 +56,7 @@ function ExtensionButton({
             {extension.icon ? (
               <i className={`fa-solid fa-${extension.icon} fa-fw`}></i>
             ) : (
-              <ToyBrick className="h-4 w-4" />
+              <ToyBrick className="size-4" />
             )}
           </div>
           <span>{truncatedName}</span>
@@ -64,8 +64,8 @@ function ExtensionButton({
         {extension.menus && extension.menus.length > 0 && (
           <ChevronRight
             className={cn(
-              "absolute right-3 h-4 w-4 transition-transform",
-              !isCollapsed && "transform rotate-90"
+              "absolute right-3 size-4 transition-transform",
+              !isCollapsed && "rotate-90"
             )}
           />
         )}
@@ -218,7 +218,7 @@ const MenuButton = ({ menu, hash }: IMenuButtonProps) => {
               </div>
               <ChevronRight
                 className={cn(
-                  "h-4 w-4 transition-transform",
+                  "size-4 transition-transform",
                   !isCollapsed && "rotate-90"
                 )}
               />

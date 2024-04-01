@@ -184,7 +184,7 @@ const RoleVariablesList: NextPageWithLayout = () => {
                 size="sm"
                 disabled={!selected?.length}
               >
-                <MinusCircle className="mr-2 h-4 w-4" />
+                <MinusCircle className="mr-2 size-4" />
                 {t("roles.variables.delete.button")}
               </Button>
             </AlertDialogTrigger>
@@ -270,7 +270,7 @@ function CreateVariable() {
     <Dialog onOpenChange={(open) => setOpen(open)} open={open}>
       <DialogTrigger asChild>
         <Button variant="outline" size="sm" className="ml-auto h-8 lg:flex">
-          <PlusCircle className="mr-2 h-4 w-4" />
+          <PlusCircle className="mr-2 size-4" />
           {t("roles.variables.create.button")}
         </Button>
       </DialogTrigger>
@@ -319,7 +319,7 @@ function CreateVariable() {
             />
             <DialogFooter>
               <Button type="submit">
-                <PlusCircle className="mr-2 h-4 w-4" />
+                <PlusCircle className="mr-2 size-4" />
                 {t("roles.variables.create.create")}
               </Button>
             </DialogFooter>

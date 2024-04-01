@@ -99,7 +99,7 @@ export function DropdownServerItem({
           disabled={disabled}
         >
           <div className="flex items-center">{children}</div>
-          <ChevronRight className="h-4 w-4" />
+          <ChevronRight className="size-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" side="right">

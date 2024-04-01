@@ -121,7 +121,7 @@ export default function ResourceUsage({ loader = false }) {
               <CardHeader>
                 <CardTitle>{t("system_status.cpu_usage")}</CardTitle>
                 <div className="flex items-center">
-                  <Cpu className="mr-2 h-4 w-4" />%{data[0]?.cpu}
+                  <Cpu className="mr-2 size-4" />%{data[0]?.cpu}
                 </div>
               </CardHeader>
               <CardContent
@@ -158,7 +158,7 @@ export default function ResourceUsage({ loader = false }) {
               <CardHeader>
                 <CardTitle>{t("system_status.ram_usage")}</CardTitle>
                 <div className="flex items-center">
-                  <MemoryStick className="mr-2 h-4 w-4" /> %{data[0]?.ram}
+                  <MemoryStick className="mr-2 size-4" /> %{data[0]?.ram}
                 </div>
               </CardHeader>
               <CardContent
@@ -195,7 +195,7 @@ export default function ResourceUsage({ loader = false }) {
               <CardHeader>
                 <CardTitle>{t("system_status.io_usage")}</CardTitle>
                 <div className="flex items-center">
-                  <HardDrive className="mr-2 h-4 w-4" /> %{data[0]?.io}
+                  <HardDrive className="mr-2 size-4" /> %{data[0]?.io}
                 </div>
               </CardHeader>
               <CardContent
@@ -235,9 +235,9 @@ export default function ResourceUsage({ loader = false }) {
                   <small className="text-foreground/50">kb/s</small>
                 </CardTitle>
                 <div className="flex items-center">
-                  <Download className="mr-2 h-4 w-4" />{" "}
+                  <Download className="mr-2 size-4" />{" "}
                   {data[0]?.network.download}
-                  <Upload className="ml-3 mr-2 h-4 w-4" />{" "}
+                  <Upload className="ml-3 mr-2 size-4" />{" "}
                   {data[0]?.network.upload}
                 </div>
               </CardHeader>

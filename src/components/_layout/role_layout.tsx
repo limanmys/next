@@ -96,7 +96,7 @@ export default function RoleLayout({ children }: { children: ReactNode }) {
         <div className="flex items-center border-b p-8 text-2xl font-bold">
           <ChevronLeft
             onClick={() => router.push("/settings/roles")}
-            className="mr-2 h-6 w-6 cursor-pointer"
+            className="mr-2 size-6 cursor-pointer"
           />
           {role && role.name} {t("roles.role")}
         </div>

@@ -9,7 +9,7 @@ export default function ServerOffline() {
       }}
     >
       <h2 className="border-r p-[24px] text-3xl font-bold tracking-tight">
-        <Unlink className="inline-block h-12 w-12" />
+        <Unlink className="inline-block size-12" />
       </h2>
       <h2 className="p-[24px] text-xl tracking-tight">
         Sunucuya erişilemiyor.

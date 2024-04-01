@@ -204,7 +204,7 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
               render={({ field }) => (
                 <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4 shadow-sm">
                   <div className="flex space-x-3 space-y-0.5">
-                    <UserCheck2 className="h-6 w-6 text-muted-foreground" />
+                    <UserCheck2 className="size-6 text-muted-foreground" />
                     <div className="flex flex-col space-y-0.5">
                       <FormLabel>
                         {t("access.keycloak.form.integration")}
@@ -226,7 +226,7 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
 
             <div className="flex justify-end">
               <Button type="submit">
-                <Save className="mr-2 h-4 w-4" />
+                <Save className="mr-2 size-4" />
                 {t("access.keycloak.form.save")}
               </Button>
             </div>

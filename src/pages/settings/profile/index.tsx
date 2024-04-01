@@ -120,7 +120,7 @@ export default function ProfilePage() {
           <>
             <Card className="relative">
               <Avatar
-                className="absolute -top-8 h-16 w-16"
+                className="absolute -top-8 size-16"
                 style={{
                   left: "calc(50% - 32px)",
                 }}
@@ -194,7 +194,7 @@ export default function ProfilePage() {
                         render={({ field }) => (
                           <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4 shadow-sm">
                             <div className="flex space-x-3 space-y-0.5">
-                              <ShieldCheck className="h-6 w-6 text-muted-foreground" />
+                              <ShieldCheck className="size-6 text-muted-foreground" />
                               <div className="flex flex-col space-y-0.5">
                                 <FormLabel>
                                   {t("advanced.tweaks.OTP_ENABLED.label")}
@@ -265,7 +265,7 @@ export default function ProfilePage() {
                       />
 
                       <Button type="submit">
-                        <Save className="mr-2 h-4 w-4" />
+                        <Save className="mr-2 size-4" />
                         {t("profile.form.save")}
                       </Button>
                     </form>

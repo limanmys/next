@@ -35,9 +35,9 @@ export default function Steps({
                 ) : null}
                 <div className="group relative flex items-start">
                   <span className="flex h-9 items-center">
-                    <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-foreground group-hover:bg-foreground">
+                    <span className="relative z-10 flex size-8 items-center justify-center rounded-full bg-foreground group-hover:bg-foreground">
                       <Check
-                        className="mt-[1px] h-5 w-5 text-background"
+                        className="mt-px size-5 text-background"
                         aria-hidden="true"
                       />
                     </span>
@@ -65,8 +65,8 @@ export default function Steps({
                   aria-current="step"
                 >
                   <span className="flex h-9 items-center" aria-hidden="true">
-                    <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full border-2 border-foreground bg-background">
-                      <span className="h-2.5 w-2.5 rounded-full bg-foreground" />
+                    <span className="relative z-10 flex size-8 items-center justify-center rounded-full border-2 border-foreground bg-background">
+                      <span className="size-2.5 rounded-full bg-foreground" />
                     </span>
                   </span>
                   <span className="ml-4 flex min-w-0 flex-col">
@@ -89,8 +89,8 @@ export default function Steps({
                 ) : null}
                 <div className="group relative flex items-start">
                   <span className="flex h-9 items-center" aria-hidden="true">
-                    <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full border-2 border-gray-300 bg-background group-hover:border-gray-400">
-                      <span className="h-2.5 w-2.5 rounded-full bg-transparent group-hover:bg-gray-300" />
+                    <span className="relative z-10 flex size-8 items-center justify-center rounded-full border-2 border-gray-300 bg-background group-hover:border-gray-400">
+                      <span className="size-2.5 rounded-full bg-transparent group-hover:bg-gray-300" />
                     </span>
                   </span>
                   <span className="ml-4 flex min-w-0 flex-col">

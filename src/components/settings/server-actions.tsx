@@ -57,20 +57,20 @@ export function ServerRowActions({ row }: { row: Row<IServer> }) {
           <DropdownMenuTrigger asChild>
             <Button
               variant="ghost"
-              className="flex h-5 w-5 p-0 data-[state=open]:bg-muted"
+              className="flex size-5 p-0 data-[state=open]:bg-muted"
             >
-              <MoreHorizontal className="h-4 w-4" />
+              <MoreHorizontal className="size-4" />
               <span className="sr-only">Open menu</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-[160px]">
             <DropdownMenuItem onClick={() => setEditDialog(true)}>
-              <Edit2 className="mr-2 h-3.5 w-3.5" />
+              <Edit2 className="mr-2 size-3.5" />
               {t("servers.actions.edit_btn")}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => setDeleteDialog(true)}>
-              <Trash className="mr-2 h-3.5 w-3.5" />
+              <Trash className="mr-2 size-3.5" />
               {t("servers.actions.delete")}
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -168,7 +168,7 @@ function Edit({
         <div className="mt-3 grid w-full items-center gap-1.5">
           <div className="flex flex-row items-center justify-between rounded-lg border p-4 shadow-sm">
             <div className="flex space-x-3 space-y-0.5">
-              <Key className="h-6 w-6 text-muted-foreground" />
+              <Key className="size-6 text-muted-foreground" />
               <div className="flex flex-col space-y-0.5">
                 <Label>{t("servers.actions.edit.form.shared_key")}</Label>
                 <p className="text-sm text-muted-foreground">
@@ -194,9 +194,9 @@ function Edit({
           </Button>
           <Button disabled={loading} onClick={() => handleEdit()}>
             {!loading ? (
-              <Edit2 className="mr-2 h-4 w-4" />
+              <Edit2 className="mr-2 size-4" />
             ) : (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              <Icons.spinner className="mr-2 size-4 animate-spin" />
             )}
             {t("servers.actions.edit.form.submit")}
           </Button>
@@ -273,7 +273,7 @@ function DeleteServer({
             {t("servers.actions.delete_dialog.cancel")}
           </AlertDialogCancel>
           <AlertDialogAction onClick={() => handleDelete()}>
-            {loading && <Icons.spinner className="h-4 w-4 animate-spin" />}
+            {loading && <Icons.spinner className="size-4 animate-spin" />}
             {t("servers.actions.delete_dialog.delete")}
           </AlertDialogAction>
         </AlertDialogFooter>

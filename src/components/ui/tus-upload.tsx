@@ -85,7 +85,7 @@ export const TusUpload = ({
     <div className="flex flex-col gap-3">
       {error && (
         <Alert>
-          <AlertCircle className="h-4 w-4" />
+          <AlertCircle className="size-4" />
           <AlertTitle>{t("information")}</AlertTitle>
           <AlertDescription>{error}</AlertDescription>
         </Alert>
@@ -97,9 +97,9 @@ export const TusUpload = ({
       <div className="mt-5 flex justify-end">
         <Button onClick={handleStart} disabled={uploading}>
           {!uploading ? (
-            <UploadCloud className="mr-2 h-4 w-4" />
+            <UploadCloud className="mr-2 size-4" />
           ) : (
-            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            <Icons.spinner className="mr-2 size-4 animate-spin" />
           )}
           {t("upload")}
         </Button>

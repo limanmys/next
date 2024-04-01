@@ -124,7 +124,7 @@ export default function SidebarSelected() {
       {selectedLoading ? (
         <div>
           <div className="relative mb-3 flex px-2">
-            <Skeleton className="h-8 w-8 rounded" />
+            <Skeleton className="size-8 rounded" />
             <div className="pl-3">
               <h2 className="text-lg font-semibold tracking-tight">
                 <Skeleton className="h-6 w-36 rounded" />
@@ -133,7 +133,7 @@ export default function SidebarSelected() {
                 <Skeleton className="mt-1 h-3 w-24 rounded" />
               </span>
             </div>
-            <Skeleton className="absolute right-0 top-0 h-4 w-4 rounded-full" />
+            <Skeleton className="absolute right-0 top-0 size-4 rounded-full" />
           </div>
           <div className="space-y-1 p-2">
             {[...Array(8)].map((_, i) => (
@@ -153,9 +153,9 @@ export default function SidebarSelected() {
         <>
           <div className="relative mb-3 flex px-2">
             {selectedData.os === "linux" ? (
-              <Icons.linux className="h-8 w-8" />
+              <Icons.linux className="size-8" />
             ) : (
-              <Icons.windows className="h-8 w-8" />
+              <Icons.windows className="size-8" />
             )}
             <div className="pl-3">
               <h2 className="-my-1 text-lg font-semibold tracking-tight">
@@ -167,7 +167,7 @@ export default function SidebarSelected() {
             </div>
             <CircleDot
               className={cn(
-                "absolute right-0 top-[1px] h-4 w-4",
+                "absolute right-0 top-px size-4",
                 selectedData.is_online ? "text-green-500" : "text-red-500"
               )}
             />
@@ -176,7 +176,7 @@ export default function SidebarSelected() {
                 <TooltipTrigger asChild>
                   <Star
                     className={cn(
-                      "absolute right-0 top-6 h-4 w-4",
+                      "absolute right-0 top-6 size-4",
                       selectedData.is_favorite
                         ? "text-yellow-500"
                         : "text-gray-500"
@@ -196,7 +196,7 @@ export default function SidebarSelected() {
                   exact={true}
                   disabled={elementIsActive(selectedData)}
                 >
-                  <TrendingUp className="mr-2 h-4 w-4" />
+                  <TrendingUp className="mr-2 size-4" />
                   {t("sidebar.system_status")}
                 </ServerItem>
                 <ServerItem
@@ -204,7 +204,7 @@ export default function SidebarSelected() {
                   exact={true}
                   disabled={!selectedData.is_online}
                 >
-                  <ToyBrick className="mr-2 h-4 w-4" />
+                  <ToyBrick className="mr-2 size-4" />
                   {t("sidebar.extensions")}
                 </ServerItem>
               </>
@@ -215,7 +215,7 @@ export default function SidebarSelected() {
               user.permissions.view_logs) && (
               <Collapsible open={!isCollapsed}>
                 <CollapsibleTrigger
-                  className="w-full text-left mt-3 px-2"
+                  className="mt-3 w-full px-2 text-left"
                   onClick={() => toggleCollapsed()}
                 >
                   <div className="flex items-center justify-between">
@@ -224,8 +224,8 @@ export default function SidebarSelected() {
                     </h2>
                     <ChevronRight
                       className={cn(
-                        "h-4 w-4 transition-transform",
-                        !isCollapsed && "transform rotate-90"
+                        "size-4 transition-transform",
+                        !isCollapsed && "rotate-90"
                       )}
                     />
                   </div>
@@ -237,7 +237,7 @@ export default function SidebarSelected() {
                       link={`/servers/${selected}/services`}
                       disabled={elementIsActive(selectedData)}
                     >
-                      <ServerCog className="mr-2 h-4 w-4" />
+                      <ServerCog className="mr-2 size-4" />
                       {t("sidebar.services")}
                     </ServerItem>
                   )}
@@ -250,7 +250,7 @@ export default function SidebarSelected() {
                           selectedData.os === "windows"
                         }
                       >
-                        <PackageOpen className="mr-2 h-4 w-4" />
+                        <PackageOpen className="mr-2 size-4" />
                         {t("sidebar.packages")}
                       </ServerItem>
                       <ServerItem
@@ -260,7 +260,7 @@ export default function SidebarSelected() {
                           selectedData.os === "windows"
                         }
                       >
-                        <PackageSearch className="mr-2 h-4 w-4" />
+                        <PackageSearch className="mr-2 size-4" />
                         {t("sidebar.updates")}
                       </ServerItem>
                       <div className="mb-1">
@@ -285,7 +285,7 @@ export default function SidebarSelected() {
                           ]}
                           disabled={elementIsActive(selectedData)}
                         >
-                          <Users className="mr-2 h-4 w-4" />
+                          <Users className="mr-2 size-4" />
                           {t("sidebar.user_management.title")}
                         </DropdownServerItem>
                       </div>
@@ -296,7 +296,7 @@ export default function SidebarSelected() {
                           selectedData.os === "windows"
                         }
                       >
-                        <Network className="mr-2 h-4 w-4" />
+                        <Network className="mr-2 size-4" />
                         {t("sidebar.open_ports")}
                       </ServerItem>
                     </>
@@ -307,7 +307,7 @@ export default function SidebarSelected() {
                       link={`/servers/${selected}/access_logs`}
                       disabled={!selectedData.is_online}
                     >
-                      <FileClock className="mr-2 h-4 w-4" />
+                      <FileClock className="mr-2 size-4" />
                       {t("sidebar.access_logs")}
                     </ServerItem>
                   )}

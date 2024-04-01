@@ -142,7 +142,7 @@ export default function RoleDetailsPage() {
             className="ml-auto h-8 lg:flex"
             onClick={() => router.push("/settings/roles")}
           >
-            <ChevronLeft className="mr-2 h-4 w-4" />
+            <ChevronLeft className="mr-2 size-4" />
             {t("roles.details.back_to_roles")}
           </Button>
 
@@ -152,7 +152,7 @@ export default function RoleDetailsPage() {
             className="ml-auto h-8 lg:flex"
             onClick={download}
           >
-            <Download className="mr-2 h-4 w-4" />
+            <Download className="mr-2 size-4" />
             {t("roles.details.create_report")}
           </Button>
 

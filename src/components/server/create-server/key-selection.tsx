@@ -81,11 +81,11 @@ export default function KeySelection({
                                 <span>{t("ssh")}</span>
                                 <div className="details flex justify-between">
                                   <div className="icons">
-                                    <Key className="h-4 w-4" />
+                                    <Key className="size-4" />
                                   </div>
                                   <div className="icons flex gap-2">
-                                    <Icons.windows className="h-4 w-4" />
-                                    <Icons.linux className="h-4 w-4" />
+                                    <Icons.windows className="size-4" />
+                                    <Icons.linux className="size-4" />
                                   </div>
                                 </div>
                               </div>
@@ -106,11 +106,11 @@ export default function KeySelection({
                                 <span>{t("ssh_certificate")}</span>
                                 <div className="details flex justify-between">
                                   <div className="icons">
-                                    <FileKey2 className="h-4 w-4" />
+                                    <FileKey2 className="size-4" />
                                   </div>
                                   <div className="icons flex gap-2">
-                                    <Icons.windows className="h-4 w-4" />
-                                    <Icons.linux className="h-4 w-4" />
+                                    <Icons.windows className="size-4" />
+                                    <Icons.linux className="size-4" />
                                   </div>
                                 </div>
                               </div>
@@ -131,10 +131,10 @@ export default function KeySelection({
                                 <span>WinRM</span>
                                 <div className="details flex justify-between">
                                   <div className="icons">
-                                    <Key className="h-4 w-4" />
+                                    <Key className="size-4" />
                                   </div>
                                   <div className="icons flex gap-2">
-                                    <Icons.windows className="h-4 w-4" />
+                                    <Icons.windows className="size-4" />
                                   </div>
                                 </div>
                               </div>
@@ -155,10 +155,10 @@ export default function KeySelection({
                                 <span>{t("winrm_insecure")}</span>
                                 <div className="details flex justify-between">
                                   <div className="icons">
-                                    <Key className="h-4 w-4" />
+                                    <Key className="size-4" />
                                   </div>
                                   <div className="icons flex gap-2">
-                                    <Icons.windows className="h-4 w-4" />
+                                    <Icons.windows className="size-4" />
                                   </div>
                                 </div>
                               </div>
@@ -179,7 +179,7 @@ export default function KeySelection({
                                 <span>{t("no_key")}</span>
                                 <div className="details flex justify-between">
                                   <div className="icons">
-                                    <Ban className="h-4 w-4" />
+                                    <Ban className="size-4" />
                                   </div>
                                 </div>
                               </div>

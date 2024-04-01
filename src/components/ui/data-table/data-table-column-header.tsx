@@ -54,26 +54,26 @@ export function DataTableColumnHeader<TData, TValue>({
             <div className="flex h-8 items-center justify-center data-[state=open]:bg-accent data-[state=open]:text-white">
               <span>{title}</span>
               {column.getIsSorted() === "desc" ? (
-                <SortDesc className="ml-2 h-4 w-4" />
+                <SortDesc className="ml-2 size-4" />
               ) : column.getIsSorted() === "asc" ? (
-                <SortAsc className="ml-2 h-4 w-4" />
+                <SortAsc className="ml-2 size-4" />
               ) : (
-                <ChevronsUpDown className="ml-2 h-4 w-4" />
+                <ChevronsUpDown className="ml-2 size-4" />
               )}
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start">
             <DropdownMenuItem onClick={() => column.toggleSorting(false)}>
-              <SortAsc className="mr-2 h-3.5 w-3.5" />
+              <SortAsc className="mr-2 size-3.5" />
               {t("table.column.asc")}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => column.toggleSorting(true)}>
-              <SortDesc className="mr-2 h-3.5 w-3.5" />
+              <SortDesc className="mr-2 size-3.5" />
               {t("table.column.desc")}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => column.toggleVisibility(false)}>
-              <EyeOff className="mr-2 h-3.5 w-3.5" />
+              <EyeOff className="mr-2 size-3.5" />
               {t("table.column.hide")}
             </DropdownMenuItem>
           </DropdownMenuContent>

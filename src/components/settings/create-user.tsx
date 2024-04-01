@@ -122,7 +122,7 @@ export default function CreateUser() {
     <Sheet open={open} onOpenChange={(o) => setOpen(o)}>
       <SheetTrigger asChild>
         <Button variant="outline" size="sm" className="ml-auto h-8 lg:flex">
-          <PlusCircle className="mr-2 h-4 w-4" />
+          <PlusCircle className="mr-2 size-4" />
           {t("users.create.button")}
         </Button>
       </SheetTrigger>
@@ -243,7 +243,7 @@ export default function CreateUser() {
             />
             <SheetFooter>
               <Button type="submit">
-                <PlusCircle className="mr-2 h-4 w-4" />{" "}
+                <PlusCircle className="mr-2 size-4" />{" "}
                 {t("users.create.create")}
               </Button>
             </SheetFooter>

@@ -311,7 +311,7 @@ export default function EditUser() {
 
             <SheetFooter>
               <Button type="submit">
-                <Edit2 className="mr-2 h-4 w-4" /> {t("users.edit.submit")}
+                <Edit2 className="mr-2 size-4" /> {t("users.edit.submit")}
               </Button>
             </SheetFooter>
           </form>

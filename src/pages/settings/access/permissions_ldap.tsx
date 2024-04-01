@@ -239,7 +239,7 @@ const AccessLdapPermissionsPage: NextPageWithLayout = () => {
                             className="pl-10"
                             {...field}
                           />
-                          <User2 className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                          <User2 className="pointer-events-none absolute left-3 top-3 size-4 text-muted-foreground" />
                         </div>
                         <FormMessage />
                       </div>
@@ -261,7 +261,7 @@ const AccessLdapPermissionsPage: NextPageWithLayout = () => {
                             {...field}
                             type="password"
                           />
-                          <KeyRound className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                          <KeyRound className="pointer-events-none absolute left-3 top-3 size-4 text-muted-foreground" />
                         </div>
                         <FormMessage />
                       </div>
@@ -270,7 +270,7 @@ const AccessLdapPermissionsPage: NextPageWithLayout = () => {
 
                   <div className="flex justify-end">
                     <Button type="submit">
-                      <LogIn className="mr-2 h-4 w-4" />
+                      <LogIn className="mr-2 size-4" />
                       {t("access.permissions.login")}
                     </Button>
                   </div>
@@ -284,11 +284,11 @@ const AccessLdapPermissionsPage: NextPageWithLayout = () => {
             <Tabs defaultValue="users" className="w-full">
               <TabsList className="w-full">
                 <TabsTrigger value="users" className="w-full">
-                  <User2 className="mr-2 h-4 w-4" />
+                  <User2 className="mr-2 size-4" />
                   {t("access.permissions.user.title")}
                 </TabsTrigger>
                 <TabsTrigger value="groups" className="w-full">
-                  <Users2 className="mr-2 h-4 w-4" />
+                  <Users2 className="mr-2 size-4" />
                   {t("access.permissions.group.title")}
                 </TabsTrigger>
               </TabsList>

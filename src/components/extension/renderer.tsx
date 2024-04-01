@@ -245,7 +245,7 @@ export default function ExtensionRenderer() {
           >
             <div className="mx-auto flex max-w-sm flex-col items-center text-center">
               <Icons.dugumluLogo className="w-18 mb-10 h-12" />
-              <h1 className="mt-3 text-2xl font-semibold text-gray-800 md:text-3xl dark:text-white">
+              <h1 className="mt-3 text-2xl font-semibold text-gray-800 dark:text-white md:text-3xl">
                 Bir hata oluştu
               </h1>
               <p className="mt-4 text-gray-500 dark:text-gray-400">
@@ -253,7 +253,7 @@ export default function ExtensionRenderer() {
               </p>
               <div className="mt-6 flex w-full shrink-0 items-center gap-x-3 sm:w-auto">
                 <Button onClick={() => router.back()} size="sm">
-                  <ArrowLeft className="mr-2 h-4 w-4" />
+                  <ArrowLeft className="mr-2 size-4" />
                   Geri dön
                 </Button>
                 <Button

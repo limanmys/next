@@ -143,7 +143,7 @@ export default function AuthLogsPage() {
             className="ml-auto h-8 lg:flex"
             onClick={() => router.push("/settings/users")}
           >
-            <ChevronLeft className="mr-2 h-4 w-4" />
+            <ChevronLeft className="mr-2 size-4" />
             {t("users.auth_log.back_to_users")}
           </Button>
         </div>

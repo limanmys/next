@@ -91,14 +91,14 @@ export default function UserSettingsPage() {
         <>
           {row.original.status === 1 ? (
             <div className="flex items-center">
-              <UserCog2 className="h-5 w-5" />
+              <UserCog2 className="size-5" />
               <Badge className="ml-2" variant="outline">
                 {t("users.admin")}
               </Badge>
             </div>
           ) : (
             <div className="flex items-center">
-              <User2 className="h-5 w-5" />
+              <User2 className="size-5" />
               <Badge className="ml-2" variant="outline">
                 {t("users.user")}
               </Badge>
@@ -160,14 +160,14 @@ export default function UserSettingsPage() {
         <>
           {row.original.otp_enabled ? (
             <div className="flex items-center">
-              <Check className="h-5 w-5 text-green-500" />
+              <Check className="size-5 text-green-500" />
               <Badge className="ml-2" variant="success">
                 {t("users.otp_enabled")}
               </Badge>
             </div>
           ) : (
             <div className="flex items-center">
-              <X className="h-5 w-5 text-red-500" />
+              <X className="size-5 text-red-500" />
               <Badge className="ml-2" variant="outline">
                 {t("users.otp_disabled")}
               </Badge>
@@ -230,7 +230,7 @@ export default function UserSettingsPage() {
             className="ml-auto h-8 lg:flex"
             onClick={() => router.push("/settings/users/logs")}
           >
-            <Footprints className="mr-2 h-4 w-4" />
+            <Footprints className="mr-2 size-4" />
             {t("users.auth_log.title")}
           </Button>
         </div>

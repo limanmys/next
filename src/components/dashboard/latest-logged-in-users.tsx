@@ -39,7 +39,7 @@ export default function LatestLoggedInUsers() {
             <div key={item.id}>
               <div className="flex px-8 py-4">
                 <div className="avatar mr-5">
-                  <Avatar className="h-12 w-12">
+                  <Avatar className="size-12">
                     <AvatarImage
                       src={`https://gravatar.com/avatar/${md5(
                         item.email
@@ -92,7 +92,7 @@ export default function LatestLoggedInUsers() {
             {[...Array(5)].map((_, i) => (
               <div className="flex px-8 py-4" key={i}>
                 <div className="avatar mr-5">
-                  <Avatar className="h-12 w-12">
+                  <Avatar className="size-12">
                     <AvatarFallback />
                   </Avatar>
                 </div>
@@ -105,14 +105,14 @@ export default function LatestLoggedInUsers() {
                   <div className="text-sm">
                     <span className="flex items-center gap-[6px] font-medium text-muted-foreground">
                       {t("latest_logged_in_users.last_login_at")}:{" "}
-                      <Skeleton className="h-4 w-[50%]" />
+                      <Skeleton className="h-4 w-1/2" />
                     </span>
                   </div>
 
                   <div className="text-sm">
                     <span className="flex items-center gap-[6px] font-medium text-muted-foreground">
                       {t("latest_logged_in_users.last_login_ip")}:{" "}
-                      <Skeleton className="h-4 w-[50%]" />
+                      <Skeleton className="h-4 w-1/2" />
                     </span>
                   </div>
                 </div>
@@ -123,8 +123,8 @@ export default function LatestLoggedInUsers() {
       </div>
 
       {!loading && data.length === 0 && (
-        <div className="mt-10 flex h-[50%] w-full flex-col items-center justify-center gap-3">
-          <FolderX className="h-8 w-8 text-muted-foreground" />
+        <div className="mt-10 flex h-1/2 w-full flex-col items-center justify-center gap-3">
+          <FolderX className="size-8 text-muted-foreground" />
           <div className="flex flex-col items-center justify-center gap-1">
             <h5 className="font-semibold text-muted-foreground">
               {t("latest_logged_in_users.empty_title")}

@@ -43,7 +43,7 @@ export function Sidebar({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "fixed z-30 w-full shrink-0 overflow-y-auto bg-background print:hidden md:sticky md:block",
+        "fixed z-30 w-full shrink-0 overflow-y-auto bg-background md:sticky md:block print:hidden",
         sidebarCtx[SIDEBARCTX_STATES.collapsed] && "hidden",
         !sidebarCtx[SIDEBARCTX_STATES.collapsed] && "z-40",
         className
@@ -88,16 +88,16 @@ export function Sidebar({ className }: { className?: string }) {
                                 key={server.id}
                               >
                                 {server.os === "linux" ? (
-                                  <Icons.linux className="mr-2 h-4 w-4" />
+                                  <Icons.linux className="mr-2 size-4" />
                                 ) : (
-                                  <Icons.windows className="mr-2 h-4 w-4" />
+                                  <Icons.windows className="mr-2 size-4" />
                                 )}
                                 {server.name}
                                 <div className="ml-auto flex">
                                   {server.is_favorite && (
-                                    <Star className="mr-1 h-4 w-4" />
+                                    <Star className="mr-1 size-4" />
                                   )}
-                                  <ChevronRight className="h-4 w-4" />
+                                  <ChevronRight className="size-4" />
                                 </div>
                               </Button>
                             )
@@ -109,7 +109,7 @@ export function Sidebar({ className }: { className?: string }) {
                                 size="sm"
                                 className="mt-1 w-full justify-start"
                               >
-                                <Server className="mr-2 h-4 w-4" />
+                                <Server className="mr-2 size-4" />
                                 {t("sidebar.all_servers")}
                               </Button>
                             </Link>
@@ -123,12 +123,12 @@ export function Sidebar({ className }: { className?: string }) {
                                       size="sm"
                                       className="mb-4 mt-1 w-full justify-start"
                                     >
-                                      <Server className="mr-2 h-4 w-4" />
+                                      <Server className="mr-2 size-4" />
                                       {t("sidebar.add_server")}
                                     </Button>
                                   </Link>
 
-                                  <ArrowUp className="mx-auto block h-8 w-8 animate-bounce" />
+                                  <ArrowUp className="mx-auto block size-8 animate-bounce" />
 
                                   <span className="block p-3 text-sm font-medium">
                                     {t("sidebar.admin_message")}
@@ -136,7 +136,7 @@ export function Sidebar({ className }: { className?: string }) {
                                 </>
                               ) : (
                                 <>
-                                  <AlertTriangle className="mx-auto block h-8 w-8" />
+                                  <AlertTriangle className="mx-auto block size-8" />
 
                                   <span className="block p-2 text-sm font-medium">
                                     {t("sidebar.user_message")}
@@ -157,7 +157,7 @@ export function Sidebar({ className }: { className?: string }) {
                       className="mb-3 w-full justify-start"
                       onClick={() => setSelected("")}
                     >
-                      <ChevronLeft className="mr-2 h-4 w-4" />
+                      <ChevronLeft className="mr-2 size-4" />
                       {t("sidebar.servers")}
                     </Button>
 
@@ -170,7 +170,7 @@ export function Sidebar({ className }: { className?: string }) {
         </div>
       </ScrollArea>
       <div className="aciklab flex items-center justify-center py-4">
-        <Icons.aciklab className="h-[2rem] w-[12rem]" />
+        <Icons.aciklab className="h-8 w-48" />
       </div>
     </div>
   )

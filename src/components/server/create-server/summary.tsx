@@ -37,12 +37,12 @@ export default function Summary({ data }: { data: any }) {
         <div className="mt-1 sm:col-span-2 sm:mt-0">
           {data.os_type === "linux" ? (
             <div className="flex items-center gap-2">
-              <Icons.linux className="h-4 w-4" />
+              <Icons.linux className="size-4" />
               GNU/Linux
             </div>
           ) : (
             <div className="flex items-center gap-2">
-              <Icons.windows className="h-4 w-4" />
+              <Icons.windows className="size-4" />
               Windows
             </div>
           )}

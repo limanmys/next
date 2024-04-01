@@ -95,7 +95,7 @@ const AccessLdapPage: NextPageWithLayout = () => {
                       placeholder="ldaps.fabrikam.com"
                       {...field}
                     />
-                    <Server className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Server className="pointer-events-none absolute left-3 top-3 size-4 text-muted-foreground" />
                     <small className="italic text-muted-foreground">
                       {t("access.ldap.forms.server_info")}
                     </small>
@@ -120,7 +120,7 @@ const AccessLdapPage: NextPageWithLayout = () => {
                       placeholder="objectguid"
                       {...field}
                     />
-                    <Fingerprint className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Fingerprint className="pointer-events-none absolute left-3 top-3 size-4 text-muted-foreground" />
                     <small className="italic text-muted-foreground">
                       {t("access.ldap.forms.object_guid_info")}
                     </small>
@@ -144,7 +144,7 @@ const AccessLdapPage: NextPageWithLayout = () => {
                       placeholder="mail"
                       {...field}
                     />
-                    <Mail className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Mail className="pointer-events-none absolute left-3 top-3 size-4 text-muted-foreground" />
                     <small className="italic text-muted-foreground">
                       {t("access.ldap.forms.mail_info")}
                     </small>
@@ -161,7 +161,7 @@ const AccessLdapPage: NextPageWithLayout = () => {
               render={({ field }) => (
                 <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4 shadow-sm">
                   <div className="flex space-x-3 space-y-0.5">
-                    <UserCheck2 className="h-6 w-6 text-muted-foreground" />
+                    <UserCheck2 className="size-6 text-muted-foreground" />
                     <div className="flex flex-col space-y-0.5">
                       <FormLabel>
                         {t("access.ldap.forms.integration")}
@@ -183,7 +183,7 @@ const AccessLdapPage: NextPageWithLayout = () => {
 
             <div className="flex justify-end">
               <Button type="submit">
-                <Save className="mr-2 h-4 w-4" />
+                <Save className="mr-2 size-4" />
                 {t("access.ldap.forms.save")}
               </Button>
             </div>

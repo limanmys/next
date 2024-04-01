@@ -12,7 +12,7 @@ export default function StatusBadge({ status }: { status: Status }) {
 
   return (
     <div
-      className={cn("mr-1 inline-block h-2 w-2 rounded-full", colors[status])}
+      className={cn("mr-1 inline-block size-2 rounded-full", colors[status])}
     ></div>
   )
 }

@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react"
+import { ReactNode, useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { Router, useRouter } from "next/router"
 import {
@@ -9,6 +9,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react"
 import Cookies from "js-cookie"
 import nProgress from "nprogress"
 import { useTranslation } from "react-i18next"
+import { ImperativePanelHandle } from "react-resizable-panels"
 
 import { cn } from "@/lib/utils"
 import { useLogout } from "@/hooks/auth/useLogout"
@@ -40,6 +41,7 @@ const Layout = ({ Component, pageProps }: any) => {
     duration: 150,
     easing: "linear",
   })
+  const panel = useRef<ImperativePanelHandle>(null)
 
   Router.events.on("routeChangeStart", () => nProgress.start())
   Router.events.on("routeChangeComplete", () => {
@@ -94,10 +96,18 @@ const Layout = ({ Component, pageProps }: any) => {
               "md:block",
               sidebarCtx[SIDEBARCTX_STATES.collapsed] && "hidden"
             )}
+            ref={panel}
           >
             <Sidebar />
           </ResizablePanel>
-          <ResizableHandle withHandle />
+          <ResizableHandle
+            withHandle
+            onDoubleClick={() => {
+              panel.current?.isCollapsed()
+                ? panel.current?.expand()
+                : panel.current?.collapse()
+            }}
+          />
           <ResizablePanel defaultSize={82} minSize={75}>
             <ScrollArea
               className="relative"

@@ -126,7 +126,7 @@ const AdvancedLogRotationPage: NextPageWithLayout = () => {
 
             <div className="flex justify-end">
               <Button type="submit">
-                <Save className="mr-2 h-4 w-4" />
+                <Save className="mr-2 size-4" />
                 {t("advanced.logrotation.save")}
               </Button>
             </div>

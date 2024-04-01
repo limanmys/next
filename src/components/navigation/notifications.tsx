@@ -135,7 +135,7 @@ export default function Notifications() {
             "relative"
           )}
         >
-          <Bell className="h-5 w-5" />
+          <Bell className="size-5" />
           <span className="sr-only">Notifications</span>
           <Badge className="absolute right-0 top-0 rounded-full px-[4px] py-[2px] text-[11px] leading-[11px]">
             {getNotSeenNotificationCount()}
@@ -154,7 +154,7 @@ export default function Notifications() {
             disabled={notifications.length === 0}
             onClick={() => handleMarkAsRead()}
           >
-            <CheckCheck className="mr-2 h-5 w-5" />{" "}
+            <CheckCheck className="mr-2 size-5" />{" "}
             {t("notifications.mark_all_as_read")}
           </Button>
         </div>
@@ -203,7 +203,7 @@ export default function Notifications() {
         {notifications.length === 0 && (
           <>
             <div className="flex flex-col items-center justify-center p-2 py-8">
-              <BellOff className="mb-5 h-8 w-8 text-slate-800 dark:text-slate-300" />
+              <BellOff className="mb-5 size-8 text-slate-800 dark:text-slate-300" />
 
               <h3 className="text-md mb-1 font-semibold tracking-tight">
                 {t("notifications.empty")}

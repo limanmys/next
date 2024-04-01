@@ -162,7 +162,7 @@ const AsyncTransferList = <T extends ITransferListItem>(
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
-            <Search className="absolute right-2 top-2 h-4 w-4 text-foreground/70" />
+            <Search className="absolute right-2 top-2 size-4 text-foreground/70" />
           </div>
 
           <ScrollArea className="h-72">
@@ -171,7 +171,7 @@ const AsyncTransferList = <T extends ITransferListItem>(
                 <>
                   {[...Array(10)].map((_, index) => (
                     <div className="flex gap-2" key={index}>
-                      <Skeleton className="h-4 w-4" />
+                      <Skeleton className="size-4" />
                       <Skeleton className="h-4 w-full" />
                     </div>
                   ))}
@@ -184,7 +184,7 @@ const AsyncTransferList = <T extends ITransferListItem>(
                     ).length === 0
                   : items.length === 0) && (
                   <div className="flex flex-col items-center justify-center gap-3">
-                    <FolderOpen className="h-8 w-8 text-foreground/70" />
+                    <FolderOpen className="size-8 text-foreground/70" />
                     <span className="text-sm font-medium leading-none text-foreground/70">
                       {t("transfer.no_records")}
                     </span>
@@ -244,14 +244,14 @@ const AsyncTransferList = <T extends ITransferListItem>(
             onClick={() => handleCheckedLeft()}
             disabled={rightChecked.length === 0}
           >
-            <ChevronLeft className="h-4 w-4" />
+            <ChevronLeft className="size-4" />
           </Button>
           <Button
             variant="outline"
             onClick={() => handleCheckedRight()}
             disabled={leftChecked.length === 0}
           >
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="size-4" />
           </Button>
         </div>
         {customList(
@@ -266,7 +266,7 @@ const AsyncTransferList = <T extends ITransferListItem>(
       {props.onSave && (
         <div className="mt-5 flex justify-end">
           <Button onClick={() => props.onSave && props.onSave(right)}>
-            <Save className="mr-2 h-4 w-4" /> {t("transfer.save")}
+            <Save className="mr-2 size-4" /> {t("transfer.save")}
           </Button>
         </div>
       )}

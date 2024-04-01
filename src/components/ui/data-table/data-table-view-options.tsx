@@ -34,7 +34,7 @@ export function DataTableViewOptions<TData, TValue>({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="sm" className="ml-auto h-8 lg:flex">
-          <SlidersHorizontal className="mr-2 h-4 w-4" />
+          <SlidersHorizontal className="mr-2 size-4" />
           {t("table.toolbar.view")}
         </Button>
       </DropdownMenuTrigger>

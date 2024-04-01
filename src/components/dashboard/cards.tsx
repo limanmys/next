@@ -48,7 +48,7 @@ export default function DashboardCards() {
           <CardTitle className="text-sm font-medium opacity-70">
             {t("cards.server_count")}
           </CardTitle>
-          <Server className="h-4 w-4 text-muted-foreground" />
+          <Server className="size-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-semibold">
@@ -63,7 +63,7 @@ export default function DashboardCards() {
             className="flex items-center gap-1 text-xs text-muted-foreground transition-all hover:gap-3"
           >
             {t("cards.show_all_servers")}{" "}
-            <ArrowRight className="inline-block h-4 w-4" />
+            <ArrowRight className="inline-block size-4" />
           </Link>
         </CardContent>
       </div>
@@ -73,7 +73,7 @@ export default function DashboardCards() {
             <CardTitle className="text-sm font-medium opacity-70">
               {t("cards.extension_count")}
             </CardTitle>
-            <ToyBrick className="h-4 w-4 text-muted-foreground" />
+            <ToyBrick className="size-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-semibold">
@@ -88,7 +88,7 @@ export default function DashboardCards() {
               href="/settings/extensions"
             >
               {t("cards.show_all_extensions")}{" "}
-              <ArrowRight className="inline-block h-4 w-4" />
+              <ArrowRight className="inline-block size-4" />
             </Link>
           </CardContent>
         </div>
@@ -98,7 +98,7 @@ export default function DashboardCards() {
           <CardTitle className="text-sm font-medium opacity-70">
             {t("cards.user_count")}
           </CardTitle>
-          <Users className="h-4 w-4 text-muted-foreground" />
+          <Users className="size-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-semibold">
@@ -114,7 +114,7 @@ export default function DashboardCards() {
               className="flex items-center gap-1 text-xs text-muted-foreground transition-all hover:gap-3"
             >
               {t("cards.show_all_users")}{" "}
-              <ArrowRight className="inline-block h-4 w-4" />
+              <ArrowRight className="inline-block size-4" />
             </Link>
           ) : (
             <p className="flex items-center gap-1 text-xs text-muted-foreground transition-all hover:gap-3">
@@ -128,7 +128,7 @@ export default function DashboardCards() {
           <CardTitle className="text-sm font-medium opacity-70">
             {t("cards.version")}
           </CardTitle>
-          <Cog className="h-4 w-4 text-muted-foreground" />
+          <Cog className="size-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-semibold">

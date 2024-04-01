@@ -72,9 +72,9 @@ export default function ServerDetails({
           ) : (
             <div className="flex items-center">
               {data.server.os === "linux" ? (
-                <Icons.linux className="mr-2 h-4 w-4" />
+                <Icons.linux className="mr-2 size-4" />
               ) : (
-                <Icons.windows className="mr-2 h-4 w-4" />
+                <Icons.windows className="mr-2 size-4" />
               )}
               <span className="text-sm">{data.details.os}</span>
             </div>
@@ -91,7 +91,7 @@ export default function ServerDetails({
             <Skeleton className="h-[20px] w-full" />
           ) : (
             <div className="flex items-center">
-              <Network className="mr-2 h-4 w-4" />
+              <Network className="mr-2 size-4" />
               <span className="text-sm">{data.server.ip_address}</span>
             </div>
           )}
@@ -107,7 +107,7 @@ export default function ServerDetails({
             <Skeleton className="h-[20px] w-full" />
           ) : (
             <div className="flex items-center">
-              <User className="mr-2 h-4 w-4" />
+              <User className="mr-2 size-4" />
               <span className="text-sm">{data.details.user}</span>
             </div>
           )}
@@ -123,7 +123,7 @@ export default function ServerDetails({
             <Skeleton className="h-[20px] w-full" />
           ) : (
             <div className="flex items-center">
-              <Clock className="mr-2 h-4 w-4" />
+              <Clock className="mr-2 size-4" />
               <span className="text-sm">{data.details.uptime}</span>
             </div>
           )}

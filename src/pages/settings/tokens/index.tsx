@@ -209,7 +209,7 @@ function CreateAccessToken() {
     <Dialog onOpenChange={(open) => setOpen(open)} open={open}>
       <DialogTrigger asChild>
         <Button variant="outline" size="sm" className="ml-auto h-8 lg:flex">
-          <PlusCircle className="mr-2 h-4 w-4" />
+          <PlusCircle className="mr-2 size-4" />
           {t("tokens.create.button")}
         </Button>
       </DialogTrigger>
@@ -222,7 +222,7 @@ function CreateAccessToken() {
         </DialogHeader>
         {token && (
           <Alert>
-            <FileWarning className="h-4 w-4" />
+            <FileWarning className="size-4" />
             <AlertTitle>{t("tokens.create.alert_title")}</AlertTitle>
             <AlertDescription>
               {t("tokens.create.alert_description")}
@@ -281,7 +281,7 @@ function CreateAccessToken() {
             />
             <DialogFooter>
               <Button type="submit">
-                <PlusCircle className="mr-2 h-4 w-4" />
+                <PlusCircle className="mr-2 size-4" />
                 {t("tokens.create.form.submit")}
               </Button>
             </DialogFooter>

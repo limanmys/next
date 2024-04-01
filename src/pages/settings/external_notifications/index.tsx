@@ -205,7 +205,7 @@ function CreateExternalNotification() {
     <Dialog onOpenChange={(open) => setOpen(open)} open={open}>
       <DialogTrigger asChild>
         <Button variant="outline" size="sm" className="ml-auto h-8 lg:flex">
-          <PlusCircle className="mr-2 h-4 w-4" />
+          <PlusCircle className="mr-2 size-4" />
           {t("external_notifications.create.button")}
         </Button>
       </DialogTrigger>
@@ -218,7 +218,7 @@ function CreateExternalNotification() {
         </DialogHeader>
         {token && (
           <Alert>
-            <FileWarning className="h-4 w-4" />
+            <FileWarning className="size-4" />
             <AlertTitle>
               {t("external_notifications.create.alert_title")}
             </AlertTitle>
@@ -286,7 +286,7 @@ function CreateExternalNotification() {
             />
             <DialogFooter>
               <Button type="submit">
-                <PlusCircle className="mr-2 h-4 w-4" />
+                <PlusCircle className="mr-2 size-4" />
                 {t("external_notifications.create.create")}
               </Button>
             </DialogFooter>

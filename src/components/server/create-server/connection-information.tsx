@@ -122,8 +122,8 @@ export default function ConnectionInformation({
                                 <div className="details flex justify-between">
                                   <span className="text-foreground/50">22</span>
                                   <div className="icons flex gap-2">
-                                    <Icons.windows className="h-4 w-4" />
-                                    <Icons.linux className="h-4 w-4" />
+                                    <Icons.windows className="size-4" />
+                                    <Icons.linux className="size-4" />
                                   </div>
                                 </div>
                               </div>
@@ -147,7 +147,7 @@ export default function ConnectionInformation({
                                     5986
                                   </span>
                                   <div className="icons flex gap-2">
-                                    <Icons.windows className="h-4 w-4" />
+                                    <Icons.windows className="size-4" />
                                   </div>
                                 </div>
                               </div>
@@ -168,7 +168,7 @@ export default function ConnectionInformation({
                                     636
                                   </span>
                                   <div className="icons flex gap-2">
-                                    <Icons.windows className="h-4 w-4" />
+                                    <Icons.windows className="size-4" />
                                   </div>
                                 </div>
                               </div>

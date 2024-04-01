@@ -42,7 +42,7 @@ export default function ProfileDropdown() {
               size: "sm",
               variant: "ghost",
             }),
-            "h-9 flex items-center gap-2"
+            "flex h-9 items-center gap-2"
           )}
         >
           <Avatar className="size-6">
@@ -73,7 +73,7 @@ export default function ProfileDropdown() {
             <DropdownMenuSeparator />
             <div className="flex">
               <div className="avatar mr-2 p-2">
-                <Avatar className="h-12 w-12">
+                <Avatar className="size-12">
                   <AvatarImage
                     src={`https://gravatar.com/avatar/${md5(user.email)}?d=404`}
                     alt={user.name}
@@ -117,7 +117,7 @@ export default function ProfileDropdown() {
             variant="ghost"
             onClick={() => router.push("/settings/profile")}
           >
-            <User className="mr-2 h-4 w-4" /> {t("profile_dropdown.profile")}
+            <User className="mr-2 size-4" /> {t("profile_dropdown.profile")}
           </Button>
           <Button
             className="w-full"
@@ -128,7 +128,7 @@ export default function ProfileDropdown() {
               })
             }}
           >
-            <LogOut className="mr-2 h-4 w-4" /> {t("profile_dropdown.logout")}
+            <LogOut className="mr-2 size-4" /> {t("profile_dropdown.logout")}
           </Button>
         </div>
       </DropdownMenuContent>

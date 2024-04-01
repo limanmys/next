@@ -184,7 +184,7 @@ const RoleFunctionsList: NextPageWithLayout = () => {
                 size="sm"
                 disabled={!selected?.length}
               >
-                <MinusCircle className="mr-2 h-4 w-4" />
+                <MinusCircle className="mr-2 size-4" />
                 {t("roles.functions.delete")}
               </Button>
             </AlertDialogTrigger>

@@ -85,7 +85,7 @@ export default function ServerExtensionPage() {
           className="ml-auto h-8 lg:flex"
           onClick={() => router.push(`${router.asPath}/install`)}
         >
-          <UploadCloud className="mr-2 h-4 w-4" />
+          <UploadCloud className="mr-2 size-4" />
           {t("packages.upload")}
         </Button>
       </DataTable>
