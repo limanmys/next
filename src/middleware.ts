@@ -5,7 +5,10 @@ import { IUser } from "./types/user"
 const authRoutes = ["/auth/login"]
 
 export function middleware(request: NextRequest) {
-  const urlBeforeRedirect = request.nextUrl.pathname
+  let urlBeforeRedirect = request.nextUrl.pathname
+  if (urlBeforeRedirect === "/auth/login") {
+    urlBeforeRedirect = "/"
+  }
 
   if (
     request.nextUrl.pathname.includes("_next") ||
