@@ -1,6 +1,6 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { apiService } from "@/services"
-import { UploadCloud } from "lucide-react"
+import { Paperclip, UploadCloud } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
 import { useEmitter } from "@/hooks/useEmitter"
@@ -14,9 +14,15 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Icons } from "@/components/ui/icons"
-import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useToast } from "@/components/ui/use-toast"
+
+import {
+  FileInput,
+  FileUploader,
+  FileUploaderContent,
+  FileUploaderItem,
+} from "../ui/dropzone"
 
 export default function UploadExtension() {
   const { toast } = useToast()
@@ -96,6 +102,13 @@ export default function UploadExtension() {
     })
   }
 
+  // If open changes clear the file
+  useEffect(() => {
+    if (!open) {
+      setFile(null)
+    }
+  }, [open])
+
   return (
     <Dialog onOpenChange={(open) => setOpen(open)} open={open}>
       <DialogTrigger asChild>
@@ -114,12 +127,37 @@ export default function UploadExtension() {
 
         <div className="mt-3 grid w-full items-center gap-1.5">
           <Label htmlFor="extension">{t("extensions.upload.file")}</Label>
-          <Input
-            id="extension"
-            type="file"
-            accept=".zip,.signed,.lmne"
-            onChange={(e) => e.target.files && setFile(e.target.files[0])}
-          />
+          <FileUploader
+            value={file && [file]}
+            onValueChange={(value) => value && setFile(value[0])}
+            dropzoneOptions={{
+              maxFiles: 5,
+              maxSize: 10000000,
+              multiple: false,
+            }}
+            className="relative bg-background rounded-lg mt-2"
+          >
+            <FileInput className="border-2 border-dashed border-muted-foreground/10">
+              <div className="flex items-center justify-center flex-col py-10 w-full">
+                <UploadCloud className="h-8 w-8 text-muted-foreground" />
+                <p className="mb-1 text-sm text-muted-foreground">
+                  <span className="font-semibold">Yüklemek için tıklayın</span>
+                  &nbsp; ya da sürükleyip bırakın.
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  ZIP, LMNE, SIGNED
+                </p>
+              </div>
+            </FileInput>
+            <FileUploaderContent>
+              {file && (
+                <FileUploaderItem index={0} className="py-4 flex items-center">
+                  <Paperclip className="h-4 w-4 stroke-current" />
+                  <span>{file.name}</span>
+                </FileUploaderItem>
+              )}
+            </FileUploaderContent>
+          </FileUploader>
         </div>
 
         <div className="mt-6 flex justify-end">
