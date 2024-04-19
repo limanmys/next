@@ -42,6 +42,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "cmdk": "^1.0.0",
+    "export-to-csv": "^1.2.4",
     "i18next": "^23.10.1",
     "i18next-chained-backend": "^4.6.2",
     "i18next-http-backend": "^2.5.0",

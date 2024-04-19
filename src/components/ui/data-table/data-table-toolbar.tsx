@@ -1,12 +1,21 @@
 import { useEffect, useState } from "react"
-import { Table } from "@tanstack/react-table"
-import { Search, X } from "lucide-react"
+import { useRouter } from "next/router"
+import { Row, Table } from "@tanstack/react-table"
+import { download, generateCsv, mkConfig } from "export-to-csv"
+import { DownloadCloud, Search, X } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
 import { DivergentColumn } from "@/types/table"
 import { Button } from "@/components/ui/button"
 import { DataTableViewOptions } from "@/components/ui/data-table/data-table-view-options"
 import { Input } from "@/components/ui/input"
+
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../tooltip"
 
 interface DataTableToolbarProps<TData, TValue> {
   table: Table<TData>
@@ -22,6 +31,21 @@ export function DataTableToolbar<TData, TValue>({
   setGlobalFilter,
 }: DataTableToolbarProps<TData, TValue>) {
   const { t } = useTranslation("components")
+
+  const router = useRouter()
+
+  const csvConfig = mkConfig({
+    fieldSeparator: ",",
+    filename: `${router.asPath}-${new Date()}`,
+    decimalSeparator: ".",
+    useKeysAsHeaders: true,
+  })
+
+  const exportExcel = (rows: Row<any>[]) => {
+    const rowData = rows.map((row) => row.original)
+    const csv = generateCsv(csvConfig)(rowData)
+    download(csvConfig)(csv)
+  }
 
   const [isFiltered, setIsFiltered] = useState<boolean>(false)
   useEffect(() => {
@@ -39,6 +63,24 @@ export function DataTableToolbar<TData, TValue>({
       <div></div>
       <div className="flex space-x-2">
         <div className="flex flex-1 items-center space-x-2">
+          <TooltipProvider>
+            <Tooltip delayDuration={200}>
+              <TooltipTrigger>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="ml-auto h-8 lg:flex"
+                  onClick={() => exportExcel(table.getFilteredRowModel().rows)}
+                >
+                  <DownloadCloud className="size-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Tabloyu dışa aktar</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+
           {isFiltered && (
             <Button
               variant="outline"
