@@ -117,9 +117,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     return redirectUri
   }
 
-  const onLogin = async (
-    data: z.infer<typeof formSchema> & z.infer<typeof otpSchema>
-  ) => {
+  const onLogin = async (data: z.infer<typeof otpSchema>) => {
     setIsLoading(true)
 
     try {
@@ -259,7 +257,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         {!otpSetup && !enableOtp && !forceChange && (
           <Form {...loginForm}>
             <form
-              onSubmit={loginForm.handleSubmit(onLogin)}
+              onSubmit={loginForm.handleSubmit(onLogin as any)}
               className="grid gap-4"
             >
               <FormField
