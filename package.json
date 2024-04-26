@@ -47,6 +47,7 @@
     "i18next-chained-backend": "^4.6.2",
     "i18next-http-backend": "^2.5.0",
     "i18next-localstorage-backend": "^4.2.0",
+    "input-otp": "^1.2.4",
     "js-cookie": "^3.0.5",
     "laravel-echo": "^1.16.0",
     "lucide-react": "^0.363.0",

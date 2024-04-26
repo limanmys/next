@@ -18,13 +18,15 @@ export class AuthService {
     email: string,
     password: string,
     newPassword?: string,
-    token?: string
+    token?: string,
+    type = "liman"
   ) => {
     if (newPassword) {
       return this.instance.post("/change_password", {
         email,
         password,
         new_password: newPassword,
+        type,
       })
     }
 
@@ -32,6 +34,7 @@ export class AuthService {
       email,
       password,
       token,
+      type,
     })
   }
 

@@ -2,7 +2,10 @@ import * as React from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { authService } from "@/services"
-import { AlertCircle } from "lucide-react"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { AlertCircle, CheckIcon, LogIn } from "lucide-react"
+import { useForm } from "react-hook-form"
+import * as z from "zod"
 
 import { cn } from "@/lib/utils"
 import { useLogin } from "@/hooks/auth/useLogin"
@@ -11,7 +14,29 @@ import { Icons } from "@/components/ui/icons"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../form/form"
 import { Alert, AlertDescription, AlertTitle } from "./alert"
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "./input-otp"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./select"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -19,12 +44,22 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const router = useRouter()
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
-  const [name, setName] = React.useState("")
-  const [password, setPassword] = React.useState("")
+  const formSchema = z.object({
+    type: z.enum(["liman", "ldap", "keycloak"]),
+    name: z.string({
+      required_error: "Kullanıcı adı alanı boş olamaz.",
+    }),
+    password: z.string({
+      required_error: "Lütfen parolanızı giriniz.",
+    }),
+  })
 
-  const [forceChange, setForceChange] = React.useState(false)
-  const [newPassword, setNewPassword] = React.useState("")
-  const [newPasswordConfirm, setNewPasswordConfirm] = React.useState("")
+  const loginForm = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      type: "liman",
+    },
+  })
 
   const [otpSetup, setOtpSetup] = React.useState(false)
   const [otpData, setOtpData] = React.useState<{
@@ -32,45 +67,69 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     image: string
     message: string
   }>()
+  const [otpCredentials, setOtpCredentials] = React.useState<{
+    username: string
+    password: string
+  }>()
 
   const [enableOtp, setEnableOtp] = React.useState(false)
-  const [otp, setOtp] = React.useState("")
+
+  const otpSchema = formSchema.and(
+    z.object({
+      otp: z.string({
+        required_error: "Lütfen doğrulama kodunu giriniz.",
+      }),
+    })
+  )
+
+  const otpForm = useForm<z.infer<typeof otpSchema>>({
+    resolver: zodResolver(otpSchema),
+  })
+
+  const [forceChange, setForceChange] = React.useState(false)
+
+  const forceChangeSchema = z
+    .object({
+      name: z.string(),
+      password: z.string(),
+      newPassword: z.string(),
+      newPasswordConfirm: z.string(),
+    })
+    .refine((data) => data.newPassword === data.newPasswordConfirm, {
+      message: "Şifreler uyuşmuyor.",
+      path: ["newPasswordConfirm"],
+    })
+
+  const forceChangeForm = useForm<z.infer<typeof forceChangeSchema>>({
+    resolver: zodResolver(forceChangeSchema),
+  })
 
   const [error, setError] = React.useState("")
   const { login } = useLogin()
-  const onSubmit = async (e: React.SyntheticEvent) => {
-    e.preventDefault()
+
+  const getRedirectUri = () => {
+    let redirectUri = (router.query.redirect || "/") as string
+    redirectUri = redirectUri
+      .replace("http://", "")
+      .replace("https://", "")
+      .replace("www.", "")
+
+    return redirectUri
+  }
+
+  const onLogin = async (
+    data: z.infer<typeof formSchema> & z.infer<typeof otpSchema>
+  ) => {
     setIsLoading(true)
 
-    let redirectUri = (router.query.redirect || "/") as string
-    redirectUri = redirectUri.replace("http://", "")
-    redirectUri = redirectUri.replace("https://", "")
-    redirectUri = redirectUri.replace("www.", "")
-
     try {
-      if (forceChange) {
-        if (newPassword !== newPasswordConfirm) {
-          throw new Error("Girdiğiniz şifreler uyuşmuyor.")
-        }
-
-        await authService.login(name, password, newPassword)
-        await login(name, newPassword, otp)
-      } else {
-        if (!name || !password) {
-          throw new Error("Kullanıcı adı veya şifre boş olamaz.")
-        }
-
-        await login(name, password, otp)
-
-        if (forceChange) {
-          setForceChange(false)
-        }
-      }
+      if (!data.otp) await login(data.name, data.password, "", data.type)
+      else await login(data.name, data.password, data.otp, data.type)
 
       setError("")
       setTimeout(() => {
-        router.push(redirectUri)
-      }, 1000)
+        router.push(getRedirectUri())
+      }, 500)
     } catch (e: any) {
       if (!e.response) {
         setError(e.message)
@@ -92,16 +151,65 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       }
 
       if (e.response.status === 405) {
+        forceChangeForm.reset({
+          name: data.name,
+          password: data.password,
+          newPassword: "",
+          newPasswordConfirm: "",
+        })
         setForceChange(true)
       }
 
       if (e.response.status === 402) {
+        setOtpCredentials({
+          username: data.name,
+          password: data.password,
+        })
         setOtpData(e.response.data)
         setOtpSetup(true)
       }
 
       if (e.response.status === 406) {
+        otpForm.reset({
+          ...data,
+          otp: "",
+        })
         setEnableOtp(true)
+      }
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const onForceChange = async (data: z.infer<typeof forceChangeSchema>) => {
+    setIsLoading(true)
+    const { name, password, newPassword } = data
+    try {
+      await authService.login(name, password, newPassword)
+      await login(name, newPassword, "")
+
+      setError("")
+      setTimeout(() => {
+        router.push(getRedirectUri())
+      }, 500)
+    } catch (e: any) {
+      if (!e.response) {
+        setError(e.message)
+        return
+      }
+
+      if (e.response.data.message) {
+        setError(e.response.data.message)
+      } else {
+        setError(e.message)
+      }
+
+      if (e.response.data.new_password) {
+        setError(
+          e.response.data.new_password[1] ||
+            e.response.data.new_password[0] ||
+            e.response.data.new_password
+        )
       }
     } finally {
       setIsLoading(false)
@@ -110,9 +218,14 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
   const saveTwoFactorToken = async (
     secret: string,
-    username: string,
-    password: string
+    username?: string,
+    password?: string
   ) => {
+    if (!secret || !username || !password) {
+      setError("Kurulum için gerekli bilgiler eksik.")
+      return
+    }
+
     try {
       setIsLoading(true)
       authService
@@ -134,160 +247,252 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
   return (
     <div className={cn("grid gap-6", className)} {...props}>
-      <form onSubmit={onSubmit}>
-        <div className="grid gap-2">
-          {error && (
-            <Alert>
-              <AlertCircle className="size-4" />
-              <AlertTitle>Bilgi</AlertTitle>
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
+      <div className="grid gap-4">
+        {error && (
+          <Alert>
+            <AlertCircle className="size-4" />
+            <AlertTitle>Bilgi</AlertTitle>
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
 
-          {!otpSetup && !enableOtp && (
-            <>
-              <div className="grid gap-1">
-                <Label className="sr-only" htmlFor="email">
-                  Kullanıcı Adı
-                </Label>
-                <Input
-                  id="email"
-                  placeholder="example@liman.dev"
-                  autoCapitalize="none"
-                  autoComplete="email"
-                  autoCorrect="off"
-                  disabled={isLoading}
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </div>
-              <div className="grid gap-1">
-                <Label className="sr-only" htmlFor="password">
-                  Şifre
-                </Label>
-                <Input
-                  id="password"
-                  placeholder="***********"
-                  type="password"
-                  autoCapitalize="none"
-                  autoComplete="password"
-                  autoCorrect="off"
-                  disabled={isLoading}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-            </>
-          )}
-
-          {forceChange && (
-            <>
-              <div className="mt-5 grid gap-1">
-                <Label className="sr-only" htmlFor="password">
-                  Yeni Şifre
-                </Label>
-                <Input
-                  id="password"
-                  placeholder="Yeni Şifreniz"
-                  type="password"
-                  autoCapitalize="none"
-                  autoComplete="password"
-                  autoCorrect="off"
-                  disabled={isLoading}
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                />
-              </div>
-
-              <div className="grid gap-1">
-                <Label className="sr-only" htmlFor="password">
-                  Yeni Şifreyi Onayla
-                </Label>
-                <Input
-                  id="password"
-                  placeholder="Yeni Şifreyi Onayla"
-                  type="password"
-                  autoCapitalize="none"
-                  autoComplete="password"
-                  autoCorrect="off"
-                  disabled={isLoading}
-                  value={newPasswordConfirm}
-                  onChange={(e) => setNewPasswordConfirm(e.target.value)}
-                />
-              </div>
-            </>
-          )}
-
-          {otpSetup && (
-            <div className="mt-5 flex grow flex-col items-center justify-center">
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: otpData?.image || "",
-                }}
-                style={{
-                  borderRadius: "24px",
-                  overflow: "hidden",
-                }}
-              ></div>
-
-              <p className="mt-5 text-center">
-                Google Authenticator uygulamasına QR kodu tarattıktan sonra
-                kaydet düğmesine basınız.
-              </p>
-
-              <Button
-                disabled={isLoading}
-                className="mt-8 w-full"
-                onClick={() =>
-                  saveTwoFactorToken(otpData?.secret || "", name, password)
-                }
-              >
-                {isLoading && (
-                  <Icons.spinner className="mr-2 size-4 animate-spin" />
+        {!otpSetup && !enableOtp && !forceChange && (
+          <Form {...loginForm}>
+            <form
+              onSubmit={loginForm.handleSubmit(onLogin)}
+              className="grid gap-4"
+            >
+              <FormField
+                control={loginForm.control}
+                name="type"
+                render={({ field }) => (
+                  <div className="flex flex-col gap-2">
+                    <Label htmlFor="type">Giriş Kapısı Seçimi</Label>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="liman">
+                          <Icons.dugumluLogo className="size-12 h-6" />
+                        </SelectItem>
+                        <SelectItem value="ldap">LDAP</SelectItem>
+                        <SelectItem value="keycloak">Keycloak</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </div>
                 )}
-                Kurulumu Tamamla
-              </Button>
-            </div>
-          )}
+              />
 
-          {enableOtp && (
-            <>
-              <div className="grid gap-1">
-                <Label className="sr-only" htmlFor="otp">
-                  İki Aşamalı Doğrulama Kodu
-                </Label>
-                <Input
-                  id="otp"
-                  placeholder="******"
-                  autoCapitalize="none"
-                  autoComplete="otp"
-                  autoCorrect="off"
-                  disabled={isLoading}
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value)}
-                />
-              </div>
-            </>
-          )}
+              <FormField
+                control={loginForm.control}
+                name="name"
+                render={({ field }) => (
+                  <div className="flex flex-col gap-3">
+                    <Label htmlFor="name">Kullanıcı Adı</Label>
+                    <Input
+                      id="name"
+                      placeholder="example@liman.dev"
+                      {...field}
+                    />
+                    <FormMessage />
+                  </div>
+                )}
+              />
 
-          {!otpSetup && (
-            <>
-              <Button disabled={isLoading} className="mt-4">
-                {isLoading && (
+              <FormField
+                control={loginForm.control}
+                name="password"
+                render={({ field }) => (
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-center justify-between">
+                      <Label htmlFor="password">Parola</Label>
+
+                      <small className="italic text-muted-foreground">
+                        <Link href="/auth/forgot_password">
+                          Şifrenizi mi unuttunuz?
+                        </Link>
+                      </small>
+                    </div>
+                    <Input
+                      id="password"
+                      placeholder="••••••••••"
+                      type="password"
+                      {...field}
+                    />
+                    <FormMessage />
+                  </div>
+                )}
+              />
+
+              <Button disabled={isLoading} className="mt-4" type="submit">
+                {isLoading ? (
                   <Icons.spinner className="mr-2 size-4 animate-spin" />
+                ) : (
+                  <LogIn className="mr-2 size-4" />
                 )}
                 Giriş Yap
               </Button>
+            </form>
+          </Form>
+        )}
 
-              <small className="mt-5 text-center italic text-muted-foreground">
-                <Link href="/auth/forgot_password">
-                  Şifrenizi mi unuttunuz?
-                </Link>
-              </small>
-            </>
-          )}
-        </div>
-      </form>
+        {forceChange && (
+          <Form {...forceChangeForm}>
+            <form
+              onSubmit={forceChangeForm.handleSubmit(onForceChange)}
+              className="grid gap-4"
+            >
+              <FormField
+                control={forceChangeForm.control}
+                name="name"
+                render={({ field }) => (
+                  <div className="flex flex-col gap-3">
+                    <Label htmlFor="name">
+                      Şifresi Değiştirilecek Kullanıcı
+                    </Label>
+                    <Input value={field.value} disabled />
+                  </div>
+                )}
+              />
+
+              <FormField
+                control={forceChangeForm.control}
+                name="newPassword"
+                render={({ field }) => (
+                  <div className="flex flex-col gap-3">
+                    <Label htmlFor="newPassword">Yeni Parolanız</Label>
+                    <Input
+                      id="newPassword"
+                      placeholder="••••••••••"
+                      type="password"
+                      {...field}
+                    />
+                    <FormMessage />
+                  </div>
+                )}
+              />
+
+              <FormField
+                control={forceChangeForm.control}
+                name="newPasswordConfirm"
+                render={({ field }) => (
+                  <div className="flex flex-col gap-3">
+                    <Label htmlFor="newPasswordConfirm">
+                      Yeni Parolanızı Onaylayın
+                    </Label>
+                    <Input
+                      id="newPasswordConfirm"
+                      placeholder="••••••••••"
+                      type="password"
+                      {...field}
+                    />
+                    <FormMessage />
+                  </div>
+                )}
+              />
+
+              <Button disabled={isLoading} className="mt-4" type="submit">
+                {isLoading ? (
+                  <Icons.spinner className="mr-2 size-4 animate-spin" />
+                ) : (
+                  <LogIn className="mr-2 size-4" />
+                )}
+                Giriş Yap
+              </Button>
+            </form>
+          </Form>
+        )}
+
+        {otpSetup && (
+          <div className="mt-5 flex grow flex-col items-center justify-center">
+            <div
+              dangerouslySetInnerHTML={{
+                __html: otpData?.image || "",
+              }}
+              style={{
+                borderRadius: "24px",
+                overflow: "hidden",
+              }}
+            ></div>
+
+            <p className="mt-5 text-center">
+              Google Authenticator uygulamasına QR kodu tarattıktan sonra kaydet
+              düğmesine basınız.
+            </p>
+
+            <Button
+              disabled={isLoading}
+              className="mt-8 w-full"
+              onClick={() =>
+                saveTwoFactorToken(
+                  otpData?.secret || "",
+                  otpCredentials?.username,
+                  otpCredentials?.password
+                )
+              }
+            >
+              {isLoading ? (
+                <Icons.spinner className="mr-2 size-4 animate-spin" />
+              ) : (
+                <CheckIcon className="mr-2 size-4" />
+              )}
+              Kurulumu Tamamla
+            </Button>
+          </div>
+        )}
+
+        {enableOtp && (
+          <Form {...otpForm}>
+            <form
+              onSubmit={otpForm.handleSubmit(onLogin)}
+              className="grid gap-4"
+            >
+              <FormField
+                control={otpForm.control}
+                name="otp"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>OTP Şifresi</FormLabel>
+                    <FormControl>
+                      <InputOTP maxLength={6} {...field}>
+                        <InputOTPGroup>
+                          <InputOTPSlot index={0} />
+                          <InputOTPSlot index={1} />
+                          <InputOTPSlot index={2} />
+                        </InputOTPGroup>
+                        <InputOTPSeparator />
+                        <InputOTPGroup>
+                          <InputOTPSlot index={3} />
+                          <InputOTPSlot index={4} />
+                          <InputOTPSlot index={5} />
+                        </InputOTPGroup>
+                      </InputOTP>
+                    </FormControl>
+                    <FormDescription>
+                      Telefonunuza gönderilen şifreyi giriniz.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <Button disabled={isLoading} className="mt-4" type="submit">
+                {isLoading ? (
+                  <Icons.spinner className="mr-2 size-4 animate-spin" />
+                ) : (
+                  <LogIn className="mr-2 size-4" />
+                )}
+                Giriş Yap
+              </Button>
+            </form>
+          </Form>
+        )}
+      </div>
     </div>
   )
 }

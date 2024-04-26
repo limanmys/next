@@ -50,7 +50,7 @@ export default function ForgotPasswordPage() {
         </div>
         <div className="lg:p-8">
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[400px]">
-            <div className="flex flex-col space-y-2 text-center">
+            <div className="mb-5 flex flex-col space-y-2 text-center">
               <h1 className="text-2xl font-semibold tracking-tight">
                 Şifremi unuttum
               </h1>
@@ -69,10 +69,8 @@ export default function ForgotPasswordPage() {
                   </Alert>
                 )}
 
-                <div className="grid gap-1">
-                  <Label className="sr-only" htmlFor="email">
-                    E-Posta Adresiniz
-                  </Label>
+                <div className="grid gap-3">
+                  <Label htmlFor="email">E-Posta Adresiniz</Label>
                   <Input
                     id="email"
                     placeholder="example@liman.dev"
