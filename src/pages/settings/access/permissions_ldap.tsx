@@ -2,7 +2,7 @@ import { ReactElement, useEffect, useState } from "react"
 import { NextPageWithLayout } from "@/pages/_app"
 import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { KeyRound, LogIn, User2, Users2 } from "lucide-react"
+import { KeyRound, LinkIcon, LogIn, User2, Users2 } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import * as z from "zod"
@@ -17,6 +17,7 @@ import { useToast } from "@/components/ui/use-toast"
 import AccessLayout from "@/components/_layout/access_layout"
 import { Form, FormField, FormMessage } from "@/components/form/form"
 import AsyncTransferList from "@/components/settings/async-transfer-list"
+import LdapRoleMapping from "@/components/settings/ldap-role-mapping"
 
 const AccessLdapPermissionsPage: NextPageWithLayout = () => {
   const { t } = useTranslation("settings")
@@ -291,6 +292,10 @@ const AccessLdapPermissionsPage: NextPageWithLayout = () => {
                   <Users2 className="mr-2 size-4" />
                   {t("access.permissions.group.title")}
                 </TabsTrigger>
+                <TabsTrigger value="role_mapping" className="w-full">
+                  <LinkIcon className="mr-2 size-4" />
+                  Rol Bağlama
+                </TabsTrigger>
               </TabsList>
               <TabsContent value="users">
                 <AsyncTransferList
@@ -312,6 +317,12 @@ const AccessLdapPermissionsPage: NextPageWithLayout = () => {
                   selected={selectedGroupList}
                   onSave={handleGroupListSave}
                   onSearch={(v: string) => fetchGroupsList(v)}
+                />
+              </TabsContent>
+              <TabsContent value="role_mapping">
+                <LdapRoleMapping
+                  username={loginData.username}
+                  password={loginData.password}
                 />
               </TabsContent>
             </Tabs>
