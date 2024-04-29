@@ -1,7 +1,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { authService } from "@/services"
+import { apiService, authService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AlertCircle, CheckIcon, LogIn } from "lucide-react"
 import { useForm } from "react-hook-form"
@@ -43,6 +43,21 @@ interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const router = useRouter()
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
+
+  const [authTypes, setAuthTypes] = React.useState<string[]>(["liman"])
+
+  React.useEffect(() => {
+    setIsLoading(true)
+    apiService
+      .getInstance()
+      .get("/auth/types")
+      .then((res) => {
+        setAuthTypes(res.data)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
+  }, [])
 
   const formSchema = z.object({
     type: z.enum(["liman", "ldap", "keycloak"]),
@@ -277,8 +292,12 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                         <SelectItem value="liman">
                           <Icons.dugumluLogo className="size-12 h-6" />
                         </SelectItem>
-                        <SelectItem value="ldap">LDAP</SelectItem>
-                        <SelectItem value="keycloak">Keycloak</SelectItem>
+                        {authTypes.includes("ldap") && (
+                          <SelectItem value="ldap">LDAP</SelectItem>
+                        )}
+                        {authTypes.includes("keycloak") && (
+                          <SelectItem value="keycloak">Keycloak</SelectItem>
+                        )}
                       </SelectContent>
                     </Select>
                     <FormMessage />
