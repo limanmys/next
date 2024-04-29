@@ -1,42 +1,47 @@
 {
-    "table": {
-        "no_records": "Kayıt yok",
-        "pagination": {
-            "selected": "seçildi.",
-            "page_size": "Sayfa boyutu",
-            "page": "Sayfa",
-            "total": "Toplam",
-            "records": "kayıt"
-        },
-        "toolbar": {
-            "clear_filters": "Filtreleri Temizle",
-            "view": "Görüntüleme",
-            "columns": "Sütunlar",
-            "search_placeholder": "Arama..."
-        },
-        "column": {
-            "asc": "Artan",
-            "desc": "Azalan",
-            "hide": "Gizle"
-        }
+  "table": {
+    "no_records": "Kayıt yok",
+    "pagination": {
+      "selected": "seçildi.",
+      "page_size": "Sayfa boyutu",
+      "page": "Sayfa",
+      "total": "Toplam",
+      "records": "kayıt"
     },
-    "select": {
-        "user": {
-            "search_placeholder": "Kullanıcı ara...",
-            "not_found": "Kullanıcı bulunamadı",
-            "select_placeholder": "Kullanıcı seçiniz"
-        },
-        "server": {
-            "search_placeholder": "Sunucu ara...",
-            "not_found": "Sunucu bulunamadı",
-            "select_placeholder": "Sunucu seçiniz"
-        }
+    "toolbar": {
+      "clear_filters": "Filtreleri Temizle",
+      "view": "Görüntüleme",
+      "columns": "Sütunlar",
+      "search_placeholder": "Arama..."
     },
-    "transfer": {
-        "select_all": "Tümünü seç",
-        "search": "Arama...",
-        "selected": "({{selected}}/{{total}} seçili)",
-        "no_records": "Veri yok",
-        "save": "Kaydet"
+    "column": {
+      "asc": "Artan",
+      "desc": "Azalan",
+      "hide": "Gizle"
     }
+  },
+  "select": {
+    "user": {
+      "search_placeholder": "Kullanıcı ara...",
+      "not_found": "Kullanıcı bulunamadı",
+      "select_placeholder": "Kullanıcı seçiniz"
+    },
+    "server": {
+      "search_placeholder": "Sunucu ara...",
+      "not_found": "Sunucu bulunamadı",
+      "select_placeholder": "Sunucu seçiniz"
+    },
+    "role": {
+      "select_placeholder": "Rol seçimi yapınız...",
+      "search_placeholder": "Rol arayın...",
+      "not_found": "Rol bulunamadı."
+    }
+  },
+  "transfer": {
+    "select_all": "Tümünü seç",
+    "search": "Arama...",
+    "selected": "({{selected}}/{{total}} seçili)",
+    "no_records": "Veri yok",
+    "save": "Kaydet"
+  }
 }
