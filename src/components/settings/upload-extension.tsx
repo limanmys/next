@@ -132,7 +132,8 @@ export default function UploadExtension() {
             onValueChange={(value) => value && setFile(value[0])}
             dropzoneOptions={{
               maxFiles: 5,
-              maxSize: 10000000,
+              // 100 MB
+              maxSize: 100 * 1024 * 1024,
               multiple: false,
             }}
             className="relative bg-background rounded-lg mt-2"
