@@ -290,9 +290,18 @@ export default function EditUser() {
                                         : r
                                     )
                                   )
+                                  // Fell to async state trap
                                   field.onChange(
                                     roles
-                                      .filter((r) => !r.selected)
+                                      .map((r) =>
+                                        r.id === role.id
+                                          ? {
+                                              ...r,
+                                              selected: e as boolean,
+                                            }
+                                          : r
+                                      )
+                                      .filter((r) => r.selected)
                                       .map((r) => r.id)
                                   )
                                 }}
