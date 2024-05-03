@@ -693,7 +693,7 @@
         "dns_check_description": "Liman sunucunuzun dış internete ve ağınızdaki IP adreslerini çözebilmesi için DNS konfigürasyonunu yapmanız gerekmektedir.",
         "go_to_dns_settings": "DNS Ayarlarına Git",
         "ssl_check_title": "SSL Sertifikası Süre Kontrolü",
-        "ssl_check_description": "Liman sunucunuz üzerine tanımlı olan sertifikanın süresi dolmak üzeredir. Yenilemeniz tavsiye edilmektedir.",
+        "ssl_check_description": "Liman sunucunuz üzerine tanımlı olan sertifikanızın süresini kontrol edin. Sertifikanızın süresi dolmak üzere ise 'limanctl cert' komutu ile yenileyebilirsiniz.",
         "ssl_self_title": "Self-Signed Sertifika",
         "ssl_self_description": "Self-signed sertifika kullandığınızı tespit ettik. Eğer kurumunuzda kullandığınız bir wildcard sertifika mevcut ise HAVELSAN A.Ş. aracılığıyla tanımlama yapmanızı tavsiye ediyoruz.",
         "high_availability_service_title": "High Availability Servis Durumu",
