@@ -4,6 +4,8 @@ export interface ICertificate {
   origin: string
   created_at: string
   updated_at: string
+  valid_to: string
+  valid_from: string
 }
 
 export interface ICertificateDetails {

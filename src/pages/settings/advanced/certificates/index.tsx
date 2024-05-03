@@ -41,22 +41,37 @@ const AdvancedCertificateSettingsPage: NextPageWithLayout = () => {
       title: "Port",
     },
     {
-      accessorKey: "updated_at",
+      accessorKey: "valid_to",
       header: ({ column }) => (
-        <DataTableColumnHeader
-          column={column}
-          title={t("advanced.certificates.updated_at")}
-        />
+        <DataTableColumnHeader column={column} title="Bitiş Süresi" />
       ),
-      title: t("advanced.certificates.updated_at"),
+      title: "Bitiş Süresi",
       accessorFn: (row) =>
-        new Date(row.updated_at).toLocaleDateString(i18n.language, {
+        new Date(row.valid_to).toLocaleDateString(i18n.language, {
           day: "2-digit",
           month: "long",
           year: "numeric",
           hour: "2-digit",
           minute: "2-digit",
         }),
+      cell: ({ row, getValue }) => (
+        <>
+          {/* Add icons for validity time is near 1 month, is not valid and valid states */}
+          <div className="flex items-center">
+            {new Date(row.original.valid_to).getTime() - new Date().getTime() <
+            0 ? (
+              <div className="mr-2 size-3 rounded-full bg-red-500"></div>
+            ) : new Date(row.original.valid_to).getTime() -
+                new Date().getTime() <
+              2592000000 ? (
+              <div className="mr-2 size-3 rounded-full bg-yellow-500"></div>
+            ) : (
+              <div className="mr-2 size-3 rounded-full bg-green-500"></div>
+            )}
+            {getValue()}
+          </div>
+        </>
+      ),
       sortingFn: compareNumericString,
     },
     {
