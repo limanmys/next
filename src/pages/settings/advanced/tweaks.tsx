@@ -9,6 +9,7 @@ import * as z from "zod"
 
 import { setFormErrors } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import PageHeader from "@/components/ui/page-header"
@@ -50,6 +51,7 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
     EXTENSION_DEVELOPER_MODE: z.boolean(),
     NEW_LOG_LEVEL: z.string(),
     LDAP_IGNORE_CERT: z.boolean(),
+    LOGIN_IMAGE: z.string().optional(),
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -265,6 +267,50 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
                       {t("advanced.tweaks.NEW_LOG_LEVEL.subtext")}
                     </small>
                   </div>
+                  <FormMessage />
+                </div>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="LOGIN_IMAGE"
+              render={({ field }) => (
+                <div className="flex flex-col gap-3">
+                  <Label htmlFor="LOGIN_IMAGE">Giriş Ekranı Marka Logosu</Label>
+                  <div className="relative">
+                    <Input
+                      id="LOGIN_IMAGE"
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0]
+                        if (file) {
+                          const reader = new FileReader()
+                          reader.onloadend = () => {
+                            const base64Data = reader.result?.toString() || ""
+                            form.setValue("LOGIN_IMAGE", base64Data)
+                          }
+                          reader.readAsDataURL(file)
+                        } else {
+                          form.setValue("LOGIN_IMAGE", "")
+                        }
+                      }}
+                    />
+
+                    {field.value && (
+                      <Card className="mt-2 border-dashed">
+                        <img
+                          src={field.value}
+                          className="max-h-40 w-auto rounded-lg object-cover"
+                        />
+                      </Card>
+                    )}
+                  </div>
+                  <small className="-mt-2 italic text-muted-foreground">
+                    Giriş ekranında gösterilecek marka logosu. Maksimum 1MB
+                    boyutunda olmalıdır.
+                  </small>
                   <FormMessage />
                 </div>
               )}

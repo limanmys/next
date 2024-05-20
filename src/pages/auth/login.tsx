@@ -1,7 +1,21 @@
+import { useEffect, useState } from "react"
+import { apiService } from "@/services"
+
 import { Icons } from "@/components/ui/icons"
 import { UserAuthForm } from "@/components/ui/user-auth-form"
 
 export default function AuthenticationPage() {
+  const [loginBranding, setLoginBranding] = useState<string>("")
+
+  useEffect(() => {
+    apiService
+      .getInstance()
+      .get("/auth/branding")
+      .then((res) => {
+        setLoginBranding(res.data.image)
+      })
+  }, [])
+
   return (
     <>
       <div className="container relative h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
@@ -16,7 +30,13 @@ export default function AuthenticationPage() {
             <Icons.dugumluLogo className="h-10 w-24 fill-white" />
           </div>
           <div className="relative z-20 mt-auto">
-            <Icons.aciklab className="h-12 w-64 fill-white" />
+            {!loginBranding && (
+              <Icons.aciklab className="h-12 w-64 fill-white" />
+            )}
+
+            {loginBranding && (
+              <img src={loginBranding} alt="Logo" className="max-h-32 w-auto" />
+            )}
           </div>
         </div>
         <div className="lg:p-8">
