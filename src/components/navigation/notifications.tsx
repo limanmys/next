@@ -137,9 +137,12 @@ export default function Notifications() {
         >
           <Bell className="size-5" />
           <span className="sr-only">Notifications</span>
-          <Badge className="absolute right-0 top-0 rounded-full px-[4px] py-[2px] text-[11px] leading-[11px]">
-            {getNotSeenNotificationCount()}
-          </Badge>
+          {
+            getNotSeenNotificationCount() > 0 && 
+              <Badge className="absolute right-0 top-0 rounded-full px-[4px] py-[2px] text-[11px] leading-[11px]" >
+                {getNotSeenNotificationCount()}
+              </Badge> 
+          }
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-5 w-[500px]">
