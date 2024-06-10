@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import Link from "next/link"
 import {
   SIDEBARCTX_STATES,
   useSidebarContext,
@@ -25,6 +26,7 @@ import { IServer } from "@/types/server"
 import { cn } from "@/lib/utils"
 import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 
+import { Button } from "../ui/button"
 import {
   Collapsible,
   CollapsibleContent,
@@ -39,7 +41,7 @@ import {
   TooltipTrigger,
 } from "../ui/tooltip"
 import ExtensionItem from "./extension-item"
-import ServerItem, { DropdownServerItem } from "./server-item"
+import ServerItem from "./server-item"
 
 export default function SidebarSelected() {
   const [
@@ -115,9 +117,34 @@ export default function SidebarSelected() {
     localStorage.setItem("serverSettingsCollapsed", (!isCollapsed).toString())
   }
 
+  // Toggle user operations
+  const [isUserCollapsed, setIsUserCollapsed] = useState(true)
+  const toggleUserCollapsed = () => {
+    setIsUserCollapsed(!isUserCollapsed)
+  }
+
   useEffect(() => {
     setIsCollapsed(localStorage.getItem("serverSettingsCollapsed") == "true")
   }, [])
+
+  const collapsibleUserData = [
+    {
+      link: `/servers/${selected}/users/local`,
+      name: t("sidebar.user_management.local_users"),
+      exact: true,
+    },
+    {
+      link: `/servers/${selected}/users/groups`,
+      name: t("sidebar.user_management.local_groups"),
+      exact: true,
+    },
+    {
+      link: `/servers/${selected}/users/sudoers`,
+      name: t("sidebar.user_management.sudoers"),
+      exact: true,
+      disabled: selectedData.os === "windows",
+    },
+  ]
 
   return (
     <>
@@ -264,30 +291,59 @@ export default function SidebarSelected() {
                         {t("sidebar.updates")}
                       </ServerItem>
                       <div className="mb-1">
-                        <DropdownServerItem
-                          items={[
-                            {
-                              link: `/servers/${selected}/users/local`,
-                              name: t("sidebar.user_management.local_users"),
-                              exact: true,
-                            },
-                            {
-                              link: `/servers/${selected}/users/groups`,
-                              name: t("sidebar.user_management.local_groups"),
-                              exact: true,
-                            },
-                            {
-                              link: `/servers/${selected}/users/sudoers`,
-                              name: t("sidebar.user_management.sudoers"),
-                              exact: true,
-                              disabled: selectedData.os === "windows",
-                            },
-                          ]}
-                          disabled={elementIsActive(selectedData)}
+                        <Collapsible
+                          open={!isUserCollapsed}
+                          onOpenChange={toggleUserCollapsed}
                         >
-                          <Users className="mr-2 size-4" />
-                          {t("sidebar.user_management.title")}
-                        </DropdownServerItem>
+                          <CollapsibleTrigger className="w-full">
+                            <Button
+                              variant={isUserCollapsed ? "ghost" : "secondary"}
+                              size="sm"
+                              className="relative flex w-full justify-between"
+                              onClick={() => toggleUserCollapsed()}
+                            >
+                              <div className="flex items-center">
+                                <Users className="mr-2 size-4" />
+                                {t("sidebar.user_management.title")}
+                              </div>
+                              <ChevronRight
+                                className={cn(
+                                  "size-4 transition-transform",
+                                  !isUserCollapsed && "rotate-90"
+                                )}
+                              />
+                            </Button>
+                          </CollapsibleTrigger>
+                          <CollapsibleContent className="animated-collapsible">
+                            <div className="my-1 flex flex-col gap-y-[3px] rounded-md border p-1">
+                              {collapsibleUserData.map((item) => (
+                                <Link href={item.link} key={item.link}>
+                                  <Button
+                                    variant={
+                                      // Check if the current route is the same as the link
+                                      // If it is, set the variant to secondary
+                                      // Otherwise, set it to ghost
+                                      item.exact
+                                        ? item.link === window.location.pathname
+                                          ? "secondary"
+                                          : "ghost"
+                                        : window.location.pathname.includes(
+                                              item.link
+                                            )
+                                          ? "secondary"
+                                          : "ghost"
+                                    }
+                                    size="sm"
+                                    className="w-full justify-start"
+                                    disabled={item.disabled}
+                                  >
+                                    {item.name}
+                                  </Button>
+                                </Link>
+                              ))}
+                            </div>
+                          </CollapsibleContent>
+                        </Collapsible>
                       </div>
                       <ServerItem
                         link={`/servers/${selected}/open_ports`}
