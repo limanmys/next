@@ -31,6 +31,7 @@ interface ITransferListProps<T extends ITransferListItem> {
   onSave?: (items: T[]) => void
   onSearch?: (text: string) => void
   renderName?: keyof T
+  defaultSearch?: string
 }
 
 const AsyncTransferList = <T extends ITransferListItem>(
@@ -41,7 +42,9 @@ const AsyncTransferList = <T extends ITransferListItem>(
   const [checked, setChecked] = useState<T[]>([])
   const [left, setLeft] = useState<T[]>([])
   const [right, setRight] = useState<T[]>([])
-  const [leftSearch, setLeftSearch] = useState<string>("")
+  const [leftSearch, setLeftSearch] = useState<string>(
+    props.defaultSearch || ""
+  )
   const [rightSearch, setRightSearch] = useState<string>("")
 
   const handleSelectedProp = () => {

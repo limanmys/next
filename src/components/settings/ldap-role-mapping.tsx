@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import { apiService } from "@/services"
 import { useTranslation } from "react-i18next"
 
+import { useDebounce } from "@/lib/debounce"
+
 import { SelectRole } from "../selectbox/role-select"
 import { Card } from "../ui/card"
 import { useToast } from "../ui/use-toast"
@@ -20,8 +22,9 @@ export default function LdapRoleMapping(props: {
   const [roleList, setRoleList] = useState<any>([])
   const [selectedRoleList, setSelectedRoleList] = useState<any>([])
   const [selectedRole, setSelectedRole] = useState<string>("")
+  const [searchValue, setSearchValue] = useState<string>("")
 
-  const fetchRoleMappingList = (param?: string) => {
+  const fetchRoleMappingList = useDebounce((param?: string) => {
     setRoleListLoading(true)
     apiService
       .getInstance()
@@ -54,8 +57,9 @@ export default function LdapRoleMapping(props: {
       .finally(() => {
         setRoleListLoading(false)
         setKey((prev) => prev + 1)
+        setSearchValue(param || "")
       })
-  }
+  }, 300)
 
   const [key, setKey] = useState(0)
 
@@ -105,6 +109,7 @@ export default function LdapRoleMapping(props: {
           onSave={handleRoleMappingSave}
           onSearch={(v: string) => fetchRoleMappingList(v)}
           key={key}
+          defaultSearch={searchValue}
         />
       )}
     </div>
