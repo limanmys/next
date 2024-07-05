@@ -10,6 +10,7 @@ import * as z from "zod"
 import { setFormErrors } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
+import { Icons } from "@/components/ui/icons"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import PageHeader from "@/components/ui/page-header"
@@ -52,6 +53,7 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
     NEW_LOG_LEVEL: z.string(),
     LDAP_IGNORE_CERT: z.boolean(),
     LOGIN_IMAGE: z.string().optional(),
+    DEFAULT_AUTH_GATE: z.enum(["ldap", "liman", "keycloak"]),
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -265,6 +267,37 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
                     </Select>
                     <small className="italic text-muted-foreground">
                       {t("advanced.tweaks.NEW_LOG_LEVEL.subtext")}
+                    </small>
+                  </div>
+                  <FormMessage />
+                </div>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="DEFAULT_AUTH_GATE"
+              render={({ field }) => (
+                <div className="flex flex-col gap-3">
+                  <Label htmlFor="DEFAULT_AUTH_GATE">
+                    Varsayılan Giriş Kapısı Seçimi
+                  </Label>
+                  <div className="relative">
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="liman">
+                          <Icons.dugumluLogo className="size-12 h-6" />
+                        </SelectItem>
+                        <SelectItem value="ldap">LDAP</SelectItem>
+                        <SelectItem value="keycloak">Keycloak</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <small className="italic text-muted-foreground">
+                      Burada seçilen giriş kapısı, kullanıcıların oturum açma
+                      sayfasında varsayılan olarak işaretli olacaktır.
                     </small>
                   </div>
                   <FormMessage />

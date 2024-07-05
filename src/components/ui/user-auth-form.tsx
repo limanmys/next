@@ -47,16 +47,25 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [authTypes, setAuthTypes] = React.useState<string[]>(["liman"])
 
   React.useEffect(() => {
-    setIsLoading(true)
-    apiService
-      .getInstance()
-      .get("/auth/types")
-      .then((res) => {
-        setAuthTypes(res.data)
-      })
-      .finally(() => {
+    const fetchAuthData = async () => {
+      try {
+        const authTypesResponse = await apiService
+          .getInstance()
+          .get("/auth/types")
+        setAuthTypes(authTypesResponse.data)
+
+        const authGateResponse = await apiService
+          .getInstance()
+          .get("/auth/gate")
+        loginForm.setValue("type", authGateResponse.data)
+      } catch (error) {
+        console.error("An error occurred while fetching auth data:", error)
+      } finally {
         setIsLoading(false)
-      })
+      }
+    }
+
+    fetchAuthData()
   }, [])
 
   const formSchema = z.object({
@@ -281,10 +290,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 render={({ field }) => (
                   <div className="flex flex-col gap-2">
                     <Label htmlFor="type">Giriş Kapısı Seçimi</Label>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
+                    <Select onValueChange={field.onChange} value={field.value}>
                       <SelectTrigger>
                         <SelectValue />
                       </SelectTrigger>
@@ -330,7 +336,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                       <Label htmlFor="password">Parola</Label>
 
                       <small className="italic text-muted-foreground">
-                        <Link href="/auth/forgot_password">
+                        <Link href="/auth/forgot_password" tabIndex={-1}>
                           Şifrenizi mi unuttunuz?
                         </Link>
                       </small>
