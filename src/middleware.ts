@@ -21,11 +21,11 @@ export function middleware(request: NextRequest) {
 
   const currentUser = request.cookies.get("currentUser")?.value
 
-  if (!currentUser && request.nextUrl.pathname.includes("forgot_password")) {
-    return NextResponse.next()
-  }
-
-  if (!currentUser && request.nextUrl.pathname.includes("reset_password")) {
+  if (
+    !currentUser &&
+    (request.nextUrl.pathname.includes("forgot_password") ||
+      request.nextUrl.pathname.includes("reset_password"))
+  ) {
     return NextResponse.next()
   }
 
@@ -33,15 +33,6 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(
       new URL("/auth/login?redirect=" + request.nextUrl.pathname, request.url)
     )
-  }
-
-  if (currentUser && Date.now() > JSON.parse(currentUser).expired_at) {
-    request.cookies.delete("currentUser")
-    const response = NextResponse.redirect(
-      new URL("/auth/login?redirect=" + urlBeforeRedirect, request.url)
-    )
-    response.cookies.delete("currentUser")
-    return response
   }
 
   if (currentUser && authRoutes.includes(request.nextUrl.pathname)) {
