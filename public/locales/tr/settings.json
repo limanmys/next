@@ -149,7 +149,7 @@
             "button": "Ekle",
             "title": "Erişim Anahtarı Oluştur",
             "description": "Bu pencereyi kullanarak yeni bir erişim anahtarı oluşturabilirsiniz.",
-            "subtext": "Bu bölüme izin vermek istediğiniz bir subnet adresini ya da IP adresini yazarak erişimi kısıtlayabilirsiniz. -1 yazdığınızda kısıt kalkmaktadır. Örneğin: 192.168.1.0/24",
+            "subtext": "Bu bölüme izin vermek istediğiniz bir IP adresini yazarak erişimi kısıtlayabilirsiniz. -1 yazdığınızda kısıt kalkmaktadır.",
             "alert_title": "Erişim Anahtarınız",
             "alert_description": "Bu tokeni kimse ile paylaşmayınız. Sizin adınıza Liman sistemi üzerinde işlem yapabilir.",
             "form": {
@@ -484,7 +484,7 @@
             "alert_description": "Bu tokeni güvenmediğiniz kimse ile paylaşmayınız. Dış uygulamalarınız bu tokeni kullanarak Liman'a bildirim gönderebilir.",
             "name": "Dış Bildirim Adı",
             "ip": "IP Adresi",
-            "subtext": "Bu bölüme izin vermek istediğiniz bir subnet adresini ya da IP adresini yazarak erişimi kısıtlayabilirsiniz. <br /> <b>Örneğin: 192.168.1.0/24</b>",
+            "subtext": "Bu bölüme izin vermek istediğiniz bir IP adresini yazarak erişimi kısıtlayabilirsiniz. -1 yazdığınızda kısıt kalkmaktadır.",
             "create": "Oluştur"
         }
     },
