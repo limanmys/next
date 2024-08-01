@@ -166,6 +166,7 @@
         "version": "Versiyon",
         "licensed": "Lisanslanmış",
         "not_licensed": "Lisanslanmamış",
+        "non_commercial": "Lisans Gerektirmeyen",
         "license": "Lisans",
         "updated_at": "Güncellenme Tarihi",
         "upload": {

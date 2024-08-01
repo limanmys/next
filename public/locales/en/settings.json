@@ -166,6 +166,7 @@
         "version": "Version",
         "licensed": "Licensed",
         "not_licensed": "Unlicensed",
+        "non_commercial": "No Need For License",
         "license": "Licence",
         "updated_at": "Updated Date",
         "upload": {

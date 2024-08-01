@@ -44,9 +44,7 @@ export default function ExtensionSettingsPage() {
     {
       accessorKey: "licensed",
       accessorFn: (row) => {
-        return row.licensed
-          ? 0 + t("extensions.licensed")
-          : t("extensions.not_licensed")
+        return row.licensed === "licensed" ? "1" : "0"
       },
       header: ({ column }) => (
         <DataTableColumnHeader
@@ -55,11 +53,11 @@ export default function ExtensionSettingsPage() {
           filterPresets={[
             {
               key: t("extensions.licensed"),
-              value: 0 + t("extensions.licensed"),
+              value: "1",
             },
             {
               key: t("extensions.not_licensed"),
-              value: t("extensions.not_licensed"),
+              value: "0",
             },
           ]}
         />
@@ -67,20 +65,22 @@ export default function ExtensionSettingsPage() {
       title: t("extensions.license"),
       cell: ({ row }) => (
         <>
-          {row.original.licensed ? (
+          {row.original.licensed === "licensed" ? (
             <div className="flex items-center">
               <Check className="size-5 text-green-500" />
               <Badge className="ml-2" variant="success">
                 {t("extensions.licensed")}
               </Badge>
             </div>
-          ) : (
+          ) : row.original.licensed === "not_licensed" ? (
             <div className="flex items-center">
               <X className="size-5 text-red-500" />
               <Badge className="ml-2" variant="outline">
                 {t("extensions.not_licensed")}
               </Badge>
             </div>
+          ) : (
+            <Badge variant="outline">{t("extensions.non_commercial")}</Badge>
           )}
         </>
       ),
