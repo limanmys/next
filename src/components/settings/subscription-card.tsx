@@ -241,7 +241,7 @@ export default function SubscriptionCard({
           )}
           {!loading && (
             <>
-              {data.valid && (
+              {data.valid && calculateRemainingDays(data.timestamp) > 0 ? (
                 <div className="flex gap-12">
                   <div className="part">
                     <h5 className="mb-3 font-semibold tracking-tight">
@@ -295,8 +295,7 @@ export default function SubscriptionCard({
                     </div>
                   </div>
                 </div>
-              )}
-              {!data.valid && (
+              ) : (
                 <div className="flex flex-col items-center justify-center gap-4">
                   <XCircle className="size-12 text-red-500" />
                   <h5 className="mb-1 font-semibold tracking-tight">
