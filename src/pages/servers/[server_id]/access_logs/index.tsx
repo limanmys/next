@@ -143,6 +143,14 @@ function AccessLogDetailsWindow({ id }: { id: string }) {
       })
   }
 
+  const itemMessageFormatter = (item: string) => {
+    try {
+      return JSON.stringify(JSON.parse(item), null, 2)
+    } catch (e) {
+      return item
+    }
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -151,7 +159,7 @@ function AccessLogDetailsWindow({ id }: { id: string }) {
           onClick={() => fetchStatus()}
         />
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[800px]">
+      <DialogContent className="max-h-[80vh] overflow-y-auto sm:max-w-[800px]">
         <DialogHeader>
           <DialogTitle>{t("access_logs.dialog.title")}</DialogTitle>
           <DialogDescription>
@@ -161,20 +169,20 @@ function AccessLogDetailsWindow({ id }: { id: string }) {
         {loading ? (
           <Skeleton className="h-64 w-full" />
         ) : (
-          <div className="relative grid gap-4">
-            <Accordion type="single" collapsible className="w-full">
-              {data?.map((item: any, index: any) => {
-                return (
-                  <AccordionItem value={index + 1} key={index + 1}>
-                    <AccordionTrigger>{item.title}</AccordionTrigger>
-                    <AccordionContent>
-                      <pre className="max-w-0">{item.message}</pre>
-                    </AccordionContent>
-                  </AccordionItem>
-                )
-              })}
-            </Accordion>
-          </div>
+          <Accordion type="single" collapsible className="block w-full">
+            {data?.map((item: any, index: any) => {
+              return (
+                <AccordionItem value={index + 1} key={index + 1}>
+                  <AccordionTrigger>{item.title}</AccordionTrigger>
+                  <AccordionContent>
+                    <pre className="max-w-[720px]">
+                      {itemMessageFormatter(item.message)}
+                    </pre>
+                  </AccordionContent>
+                </AccordionItem>
+              )
+            })}
+          </Accordion>
         )}
       </DialogContent>
     </Dialog>

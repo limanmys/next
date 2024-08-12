@@ -1,13 +1,14 @@
-import { ReactElement } from "react"
 import { NextPageWithLayout } from "@/pages/_app"
 import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Save } from "lucide-react"
+import { ReactElement, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import * as z from "zod"
 
-import { setFormErrors } from "@/lib/utils"
+import AdvancedLayout from "@/components/_layout/advanced_layout"
+import { Form, FormField, FormMessage } from "@/components/form/form"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -20,8 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { useToast } from "@/components/ui/use-toast"
-import AdvancedLayout from "@/components/_layout/advanced_layout"
-import { Form, FormField, FormMessage } from "@/components/form/form"
+import { setFormErrors } from "@/lib/utils"
 
 const AdvancedLogRotationPage: NextPageWithLayout = () => {
   const { t } = useTranslation("settings")
@@ -36,6 +36,22 @@ const AdvancedLogRotationPage: NextPageWithLayout = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   })
+
+  useEffect(() => {
+    apiService
+      .getInstance()
+      .get("/settings/advanced/log_rotation")
+      .then((res) => {
+        form.reset(res.data)
+      })
+      .catch((e) => {
+        toast({
+          title: t("error"),
+          description: t("advanced.logrotation.error"),
+          variant: "destructive",
+        })
+      })
+  }, [])
 
   const handleSave = (data: z.infer<typeof formSchema>) => {
     apiService
