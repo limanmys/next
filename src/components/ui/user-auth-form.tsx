@@ -320,6 +320,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                     <Input
                       id="name"
                       placeholder="example@liman.dev"
+                      autoComplete="new-password"
                       {...field}
                     />
                     <FormMessage />
@@ -345,6 +346,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                       id="password"
                       placeholder="••••••••••"
                       type="password"
+                      autoComplete="new-password"
                       {...field}
                     />
                     <FormMessage />
