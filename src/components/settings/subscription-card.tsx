@@ -89,6 +89,16 @@ export default function SubscriptionCard({
     return days
   }
 
+  // Function that takes YYYY-MM-DD formatted date and shows remaining days
+  const formatStringTimestampToDays = (date: string) => {
+    const d = new Date(date)
+    const now = new Date()
+    const diff = d.getTime() - now.getTime()
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24))
+
+    return days
+  }
+
   useEffect(() => {
     setServerLoading(true)
 
@@ -241,7 +251,10 @@ export default function SubscriptionCard({
           )}
           {!loading && (
             <>
-              {data.valid && calculateRemainingDays(data.timestamp) > 0 ? (
+              {data.valid &&
+              (data.type !== "php"
+                ? calculateRemainingDays(data.timestamp) > 0
+                : true) ? (
                 <div className="flex gap-12">
                   <div className="part">
                     <h5 className="mb-3 font-semibold tracking-tight">
@@ -270,7 +283,9 @@ export default function SubscriptionCard({
                         <span className="text-3xl font-bold">
                           {data.type != "php"
                             ? calculateRemainingDays(data.timestamp)
-                            : data.timestamp}
+                            : formatStringTimestampToDays(
+                                data.timestamp as unknown as string
+                              )}
                         </span>
                         <small className="text-foreground/60">
                           {t("subscriptions.subcard.days_remaining")}
