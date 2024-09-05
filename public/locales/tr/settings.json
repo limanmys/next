@@ -332,6 +332,12 @@
             "success": "Kullanıcılar başarıyla güncellendi.",
             "error": "Kullanıcılar güncellenirken bir hata oluştu."
         },
+        "views": {
+            "title": "Görünüm İzinleri",
+            "description": "Kullanıcıların Liman'ı gördükleri düzeni değiştirin.",
+            "success": "Görünüm izinleri başarıyla güncellendi.",
+            "error": "Görünüm izinleri güncellenirken bir hata oluştu."
+        },
         "liman": {
             "title": "Liman İzinleri",
             "description": "Liman üzerinde gerçekleştirilen fonksiyonlara yetki verin.",

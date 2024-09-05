@@ -3,6 +3,7 @@ import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import {
   ChevronLeft,
+  Eye,
   FunctionSquare,
   Server,
   Text,
@@ -57,6 +58,13 @@ export default function RoleLayout({ children }: { children: ReactNode }) {
       href: `/settings/roles/${router.query.role_id}/functions`,
     },
     {
+      id: "views",
+      icon: Eye,
+      title: t("roles.views.title"),
+      description: t("roles.views.description"),
+      href: `/settings/roles/${router.query.role_id}/views`,
+    },
+    {
       id: "variables",
       icon: Text,
       title: t("roles.variables.title"),
@@ -93,7 +101,7 @@ export default function RoleLayout({ children }: { children: ReactNode }) {
       }}
     >
       <div className="col-span-1 border-r">
-        <div className="flex items-center border-b p-8 text-2xl font-bold">
+        <div className="flex items-center border-b px-8 py-6 pt-7 text-2xl font-bold">
           <ChevronLeft
             onClick={() => router.push("/settings/roles")}
             className="mr-2 size-6 cursor-pointer"
