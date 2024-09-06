@@ -1,6 +1,8 @@
+import { useMemo } from "react"
 import dynamic from "next/dynamic"
 import { useTranslation } from "react-i18next"
 
+import { DashboardEnum } from "@/types/user"
 import { cn } from "@/lib/utils"
 import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 import DashboardCards from "@/components/dashboard/cards"
@@ -16,12 +18,41 @@ export default function IndexPage() {
   const { t } = useTranslation("dashboard")
   const user = useCurrentUser()
 
+  const viewPermissions = user.permissions.view
+
+  const dashboardItems: DashboardEnum[] = [
+    "most_used_extensions",
+    "auth_logs",
+    "most_used_servers",
+  ]
+
+  const dashboardGridItems = useMemo(() => {
+    return viewPermissions.dashboard
+      .filter((item) => dashboardItems.includes(item))
+      .sort((a, b) => dashboardItems.indexOf(a) - dashboardItems.indexOf(b))
+  }, [viewPermissions.dashboard, dashboardItems])
+
+  const dashboardGridItemWidthClassName = useMemo(() => {
+    const dashboardGridItemsLength = dashboardGridItems.length
+    return dashboardGridItemsLength === 1
+      ? ""
+      : `xl:w-1/${dashboardGridItemsLength}`
+  }, [dashboardGridItems])
+
+  const renderDashboardItemsWithPermissions = useMemo(() => {
+    return dashboardGridItems.map((item) => (
+      <div key={item} className={cn("w-full", dashboardGridItemWidthClassName)}>
+        {item === "most_used_extensions" && <MostUsedExtensions />}
+        {item === "most_used_servers" && <FavoriteServers />}
+        {item === "auth_logs" && <LatestLoggedInUsers />}
+      </div>
+    ))
+  }, [dashboardGridItems, dashboardGridItemWidthClassName])
+
   return (
     <div
       className="flex flex-col"
-      style={{
-        height: "var(--container-height)",
-      }}
+      style={{ height: "var(--container-height)" }}
     >
       <div className="title flex items-center justify-between gap-3 overflow-hidden p-8">
         <h2 className="text-2xl font-semibold">{t("title", "Pano")}</h2>
@@ -33,26 +64,7 @@ export default function IndexPage() {
       <DashboardCards />
 
       <div className="flex w-full flex-[2] flex-col divide-x xl:flex-row">
-        <div
-          className={cn("w-full", user.status === 1 ? "xl:w-1/3" : "xl:w-1/2")}
-        >
-          <MostUsedExtensions />
-        </div>
-        {user.status === 1 && (
-          <div
-            className={cn(
-              "w-full",
-              user.status === 1 ? "xl:w-1/3" : "xl:w-1/2"
-            )}
-          >
-            <LatestLoggedInUsers />
-          </div>
-        )}
-        <div
-          className={cn("w-full", user.status === 1 ? "xl:w-1/3" : "xl:w-1/2")}
-        >
-          <FavoriteServers />
-        </div>
+        {renderDashboardItemsWithPermissions}
       </div>
     </div>
   )

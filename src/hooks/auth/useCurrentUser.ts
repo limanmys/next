@@ -4,6 +4,7 @@ import Cookies from "js-cookie"
 import { IUser } from "@/types/user"
 
 const defaultUserObject: IUser = {
+  name: "",
   status: 1,
   permissions: {
     server_details: true,
@@ -17,15 +18,18 @@ const defaultUserObject: IUser = {
 export function getCurrentUser(): IUser {
   const currentUser = Cookies.get("currentUser")
   if (!currentUser) return defaultUserObject
-  return JSON.parse(currentUser || { user: defaultUserObject }).user
+  return JSON.parse(
+    currentUser || `{ "user": ${JSON.stringify(defaultUserObject)} }`
+  ).user
 }
 
 export function useCurrentUser(): IUser {
-  const [currentUser, setCurrentUser] = useState<IUser>(defaultUserObject)
+  const [currentUser, setCurrentUser] = useState<IUser>(() => getCurrentUser())
 
   useEffect(() => {
-    setCurrentUser(getCurrentUser())
+    const updatedUser = getCurrentUser()
+    setCurrentUser(updatedUser)
   }, [])
 
-  return currentUser as IUser
+  return currentUser
 }

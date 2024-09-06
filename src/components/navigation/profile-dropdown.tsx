@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import md5 from "blueimp-md5"
-import Cookies from "js-cookie"
 import { ChevronDown, LogOut, User } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
-import { IUser } from "@/types/user"
 import { cn } from "@/lib/utils"
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 import { useLogout } from "@/hooks/auth/useLogout"
 import { Button, buttonVariants } from "@/components/ui/button"
 
@@ -23,13 +21,7 @@ export default function ProfileDropdown() {
   const router = useRouter()
   const { t, i18n } = useTranslation("common")
 
-  const [user, setUser] = useState({} as IUser)
-  useEffect(() => {
-    const currentUser = Cookies.get("currentUser")
-    if (currentUser) {
-      setUser(JSON.parse(currentUser).user)
-    }
-  }, [])
+  const user = useCurrentUser()
 
   const { logout } = useLogout()
 

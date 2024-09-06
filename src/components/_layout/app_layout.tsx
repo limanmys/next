@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef, useState } from "react"
+import { ReactNode, useCallback, useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { Router, useRouter } from "next/router"
 import {
@@ -12,6 +12,7 @@ import { useTranslation } from "react-i18next"
 import { ImperativePanelHandle } from "react-resizable-panels"
 
 import { cn } from "@/lib/utils"
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 import { useLogout } from "@/hooks/auth/useLogout"
 import {
   AlertDialog,
@@ -42,42 +43,55 @@ const Layout = ({ Component, pageProps }: any) => {
     easing: "linear",
   })
   const panel = useRef<ImperativePanelHandle>(null)
-
-  Router.events.on("routeChangeStart", () => nProgress.start())
-  Router.events.on("routeChangeComplete", () => {
-    sidebarCtx[SIDEBARCTX_STATES.setCollapsed](true)
-    nProgress.done()
-  })
-  Router.events.on("routeChangeError", () => nProgress.done())
-
-  const getLayout = Component.getLayout ?? ((page: ReactNode) => page)
-  const [open, setOpen] = useState<boolean>(false)
   const { logout } = useLogout()
+  const [open, setOpen] = useState(false)
+
+  const user = useCurrentUser()
 
   useEffect(() => {
-    let authChecker = setInterval(() => {
+    const handleRouteChangeStart = () => nProgress.start()
+    const handleRouteChangeComplete = () => {
+      sidebarCtx[SIDEBARCTX_STATES.setCollapsed](true)
+      nProgress.done()
+    }
+    const handleRouteChangeError = () => nProgress.done()
+
+    Router.events.on("routeChangeStart", handleRouteChangeStart)
+    Router.events.on("routeChangeComplete", handleRouteChangeComplete)
+    Router.events.on("routeChangeError", handleRouteChangeError)
+
+    return () => {
+      Router.events.off("routeChangeStart", handleRouteChangeStart)
+      Router.events.off("routeChangeComplete", handleRouteChangeComplete)
+      Router.events.off("routeChangeError", handleRouteChangeError)
+    }
+  }, [sidebarCtx])
+
+  useEffect(() => {
+    const checkAuthStatus = () => {
       let currentUser = Cookies.get("currentUser")
       if (currentUser) {
         currentUser = JSON.parse(currentUser)
-      }
-
-      if (currentUser && currentUser.expired_at) {
-        // expired_at is unix epoch milliseconds time
-        // check if expired_at is less than current time
-        // if it is, then logout
-        if (currentUser.expired_at < Date.now()) {
+        if (currentUser.expired_at && currentUser.expired_at < Date.now()) {
           setOpen(true)
           logout()
         }
-      } else {
-        clearInterval(authChecker)
       }
-    }, 30000)
-
-    return () => {
-      clearInterval(authChecker)
     }
-  }, [])
+
+    const authChecker = setInterval(checkAuthStatus, 30000)
+
+    return () => clearInterval(authChecker)
+  }, [logout])
+
+  const getLayout = useCallback(
+    Component.getLayout ?? ((page: ReactNode) => page),
+    [Component]
+  )
+
+  if (!user || user.name === "") {
+    return null
+  }
 
   return (
     <>

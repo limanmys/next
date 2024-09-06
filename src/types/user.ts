@@ -33,10 +33,23 @@ export interface IAuthLog {
   user: IUser
 }
 
+export type DashboardEnum =
+  | "servers"
+  | "extensions"
+  | "users"
+  | "version"
+  | "most_used_extensions"
+  | "most_used_servers"
+  | "auth_logs"
+
 export interface ILimanPermissions {
   server_details: boolean
   server_services: boolean
   add_server: boolean
   update_server: boolean
   view_logs: boolean
+  view: {
+    sidebar: "servers" | "extensions"
+    dashboard: DashboardEnum[]
+  }
 }

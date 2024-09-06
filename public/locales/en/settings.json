@@ -332,6 +332,23 @@
             "success": "Users have been updated successfully.",
             "error": "An error occurred while updating users."
         },
+        "views": {
+            "title": "View Permissions",
+            "description": "Modify how users see the layout in Liman.",
+            "success": "View permissions updated successfully.",
+            "error": "An error occurred while updating view permissions.",
+            "sidebar": "Sidebar View Options",
+            "sidebar_servers": "Server Display (Classic)",
+            "sidebar_extensions": "Extension List Display",
+            "sidebar_description": "Determine how the sidebar will appear to users with the role.",
+            "dashboard": "Dashboard View Options",
+            "dashboard_description": "Select which widgets users should see on the dashboard.",
+            "servers": "Number of Servers",
+            "users": "Number of Users",
+            "version": "Liman Version",
+            "most_used_extensions": "Most Used Extensions",
+            "most_used_servers": "Most Used Servers"
+        },
         "liman": {
             "title": "Liman Permissions",
             "description": "Authorize functions performed on Liman.",

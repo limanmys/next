@@ -331,6 +331,23 @@
             "success": "Die Benutzer wurden erfolgreich aktualisiert.",
             "error": "Beim Aktualisieren von Benutzern ist ein Fehler aufgetreten."
         },
+        "views": {
+            "title": "Ansichtsberechtigungen",
+            "description": "Ändern Sie das Layout, wie Benutzer Liman sehen.",
+            "success": "Ansichtsberechtigungen erfolgreich aktualisiert.",
+            "error": "Beim Aktualisieren der Ansichtsberechtigungen ist ein Fehler aufgetreten.",
+            "sidebar": "Seitenleisten-Ansichtsoptionen",
+            "sidebar_servers": "Serveranzeige (Klassisch)",
+            "sidebar_extensions": "Erweiterungsliste anzeigen",
+            "sidebar_description": "Bestimmen Sie, wie die Seitenleiste für Benutzer mit der Rolle angezeigt wird.",
+            "dashboard": "Dashboard-Ansichtsoptionen",
+            "dashboard_description": "Wählen Sie aus, welche Widgets die Benutzer im Dashboard sehen sollen.",
+            "servers": "Anzahl der Server",
+            "users": "Anzahl der Benutzer",
+            "version": "Liman-Version",
+            "most_used_extensions": "Meistgenutzte Erweiterungen",
+            "most_used_servers": "Meistgenutzte Server"
+        },
         "liman": {
             "title": "liman Genehmigungen",
             "description": "Autorisieren Sie Funktionen, die auf Liman ausgeführt werden.",

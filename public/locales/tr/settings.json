@@ -336,7 +336,18 @@
             "title": "Görünüm İzinleri",
             "description": "Kullanıcıların Liman'ı gördükleri düzeni değiştirin.",
             "success": "Görünüm izinleri başarıyla güncellendi.",
-            "error": "Görünüm izinleri güncellenirken bir hata oluştu."
+            "error": "Görünüm izinleri güncellenirken bir hata oluştu.",
+            "sidebar": "Sol Menü Görünüm Seçenekleri",
+            "sidebar_servers": "Sunucu Gösterimi (Klasik)",
+            "sidebar_extensions": "Eklenti Listesi Gösterimi",
+            "sidebar_description": "Sol menünün role sahip kullanıcılar tarafından nasıl gözükeceğini belirleyin.",
+            "dashboard": "Pano Görünüm Seçenekleri",
+            "dashboard_description": "Kullanıcıların panoda görmesi gereken widgetları belirleyin.",
+            "servers": "Sunucu Sayısı",
+            "users": "Kullanıcı Sayısı",
+            "version": "Liman Versiyonu",
+            "most_used_extensions": "En Çok Kullanılan Eklentiler",
+            "most_used_servers": "En Çok Kullanılan Sunucular"
         },
         "liman": {
             "title": "Liman İzinleri",

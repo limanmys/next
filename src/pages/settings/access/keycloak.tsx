@@ -52,15 +52,15 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
       .post("/settings/access/keycloak/configuration", data)
       .then(() => {
         toast({
-          title: t("access.keycloak.toasts.success.title"),
-          description: t("access.keycloak.toasts.success.description"),
+          title: t("success"),
+          description: t("access.keycloak.toast.success.description"),
         })
       })
       .catch((e) => {
         if (!setFormErrors(e, form)) {
           toast({
-            title: t("access.keycloak.toasts.fail.title"),
-            description: t("access.keycloak.toasts.fail.description"),
+            title: t("error"),
+            description: t("access.keycloak.toast.fail.description"),
             variant: "destructive",
           })
         }
