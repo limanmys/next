@@ -1,10 +1,7 @@
 import dynamic from "next/dynamic"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import {
-  SIDEBARCTX_STATES,
-  useSidebarContext,
-} from "@/providers/sidebar-provider"
+import { useSidebarContext } from "@/providers/sidebar-provider"
 import { Menu, Settings } from "lucide-react"
 
 import { Button, buttonVariants } from "@/components/ui/button"
@@ -30,7 +27,7 @@ export function SiteHeader() {
             <Button
               variant="ghost"
               className="mr-3 p-0"
-              onClick={() => sidebarCtx[SIDEBARCTX_STATES.toggleSidebar]()}
+              onClick={() => sidebarCtx.toggleSidebar()}
             >
               <Menu className="size-6" />
             </Button>
@@ -38,7 +35,7 @@ export function SiteHeader() {
           <Link
             href="/"
             className="flex items-center space-x-2"
-            onClick={() => sidebarCtx[SIDEBARCTX_STATES.setSelected]("")}
+            onClick={() => sidebarCtx.setSelected("")}
           >
             <Icons.dugumluLogo className="w-18 h-8 dark:fill-white" />
           </Link>

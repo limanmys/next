@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react"
-import {
-  SIDEBARCTX_STATES,
-  useSidebarContext,
-} from "@/providers/sidebar-provider"
+import { useSidebarContext } from "@/providers/sidebar-provider"
 import { apiService } from "@/services"
 import { FolderX } from "lucide-react"
 import { useTranslation } from "react-i18next"
@@ -46,9 +43,7 @@ export default function FavoriteServers() {
             return (
               <div
                 key={item.id}
-                onClick={() =>
-                  sidebarCtx[SIDEBARCTX_STATES.setSelected](item.id)
-                }
+                onClick={() => sidebarCtx.setSelected(item.id)}
               >
                 <ServerCard item={item} />
               </div>

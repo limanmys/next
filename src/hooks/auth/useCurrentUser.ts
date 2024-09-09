@@ -12,6 +12,9 @@ const defaultUserObject: IUser = {
     add_server: true,
     update_server: true,
     view_logs: true,
+    view: {
+      sidebar: "servers",
+    },
   },
 } as IUser
 

@@ -1,8 +1,5 @@
 import { useState } from "react"
-import {
-  SIDEBARCTX_STATES,
-  useSidebarContext,
-} from "@/providers/sidebar-provider"
+import { useSidebarContext } from "@/providers/sidebar-provider"
 import { apiService } from "@/services"
 import { Row } from "@tanstack/react-table"
 import { Edit2, Key, MoreHorizontal, Trash } from "lucide-react"
@@ -120,7 +117,7 @@ function Edit({
           description: t("servers.actions.edit.success_msg"),
         })
         emitter.emit("REFETCH_SERVERS")
-        sidebarCtx[SIDEBARCTX_STATES.refreshServers]()
+        sidebarCtx.refreshServers()
         setOpen(false)
       })
       .catch(() => {
@@ -233,7 +230,7 @@ function DeleteServer({
           description: t("servers.actions.delete_dialog.success_msg"),
         })
         emitter.emit("REFETCH_SERVERS")
-        sidebarCtx[SIDEBARCTX_STATES.refreshServers]()
+        sidebarCtx.refreshServers()
         setOpen(false)
       })
       .catch(() => {

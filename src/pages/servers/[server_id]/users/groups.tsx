@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
-import {
-  SIDEBARCTX_STATES,
-  useSidebarContext,
-} from "@/providers/sidebar-provider"
+import { useSidebarContext } from "@/providers/sidebar-provider"
 import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { PlusCircle } from "lucide-react"
@@ -92,8 +89,8 @@ export default function LocalGroups() {
         selectable={false}
       >
         {!(
-          sidebarCtx[SIDEBARCTX_STATES.selectedData].type &&
-          sidebarCtx[SIDEBARCTX_STATES.selectedData].type.includes("winrm")
+          sidebarCtx.selectedData.type &&
+          sidebarCtx.selectedData.type.includes("winrm")
         ) && <CreateLocalGroup />}
       </DataTable>
     </>

@@ -2,22 +2,61 @@ import * as React from "react"
 import { useRouter } from "next/router"
 import { apiService } from "@/services"
 
+import { IExtension } from "@/types/extension"
 import { IServer } from "@/types/server"
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 
-const Context = React.createContext([] as any)
+interface SidebarContextType {
+  selected: string
+  setSelected: React.Dispatch<React.SetStateAction<string>>
+  selectedData: IServer
+  setSelectedData: React.Dispatch<React.SetStateAction<IServer>>
+  selectedLoading: boolean
+  setSelectedLoading: React.Dispatch<React.SetStateAction<boolean>>
+  refreshSelected: () => void
+  settingsActive: boolean
+  setSettingsActive: React.Dispatch<React.SetStateAction<boolean>>
+  serversLoading: boolean
+  setServersLoading: React.Dispatch<React.SetStateAction<boolean>>
+  servers: IServer[]
+  setServers: React.Dispatch<React.SetStateAction<IServer[]>>
+  refreshServers: () => void
+  // Add extension menu support
+  extensionsLoading: boolean
+  setExtensionsLoading: React.Dispatch<React.SetStateAction<boolean>>
+  extensions: IExtension[]
+  setExtensions: React.Dispatch<React.SetStateAction<IExtension[]>>
+  refreshExtensions: () => void
+  collapsed: boolean
+  setCollapsed: React.Dispatch<React.SetStateAction<boolean>>
+  toggleSidebar: () => void
+}
 
-export function SidebarProvider({
+const SidebarContext = React.createContext<SidebarContextType | undefined>(
+  undefined
+)
+
+export const SidebarProvider = ({
   children,
 }: {
   children: React.ReactNode
-}): React.JSX.Element {
+}) => {
   const router = useRouter()
+  const user = useCurrentUser()
   const [selected, setSelected] = React.useState<string>("")
   const [selectedLoading, setSelectedLoading] = React.useState<boolean>(true)
   const [selectedData, setSelectedData] = React.useState<IServer>({} as IServer)
   const [settingsActive, setSettingsActive] = React.useState<boolean>(false)
+
+  // Server menu state
   const [serversLoading, setServersLoading] = React.useState<boolean>(true)
   const [servers, setServers] = React.useState<IServer[]>([])
+
+  // Extension menu state
+  const [extensionsLoading, setExtensionsLoading] =
+    React.useState<boolean>(true)
+  const [extensions, setExtensions] = React.useState<IExtension[]>([])
+
   const [collapsed, setCollapsed] = React.useState<boolean>(true)
 
   React.useEffect(() => {
@@ -30,23 +69,28 @@ export function SidebarProvider({
   }, [router.asPath])
 
   React.useEffect(() => {
+    if (user.permissions.view.sidebar === "extensions") {
+      setSelected("")
+      return
+    }
+
     if (router.query.server_id) {
       setSelected(router.query.server_id as string)
     } else {
       setSelected("")
     }
-  }, [router.query.server_id])
+  }, [router.query.server_id, user.permissions.view.sidebar])
 
-  const refreshSelected = () => {
+  const refreshSelected = React.useCallback(() => {
     apiService
       .getInstance()
       .get(`/menu/servers/${selected}`)
       .then((res) => {
         setSelectedData(res.data)
       })
-  }
+  }, [selected])
 
-  const refreshServers = () => {
+  const refreshServers = React.useCallback(() => {
     apiService
       .getInstance()
       .get("/menu/servers")
@@ -54,59 +98,76 @@ export function SidebarProvider({
         setServers(res.data)
         setServersLoading(false)
       })
-  }
+  }, [])
 
-  const toggleSidebar = () => {
-    setCollapsed(!collapsed)
-  }
+  // Add extension menu support
+  const refreshExtensions = React.useCallback(() => {
+    apiService
+      .getInstance()
+      .get("/menu/extensions")
+      .then((res) => {
+        setExtensions(res.data)
+        setExtensionsLoading(false)
+      })
+  }, [])
+
+  const toggleSidebar = React.useCallback(() => {
+    setCollapsed((prev) => !prev)
+  }, [])
+
+  const contextValue = React.useMemo(
+    () => ({
+      selected,
+      setSelected,
+      selectedData,
+      setSelectedData,
+      selectedLoading,
+      setSelectedLoading,
+      refreshSelected,
+      settingsActive,
+      setSettingsActive,
+      serversLoading,
+      setServersLoading,
+      servers,
+      setServers,
+      refreshServers,
+      extensionsLoading,
+      setExtensionsLoading,
+      extensions,
+      setExtensions,
+      refreshExtensions,
+      collapsed,
+      setCollapsed,
+      toggleSidebar,
+    }),
+    [
+      selected,
+      selectedData,
+      selectedLoading,
+      settingsActive,
+      serversLoading,
+      servers,
+      collapsed,
+      refreshSelected,
+      refreshServers,
+      extensionsLoading,
+      extensions,
+      refreshExtensions,
+      toggleSidebar,
+    ]
+  )
 
   return (
-    <Context.Provider
-      value={[
-        selected,
-        setSelected,
-        selectedData,
-        setSelectedData,
-        selectedLoading,
-        setSelectedLoading,
-        refreshSelected,
-        settingsActive,
-        setSettingsActive,
-        serversLoading,
-        setServersLoading,
-        servers,
-        setServers,
-        refreshServers,
-        collapsed,
-        setCollapsed,
-        toggleSidebar,
-      ]}
-    >
+    <SidebarContext.Provider value={contextValue}>
       {children}
-    </Context.Provider>
+    </SidebarContext.Provider>
   )
 }
 
-export function useSidebarContext() {
-  return React.useContext(Context)
-}
-
-export const SIDEBARCTX_STATES = {
-  selected: 0,
-  setSelected: 1,
-  selectedData: 2,
-  setSelectedData: 3,
-  selectedLoading: 4,
-  setSelectedLoading: 5,
-  refreshSelected: 6,
-  settingsActive: 7,
-  setSettingsActive: 8,
-  serversLoading: 9,
-  setServersLoading: 10,
-  servers: 11,
-  setServers: 12,
-  refreshServers: 13,
-  collapsed: 14,
-  setCollapsed: 15,
-  toggleSidebar: 16,
+export const useSidebarContext = () => {
+  const context = React.useContext(SidebarContext)
+  if (context === undefined) {
+    throw new Error("useSidebarContext must be used within a SidebarProvider")
+  }
+  return context
 }

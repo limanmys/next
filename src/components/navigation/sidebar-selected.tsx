@@ -1,9 +1,6 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import Link from "next/link"
-import {
-  SIDEBARCTX_STATES,
-  useSidebarContext,
-} from "@/providers/sidebar-provider"
+import { useSidebarContext } from "@/providers/sidebar-provider"
 import { apiService } from "@/services"
 import axios, { CancelTokenSource } from "axios"
 import {
@@ -44,34 +41,33 @@ import ExtensionItem from "./extension-item"
 import ServerItem from "./server-item"
 
 export default function SidebarSelected() {
-  const [
+  const {
     selected,
-    setSelected,
     selectedData,
     setSelectedData,
     selectedLoading,
     setSelectedLoading,
-  ] = useSidebarContext()
-  const sidebarCtx = useSidebarContext()
+  } = useSidebarContext()
   const user = useCurrentUser()
   const { t } = useTranslation("common")
 
-  let cancelToken: CancelTokenSource | undefined
+  const [isCollapsed, setIsCollapsed] = useState(true)
+  const [isUserCollapsed, setIsUserCollapsed] = useState(true)
+
+  const cancelToken = useRef<CancelTokenSource | undefined>(undefined)
 
   useEffect(() => {
-    // Cancel the previous request before making a new request
-    if (cancelToken) {
-      cancelToken.cancel()
+    if (cancelToken.current) {
+      cancelToken.current.cancel()
     }
 
-    // Create a new CancelToken
-    cancelToken = axios.CancelToken.source()
+    cancelToken.current = axios.CancelToken.source()
 
     setSelectedLoading(true)
     apiService
       .getInstance()
       .get(`/menu/servers/${selected}`, {
-        cancelToken: cancelToken.token,
+        cancelToken: cancelToken.current.token,
       })
       .then((res) => {
         setSelectedData(res.data)
@@ -84,41 +80,37 @@ export default function SidebarSelected() {
       })
 
     return () => {
-      if (cancelToken) {
-        cancelToken.cancel()
+      if (cancelToken.current) {
+        cancelToken.current.cancel()
       }
     }
-  }, [selected])
+  }, [selected, setSelectedData, setSelectedLoading])
 
-  const toggleFavorite = (id: string) => {
-    apiService
-      .getInstance()
-      .post(`/servers/${id}/favorites`)
-      .then(() => {
-        sidebarCtx[SIDEBARCTX_STATES.refreshServers]()
-        setSelectedData((prev: IServer) => {
-          return {
+  const toggleFavorite = useCallback(
+    (id: string) => {
+      apiService
+        .getInstance()
+        .post(`/servers/${id}/favorites`)
+        .then(() => {
+          setSelectedData((prev: IServer) => ({
             ...prev,
             is_favorite: !prev.is_favorite,
-          }
+          }))
         })
-      })
-  }
+    },
+    [setSelectedData]
+  )
 
-  const elementIsActive = (server: IServer): boolean => {
-    return !server.is_online || !server.can_run_command
-  }
+  const elementIsActive = useCallback((): boolean => {
+    return !(selectedData.is_online && selectedData.can_run_command)
+  }, [selectedData])
 
-  // Toggle server opts
-  // store it on the localstorage if it's collapsed or not
-  const [isCollapsed, setIsCollapsed] = useState(true)
   const toggleCollapsed = () => {
     setIsCollapsed(!isCollapsed)
     localStorage.setItem("serverSettingsCollapsed", (!isCollapsed).toString())
   }
 
   // Toggle user operations
-  const [isUserCollapsed, setIsUserCollapsed] = useState(true)
   const toggleUserCollapsed = () => {
     setIsUserCollapsed(!isUserCollapsed)
   }
@@ -221,7 +213,7 @@ export default function SidebarSelected() {
                 <ServerItem
                   link={`/servers/${selected}`}
                   exact={true}
-                  disabled={elementIsActive(selectedData)}
+                  disabled={elementIsActive()}
                 >
                   <TrendingUp className="mr-2 size-4" />
                   {t("sidebar.system_status")}
@@ -243,7 +235,7 @@ export default function SidebarSelected() {
               <Collapsible open={!isCollapsed}>
                 <CollapsibleTrigger
                   className="mt-3 w-full px-2 text-left"
-                  onClick={() => toggleCollapsed()}
+                  onClick={toggleCollapsed}
                 >
                   <div className="flex items-center justify-between">
                     <h2 className="text-lg font-semibold tracking-tight">
@@ -262,7 +254,7 @@ export default function SidebarSelected() {
                   {user.permissions.server_services && (
                     <ServerItem
                       link={`/servers/${selected}/services`}
-                      disabled={elementIsActive(selectedData)}
+                      disabled={elementIsActive()}
                     >
                       <ServerCog className="mr-2 size-4" />
                       {t("sidebar.services")}
@@ -273,8 +265,7 @@ export default function SidebarSelected() {
                       <ServerItem
                         link={`/servers/${selected}/packages`}
                         disabled={
-                          elementIsActive(selectedData) ||
-                          selectedData.os === "windows"
+                          elementIsActive() || selectedData.os === "windows"
                         }
                       >
                         <PackageOpen className="mr-2 size-4" />
@@ -283,8 +274,7 @@ export default function SidebarSelected() {
                       <ServerItem
                         link={`/servers/${selected}/updates`}
                         disabled={
-                          elementIsActive(selectedData) ||
-                          selectedData.os === "windows"
+                          elementIsActive() || selectedData.os === "windows"
                         }
                       >
                         <PackageSearch className="mr-2 size-4" />
@@ -294,13 +284,16 @@ export default function SidebarSelected() {
                         <Collapsible
                           open={!isUserCollapsed}
                           onOpenChange={toggleUserCollapsed}
+                          disabled={elementIsActive()}
                         >
                           <CollapsibleTrigger className="w-full">
                             <Button
                               variant={isUserCollapsed ? "ghost" : "secondary"}
                               size="sm"
                               className="relative flex w-full justify-between"
-                              onClick={() => toggleUserCollapsed()}
+                              onClick={toggleUserCollapsed}
+                              disabled={elementIsActive()}
+                              as={!elementIsActive() ? "div" : "button"}
                             >
                               <div className="flex items-center">
                                 <Users className="mr-2 size-4" />
@@ -320,9 +313,6 @@ export default function SidebarSelected() {
                                 <Link href={item.link} key={item.link}>
                                   <Button
                                     variant={
-                                      // Check if the current route is the same as the link
-                                      // If it is, set the variant to secondary
-                                      // Otherwise, set it to ghost
                                       item.exact
                                         ? item.link === window.location.pathname
                                           ? "secondary"
@@ -348,8 +338,7 @@ export default function SidebarSelected() {
                       <ServerItem
                         link={`/servers/${selected}/open_ports`}
                         disabled={
-                          elementIsActive(selectedData) ||
-                          selectedData.os === "windows"
+                          elementIsActive() || selectedData.os === "windows"
                         }
                       >
                         <Network className="mr-2 size-4" />

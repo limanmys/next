@@ -1,10 +1,7 @@
 import { ReactNode, useCallback, useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { Router, useRouter } from "next/router"
-import {
-  SIDEBARCTX_STATES,
-  useSidebarContext,
-} from "@/providers/sidebar-provider"
+import { useSidebarContext } from "@/providers/sidebar-provider"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
 import Cookies from "js-cookie"
 import nProgress from "nprogress"
@@ -51,7 +48,7 @@ const Layout = ({ Component, pageProps }: any) => {
   useEffect(() => {
     const handleRouteChangeStart = () => nProgress.start()
     const handleRouteChangeComplete = () => {
-      sidebarCtx[SIDEBARCTX_STATES.setCollapsed](true)
+      sidebarCtx.setCollapsed(true)
       nProgress.done()
     }
     const handleRouteChangeError = () => nProgress.done()
@@ -106,10 +103,7 @@ const Layout = ({ Component, pageProps }: any) => {
             defaultSize={18}
             minSize={15}
             collapsible={true}
-            className={cn(
-              "md:block",
-              sidebarCtx[SIDEBARCTX_STATES.collapsed] && "hidden"
-            )}
+            className={cn("md:block", sidebarCtx.collapsed && "hidden")}
             ref={panel}
           >
             <Sidebar />

@@ -1,13 +1,13 @@
+import { useEffect, useMemo, useState } from "react"
+import Link from "next/link"
 import { apiService } from "@/services"
 import { ArrowRight, Cog, Server, ToyBrick, Users } from "lucide-react"
-import Link from "next/link"
-import { useEffect, useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
-import { cn } from "@/lib/utils"
 import { DashboardEnum } from "@/types/user"
+import { cn } from "@/lib/utils"
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
+import { CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 import { Skeleton } from "../ui/skeleton"
 
@@ -51,10 +51,7 @@ export default function DashboardCards() {
 
   const cardGridItemGridColumnClassName = useMemo(() => {
     const cardGridItemsLength = cardGridItems.length
-    return (
-      (cardGridItemsLength > 3 ? `md:grid-cols-2` : `md:grid-cols-1`) +
-      ` lg:grid-cols-${cardGridItemsLength}`
-    )
+    return `md:grid-cols-${cardGridItemsLength} lg:grid-cols-${cardGridItemsLength}`
   }, [cardGridItems])
 
   if (cardGridItems.length === 0) return null
@@ -67,9 +64,9 @@ export default function DashboardCards() {
           cardGridItemGridColumnClassName
         )}
       >
-        {cardGridItems.map((item) => {
+        {cardGridItems.map((item, idx) => {
           return (
-            <>
+            <div key={`dashboard_cards_${idx}`}>
               {item === "servers" && (
                 <div className="p-2">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -179,7 +176,7 @@ export default function DashboardCards() {
                   </CardContent>
                 </div>
               )}
-            </>
+            </div>
           )
         })}
       </div>

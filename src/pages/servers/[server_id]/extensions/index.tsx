@@ -1,10 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import {
-  SIDEBARCTX_STATES,
-  useSidebarContext,
-} from "@/providers/sidebar-provider"
+import { useSidebarContext } from "@/providers/sidebar-provider"
 import { apiService } from "@/services"
 import { Link2, MinusCircle, Sliders, UploadCloud } from "lucide-react"
 import { useTranslation } from "react-i18next"
@@ -72,17 +69,13 @@ export default function ServerExtensionPage() {
       cell: ({ row }) => (
         <>
           <Link
-            href={`/servers/${
-              sidebarCtx[SIDEBARCTX_STATES.selected]
-            }/extensions/${row.original.id}`}
+            href={`/servers/${sidebarCtx.selected}/extensions/${row.original.id}`}
           >
             {row.original.display_name}
             <Link2 className="ml-2 inline-block size-4" />
           </Link>
           <Link
-            href={`/servers/${
-              sidebarCtx[SIDEBARCTX_STATES.selected]
-            }/settings/${row.original.id}`}
+            href={`/servers/${sidebarCtx.selected}/settings/${row.original.id}`}
           >
             <Sliders className="ml-2 inline-block size-4" />
           </Link>
@@ -151,7 +144,7 @@ export default function ServerExtensionPage() {
           title: t("success"),
           description: t("extensions.toasts.assign"),
         })
-        sidebarCtx[SIDEBARCTX_STATES.refreshSelected]()
+        sidebarCtx.refreshSelected()
         fetchData()
       })
   }
@@ -172,7 +165,7 @@ export default function ServerExtensionPage() {
         })
         setSelected([])
         tableRef.current?.resetRowSelection()
-        sidebarCtx[SIDEBARCTX_STATES.refreshSelected]()
+        sidebarCtx.refreshSelected()
         fetchData()
       })
   }

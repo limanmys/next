@@ -1,10 +1,7 @@
 import { useRef, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import {
-  SIDEBARCTX_STATES,
-  useSidebarContext,
-} from "@/providers/sidebar-provider"
+import { useSidebarContext } from "@/providers/sidebar-provider"
 import { apiService } from "@/services"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { ChevronLeft, ChevronRight, PlusCircle, Server } from "lucide-react"
@@ -194,7 +191,7 @@ export default function ServerCreatePage() {
       .getInstance()
       .post("/servers", data)
       .then(() => {
-        sidebarCtx[SIDEBARCTX_STATES.refreshServers]()
+        sidebarCtx.refreshServers()
         toast({
           title: t("success"),
           description: t("create.errors.success"),
