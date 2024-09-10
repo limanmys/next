@@ -91,7 +91,7 @@ export function Sidebar({ className }: { className?: string }) {
                             ))}
                           </div>
                         ) : (
-                          <>
+                          <div>
                             {extensions.map((extension: any) => (
                               <ExtensionItem
                                 key={extension.id}
@@ -108,7 +108,7 @@ export function Sidebar({ className }: { className?: string }) {
                                 </span>
                               </>
                             )}
-                          </>
+                          </div>
                         )}
                       </div>
                     </>
@@ -175,7 +175,7 @@ export function Sidebar({ className }: { className?: string }) {
                           ))}
                         </div>
                       ) : (
-                        <>
+                        <div>
                           {servers.map((server: IServer) => (
                             <Button
                               variant="ghost"
@@ -241,7 +241,7 @@ export function Sidebar({ className }: { className?: string }) {
                               )}
                             </>
                           )}
-                        </>
+                        </div>
                       )}
                     </div>
                   </>

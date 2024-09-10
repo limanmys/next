@@ -91,6 +91,11 @@ export default function DashboardCards() {
                       <ArrowRight className="inline-block size-4" />
                     </Link>
                   </CardContent>
+                  {/* Hacky way to make sure compiler adds the classes */}
+                  <div className="hidden md:grid-cols-4 lg:grid-cols-4"></div>
+                  <div className="hidden md:grid-cols-3 lg:grid-cols-3"></div>
+                  <div className="hidden md:grid-cols-2 lg:grid-cols-2"></div>
+                  <div className="hidden md:grid-cols-1 lg:grid-cols-1"></div>
                 </div>
               )}
 
