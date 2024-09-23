@@ -346,7 +346,10 @@
             "users": "Anzahl der Benutzer",
             "version": "Liman-Version",
             "most_used_extensions": "Meistgenutzte Erweiterungen",
-            "most_used_servers": "Meistgenutzte Server"
+            "most_used_servers": "Meistgenutzte Server",
+            "redirect": "Umleitungserweiterung",
+            "redirect_description": "Bestimmen Sie die Erweiterung, zu der Benutzer beim Anmelden bei Liman weitergeleitet werden. Fügen Sie diese Rolle den Benutzern sorgfältig hinzu.",
+            "redirect_placeholder": "Wählen Sie die Erweiterung zur Weiterleitung aus"
         },
         "liman": {
             "title": "liman Genehmigungen",

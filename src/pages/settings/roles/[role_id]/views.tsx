@@ -1,14 +1,15 @@
-import { ReactElement, useEffect } from "react"
-import { useRouter } from "next/router"
 import { NextPageWithLayout } from "@/pages/_app"
 import { apiService } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Save } from "lucide-react"
+import { useRouter } from "next/router"
+import { ReactElement, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import * as z from "zod"
 
-import { setFormErrors } from "@/lib/utils"
+import RoleLayout from "@/components/_layout/role_layout"
+import { Form, FormField, FormMessage } from "@/components/form/form"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -22,13 +23,15 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { useToast } from "@/components/ui/use-toast"
-import RoleLayout from "@/components/_layout/role_layout"
-import { Form, FormField, FormMessage } from "@/components/form/form"
+import { setFormErrors } from "@/lib/utils"
+import { IExtension } from "@/types/extension"
 
 const RoleViewList: NextPageWithLayout = () => {
   const router = useRouter()
   const { t } = useTranslation("settings")
   const { toast } = useToast()
+
+  const [extensionSelector, setExtensionSelector] = useState<IExtension[]>([])
 
   const DashboardEnum = z.enum([
     "servers",
@@ -41,6 +44,7 @@ const RoleViewList: NextPageWithLayout = () => {
   const formSchema = z.object({
     sidebar: z.enum(["servers", "extensions"]),
     dashboard: z.array(DashboardEnum),
+    redirect: z.string().optional()
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -50,10 +54,19 @@ const RoleViewList: NextPageWithLayout = () => {
   const fetchData = () => {
     apiService
       .getInstance()
-      .get(`/settings/roles/${router.query.role_id}/views`)
+      .get(`/settings/roles/${router.query.role_id}/extensions`)
       .then((res) => {
-        form.reset(res.data)
+        if (res.status === 200) {
+          setExtensionSelector(res.data.selected)
+        }
+        apiService
+          .getInstance()
+          .get(`/settings/roles/${router.query.role_id}/views`)
+          .then((res) => {
+            form.reset(res.data)
+          })
       })
+
   }
 
   useEffect(() => {
@@ -157,6 +170,38 @@ const RoleViewList: NextPageWithLayout = () => {
                 {t("roles.views.dashboard_description")}
               </small>
             </div>
+
+            <FormField
+              control={form.control}
+              name="redirect"
+              render={({ field }) => (
+                <div className="flex flex-col gap-2">
+                  <Label htmlFor="redirect">{t("roles.views.redirect")}</Label>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                    value={field.value}
+                  >
+                    <SelectTrigger>
+                      <SelectValue
+                        placeholder={t("roles.views.redirect_placeholder")}
+                      />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {extensionSelector.map((item) => (
+                        <SelectItem key={item.id} value={item.id}>
+                          {item.display_name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <small className="italic text-muted-foreground">
+                    {t("roles.views.redirect_description")}
+                  </small>
+                  <FormMessage className="mt-1" />
+                </div>
+              )}
+            />
 
             <div className="flex justify-end">
               <Button type="submit">

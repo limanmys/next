@@ -347,7 +347,10 @@
             "users": "Number of Users",
             "version": "Liman Version",
             "most_used_extensions": "Most Used Extensions",
-            "most_used_servers": "Most Used Servers"
+            "most_used_servers": "Most Used Servers",
+            "redirect": "Redirect Extension",
+            "redirect_description": "Determine the extension to which users will be redirected when they log in to Liman. Add this role to users carefully.",
+            "redirect_placeholder": "Select the extension to be redirected"
         },
         "liman": {
             "title": "Liman Permissions",

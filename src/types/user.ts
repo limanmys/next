@@ -51,5 +51,6 @@ export interface ILimanPermissions {
   view: {
     sidebar: "servers" | "extensions"
     dashboard: DashboardEnum[]
+    redirect: string | null
   }
 }

@@ -1,10 +1,10 @@
-import * as React from "react"
-import { useRouter } from "next/router"
 import { apiService } from "@/services"
+import { useRouter } from "next/router"
+import * as React from "react"
 
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 import { IExtension } from "@/types/extension"
 import { IServer } from "@/types/server"
-import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 
 interface SidebarContextType {
   selected: string
@@ -30,6 +30,9 @@ interface SidebarContextType {
   collapsed: boolean
   setCollapsed: React.Dispatch<React.SetStateAction<boolean>>
   toggleSidebar: () => void
+  redirectNow: (id?: string) => void
+  redirectId: string
+  setRedirectId: React.Dispatch<React.SetStateAction<string>>
 }
 
 const SidebarContext = React.createContext<SidebarContextType | undefined>(
@@ -58,6 +61,9 @@ export const SidebarProvider = ({
   const [extensions, setExtensions] = React.useState<IExtension[]>([])
 
   const [collapsed, setCollapsed] = React.useState<boolean>(true)
+
+  const [redirectKey, setRedirectKey] = React.useState<number>(0)
+  const [redirectId, setRedirectId] = React.useState<string>("")
 
   React.useEffect(() => {
     if (router.asPath.startsWith("/settings")) {
@@ -108,8 +114,30 @@ export const SidebarProvider = ({
       .then((res) => {
         setExtensions(res.data)
         setExtensionsLoading(false)
+        if (redirectId) {
+          const extension = res.data.find((ext: IExtension) => ext.id === redirectId)
+          if (!extension) {
+            return
+          }
+          router.push(`/servers/${extension.server_id}/extensions/${extension.id}${extension.menus && extension.menus.length > 0
+            ? extension.menus[0].url
+            : ""
+            }`)
+        }
       })
-  }, [])
+  }, [redirectKey])
+
+  const redirectNow = React.useCallback(
+    (id?: string) => {
+      if (id) {
+        setRedirectId(id)
+      }
+      if (redirectId) {
+        setRedirectKey((prev) => prev + 1)
+      }
+    },
+    [redirectId]
+  )
 
   const toggleSidebar = React.useCallback(() => {
     setCollapsed((prev) => !prev)
@@ -139,6 +167,11 @@ export const SidebarProvider = ({
       collapsed,
       setCollapsed,
       toggleSidebar,
+      redirectKey,
+      setRedirectKey,
+      redirectId,
+      setRedirectId,
+      redirectNow,
     }),
     [
       selected,
@@ -154,6 +187,7 @@ export const SidebarProvider = ({
       extensions,
       refreshExtensions,
       toggleSidebar,
+      redirectNow,
     ]
   )
 

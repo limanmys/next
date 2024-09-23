@@ -1,14 +1,15 @@
-import { useMemo } from "react"
 import dynamic from "next/dynamic"
+import { useEffect, useMemo } from "react"
 import { useTranslation } from "react-i18next"
 
-import { DashboardEnum } from "@/types/user"
-import { cn } from "@/lib/utils"
-import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 import DashboardCards from "@/components/dashboard/cards"
 import FavoriteServers from "@/components/dashboard/favorite-servers"
 import LatestLoggedInUsers from "@/components/dashboard/latest-logged-in-users"
 import MostUsedExtensions from "@/components/dashboard/most-used-extensions"
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
+import { cn } from "@/lib/utils"
+import { useSidebarContext } from "@/providers/sidebar-provider"
+import { DashboardEnum } from "@/types/user"
 
 const DateTimeView = dynamic(() => import("@/components/dashboard/date-time"), {
   ssr: false,
@@ -17,6 +18,7 @@ const DateTimeView = dynamic(() => import("@/components/dashboard/date-time"), {
 export default function IndexPage() {
   const { t } = useTranslation("dashboard")
   const user = useCurrentUser()
+  const { redirectNow } = useSidebarContext()
 
   const viewPermissions = user.permissions.view
 
@@ -25,6 +27,12 @@ export default function IndexPage() {
     "auth_logs",
     "most_used_servers",
   ]
+
+  useEffect(() => {
+    if (viewPermissions.redirect) {
+      redirectNow(viewPermissions.redirect)
+    }
+  }, [viewPermissions.redirect])
 
   const dashboardGridItems = useMemo(() => {
     return viewPermissions.dashboard

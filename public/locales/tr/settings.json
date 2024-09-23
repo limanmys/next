@@ -347,7 +347,10 @@
             "users": "Kullanıcı Sayısı",
             "version": "Liman Versiyonu",
             "most_used_extensions": "En Çok Kullanılan Eklentiler",
-            "most_used_servers": "En Çok Kullanılan Sunucular"
+            "most_used_servers": "En Çok Kullanılan Sunucular",
+            "redirect": "Yönlendirilecek Eklenti",
+            "redirect_description": "Kullanıcılar Liman'a giriş yaptıklarında yönlendirilecekleri eklentiyi belirleyin. Bu rolü kullanıcılara dikkatli ekleyin.",
+            "redirect_placeholder": "Yönlendirilecek eklentiyi seçiniz"
         },
         "liman": {
             "title": "Liman İzinleri",
