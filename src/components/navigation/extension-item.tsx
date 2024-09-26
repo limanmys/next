@@ -191,7 +191,9 @@ const MenuButton = ({ menu, hash }: IMenuButtonProps) => {
 
             {menu.name instanceof String
               ? menu.name
-              : menu.name[i18n.language as keyof typeof menu.name] || menu.name}
+              : menu.name[i18n.language as keyof typeof menu.name] ||
+                menu.name["tr" as keyof typeof menu.name] ||
+                menu.name}
           </Button>
         </a>
       )}
@@ -214,6 +216,7 @@ const MenuButton = ({ menu, hash }: IMenuButtonProps) => {
                 {menu.name instanceof String
                   ? menu.name
                   : menu.name[i18n.language as keyof typeof menu.name] ||
+                    menu.name["tr" as keyof typeof menu.name] ||
                     menu.name}
               </div>
               <ChevronRight
