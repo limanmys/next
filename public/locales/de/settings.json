@@ -423,7 +423,11 @@
                 "description": "Als Ergebnis dieses Prozesses werden private Daten für die Rolle erstellt.",
                 "key": "Name",
                 "value": "Wert",
-                "create": "Schaffen"
+                "create": "Schaffen",
+                "extension": "Erweiterung",
+                "key_selectable": "Benutzerdefinierter Datentyp",
+                "key_placeholder": "Benutzerdefinierten Datentyp auswählen...",
+                "value_placeholder": "Wert auswählen..."
             }
         }
     },

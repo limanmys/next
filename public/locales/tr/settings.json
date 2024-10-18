@@ -424,7 +424,11 @@
                 "description": "Bu işlem sonucu rol üzerinde bir özel veri oluşturulacaktır.",
                 "key": "Adı",
                 "value": "Değeri",
-                "create": "Oluştur"
+                "create": "Oluştur",
+                "extension": "Eklenti",
+                "key_selectable": "Özel Veri Türü",
+                "key_placeholder": "Özel veri türünü seçiniz...",
+                "value_placeholder": "Değer seçiniz..."
             }
         }
     },

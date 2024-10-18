@@ -424,7 +424,11 @@
                 "description": "As a result of this process, private data will be created on the role.",
                 "key": "Name",
                 "value": "Value",
-                "create": "Create"
+                "create": "Create",
+                "extension": "Extension",
+                "key_selectable": "Custom Data Type",
+                "key_placeholder": "Select custom data type...",
+                "value_placeholder": "Select value..."
             }
         }
     },
