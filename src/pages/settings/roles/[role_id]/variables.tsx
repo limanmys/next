@@ -39,9 +39,18 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import PageHeader from "@/components/ui/page-header"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { useToast } from "@/components/ui/use-toast"
 import RoleLayout from "@/components/_layout/role_layout"
 import { Form, FormField, FormMessage } from "@/components/form/form"
+import { SelectExtension } from "@/components/selectbox/extension-select"
 
 const RoleVariablesList: NextPageWithLayout = () => {
   const [loading, setLoading] = useState<boolean>(true)
@@ -215,13 +224,14 @@ const RoleVariablesList: NextPageWithLayout = () => {
 
 function CreateVariable() {
   const router = useRouter()
-  const { t } = useTranslation("settings")
+  const { t, i18n } = useTranslation("settings")
   const { toast } = useToast()
   const emitter = useEmitter()
 
   const formSchema = z.object({
     key: z.string().min(1),
-    value: z.string().min(1),
+    value: z.any(),
+    type: z.any(),
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -229,11 +239,44 @@ function CreateVariable() {
     defaultValues: {
       key: "",
       value: "",
+      type: "string",
     },
   })
 
+  const [selectedExtension, setSelectedExtension] = useState<string>(null!)
+  const [data, setData] = useState<any[]>([])
+  const [selectedVariable, setSelectedVariable] = useState<any>(null!)
+
+  const fetchVariableList = (extension: string) => {
+    if (!extension) return
+
+    setSelectedExtension(extension)
+
+    if (extension === "default") {
+      setData([])
+      return
+    }
+
+    apiService
+      .getInstance()
+      .get(`/settings/extensions/${extension}/variables`)
+      .then((res) => {
+        setData(res.data)
+      })
+  }
+
   const [open, setOpen] = useState<boolean>(false)
+  // Reset form on open state change
+  useEffect(() => {
+    if (open) {
+      form.reset()
+      setSelectedExtension(null!)
+      setData([])
+      setSelectedVariable(null!)
+    }
+  }, [open])
   const handleCreate = (values: z.infer<typeof formSchema>) => {
+    console.log(values)
     apiService
       .getInstance()
       .post(`/settings/roles/${router.query.role_id}/variables`, values)
@@ -264,6 +307,12 @@ function CreateVariable() {
           })
         }
       })
+      .finally(() => {
+        // reset all states and values
+        setSelectedExtension(null!)
+        setData([])
+        setSelectedVariable(null!)
+      })
   }
 
   return (
@@ -274,7 +323,7 @@ function CreateVariable() {
           {t("roles.variables.create.button")}
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[525px]">
+      <DialogContent className="sm:max-w-[700px]">
         <DialogHeader>
           <DialogTitle>{t("roles.variables.create.title")}</DialogTitle>
           <DialogDescription>
@@ -286,37 +335,272 @@ function CreateVariable() {
             onSubmit={form.handleSubmit(handleCreate)}
             className="space-y-5"
           >
-            <FormField
-              control={form.control}
-              name="key"
-              render={({ field }) => (
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="key" className="text-right">
-                    {t("roles.variables.create.key")}
-                  </Label>
-                  <div className="col-span-3">
-                    <Input id="key" {...field} />
-                    <FormMessage className="mt-1" />
-                  </div>
-                </div>
-              )}
-            />
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="key" className="text-right">
+                {t("roles.variables.create.extension")}
+              </Label>
+              <div className="col-span-3">
+                <SelectExtension
+                  onValueChange={(value) => fetchVariableList(value)}
+                  endpoint={`/settings/roles/${router.query.role_id}/extensions?variable_selector=1`}
+                />
+              </div>
+            </div>
 
-            <FormField
-              control={form.control}
-              name="value"
-              render={({ field }) => (
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="value" className="text-right">
-                    {t("roles.variables.create.value")}
-                  </Label>
-                  <div className="col-span-3">
-                    <Input id="value" {...field} />
-                    <FormMessage className="mt-1" />
-                  </div>
-                </div>
+            {selectedExtension &&
+              selectedExtension !== "default" &&
+              data.length > 0 && (
+                <FormField
+                  control={form.control}
+                  name="key"
+                  render={({ field }) => (
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="key" className="text-right">
+                        {t("roles.variables.create.key_selectable")}
+                      </Label>
+                      <div className="col-span-3">
+                        <Select
+                          onValueChange={(value) => {
+                            const obj = data.find((item) => item.key === value)
+                            setSelectedVariable(obj)
+                            form.setValue("type", obj.type)
+                            if (obj.type === "multiselect") {
+                              form.setValue("value", [])
+                            }
+                            field.onChange(value)
+                          }}
+                          defaultValue={field.value}
+                        >
+                          <SelectTrigger>
+                            <SelectValue
+                              placeholder={t(
+                                "roles.variables.create.key_placeholder"
+                              )}
+                            />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {data.map((item) => (
+                              <SelectItem key={item.key} value={item.key}>
+                                {item.options.label[i18n.language] || item.key}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                  )}
+                />
               )}
-            />
+
+            {selectedVariable &&
+              selectedVariable.type &&
+              selectedVariable.type === "text" && (
+                <FormField
+                  control={form.control}
+                  name="value"
+                  render={({ field }) => (
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="value" className="-mt-6 text-right">
+                        {selectedVariable.options.label[i18n.language] ||
+                          selectedVariable.key}
+                      </Label>
+                      <div className="col-span-3">
+                        <Input id="value" {...field} />
+                        <small className="italic text-muted-foreground">
+                          {selectedVariable.options.description[
+                            i18n.language
+                          ] || selectedVariable.key}
+                        </small>
+                        <FormMessage className="mt-1" />
+                      </div>
+                    </div>
+                  )}
+                />
+              )}
+
+            {selectedVariable &&
+              selectedVariable.type &&
+              selectedVariable.type === "select" && (
+                <FormField
+                  control={form.control}
+                  name="value"
+                  render={({ field }) => (
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="value" className="-mt-6 text-right">
+                        {selectedVariable.options.label[i18n.language] ||
+                          selectedVariable.key}
+                      </Label>
+                      <div className="col-span-3">
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <SelectTrigger>
+                            <SelectValue
+                              placeholder={t(
+                                "roles.variables.create.value_placeholder"
+                              )}
+                            />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {selectedVariable.options.selections.map(
+                              (item: any) => (
+                                <SelectItem key={item.value} value={item.value}>
+                                  {item.label[i18n.language] || item.value}
+                                </SelectItem>
+                              )
+                            )}
+                          </SelectContent>
+                        </Select>
+                        <small className="italic text-muted-foreground">
+                          {selectedVariable.options.description[
+                            i18n.language
+                          ] || selectedVariable.key}
+                        </small>
+                        <FormMessage className="mt-1" />
+                      </div>
+                    </div>
+                  )}
+                />
+              )}
+
+            {selectedVariable &&
+              selectedVariable.type &&
+              selectedVariable.type === "radio" && (
+                <FormField
+                  control={form.control}
+                  name="value"
+                  render={({ field }) => (
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="value" className="-mt-6 text-right">
+                        {selectedVariable.options.label[i18n.language] ||
+                          selectedVariable.key}
+                      </Label>
+                      <div className="col-span-3">
+                        <div className="grid grid-cols-2 gap-4">
+                          <RadioGroup
+                            id="value"
+                            value={field.value}
+                            onValueChange={field.onChange}
+                          >
+                            {selectedVariable.options.selections.map(
+                              (item: any) => (
+                                <div className="flex items-center gap-2">
+                                  <RadioGroupItem
+                                    key={item.value}
+                                    value={item.value}
+                                  />
+                                  <Label>
+                                    {item.label[i18n.language] || item.value}
+                                  </Label>
+                                </div>
+                              )
+                            )}
+                          </RadioGroup>
+                        </div>
+                        <small className="italic text-muted-foreground">
+                          {selectedVariable.options.description[
+                            i18n.language
+                          ] || selectedVariable.key}
+                        </small>
+                        <FormMessage className="mt-1" />
+                      </div>
+                    </div>
+                  )}
+                />
+              )}
+
+            {selectedVariable &&
+              selectedVariable.type &&
+              selectedVariable.type === "multiselect" && (
+                <FormField
+                  control={form.control}
+                  name="value"
+                  render={({ field }) => (
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="value" className="-mt-6 text-right">
+                        {selectedVariable.options.label[i18n.language] ||
+                          selectedVariable.key}
+                      </Label>
+                      <div className="col-span-3 flex flex-col gap-3">
+                        {selectedVariable.options.selections.map(
+                          (item: any) => {
+                            return (
+                              <div className="flex items-center gap-2">
+                                <Checkbox
+                                  key={item.value}
+                                  value={item.value}
+                                  checked={field.value.includes(item.value)}
+                                  onCheckedChange={(value) => {
+                                    if (value) {
+                                      field.onChange([
+                                        ...field.value,
+                                        item.value,
+                                      ])
+                                    } else {
+                                      field.onChange(
+                                        field.value.filter(
+                                          (v: any) => v !== item.value
+                                        )
+                                      )
+                                    }
+                                  }}
+                                />
+                                <Label htmlFor={item.value}>
+                                  {item.label[i18n.language] || item.value}
+                                </Label>
+                              </div>
+                            )
+                          }
+                        )}
+                        <small className="italic text-muted-foreground">
+                          {selectedVariable.options.description[
+                            i18n.language
+                          ] || selectedVariable.key}
+                        </small>
+                        <FormMessage className="mt-1" />
+                      </div>
+                    </div>
+                  )}
+                />
+              )}
+
+            {(selectedExtension === "default" || data.length === 0) && (
+              <>
+                <FormField
+                  control={form.control}
+                  name="key"
+                  render={({ field }) => (
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="key" className="text-right">
+                        {t("roles.variables.create.key")}
+                      </Label>
+                      <div className="col-span-3">
+                        <Input id="key" {...field} />
+                        <FormMessage className="mt-1" />
+                      </div>
+                    </div>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="value"
+                  render={({ field }) => (
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="value" className="text-right">
+                        {t("roles.variables.create.value")}
+                      </Label>
+                      <div className="col-span-3">
+                        <Input id="value" {...field} />
+                        <FormMessage className="mt-1" />
+                      </div>
+                    </div>
+                  )}
+                />
+              </>
+            )}
+
             <DialogFooter>
               <Button type="submit">
                 <PlusCircle className="mr-2 size-4" />
