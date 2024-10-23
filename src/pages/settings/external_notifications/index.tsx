@@ -1,15 +1,13 @@
-import { useEffect, useState } from "react"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FileWarning, PlusCircle } from "lucide-react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
-import { IExternalNotification } from "@/types/notification"
-import { DivergentColumn } from "@/types/table"
-import { setFormErrors } from "@/lib/utils"
-import { useEmitter } from "@/hooks/useEmitter"
+import { Form, FormField, FormMessage } from "@/components/form/form"
+import { ExternalNotificationActions } from "@/components/settings/external-notification-actions"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/data-table/data-table"
@@ -27,8 +25,10 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import PageHeader from "@/components/ui/page-header"
 import { useToast } from "@/components/ui/use-toast"
-import { Form, FormField, FormMessage } from "@/components/form/form"
-import { ExternalNotificationActions } from "@/components/settings/external-notification-actions"
+import { useEmitter } from "@/hooks/useEmitter"
+import { setFormErrors } from "@/lib/utils"
+import { IExternalNotification } from "@/types/notification"
+import { DivergentColumn } from "@/types/table"
 
 export default function ExternalNotificationPage() {
   const [loading, setLoading] = useState<boolean>(true)
@@ -71,15 +71,15 @@ export default function ExternalNotificationPage() {
         <>
           {row.original.last_used
             ? new Date(row.original.last_used).toLocaleDateString(
-                i18n.language,
-                {
-                  day: "2-digit",
-                  month: "long",
-                  year: "numeric",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                }
-              )
+              i18n.language,
+              {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+              }
+            )
             : t("external_notifications.unknown")}
         </>
       ),
@@ -95,8 +95,7 @@ export default function ExternalNotificationPage() {
   ]
 
   const fetchData = () => {
-    apiService
-      .getInstance()
+    http
       .get<IExternalNotification[]>(`/settings/notifications/external`)
       .then((res) => {
         setData(res.data)
@@ -161,8 +160,7 @@ function CreateExternalNotification() {
 
   const [open, setOpen] = useState<boolean>(false)
   const handleCreate = (values: z.infer<typeof formSchema>) => {
-    apiService
-      .getInstance()
+    http
       .post<{
         status: boolean
         token: string

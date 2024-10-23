@@ -1,5 +1,5 @@
-import { useState } from "react"
 import { ExpandIcon, ShrinkIcon } from "lucide-react"
+import { useState } from "react"
 
 import { buttonVariants } from "../ui/button"
 

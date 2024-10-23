@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { AvatarImage } from "@radix-ui/react-avatar"
 import md5 from "blueimp-md5"
 import { FolderX } from "lucide-react"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
 import { IUser } from "@/types/user"
@@ -16,8 +16,7 @@ export default function LatestLoggedInUsers() {
   const [data, setData] = useState<IUser[]>([])
 
   useEffect(() => {
-    apiService
-      .getInstance()
+    http
       .get<IUser[]>("/dashboard/latest_logged_in_users")
       .then((res) => {
         setData(res.data)

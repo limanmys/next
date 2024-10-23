@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react"
-import { useRouter } from "next/router"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { FileWarning, Loader2, Save } from "lucide-react"
+import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { IExtensionSetting, IExtensionVariable } from "@/types/extension"
+import { SelectExtension } from "@/components/selectbox/extension-select"
+import { SelectServer } from "@/components/selectbox/server-select"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -13,8 +14,7 @@ import { Label } from "@/components/ui/label"
 import Loading from "@/components/ui/loading"
 import PageHeader from "@/components/ui/page-header"
 import { useToast } from "@/components/ui/use-toast"
-import { SelectExtension } from "@/components/selectbox/extension-select"
-import { SelectServer } from "@/components/selectbox/server-select"
+import { IExtensionSetting, IExtensionVariable } from "@/types/extension"
 
 export default function ExtensionSettingsPage() {
   const router = useRouter()
@@ -32,8 +32,7 @@ export default function ExtensionSettingsPage() {
     if (!router.query.server_id || !router.query.extension_id) return
 
     setLoading(true)
-    apiService
-      .getInstance()
+    http
       .get<IExtensionSetting>(
         `/servers/${router.query.server_id}/extensions/${router.query.extension_id}/settings`
       )
@@ -48,8 +47,7 @@ export default function ExtensionSettingsPage() {
     e.preventDefault()
     setFormLoading(true)
 
-    apiService
-      .getInstance()
+    http
       .post(
         `/servers/${router.query.server_id}/extensions/${router.query.extension_id}/settings`,
         values

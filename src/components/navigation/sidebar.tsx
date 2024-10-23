@@ -1,7 +1,5 @@
 "use client"
 
-import { useEffect } from "react"
-import Link from "next/link"
 import { useSidebarContext } from "@/providers/sidebar-provider"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
 import {
@@ -12,13 +10,15 @@ import {
   Server,
   Star,
 } from "lucide-react"
+import Link from "next/link"
+import { useEffect } from "react"
 import { useTranslation } from "react-i18next"
 
-import { IServer } from "@/types/server"
-import { cn } from "@/lib/utils"
-import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
+import { cn } from "@/lib/utils"
+import { IServer } from "@/types/server"
 
 import { Icons } from "../ui/icons"
 import { Skeleton } from "../ui/skeleton"

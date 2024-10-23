@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { PlusCircle } from "lucide-react"
 import { useForm } from "react-hook-form"
@@ -87,8 +87,7 @@ export default function CreateUser() {
 
   const [open, setOpen] = useState<boolean>(false)
   const handleCreate = (values: z.infer<typeof formSchema>) => {
-    apiService
-      .getInstance()
+    http
       .post(`/settings/users`, values)
       .then((res) => {
         if (res.status === 200) {

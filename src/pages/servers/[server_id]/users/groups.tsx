@@ -1,17 +1,14 @@
-import { useEffect, useState } from "react"
-import { useRouter } from "next/router"
 import { useSidebarContext } from "@/providers/sidebar-provider"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { PlusCircle } from "lucide-react"
+import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import * as z from "zod"
 
-import { ILocalGroup } from "@/types/server_user"
-import { DivergentColumn } from "@/types/table"
-import { setFormErrors } from "@/lib/utils"
-import { useEmitter } from "@/hooks/useEmitter"
+import { Form, FormField, FormMessage } from "@/components/form/form"
 import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
@@ -28,7 +25,10 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import PageHeader from "@/components/ui/page-header"
 import { useToast } from "@/components/ui/use-toast"
-import { Form, FormField, FormMessage } from "@/components/form/form"
+import { useEmitter } from "@/hooks/useEmitter"
+import { setFormErrors } from "@/lib/utils"
+import { ILocalGroup } from "@/types/server_user"
+import { DivergentColumn } from "@/types/table"
 
 export default function LocalGroups() {
   const router = useRouter()
@@ -55,8 +55,7 @@ export default function LocalGroups() {
   const fetchData = () => {
     if (!router.query.server_id) return
 
-    apiService
-      .getInstance()
+    http
       .get(`/servers/${router.query.server_id}/users/groups`)
       .then((res) => {
         setData(res.data)
@@ -124,8 +123,7 @@ function CreateLocalGroup() {
 
   const [open, setOpen] = useState<boolean>(false)
   const handleCreate = (values: z.infer<typeof formSchema>) => {
-    apiService
-      .getInstance()
+    http
       .post(`/servers/${router.query.server_id}/users/groups`, values)
       .then((res) => {
         if (res.status === 200) {

@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react"
+import { http } from "@/services"
 import Head from "next/head"
 import { useRouter } from "next/router"
-import { apiService } from "@/services"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { IPackage } from "@/types/package"
-import { DivergentColumn } from "@/types/table"
 import { Badge } from "@/components/ui/badge"
 import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
 import { Skeleton } from "@/components/ui/skeleton"
+import { IPackage } from "@/types/package"
+import { DivergentColumn } from "@/types/table"
 
 export default function ServerExtensionPage() {
   const router = useRouter()
@@ -63,8 +63,7 @@ export default function ServerExtensionPage() {
   const fetchData = () => {
     if (!router.query.server_id) return
 
-    apiService
-      .getInstance()
+    http
       .get(`/servers/${router.query.server_id}/updates`)
       .then((res) => {
         setData(res.data)

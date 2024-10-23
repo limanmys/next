@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react"
-import Link from "next/link"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import Cookies from "js-cookie"
 import Echo from "laravel-echo"
 import { Bell, BellOff, CheckCheck } from "lucide-react"
+import Link from "next/link"
 import Pusher from "pusher-js"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { INotification } from "@/types/notification"
-import { cn } from "@/lib/utils"
-import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 import { Button, buttonVariants } from "@/components/ui/button"
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
+import { cn } from "@/lib/utils"
+import { INotification } from "@/types/notification"
 
 import { Badge } from "../ui/badge"
 import {
@@ -41,7 +41,7 @@ export default function Notifications() {
     setTimeout(() => {
       notifications.forEach((notification) => {
         if (!notification.seen_at) {
-          apiService.getInstance().post("/notifications/seen", {
+          http.post("/notifications/seen", {
             notification_id: notification.notification_id,
           })
         }
@@ -53,8 +53,7 @@ export default function Notifications() {
     const currentUser = Cookies.get("currentUser")
     let tempNotifications: INotification[] = []
 
-    apiService
-      .getInstance()
+    http
       .get<INotification[]>("/notifications/unread")
       .then((response) => {
         tempNotifications = response.data
@@ -115,8 +114,7 @@ export default function Notifications() {
   }, [])
 
   const handleMarkAsRead = () => {
-    apiService
-      .getInstance()
+    http
       .post("/notifications/read")
       .then(() => {
         setNotifications([])
@@ -138,10 +136,10 @@ export default function Notifications() {
           <Bell className="size-5" />
           <span className="sr-only">Notifications</span>
           {
-            getNotSeenNotificationCount() > 0 && 
-              <Badge className="absolute right-0 top-0 rounded-full px-[4px] py-[2px] text-[11px] leading-[11px]" >
-                {getNotSeenNotificationCount()}
-              </Badge> 
+            getNotSeenNotificationCount() > 0 &&
+            <Badge className="absolute right-0 top-0 rounded-full px-[4px] py-[2px] text-[11px] leading-[11px]" >
+              {getNotSeenNotificationCount()}
+            </Badge>
           }
         </div>
       </DropdownMenuTrigger>

@@ -1,8 +1,8 @@
-import { SyntheticEvent, useState } from "react"
+import { http } from "@/services"
+import { AlertCircle } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { apiService } from "@/services"
-import { AlertCircle } from "lucide-react"
+import { SyntheticEvent, useState } from "react"
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
@@ -22,8 +22,7 @@ export default function ResetPassword() {
     e.preventDefault()
 
     setLoading(true)
-    apiService
-      .getInstance()
+    http
       .post("/auth/reset_password", {
         email: router.query.email,
         token: router.query.token,

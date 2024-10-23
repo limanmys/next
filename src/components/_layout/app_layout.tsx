@@ -1,16 +1,15 @@
-import { ReactNode, useCallback, useEffect, useRef, useState } from "react"
-import Link from "next/link"
-import { Router, useRouter } from "next/router"
 import { useSidebarContext } from "@/providers/sidebar-provider"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
 import Cookies from "js-cookie"
+import Link from "next/link"
+import { Router, useRouter } from "next/router"
 import nProgress from "nprogress"
+import { ReactNode, useCallback, useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { ImperativePanelHandle } from "react-resizable-panels"
 
-import { cn } from "@/lib/utils"
-import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
-import { useLogout } from "@/hooks/auth/useLogout"
+import { Sidebar } from "@/components/navigation/sidebar"
+import { SiteHeader } from "@/components/navigation/site-header"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,8 +20,9 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { Sidebar } from "@/components/navigation/sidebar"
-import { SiteHeader } from "@/components/navigation/site-header"
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
+import { useLogout } from "@/hooks/auth/useLogout"
+import { cn } from "@/lib/utils"
 
 import GradientSvg from "../bg/gradient"
 import {

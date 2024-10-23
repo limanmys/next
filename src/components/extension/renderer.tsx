@@ -1,10 +1,10 @@
-import { useEffect, useReducer, useRef, useState } from "react"
-import Head from "next/head"
-import { useRouter } from "next/router"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import autoAnimate from "@formkit/auto-animate"
 import { ArrowLeft } from "lucide-react"
 import { useTheme } from "next-themes"
+import Head from "next/head"
+import { useRouter } from "next/router"
+import { useEffect, useReducer, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 
 import { Button } from "../ui/button"
@@ -59,8 +59,7 @@ export default function ExtensionRenderer() {
         slug += `?${searchParams.toString()}`
       }
 
-      apiService
-        .getInstance()
+      http
         .post(
           `/servers/${router.query.server_id}/extensions/${router.query.extension_id}/${slug}`
         )
@@ -214,7 +213,7 @@ export default function ExtensionRenderer() {
     )
 
     return () => {
-      window.removeEventListener("message", () => {}, false)
+      window.removeEventListener("message", () => { }, false)
     }
   }, [])
 

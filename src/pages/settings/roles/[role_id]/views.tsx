@@ -1,5 +1,5 @@
 import { NextPageWithLayout } from "@/pages/_app"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Save } from "lucide-react"
 import { useRouter } from "next/router"
@@ -52,15 +52,13 @@ const RoleViewList: NextPageWithLayout = () => {
   })
 
   const fetchData = () => {
-    apiService
-      .getInstance()
+    http
       .get(`/settings/roles/${router.query.role_id}/extensions`)
       .then((res) => {
         if (res.status === 200) {
           setExtensionSelector(res.data.selected)
         }
-        apiService
-          .getInstance()
+        http
           .get(`/settings/roles/${router.query.role_id}/views`)
           .then((res) => {
             form.reset(res.data)
@@ -86,8 +84,7 @@ const RoleViewList: NextPageWithLayout = () => {
   }
 
   const handleSave = (data: z.infer<typeof formSchema>) => {
-    apiService
-      .getInstance()
+    http
       .post(`/settings/roles/${router.query.role_id}/views`, {
         views: data,
       })

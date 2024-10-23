@@ -1,18 +1,18 @@
+import { http } from "@/services"
 import { useEffect, useState } from "react"
-import { apiService } from "@/services"
 import { useTranslation } from "react-i18next"
 
-import { DivergentColumn } from "@/types/table"
-import { IVault } from "@/types/vault"
-import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
-import { useEmitter } from "@/hooks/useEmitter"
-import DataTable from "@/components/ui/data-table/data-table"
-import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
-import PageHeader from "@/components/ui/page-header"
 import { SelectUser } from "@/components/selectbox/user-select"
 import CreateVaultKey from "@/components/settings/create-vault-key"
 import CreateVaultSetting from "@/components/settings/create-vault-setting"
 import { VaultRowActions } from "@/components/settings/vault-actions"
+import DataTable from "@/components/ui/data-table/data-table"
+import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
+import PageHeader from "@/components/ui/page-header"
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
+import { useEmitter } from "@/hooks/useEmitter"
+import { DivergentColumn } from "@/types/table"
+import { IVault } from "@/types/vault"
 
 export default function VaultPage() {
   const [loading, setLoading] = useState<boolean>(true)
@@ -48,8 +48,7 @@ export default function VaultPage() {
   ]
 
   const fetchData = (user: string) => {
-    apiService
-      .getInstance()
+    http
       .get(`/settings/vault?user_id=${user}`)
       .then((res) => {
         setData(res.data)

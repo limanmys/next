@@ -1,12 +1,16 @@
-import { ReactElement, useEffect, useState } from "react"
 import { NextPageWithLayout } from "@/pages/_app"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { KeyRound, LinkIcon, LogIn, User2, Users2 } from "lucide-react"
+import { ReactElement, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import * as z from "zod"
 
+import AccessLayout from "@/components/_layout/access_layout"
+import { Form, FormField, FormMessage } from "@/components/form/form"
+import AsyncTransferList from "@/components/settings/async-transfer-list"
+import LdapRoleMapping from "@/components/settings/ldap-role-mapping"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -14,10 +18,6 @@ import { Label } from "@/components/ui/label"
 import PageHeader from "@/components/ui/page-header"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useToast } from "@/components/ui/use-toast"
-import AccessLayout from "@/components/_layout/access_layout"
-import { Form, FormField, FormMessage } from "@/components/form/form"
-import AsyncTransferList from "@/components/settings/async-transfer-list"
-import LdapRoleMapping from "@/components/settings/ldap-role-mapping"
 
 const AccessLdapPermissionsPage: NextPageWithLayout = () => {
   const { t } = useTranslation("settings")
@@ -39,8 +39,7 @@ const AccessLdapPermissionsPage: NextPageWithLayout = () => {
   })
 
   const handleLogin = (data: z.infer<typeof loginSchema>) => {
-    apiService
-      .getInstance()
+    http
       .post("/settings/access/ldap/login", {
         ...data,
       })
@@ -77,8 +76,7 @@ const AccessLdapPermissionsPage: NextPageWithLayout = () => {
   const [userList, setUserList] = useState([])
   const [selectedUserList, setSelectedUserList] = useState([])
   const fetchUsersList = (param?: string) => {
-    apiService
-      .getInstance()
+    http
       .get("settings/access/ldap/permissions/users", {
         params: {
           username: loginData.username,
@@ -114,8 +112,7 @@ const AccessLdapPermissionsPage: NextPageWithLayout = () => {
   }, [loggedIn])
 
   const handleUserListSave = (users: any[]) => {
-    apiService
-      .getInstance()
+    http
       .post("settings/access/ldap/permissions/users", {
         username: loginData.username,
         password: loginData.password,
@@ -140,8 +137,7 @@ const AccessLdapPermissionsPage: NextPageWithLayout = () => {
   const [groupList, setGroupList] = useState([])
   const [selectedGroupList, setSelectedGroupList] = useState([])
   const fetchGroupsList = (param?: string) => {
-    apiService
-      .getInstance()
+    http
       .get("settings/access/ldap/permissions/groups", {
         params: {
           username: loginData.username,
@@ -177,8 +173,7 @@ const AccessLdapPermissionsPage: NextPageWithLayout = () => {
   }, [loggedIn])
 
   const handleGroupListSave = (groups: any[]) => {
-    apiService
-      .getInstance()
+    http
       .post("settings/access/ldap/permissions/groups", {
         username: loginData.username,
         password: loginData.password,

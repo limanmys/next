@@ -1,12 +1,12 @@
-import { useRouter } from "next/router"
 import md5 from "blueimp-md5"
 import { ChevronDown, LogOut, User } from "lucide-react"
+import { useRouter } from "next/router"
 import { useTranslation } from "react-i18next"
 
-import { cn } from "@/lib/utils"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 import { useLogout } from "@/hooks/auth/useLogout"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import {

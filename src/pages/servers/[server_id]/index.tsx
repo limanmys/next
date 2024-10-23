@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react"
+import { http } from "@/services"
 import { useRouter } from "next/router"
-import { apiService } from "@/services"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { IServer, IServerDetails } from "@/types/server"
 import CpuTable from "@/components/server/cpu-table"
 import ServerDetails from "@/components/server/details"
 import DiskTable from "@/components/server/disk-table"
 import RamTable from "@/components/server/ram-table"
 import ResourceUsage from "@/components/server/resource-usage"
 import ServerSpecs from "@/components/server/specs"
+import { IServer, IServerDetails } from "@/types/server"
 
 interface IDetails {
   server: IServer
@@ -26,8 +26,7 @@ export default function ServerStatus() {
     setLoading(true)
     if (!router.query.server_id) return
 
-    apiService
-      .getInstance()
+    http
       .get(`/servers/${router.query.server_id}`)
       .then((res) => {
         setLoading(false)

@@ -1,6 +1,6 @@
-import { ReactNode, useEffect, useState } from "react"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { BookKey, FolderGit2, ScanFace, ScrollText } from "lucide-react"
+import { ReactNode, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
 import AccessCard from "../settings/access-card"
@@ -45,8 +45,7 @@ export default function AccessLayout({ children }: { children: ReactNode }) {
   ]
 
   useEffect(() => {
-    apiService
-      .getInstance()
+    http
       .get("/settings/access/ldap/configuration")
       .then((res) => {
         if (res.data.active) {

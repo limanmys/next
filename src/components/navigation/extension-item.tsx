@@ -1,13 +1,13 @@
-import { MouseEvent, useEffect, useState } from "react"
+import { ChevronRight, ToyBrick } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { ChevronRight, ToyBrick } from "lucide-react"
+import { MouseEvent, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
+import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 import { IExtension } from "@/types/extension"
 import { IMenu } from "@/types/server"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
 
 import {
   Collapsible,
@@ -124,11 +124,10 @@ export default function ExtensionItem({
     <Collapsible open={router.asPath.includes(extension.id)}>
       <CollapsibleTrigger className="w-full">
         <Link
-          href={`/servers/${server_id}/extensions/${extension.id}${
-            extension.menus && extension.menus.length > 0
-              ? extension.menus[0].url
-              : ""
-          }`}
+          href={`/servers/${server_id}/extensions/${extension.id}${extension.menus && extension.menus.length > 0
+            ? extension.menus[0].url
+            : ""
+            }`}
           onClick={onClick}
         >
           <ExtensionButton
@@ -192,8 +191,8 @@ const MenuButton = ({ menu, hash }: IMenuButtonProps) => {
             {menu.name instanceof String
               ? menu.name
               : menu.name[i18n.language as keyof typeof menu.name] ||
-                menu.name["tr" as keyof typeof menu.name] ||
-                menu.name}
+              menu.name["tr" as keyof typeof menu.name] ||
+              menu.name}
           </Button>
         </a>
       )}
@@ -216,8 +215,8 @@ const MenuButton = ({ menu, hash }: IMenuButtonProps) => {
                 {menu.name instanceof String
                   ? menu.name
                   : menu.name[i18n.language as keyof typeof menu.name] ||
-                    menu.name["tr" as keyof typeof menu.name] ||
-                    menu.name}
+                  menu.name["tr" as keyof typeof menu.name] ||
+                  menu.name}
               </div>
               <ChevronRight
                 className={cn(

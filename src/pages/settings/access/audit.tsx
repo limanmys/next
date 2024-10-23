@@ -1,11 +1,10 @@
-import { ReactElement, useEffect, useState } from "react"
 import { NextPageWithLayout } from "@/pages/_app"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { ScrollText } from "lucide-react"
+import { ReactElement, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { IAuditLog } from "@/types/audit_log"
-import { DivergentColumn } from "@/types/table"
+import AccessLayout from "@/components/_layout/access_layout"
 import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
 import {
@@ -17,7 +16,8 @@ import {
 } from "@/components/ui/dialog"
 import PageHeader from "@/components/ui/page-header"
 import { Skeleton } from "@/components/ui/skeleton"
-import AccessLayout from "@/components/_layout/access_layout"
+import { IAuditLog } from "@/types/audit_log"
+import { DivergentColumn } from "@/types/table"
 
 const AccessAuditLogsPage: NextPageWithLayout = () => {
   const [loading, setLoading] = useState<boolean>(true)
@@ -118,9 +118,9 @@ const AccessAuditLogsPage: NextPageWithLayout = () => {
         <>
           {row.original.message
             ? t(
-                `access.audit.messages.${row.original.message}`,
-                row.original.details
-              )
+              `access.audit.messages.${row.original.message}`,
+              row.original.details
+            )
             : "-"}
         </>
       ),
@@ -149,8 +149,7 @@ const AccessAuditLogsPage: NextPageWithLayout = () => {
   ]
 
   const fetchData = () => {
-    apiService
-      .getInstance()
+    http
       .get<IAuditLog[]>(`/settings/access/audit`)
       .then((res) => {
         setData(res.data)
@@ -187,8 +186,7 @@ function AuditLogDetails({ id }: { id: string }) {
 
   const fetchStatus = () => {
     setLoading(true)
-    apiService
-      .getInstance()
+    http
       .get<any>(`/settings/access/audit/${id}`)
       .then((response) => {
         setData(response.data)

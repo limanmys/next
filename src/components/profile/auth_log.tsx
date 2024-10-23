@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { useTranslation } from "react-i18next"
 
 import { DivergentColumn } from "@/types/table"
@@ -76,8 +76,7 @@ export default function AuthLog() {
   ]
 
   const fetchData = () => {
-    apiService
-      .getInstance()
+    http
       .get<IAuthLog[]>(`/profile/auth_logs`)
       .then((res) => {
         setData(res.data)

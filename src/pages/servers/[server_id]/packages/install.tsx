@@ -1,13 +1,10 @@
-import { useEffect, useState } from "react"
-import { useRouter } from "next/router"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { Check, ChevronLeft, Clock, Loader, UploadCloud, X } from "lucide-react"
+import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { TusClientProvider } from "use-tus"
 
-import { IQueue } from "@/types/queue"
-import { DivergentColumn } from "@/types/table"
-import { compareNumericString } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/data-table/data-table"
@@ -23,6 +20,9 @@ import {
 import PageHeader from "@/components/ui/page-header"
 import { TusUpload } from "@/components/ui/tus-upload"
 import { useToast } from "@/components/ui/use-toast"
+import { compareNumericString } from "@/lib/utils"
+import { IQueue } from "@/types/queue"
+import { DivergentColumn } from "@/types/table"
 
 export default function PackageInstallPage() {
   const router = useRouter()
@@ -143,8 +143,7 @@ export default function PackageInstallPage() {
   const fetchData = () => {
     if (!router.query.server_id) return
 
-    apiService
-      .getInstance()
+    http
       .get<IQueue[]>(`/servers/${router.query.server_id}/packages/queue`)
       .then((res) => {
         setData(res.data)
@@ -205,8 +204,7 @@ function UploadPackage() {
       return
     }
 
-    apiService
-      .getInstance()
+    http
       .post<IQueue>(`/servers/${router.query.server_id}/packages/queue`, {
         file,
       })

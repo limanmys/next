@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { Cpu, MemoryStick, PackageSearch, Server } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
@@ -19,8 +19,7 @@ export default function ServerSpecs({ loader = false }: { loader?: boolean }) {
     if (loader) return
     if (!router.query.server_id) return
 
-    apiService
-      .getInstance()
+    http
       .get(`/servers/${router.query.server_id}/specs`)
       .then((response) => {
         setLoading(false)

@@ -1,19 +1,12 @@
-import { ReactElement, useEffect } from "react"
 import { NextPageWithLayout } from "@/pages/_app"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Fingerprint, Mail, Save, Server, UserCheck2 } from "lucide-react"
+import { ReactElement, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import * as z from "zod"
 
-import { setFormErrors } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import PageHeader from "@/components/ui/page-header"
-import { Switch } from "@/components/ui/switch"
-import { useToast } from "@/components/ui/use-toast"
 import AccessLayout from "@/components/_layout/access_layout"
 import {
   Form,
@@ -24,6 +17,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/form/form"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import PageHeader from "@/components/ui/page-header"
+import { Switch } from "@/components/ui/switch"
+import { useToast } from "@/components/ui/use-toast"
+import { setFormErrors } from "@/lib/utils"
 
 const AccessLdapPage: NextPageWithLayout = () => {
   const { toast } = useToast()
@@ -41,8 +41,7 @@ const AccessLdapPage: NextPageWithLayout = () => {
   })
 
   const handleSave = (data: z.infer<typeof formSchema>) => {
-    apiService
-      .getInstance()
+    http
       .post("/settings/access/ldap/configuration", data)
       .then(() => {
         toast({
@@ -62,8 +61,7 @@ const AccessLdapPage: NextPageWithLayout = () => {
   }
 
   useEffect(() => {
-    apiService
-      .getInstance()
+    http
       .get("/settings/access/ldap/configuration")
       .then((res) => {
         form.reset(res.data)

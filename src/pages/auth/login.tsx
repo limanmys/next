@@ -1,5 +1,5 @@
+import { http } from "@/services"
 import { useEffect, useState } from "react"
-import { apiService } from "@/services"
 
 import { Icons } from "@/components/ui/icons"
 import { UserAuthForm } from "@/components/ui/user-auth-form"
@@ -8,8 +8,7 @@ export default function AuthenticationPage() {
   const [loginBranding, setLoginBranding] = useState<string>("")
 
   useEffect(() => {
-    apiService
-      .getInstance()
+    http
       .get("/auth/branding")
       .then((res) => {
         setLoginBranding(res.data.image)

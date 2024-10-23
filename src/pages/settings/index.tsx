@@ -1,9 +1,9 @@
 import { useTranslation } from "react-i18next"
 
-import { Settings } from "@/lib/settings"
-import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
-import PageHeader from "@/components/ui/page-header"
 import SettingCard from "@/components/settings/setting-card"
+import PageHeader from "@/components/ui/page-header"
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
+import { Settings } from "@/lib/settings"
 
 export default function SettingsPage() {
   const user = useCurrentUser()

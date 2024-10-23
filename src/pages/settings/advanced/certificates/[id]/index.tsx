@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react"
+import { http } from "@/services"
 import { useRouter } from "next/router"
-import { apiService } from "@/services"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { ICertificateDetails } from "@/types/certificate"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import PageHeader from "@/components/ui/page-header"
 import { useToast } from "@/components/ui/use-toast"
+import { ICertificateDetails } from "@/types/certificate"
 
 export default function CertificateInformation() {
   const router = useRouter()
@@ -20,8 +20,7 @@ export default function CertificateInformation() {
   useEffect(() => {
     if (!router.query.id) return
 
-    apiService
-      .getInstance()
+    http
       .get<ICertificateDetails>(
         `/settings/advanced/certificates/${router.query.id}/information`
       )

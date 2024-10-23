@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react"
 import dynamic from "next/dynamic"
 import { useRouter } from "next/router"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { Cpu, Download, HardDrive, MemoryStick, Upload } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useTranslation } from "react-i18next"
@@ -65,8 +65,7 @@ export default function ResourceUsage({ loader = false }) {
     if (!router.query.server_id) return
 
     const f = () =>
-      apiService
-        .getInstance()
+      http
         .get(`/servers/${router.query.server_id}/stats`)
         .then((response) => {
           setLoading(false)
@@ -78,16 +77,16 @@ export default function ResourceUsage({ loader = false }) {
                 .fill(null)
                 .map(
                   (e, i) =>
-                    (e = {
-                      cpu: 0,
-                      ram: 0,
-                      io: 0,
-                      network: {
-                        download: 0,
-                        upload: 0,
-                      },
-                      time: Date.now() - 20000 - 3000 * i,
-                    })
+                  (e = {
+                    cpu: 0,
+                    ram: 0,
+                    io: 0,
+                    network: {
+                      download: 0,
+                      upload: 0,
+                    },
+                    time: Date.now() - 20000 - 3000 * i,
+                  })
                 ),
             ]
           }

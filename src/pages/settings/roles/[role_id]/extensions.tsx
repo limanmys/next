@@ -1,15 +1,15 @@
-import { ReactElement, useEffect, useState } from "react"
-import { useRouter } from "next/router"
 import { NextPageWithLayout } from "@/pages/_app"
-import { apiService } from "@/services"
+import { http } from "@/services"
+import { useRouter } from "next/router"
+import { ReactElement, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { IExtension } from "@/types/extension"
-import { useEmitter } from "@/hooks/useEmitter"
+import RoleLayout from "@/components/_layout/role_layout"
 import PageHeader from "@/components/ui/page-header"
 import TransferList from "@/components/ui/transfer-list"
 import { useToast } from "@/components/ui/use-toast"
-import RoleLayout from "@/components/_layout/role_layout"
+import { useEmitter } from "@/hooks/useEmitter"
+import { IExtension } from "@/types/extension"
 
 const RoleExtensionList: NextPageWithLayout = () => {
   const router = useRouter()
@@ -21,8 +21,7 @@ const RoleExtensionList: NextPageWithLayout = () => {
   const [loading, setLoading] = useState<boolean>(true)
 
   const fetchData = () => {
-    apiService
-      .getInstance()
+    http
       .get(`/settings/roles/${router.query.role_id}/extensions`)
       .then((res) => {
         setExtensions(res.data.extensions)
@@ -40,8 +39,7 @@ const RoleExtensionList: NextPageWithLayout = () => {
       extensions: selected.map((item) => item.id),
     }
 
-    apiService
-      .getInstance()
+    http
       .post(`/settings/roles/${router.query.role_id}/extensions`, data)
       .then(() => {
         toast({

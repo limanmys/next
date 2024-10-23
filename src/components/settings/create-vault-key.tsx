@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Ban, FileKey2, Key, PlusCircle } from "lucide-react"
 import { useForm } from "react-hook-form"
@@ -66,8 +66,7 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
 
   const [open, setOpen] = useState<boolean>(false)
   const handleCreate = (values: z.infer<typeof formSchema>) => {
-    apiService
-      .getInstance()
+    http
       .post(`/settings/vault/key`, {
         ...values,
         user_id: userId,

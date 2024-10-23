@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react"
-import { useRouter } from "next/router"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { FolderX } from "lucide-react"
+import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
 import { IMostUsedExtension } from "@/types/dashboard"
@@ -17,8 +17,7 @@ export default function MostUsedExtensions() {
   const [data, setData] = useState<IMostUsedExtension[]>([])
 
   useEffect(() => {
-    apiService
-      .getInstance()
+    http
       .get<IMostUsedExtension[]>("/dashboard/most_used_extensions")
       .then((res) => {
         setData(res.data)

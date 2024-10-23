@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { CheckCircle, Plus, PlusCircle } from "lucide-react"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { IExtension } from "@/types/extension"
-import { ILimanSubscription } from "@/types/subscription"
-import { useEmitter } from "@/hooks/useEmitter"
+import SubscriptionCard from "@/components/settings/subscription-card"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import {
@@ -21,7 +19,9 @@ import PageHeader from "@/components/ui/page-header"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/components/ui/use-toast"
-import SubscriptionCard from "@/components/settings/subscription-card"
+import { useEmitter } from "@/hooks/useEmitter"
+import { IExtension } from "@/types/extension"
+import { ILimanSubscription } from "@/types/subscription"
 
 export default function SubscriptionPage() {
   const { t } = useTranslation("settings")
@@ -34,8 +34,7 @@ export default function SubscriptionPage() {
   const emitter = useEmitter()
 
   const fetchLimanSubscription = () => {
-    apiService
-      .getInstance()
+    http
       .get("/settings/subscriptions/liman")
       .then((response) => {
         setLimanSubscription(response.data)
@@ -49,8 +48,7 @@ export default function SubscriptionPage() {
   const fetchData = () => {
     setLoading(true)
 
-    apiService
-      .getInstance()
+    http
       .get("/settings/subscriptions")
       .then((response) => {
         if (response.status === 200) {
@@ -181,7 +179,7 @@ export default function SubscriptionPage() {
                   <span className="text-foreground/70">
                     {Math.floor(
                       (limanSubscription.coverage_end - Date.now()) /
-                        (1000 * 60 * 60 * 24)
+                      (1000 * 60 * 60 * 24)
                     )}
                   </span>
                 </div>
@@ -236,8 +234,7 @@ function LimanLicense({
   const handleCreate = () => {
     setLoading(true)
 
-    apiService
-      .getInstance()
+    http
       .post(`/settings/subscriptions/liman`, {
         license: data,
       })

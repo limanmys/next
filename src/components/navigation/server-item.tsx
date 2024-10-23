@@ -1,7 +1,7 @@
-import React from "react"
+import { ChevronRight } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { ChevronRight } from "lucide-react"
+import React from "react"
 
 import { cn } from "@/lib/utils"
 

@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useRouter } from "next/router"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { PlusCircle } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
@@ -42,8 +42,7 @@ export default function AssignFunction() {
     setLoading(true)
     setSelectedExtension(extension)
 
-    apiService
-      .getInstance()
+    http
       .get(`/settings/extensions/${extension}/functions`)
       .then((res) => {
         setData(res.data)
@@ -89,8 +88,7 @@ export default function AssignFunction() {
   ]
 
   const handleAddPermission = () => {
-    apiService
-      .getInstance()
+    http
       .post(`/settings/roles/${router.query.role_id}/functions`, {
         functions: selected.map((item) => item.name),
         extension_id: selectedExtension,

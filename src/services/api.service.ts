@@ -16,6 +16,11 @@ export class ApiService {
       },
     })
 
+    this.instance.interceptors.request.use((config) => {
+      config.headers["x-language"] = localStorage.getItem("LANGUAGE") || "tr"
+      return config
+    })
+
     this.instance.interceptors.response.use(
       (response) => {
         return response
@@ -40,10 +45,11 @@ export class ApiService {
     )
   }
 
+  /**
+   * DEPRECATED
+   * @returns AxiosInstance
+   */
   getInstance = () => {
-    this.instance.defaults.headers["x-language"] =
-      localStorage.getItem("LANGUAGE") || "tr"
-
     return this.instance
   }
 }

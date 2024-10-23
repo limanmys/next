@@ -1,19 +1,19 @@
-import { useEffect, useState } from "react"
-import Link from "next/link"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { Link2, Server } from "lucide-react"
+import Link from "next/link"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { IServer } from "@/types/server"
-import { DivergentColumn } from "@/types/table"
-import { compareNumericString } from "@/lib/utils"
-import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
-import { useEmitter } from "@/hooks/useEmitter"
+import { ServerRowActions } from "@/components/settings/server-actions"
 import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
 import PageHeader from "@/components/ui/page-header"
-import { ServerRowActions } from "@/components/settings/server-actions"
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
+import { useEmitter } from "@/hooks/useEmitter"
+import { compareNumericString } from "@/lib/utils"
+import { IServer } from "@/types/server"
+import { DivergentColumn } from "@/types/table"
 
 export default function Servers() {
   const [loading, setLoading] = useState<boolean>(true)
@@ -83,8 +83,7 @@ export default function Servers() {
   useEffect(() => {
     setLoading(true)
 
-    apiService
-      .getInstance()
+    http
       .get(`/servers`)
       .then((res) => {
         setData(res.data)
@@ -94,8 +93,7 @@ export default function Servers() {
     emitter.on("REFETCH_SERVERS", () => {
       setLoading(true)
 
-      apiService
-        .getInstance()
+      http
         .get(`/servers`)
         .then((res) => {
           setData(res.data)

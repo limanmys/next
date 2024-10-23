@@ -1,6 +1,4 @@
-import { ReactNode, useEffect, useState } from "react"
-import { useRouter } from "next/router"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import {
   ChevronLeft,
   Eye,
@@ -10,12 +8,14 @@ import {
   ToyBrick,
   Users2,
 } from "lucide-react"
+import { useRouter } from "next/router"
+import { ReactNode, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { IRole } from "@/types/role"
-import { useEmitter } from "@/hooks/useEmitter"
-import { Icons } from "@/components/ui/icons"
 import RoleCard from "@/components/settings/role-card"
+import { Icons } from "@/components/ui/icons"
+import { useEmitter } from "@/hooks/useEmitter"
+import { IRole } from "@/types/role"
 
 export default function RoleLayout({ children }: { children: ReactNode }) {
   const router = useRouter()
@@ -74,8 +74,7 @@ export default function RoleLayout({ children }: { children: ReactNode }) {
   ]
   const [role, setRole] = useState<IRole>()
   const fetchData = (id?: string) => {
-    apiService
-      .getInstance()
+    http
       .get(`/settings/roles/${id ? id : router.query.role_id}`)
       .then((response) => {
         setRole(response.data)

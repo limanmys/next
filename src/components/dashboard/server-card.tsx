@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { CircleDot } from "lucide-react"
+import { useEffect, useState } from "react"
 
-import { IServer } from "@/types/server"
 import { cn } from "@/lib/utils"
+import { IServer } from "@/types/server"
 
 import { Card, CardContent } from "../ui/card"
 import { Icons } from "../ui/icons"
@@ -14,8 +14,7 @@ export default function ServerCard({ item }: { item: IServer }) {
   const [data, setData] = useState<IServer>()
 
   useEffect(() => {
-    apiService
-      .getInstance()
+    http
       .get<IServer>(`/menu/servers/${item.id}`)
       .then((res) => {
         setData(res.data)

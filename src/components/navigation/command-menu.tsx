@@ -1,4 +1,4 @@
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { CommandLoading } from "cmdk"
 import { Search } from "lucide-react"
 import { useRouter } from "next/router"
@@ -25,8 +25,7 @@ const search = (
 ) => {
   setResults({})
   setLoading(true)
-  apiService
-    .getInstance()
+  http
     .post("/search", {
       query: query,
     })

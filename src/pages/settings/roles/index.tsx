@@ -1,16 +1,14 @@
-import { useEffect, useState } from "react"
-import { useRouter } from "next/router"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Footprints, Link2, PlusCircle } from "lucide-react"
+import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
-import { IRole } from "@/types/role"
-import { DivergentColumn } from "@/types/table"
-import { compareNumericString, setFormErrors } from "@/lib/utils"
-import { useEmitter } from "@/hooks/useEmitter"
+import { Form, FormField, FormMessage } from "@/components/form/form"
+import { RoleRowActions } from "@/components/settings/role-actions"
 import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
@@ -27,8 +25,10 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import PageHeader from "@/components/ui/page-header"
 import { useToast } from "@/components/ui/use-toast"
-import { Form, FormField, FormMessage } from "@/components/form/form"
-import { RoleRowActions } from "@/components/settings/role-actions"
+import { useEmitter } from "@/hooks/useEmitter"
+import { compareNumericString, setFormErrors } from "@/lib/utils"
+import { IRole } from "@/types/role"
+import { DivergentColumn } from "@/types/table"
 
 export default function RoleSettingsPage() {
   const router = useRouter()
@@ -84,8 +84,7 @@ export default function RoleSettingsPage() {
   ]
 
   const fetchData = () => {
-    apiService
-      .getInstance()
+    http
       .get(`/settings/roles`)
       .then((res) => {
         setData(res.data)
@@ -152,8 +151,7 @@ function CreateRole() {
 
   const [open, setOpen] = useState<boolean>(false)
   const handleCreate = (values: z.infer<typeof formSchema>) => {
-    apiService
-      .getInstance()
+    http
       .post(`/settings/roles`, values)
       .then((res) => {
         if (res.status === 200) {

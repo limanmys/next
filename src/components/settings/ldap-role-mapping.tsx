@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { useTranslation } from "react-i18next"
 
 import { useDebounce } from "@/lib/debounce"
@@ -26,8 +26,7 @@ export default function LdapRoleMapping(props: {
 
   const fetchRoleMappingList = useDebounce((param?: string) => {
     setRoleListLoading(true)
-    apiService
-      .getInstance()
+    http
       .get("settings/access/ldap/permissions/role_mappings", {
         params: {
           username: username,
@@ -70,8 +69,7 @@ export default function LdapRoleMapping(props: {
   }, [selectedRole, username, password])
 
   const handleRoleMappingSave = (groups: any[]) => {
-    apiService
-      .getInstance()
+    http
       .post("settings/access/ldap/permissions/role_mappings", {
         role_id: selectedRole,
         groups: groups.map((it) => it.id),

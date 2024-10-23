@@ -1,15 +1,13 @@
-import { useEffect, useState } from "react"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FileWarning, PlusCircle } from "lucide-react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
-import { DivergentColumn } from "@/types/table"
-import { IToken } from "@/types/token"
-import { setFormErrors } from "@/lib/utils"
-import { useEmitter } from "@/hooks/useEmitter"
+import { Form, FormField, FormMessage } from "@/components/form/form"
+import { TokenActions } from "@/components/settings/token-actions"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/data-table/data-table"
@@ -27,8 +25,10 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import PageHeader from "@/components/ui/page-header"
 import { useToast } from "@/components/ui/use-toast"
-import { Form, FormField, FormMessage } from "@/components/form/form"
-import { TokenActions } from "@/components/settings/token-actions"
+import { useEmitter } from "@/hooks/useEmitter"
+import { setFormErrors } from "@/lib/utils"
+import { DivergentColumn } from "@/types/table"
+import { IToken } from "@/types/token"
 
 export default function TokensPage() {
   const [loading, setLoading] = useState<boolean>(true)
@@ -75,15 +75,15 @@ export default function TokensPage() {
         <>
           {row.original.last_used_at
             ? new Date(row.original.last_used_at).toLocaleDateString(
-                i18n.language,
-                {
-                  day: "2-digit",
-                  month: "long",
-                  year: "numeric",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                }
-              )
+              i18n.language,
+              {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+              }
+            )
             : t("tokens.unknown")}
         </>
       ),
@@ -99,8 +99,7 @@ export default function TokensPage() {
   ]
 
   const fetchData = () => {
-    apiService
-      .getInstance()
+    http
       .get<IToken[]>(`/settings/tokens`)
       .then((res) => {
         setData(res.data)
@@ -171,8 +170,7 @@ function CreateAccessToken() {
   }, [open])
 
   const handleCreate = (values: z.infer<typeof formSchema>) => {
-    apiService
-      .getInstance()
+    http
       .post<{
         status: boolean
         token: string

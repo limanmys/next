@@ -1,5 +1,5 @@
 import * as React from "react"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { Check, ChevronsUpDown, Server } from "lucide-react"
 
 import { IServer } from "@/types/server"
@@ -36,8 +36,7 @@ export function SelectServer({
   const [loading, setLoading] = React.useState(true)
 
   React.useEffect(() => {
-    apiService
-      .getInstance()
+    http
       .get("/servers")
       .then((res) => {
         setServers(res.data)

@@ -1,20 +1,20 @@
-import { ReactElement, useEffect, useState } from "react"
-import { useRouter } from "next/router"
 import { NextPageWithLayout } from "@/pages/_app"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { PlusCircle } from "lucide-react"
+import { useRouter } from "next/router"
+import { ReactElement, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { ICertificate } from "@/types/certificate"
-import { DivergentColumn } from "@/types/table"
-import { compareNumericString } from "@/lib/utils"
-import { useEmitter } from "@/hooks/useEmitter"
+import AdvancedLayout from "@/components/_layout/advanced_layout"
+import { CertificateActions } from "@/components/settings/certificate-actions"
 import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
 import PageHeader from "@/components/ui/page-header"
-import AdvancedLayout from "@/components/_layout/advanced_layout"
-import { CertificateActions } from "@/components/settings/certificate-actions"
+import { useEmitter } from "@/hooks/useEmitter"
+import { compareNumericString } from "@/lib/utils"
+import { ICertificate } from "@/types/certificate"
+import { DivergentColumn } from "@/types/table"
 
 const AdvancedCertificateSettingsPage: NextPageWithLayout = () => {
   const router = useRouter()
@@ -59,10 +59,10 @@ const AdvancedCertificateSettingsPage: NextPageWithLayout = () => {
           {/* Add icons for validity time is near 1 month, is not valid and valid states */}
           <div className="flex items-center">
             {new Date(row.original.valid_to).getTime() - new Date().getTime() <
-            0 ? (
+              0 ? (
               <div className="mr-2 size-3 rounded-full bg-red-500"></div>
             ) : new Date(row.original.valid_to).getTime() -
-                new Date().getTime() <
+              new Date().getTime() <
               2592000000 ? (
               <div className="mr-2 size-3 rounded-full bg-yellow-500"></div>
             ) : (
@@ -85,8 +85,7 @@ const AdvancedCertificateSettingsPage: NextPageWithLayout = () => {
   ]
 
   const fetchData = () => {
-    apiService
-      .getInstance()
+    http
       .get<ICertificate[]>(`/settings/advanced/certificates`)
       .then((res) => {
         setData(res.data)

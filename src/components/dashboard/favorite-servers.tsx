@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react"
 import { useSidebarContext } from "@/providers/sidebar-provider"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { FolderX } from "lucide-react"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
 import { IServer } from "@/types/server"
@@ -17,8 +17,7 @@ export default function FavoriteServers() {
   const sidebarCtx = useSidebarContext()
 
   useEffect(() => {
-    apiService
-      .getInstance()
+    http
       .get<IServer[]>("/dashboard/favorite_servers")
       .then((res) => {
         setData(res.data)

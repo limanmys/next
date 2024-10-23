@@ -1,14 +1,12 @@
-import { useEffect, useRef, useState } from "react"
+import { useSidebarContext } from "@/providers/sidebar-provider"
+import { http } from "@/services"
+import { Link2, MinusCircle, Sliders, UploadCloud } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { useSidebarContext } from "@/providers/sidebar-provider"
-import { apiService } from "@/services"
-import { Link2, MinusCircle, Sliders, UploadCloud } from "lucide-react"
+import { useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { IExtension } from "@/types/extension"
-import { DivergentColumn } from "@/types/table"
-import { compareNumericString } from "@/lib/utils"
+import AssignExtension from "@/components/server/assign-extension"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -26,7 +24,9 @@ import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
 import PageHeader from "@/components/ui/page-header"
 import { useToast } from "@/components/ui/use-toast"
-import AssignExtension from "@/components/server/assign-extension"
+import { compareNumericString } from "@/lib/utils"
+import { IExtension } from "@/types/extension"
+import { DivergentColumn } from "@/types/table"
 
 export default function ServerExtensionPage() {
   const router = useRouter()
@@ -117,8 +117,7 @@ export default function ServerExtensionPage() {
   const fetchData = () => {
     if (!router.query.server_id) return
 
-    apiService
-      .getInstance()
+    http
       .get(`/servers/${router.query.server_id}/extensions`)
       .then((res) => {
         setData(res.data)
@@ -133,8 +132,7 @@ export default function ServerExtensionPage() {
   const onAssignExtension = (extensions: IExtension[]) => {
     const values = extensions.map((i) => i.id)
 
-    apiService
-      .getInstance()
+    http
       .post(`extensions/assign`, {
         server_id: router.query.server_id,
         extensions: values,
@@ -152,8 +150,7 @@ export default function ServerExtensionPage() {
   const onUnassignExtension = (extensions: IExtension[]) => {
     const values = extensions.map((i) => i.id)
 
-    apiService
-      .getInstance()
+    http
       .post(`extensions/unassign`, {
         server_id: router.query.server_id,
         extensions: values,

@@ -1,23 +1,23 @@
-import { useRef, useState } from "react"
-import Link from "next/link"
-import { useRouter } from "next/router"
 import { useSidebarContext } from "@/providers/sidebar-provider"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { ChevronLeft, ChevronRight, PlusCircle, Server } from "lucide-react"
+import Link from "next/link"
+import { useRouter } from "next/router"
+import { useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 
+import ConnectionInformation from "@/components/server/create-server/connection-information"
+import GeneralSettings from "@/components/server/create-server/general-settings"
+import KeyInputs from "@/components/server/create-server/key"
+import KeySelection from "@/components/server/create-server/key-selection"
+import Summary from "@/components/server/create-server/summary"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Icons } from "@/components/ui/icons"
 import PageHeader from "@/components/ui/page-header"
 import Steps from "@/components/ui/steps"
 import { useToast } from "@/components/ui/use-toast"
-import ConnectionInformation from "@/components/server/create-server/connection-information"
-import GeneralSettings from "@/components/server/create-server/general-settings"
-import KeyInputs from "@/components/server/create-server/key"
-import KeySelection from "@/components/server/create-server/key-selection"
-import Summary from "@/components/server/create-server/summary"
 
 export default function ServerCreatePage() {
   const { toast } = useToast()
@@ -37,8 +37,7 @@ export default function ServerCreatePage() {
       component: ConnectionInformation,
       validation: async (data: any) => {
         try {
-          const res = await apiService
-            .getInstance()
+          const res = await http
             .post("/servers/check_access", data)
           return {
             isValid: res.status === 200,
@@ -59,8 +58,7 @@ export default function ServerCreatePage() {
       component: GeneralSettings,
       validation: async (data: any) => {
         try {
-          const res = await apiService
-            .getInstance()
+          const res = await http
             .post("/servers/check_name", data)
           return {
             isValid: res.status === 200,
@@ -100,8 +98,7 @@ export default function ServerCreatePage() {
         }
 
         try {
-          const res = await apiService
-            .getInstance()
+          const res = await http
             .post("/servers/check_connection", data)
           return {
             isValid: res.status === 200,
@@ -187,8 +184,7 @@ export default function ServerCreatePage() {
 
   const createServer = () => {
     setLoading(true)
-    apiService
-      .getInstance()
+    http
       .post("/servers", data)
       .then(() => {
         sidebarCtx.refreshServers()

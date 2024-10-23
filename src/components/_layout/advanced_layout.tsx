@@ -1,5 +1,5 @@
-import { ReactNode } from "react"
 import { Award, CloudCog, Cog, ScrollText } from "lucide-react"
+import { ReactNode } from "react"
 import { useTranslation } from "react-i18next"
 
 import AccessCard from "../settings/access-card"

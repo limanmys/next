@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { Row } from "@tanstack/react-table"
 import { Edit2, Footprints, MoreHorizontal, Trash } from "lucide-react"
 import { useTranslation } from "react-i18next"
@@ -86,8 +86,7 @@ function DeleteDialog({
   const handleDelete = () => {
     setLoading(true)
 
-    apiService
-      .getInstance()
+    http
       .delete(`/settings/users/${user.id}`)
       .then(() => {
         toast({

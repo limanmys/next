@@ -1,5 +1,5 @@
 import * as React from "react"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { Check, ChevronsUpDown, User } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
@@ -39,8 +39,7 @@ export function SelectUser({
   const [loading, setLoading] = React.useState(true)
 
   React.useEffect(() => {
-    apiService
-      .getInstance()
+    http
       .get("/settings/users")
       .then((res) => {
         setUsers(res.data)

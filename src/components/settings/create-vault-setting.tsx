@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { PlusCircle, Settings } from "lucide-react"
 import { useForm } from "react-hook-form"
@@ -53,8 +53,7 @@ export default function CreateVaultSetting({ userId }: { userId: string }) {
   }, [open])
 
   const handleCreate = (values: z.infer<typeof formSchema>) => {
-    apiService
-      .getInstance()
+    http
       .post(`/settings/vault`, {
         ...values,
         user_id: userId,

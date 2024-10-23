@@ -1,6 +1,4 @@
-import { useEffect, useRef, useState } from "react"
-import { useRouter } from "next/router"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import {
   CheckCircle,
   ListRestart,
@@ -9,10 +7,10 @@ import {
   StopCircle,
   X,
 } from "lucide-react"
+import { useRouter } from "next/router"
+import { useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { IService } from "@/types/service"
-import { DivergentColumn } from "@/types/table"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -40,6 +38,8 @@ import {
 import PageHeader from "@/components/ui/page-header"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useToast } from "@/components/ui/use-toast"
+import { IService } from "@/types/service"
+import { DivergentColumn } from "@/types/table"
 
 export default function ServerExtensionPage() {
   const router = useRouter()
@@ -133,11 +133,10 @@ export default function ServerExtensionPage() {
         </div>
       ),
       accessorFn: (row) => {
-        return `${
-          row.status.running === "running"
-            ? 0 + t("services.status.running.yes")
-            : 1 + t("services.status.running.no")
-        }`
+        return `${row.status.running === "running"
+          ? 0 + t("services.status.running.yes")
+          : 1 + t("services.status.running.no")
+          }`
       },
     },
     {
@@ -169,11 +168,10 @@ export default function ServerExtensionPage() {
         </div>
       ),
       accessorFn: (row) => {
-        return `${
-          row.status.active
-            ? 0 + t("services.status.active.yes")
-            : 1 + t("services.status.active.no")
-        }`
+        return `${row.status.active
+          ? 0 + t("services.status.active.yes")
+          : 1 + t("services.status.active.no")
+          }`
       },
     },
   ]
@@ -181,8 +179,7 @@ export default function ServerExtensionPage() {
   const fetchData = () => {
     if (!router.query.server_id) return
 
-    apiService
-      .getInstance()
+    http
       .get(`/servers/${router.query.server_id}/services`)
       .then((res) => {
         setData(res.data)
@@ -199,8 +196,7 @@ export default function ServerExtensionPage() {
 
     const services = selected.map((service) => service.name)
 
-    apiService
-      .getInstance()
+    http
       .post(`/servers/${router.query.server_id}/services/${action}`, {
         services,
       })
@@ -334,8 +330,7 @@ function ServiceStatusWindow({ name }: { name: string }) {
 
   const fetchStatus = () => {
     setLoading(true)
-    apiService
-      .getInstance()
+    http
       .post(`/servers/${router.query.server_id}/services/status`, {
         service_name: name,
       })

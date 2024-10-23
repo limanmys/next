@@ -1,18 +1,18 @@
-import * as React from "react"
-import Link from "next/link"
-import { useRouter } from "next/router"
-import { apiService, authService } from "@/services"
+import { authService, http } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AlertCircle, CheckIcon, LogIn } from "lucide-react"
+import Link from "next/link"
+import { useRouter } from "next/router"
+import * as React from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
-import { cn } from "@/lib/utils"
-import { useLogin } from "@/hooks/auth/useLogin"
 import { Button } from "@/components/ui/button"
 import { Icons } from "@/components/ui/icons"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useLogin } from "@/hooks/auth/useLogin"
+import { cn } from "@/lib/utils"
 
 import {
   Form,
@@ -38,7 +38,7 @@ import {
   SelectValue,
 } from "./select"
 
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const router = useRouter()
@@ -49,13 +49,11 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   React.useEffect(() => {
     const fetchAuthData = async () => {
       try {
-        const authTypesResponse = await apiService
-          .getInstance()
+        const authTypesResponse = await http
           .get("/auth/types")
         setAuthTypes(authTypesResponse.data)
 
-        const authGateResponse = await apiService
-          .getInstance()
+        const authGateResponse = await http
           .get("/auth/gate")
         loginForm.setValue("type", authGateResponse.data)
       } catch (error) {
@@ -167,8 +165,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       if (e.response.data.new_password) {
         setError(
           e.response.data.new_password[1] ||
-            e.response.data.new_password[0] ||
-            e.response.data.new_password
+          e.response.data.new_password[0] ||
+          e.response.data.new_password
         )
       }
 
@@ -229,8 +227,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       if (e.response.data.new_password) {
         setError(
           e.response.data.new_password[1] ||
-            e.response.data.new_password[0] ||
-            e.response.data.new_password
+          e.response.data.new_password[0] ||
+          e.response.data.new_password
         )
       }
     } finally {

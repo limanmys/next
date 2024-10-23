@@ -1,18 +1,18 @@
-import { useEffect, useState } from "react"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { Check, X } from "lucide-react"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { IExtension } from "@/types/extension"
-import { DivergentColumn } from "@/types/table"
-import { compareNumericString } from "@/lib/utils"
-import { useEmitter } from "@/hooks/useEmitter"
+import { ExtensionRowActions } from "@/components/settings/extension-actions"
+import UploadExtension from "@/components/settings/upload-extension"
 import { Badge } from "@/components/ui/badge"
 import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
 import PageHeader from "@/components/ui/page-header"
-import { ExtensionRowActions } from "@/components/settings/extension-actions"
-import UploadExtension from "@/components/settings/upload-extension"
+import { useEmitter } from "@/hooks/useEmitter"
+import { compareNumericString } from "@/lib/utils"
+import { IExtension } from "@/types/extension"
+import { DivergentColumn } from "@/types/table"
 
 export default function ExtensionSettingsPage() {
   const [loading, setLoading] = useState<boolean>(true)
@@ -116,8 +116,7 @@ export default function ExtensionSettingsPage() {
   ]
 
   const fetchData = () => {
-    apiService
-      .getInstance()
+    http
       .get(`/settings/extensions`)
       .then((res) => {
         setData(res.data)

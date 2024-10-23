@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { useTranslation } from "react-i18next"
 
 import { IServerDiskUsage } from "@/types/server"
@@ -29,8 +29,7 @@ export default function DiskTable({ loader = false }) {
     if (!router.query.server_id) return
 
     const f = () =>
-      apiService
-        .getInstance()
+      http
         .get(`/servers/${router.query.server_id}/stats/disk`)
         .then((res) => {
           setLoading(false)

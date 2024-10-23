@@ -1,5 +1,5 @@
 import * as React from "react"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { Check, ChevronsUpDown, ToyBrick } from "lucide-react"
 
 import { IExtension } from "@/types/extension"
@@ -38,8 +38,7 @@ export function SelectExtension({
   const [loading, setLoading] = React.useState(true)
 
   React.useEffect(() => {
-    apiService
-      .getInstance()
+    http
       .get(endpoint || "/extensions")
       .then((res) => {
         if (res.data.selected) {
@@ -47,8 +46,8 @@ export function SelectExtension({
           if (!defaultValue)
             setValue(
               res.data.selected &&
-                res.data.selected.length &&
-                res.data.selected[0].id
+              res.data.selected.length &&
+              res.data.selected[0].id
             )
           return
         }

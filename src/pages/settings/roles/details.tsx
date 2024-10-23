@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react"
-import { useRouter } from "next/router"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { ChevronLeft, Download } from "lucide-react"
+import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { IRole } from "@/types/role"
-import { DivergentColumn } from "@/types/table"
-import { useDownloadFile } from "@/hooks/useDownloadFile"
 import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
 import PageHeader from "@/components/ui/page-header"
 import { useToast } from "@/components/ui/use-toast"
+import { useDownloadFile } from "@/hooks/useDownloadFile"
+import { IRole } from "@/types/role"
+import { DivergentColumn } from "@/types/table"
 
 export default function RoleDetailsPage() {
   const router = useRouter()
@@ -82,8 +82,7 @@ export default function RoleDetailsPage() {
   ]
 
   const fetchData = () => {
-    apiService
-      .getInstance()
+    http
       .get(`/settings/roles/details`)
       .then((res) => {
         setData(res.data)
@@ -97,7 +96,7 @@ export default function RoleDetailsPage() {
 
   const { ref, url, download, name } = useDownloadFile({
     apiDefinition: () => {
-      return apiService.getInstance().get(`/settings/roles/details/csv`, {
+      return http.get(`/settings/roles/details/csv`, {
         responseType: "blob",
       })
     },

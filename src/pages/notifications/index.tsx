@@ -1,19 +1,18 @@
-import { useEffect, useState } from "react"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { BellOff } from "lucide-react"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { INotification } from "@/types/notification"
 import PageHeader from "@/components/ui/page-header"
 import StatusBadge, { Status } from "@/components/ui/status-badge"
+import { INotification } from "@/types/notification"
 
 export default function NotificationsPage() {
   const { t } = useTranslation("common")
   const [notifications, setNotifications] = useState<INotification[]>([])
 
   useEffect(() => {
-    apiService
-      .getInstance()
+    http
       .get<INotification[]>("/notifications")
       .then((response) => {
         setNotifications(response.data)

@@ -1,15 +1,15 @@
-import { ReactElement, useEffect, useState } from "react"
-import { useRouter } from "next/router"
 import { NextPageWithLayout } from "@/pages/_app"
-import { apiService } from "@/services"
+import { http } from "@/services"
+import { useRouter } from "next/router"
+import { ReactElement, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { IUser } from "@/types/user"
-import { useEmitter } from "@/hooks/useEmitter"
+import RoleLayout from "@/components/_layout/role_layout"
 import PageHeader from "@/components/ui/page-header"
 import TransferList from "@/components/ui/transfer-list"
 import { useToast } from "@/components/ui/use-toast"
-import RoleLayout from "@/components/_layout/role_layout"
+import { useEmitter } from "@/hooks/useEmitter"
+import { IUser } from "@/types/user"
 
 const RoleLimanList: NextPageWithLayout = () => {
   const router = useRouter()
@@ -21,8 +21,7 @@ const RoleLimanList: NextPageWithLayout = () => {
   const [loading, setLoading] = useState<boolean>(true)
 
   const fetchData = () => {
-    apiService
-      .getInstance()
+    http
       .get(`/settings/roles/${router.query.role_id}/liman`)
       .then((res) => {
         setExtensions(res.data.permissions)
@@ -40,8 +39,7 @@ const RoleLimanList: NextPageWithLayout = () => {
       limanPermissions: selected.map((item) => item.id),
     }
 
-    apiService
-      .getInstance()
+    http
       .post(`/settings/roles/${router.query.role_id}/liman`, data)
       .then(() => {
         toast({

@@ -1,13 +1,13 @@
-import { useEffect, useMemo, useState } from "react"
-import Link from "next/link"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { ArrowRight, Cog, Server, ToyBrick, Users } from "lucide-react"
+import Link from "next/link"
+import { useEffect, useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { DashboardEnum } from "@/types/user"
-import { cn } from "@/lib/utils"
-import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
+import { cn } from "@/lib/utils"
+import { DashboardEnum } from "@/types/user"
 
 import { Skeleton } from "../ui/skeleton"
 
@@ -34,8 +34,7 @@ export default function DashboardCards() {
   ]
 
   useEffect(() => {
-    apiService
-      .getInstance()
+    http
       .get<IDashboardInformation>("/dashboard/information")
       .then((response) => {
         setData(response.data)

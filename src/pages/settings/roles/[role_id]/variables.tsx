@@ -1,17 +1,16 @@
-import { ReactElement, useEffect, useRef, useState } from "react"
-import { useRouter } from "next/router"
 import { NextPageWithLayout } from "@/pages/_app"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { MinusCircle, PlusCircle } from "lucide-react"
+import { useRouter } from "next/router"
+import { ReactElement, useEffect, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import * as z from "zod"
 
-import { IFunction } from "@/types/function"
-import { DivergentColumn } from "@/types/table"
-import { setFormErrors } from "@/lib/utils"
-import { useEmitter } from "@/hooks/useEmitter"
+import RoleLayout from "@/components/_layout/role_layout"
+import { Form, FormField, FormMessage } from "@/components/form/form"
+import { SelectExtension } from "@/components/selectbox/extension-select"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -48,9 +47,10 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { useToast } from "@/components/ui/use-toast"
-import RoleLayout from "@/components/_layout/role_layout"
-import { Form, FormField, FormMessage } from "@/components/form/form"
-import { SelectExtension } from "@/components/selectbox/extension-select"
+import { useEmitter } from "@/hooks/useEmitter"
+import { setFormErrors } from "@/lib/utils"
+import { IFunction } from "@/types/function"
+import { DivergentColumn } from "@/types/table"
 
 const RoleVariablesList: NextPageWithLayout = () => {
   const [loading, setLoading] = useState<boolean>(true)
@@ -108,8 +108,7 @@ const RoleVariablesList: NextPageWithLayout = () => {
   ]
 
   const fetchData = (id?: string) => {
-    apiService
-      .getInstance()
+    http
       .get(`/settings/roles/${id ? id : router.query.role_id}/variables`)
       .then((res) => {
         setData(res.data)
@@ -133,8 +132,7 @@ const RoleVariablesList: NextPageWithLayout = () => {
   const deleteSelected = () => {
     if (!selected?.length) return
 
-    apiService
-      .getInstance()
+    http
       .delete(`/settings/roles/${router.query.role_id}/functions`, {
         data: {
           permission_ids: selected.map((s) => s.id),
@@ -257,8 +255,7 @@ function CreateVariable() {
       return
     }
 
-    apiService
-      .getInstance()
+    http
       .get(`/settings/extensions/${extension}/variables`)
       .then((res) => {
         setData(res.data)
@@ -277,8 +274,7 @@ function CreateVariable() {
   }, [open])
   const handleCreate = (values: z.infer<typeof formSchema>) => {
     console.log(values)
-    apiService
-      .getInstance()
+    http
       .post(`/settings/roles/${router.query.role_id}/variables`, values)
       .then((res) => {
         if (res.status === 200) {

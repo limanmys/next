@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react"
-import { useRouter } from "next/router"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { ChevronLeft } from "lucide-react"
+import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { DivergentColumn } from "@/types/table"
-import { IAuthLog } from "@/types/user"
 import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
@@ -16,6 +14,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { DivergentColumn } from "@/types/table"
+import { IAuthLog } from "@/types/user"
 
 export default function AuthLogsPage() {
   const router = useRouter()
@@ -94,15 +94,15 @@ export default function AuthLogsPage() {
         <>
           {row.original.created_at
             ? new Date(row.original.created_at).toLocaleDateString(
-                i18n.language,
-                {
-                  day: "2-digit",
-                  month: "long",
-                  year: "numeric",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                }
-              )
+              i18n.language,
+              {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+              }
+            )
             : t("users.auth_log.unknown")}
         </>
       ),
@@ -110,8 +110,7 @@ export default function AuthLogsPage() {
   ]
 
   const fetchData = () => {
-    apiService
-      .getInstance()
+    http
       .get<IAuthLog[]>(`/settings/users/auth_logs`)
       .then((res) => {
         setData(res.data)

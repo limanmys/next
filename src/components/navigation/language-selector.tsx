@@ -1,4 +1,4 @@
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { Globe2 } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
@@ -17,8 +17,7 @@ const changeLanguage = (i18n: any, language: any) => {
   window.localStorage.setItem("LANGUAGE", language)
   i18n.changeLanguage(language)
 
-  apiService
-    .getInstance()
+  http
     .post("/locale", { locale: language })
     .catch(() => {
       // Do nothing

@@ -1,4 +1,4 @@
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { useRouter } from "next/router"
 import * as React from "react"
 
@@ -88,8 +88,7 @@ export const SidebarProvider = ({
   }, [router.query.server_id, user.permissions.view.sidebar])
 
   const refreshSelected = React.useCallback(() => {
-    apiService
-      .getInstance()
+    http
       .get(`/menu/servers/${selected}`)
       .then((res) => {
         setSelectedData(res.data)
@@ -97,8 +96,7 @@ export const SidebarProvider = ({
   }, [selected])
 
   const refreshServers = React.useCallback(() => {
-    apiService
-      .getInstance()
+    http
       .get("/menu/servers")
       .then((res) => {
         setServers(res.data)
@@ -108,8 +106,7 @@ export const SidebarProvider = ({
 
   // Add extension menu support
   const refreshExtensions = React.useCallback(() => {
-    apiService
-      .getInstance()
+    http
       .get("/menu/extensions")
       .then((res) => {
         setExtensions(res.data)

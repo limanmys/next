@@ -1,8 +1,8 @@
 import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { useTranslation } from "react-i18next"
 
-import { Settings } from "@/lib/settings"
 import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
+import { Settings } from "@/lib/settings"
 
 import SettingsItem from "./settings-item"
 

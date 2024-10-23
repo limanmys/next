@@ -1,11 +1,11 @@
+import { useSidebarContext } from "@/providers/sidebar-provider"
+import { Menu, Settings } from "lucide-react"
 import dynamic from "next/dynamic"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { useSidebarContext } from "@/providers/sidebar-provider"
-import { Menu, Settings } from "lucide-react"
 
-import { Button, buttonVariants } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { Button, buttonVariants } from "@/components/ui/button"
 
 import { Icons } from "../ui/icons"
 import CommandMenu from "./command-menu"

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Edit2 } from "lucide-react"
 import { useForm } from "react-hook-form"
@@ -80,8 +80,7 @@ export default function EditUser() {
 
   const [open, setOpen] = useState<boolean>(false)
   const handleEdit = (values: z.infer<typeof formSchema>) => {
-    apiService
-      .getInstance()
+    http
       .patch(`/settings/users/${values.id}`, values)
       .then((res) => {
         if (res.status === 200) {
@@ -135,8 +134,7 @@ export default function EditUser() {
         roles: [],
       })
 
-      apiService
-        .getInstance()
+      http
         .get(`/settings/users/${d.id}/roles`)
         .then((res) => {
           setRoles(res.data)
@@ -284,9 +282,9 @@ export default function EditUser() {
                                     roles.map((r) =>
                                       r.id === role.id
                                         ? {
-                                            ...r,
-                                            selected: e as boolean,
-                                          }
+                                          ...r,
+                                          selected: e as boolean,
+                                        }
                                         : r
                                     )
                                   )
@@ -296,9 +294,9 @@ export default function EditUser() {
                                       .map((r) =>
                                         r.id === role.id
                                           ? {
-                                              ...r,
-                                              selected: e as boolean,
-                                            }
+                                            ...r,
+                                            selected: e as boolean,
+                                          }
                                           : r
                                       )
                                       .filter((r) => r.selected)

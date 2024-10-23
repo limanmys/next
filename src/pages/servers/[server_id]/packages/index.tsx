@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react"
-import { useRouter } from "next/router"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { UploadCloud } from "lucide-react"
+import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { IPackage } from "@/types/package"
-import { DivergentColumn } from "@/types/table"
 import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
 import PageHeader from "@/components/ui/page-header"
+import { IPackage } from "@/types/package"
+import { DivergentColumn } from "@/types/table"
 
 export default function ServerExtensionPage() {
   const router = useRouter()
@@ -53,8 +53,7 @@ export default function ServerExtensionPage() {
   const fetchData = () => {
     if (!router.query.server_id) return
 
-    apiService
-      .getInstance()
+    http
       .get(`/servers/${router.query.server_id}/packages`)
       .then((res) => {
         setData(res.data)

@@ -1,14 +1,11 @@
 // TODO: Create server-side pagination for this page
 
-import { useEffect, useState } from "react"
-import { useRouter } from "next/router"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { ScrollText } from "lucide-react"
+import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { IAccessLog } from "@/types/access_log"
-import { DivergentColumn } from "@/types/table"
-import { compareNumericString } from "@/lib/utils"
 import {
   Accordion,
   AccordionContent,
@@ -27,6 +24,9 @@ import {
 } from "@/components/ui/dialog"
 import PageHeader from "@/components/ui/page-header"
 import { Skeleton } from "@/components/ui/skeleton"
+import { compareNumericString } from "@/lib/utils"
+import { IAccessLog } from "@/types/access_log"
+import { DivergentColumn } from "@/types/table"
 
 export default function ServerExtensionPage() {
   const router = useRouter()
@@ -97,8 +97,7 @@ export default function ServerExtensionPage() {
   const fetchData = () => {
     if (!router.query.server_id) return
 
-    apiService
-      .getInstance()
+    http
       .get(`/servers/${router.query.server_id}/access_logs`)
       .then((res) => {
         setData(res.data)
@@ -134,8 +133,7 @@ function AccessLogDetailsWindow({ id }: { id: string }) {
 
   const fetchStatus = () => {
     setLoading(true)
-    apiService
-      .getInstance()
+    http
       .get(`/servers/${router.query.server_id}/access_logs/${id}`)
       .then((response) => {
         setData(response.data)

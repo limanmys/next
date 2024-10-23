@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { PlusCircle } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
@@ -36,8 +36,7 @@ export default function AssignExtension({
   const fetchData = () => {
     setLoading(true)
 
-    apiService
-      .getInstance()
+    http
       .get(`/extensions?server_id=${serverId}`)
       .then((res) => {
         setData(res.data)

@@ -1,13 +1,13 @@
-import { ReactElement, useEffect, useRef, useState } from "react"
-import { useRouter } from "next/router"
 import { NextPageWithLayout } from "@/pages/_app"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { MinusCircle } from "lucide-react"
+import { useRouter } from "next/router"
+import { ReactElement, useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { IExtension } from "@/types/extension"
-import { DivergentColumn } from "@/types/table"
-import { useEmitter } from "@/hooks/useEmitter"
+import RoleLayout from "@/components/_layout/role_layout"
+import AssignFunction from "@/components/settings/assign-function"
+import { FunctionExtensionActions } from "@/components/settings/function-extension-actions"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -25,9 +25,9 @@ import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
 import PageHeader from "@/components/ui/page-header"
 import { useToast } from "@/components/ui/use-toast"
-import RoleLayout from "@/components/_layout/role_layout"
-import AssignFunction from "@/components/settings/assign-function"
-import { FunctionExtensionActions } from "@/components/settings/function-extension-actions"
+import { useEmitter } from "@/hooks/useEmitter"
+import { IExtension } from "@/types/extension"
+import { DivergentColumn } from "@/types/table"
 
 const RoleFunctionsList: NextPageWithLayout = () => {
   const [loading, setLoading] = useState<boolean>(true)
@@ -45,8 +45,7 @@ const RoleFunctionsList: NextPageWithLayout = () => {
   useEffect(() => {
     if (!router.query.role_id) return
 
-    apiService
-      .getInstance()
+    http
       .get(`/settings/roles/${router.query.role_id}/extensions`)
       .then((res) => {
         setExtensions(res.data.selected)
@@ -99,8 +98,7 @@ const RoleFunctionsList: NextPageWithLayout = () => {
   ]
 
   const fetchData = (id?: string) => {
-    apiService
-      .getInstance()
+    http
       .get(`/settings/roles/${id ? id : router.query.role_id}/functions`)
       .then((res) => {
         setData(res.data)
@@ -124,8 +122,7 @@ const RoleFunctionsList: NextPageWithLayout = () => {
   const deleteSelected = () => {
     if (!selected?.length) return
 
-    apiService
-      .getInstance()
+    http
       .delete(`/settings/roles/${router.query.role_id}/functions`, {
         data: {
           permission_ids: selected.map((s) => s.id),

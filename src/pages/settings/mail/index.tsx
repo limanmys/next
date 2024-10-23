@@ -1,12 +1,20 @@
-import { useEffect } from "react"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Key, Save, Server, User2, UserCheck2 } from "lucide-react"
+import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import * as z from "zod"
 
-import { setFormErrors } from "@/lib/utils"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/form/form"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -20,15 +28,7 @@ import {
 } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
 import { useToast } from "@/components/ui/use-toast"
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/form/form"
+import { setFormErrors } from "@/lib/utils"
 
 export default function MailSettingsPage() {
   const { toast } = useToast()
@@ -52,8 +52,7 @@ export default function MailSettingsPage() {
   })
 
   const handleSave = (data: z.infer<typeof formSchema>) => {
-    apiService
-      .getInstance()
+    http
       .post("/settings/mail", data)
       .then(() => {
         toast({
@@ -73,8 +72,7 @@ export default function MailSettingsPage() {
   }
 
   useEffect(() => {
-    apiService
-      .getInstance()
+    http
       .get<z.infer<typeof formSchema>>("/settings/mail")
       .then((res) => {
         form.reset(res.data)

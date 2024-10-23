@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react"
-import Link from "next/link"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import {
   ExternalLink,
   Lock,
@@ -9,14 +7,16 @@ import {
   ServerCrash,
   User2,
 } from "lucide-react"
+import Link from "next/link"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { IHealthCheck } from "@/types/health"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Loading from "@/components/ui/loading"
 import PageHeader from "@/components/ui/page-header"
 import { useToast } from "@/components/ui/use-toast"
+import { IHealthCheck } from "@/types/health"
 
 function HealthStatus({ status }: { status: boolean }) {
   const { t } = useTranslation("settings")
@@ -24,9 +24,8 @@ function HealthStatus({ status }: { status: boolean }) {
   return (
     <div className="ml-2 flex items-center">
       <span
-        className={`mr-2 size-2 rounded-full ${
-          status ? "bg-green-500" : "bg-orange-500"
-        }`}
+        className={`mr-2 size-2 rounded-full ${status ? "bg-green-500" : "bg-orange-500"
+          }`}
       ></span>
       <span className="text-muted-foreground">
         {status ? t("ok") : t("warning")}
@@ -42,8 +41,7 @@ export default function HealthPage() {
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    apiService
-      .getInstance()
+    http
       .get("/settings/health")
       .then((response) => {
         setData(response.data)
@@ -59,8 +57,7 @@ export default function HealthPage() {
   const { toast } = useToast()
 
   const manualSync = () => {
-    apiService
-      .getInstance()
+    http
       .post("/settings/health/manual_high_availability_sync")
       .then(() => {
         toast({

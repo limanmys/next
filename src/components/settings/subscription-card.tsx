@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { MoreHorizontal, PlusCircle, Send, Server, XCircle } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
@@ -57,8 +57,7 @@ export default function SubscriptionCard({
   const fetchData = (server_id: string) => {
     setLoading(true)
 
-    apiService
-      .getInstance()
+    http
       .get(`/settings/subscriptions/${extension.id}/${server_id}`)
       .then((response) => {
         setData(response.data)
@@ -102,8 +101,7 @@ export default function SubscriptionCard({
   useEffect(() => {
     setServerLoading(true)
 
-    apiService
-      .getInstance()
+    http
       .get<IServer[]>(`/settings/subscriptions/${extension.id}/servers`)
       .then((res) => {
         setServers(res.data)
@@ -252,9 +250,9 @@ export default function SubscriptionCard({
           {!loading && (
             <>
               {data.valid &&
-              (data.type !== "php"
-                ? calculateRemainingDays(data.timestamp) > 0
-                : true) ? (
+                (data.type !== "php"
+                  ? calculateRemainingDays(data.timestamp) > 0
+                  : true) ? (
                 <div className="flex gap-12">
                   <div className="part">
                     <h5 className="mb-3 font-semibold tracking-tight">
@@ -284,8 +282,8 @@ export default function SubscriptionCard({
                           {data.type != "php"
                             ? calculateRemainingDays(data.timestamp)
                             : formatStringTimestampToDays(
-                                data.timestamp as unknown as string
-                              )}
+                              data.timestamp as unknown as string
+                            )}
                         </span>
                         <small className="text-foreground/60">
                           {t("subscriptions.subcard.days_remaining")}
@@ -352,8 +350,7 @@ function License({
   const handleCreate = () => {
     setLoading(true)
 
-    apiService
-      .getInstance()
+    http
       .post(`/settings/extensions/${extension.id}/license`, {
         license: data,
         server_id: server,

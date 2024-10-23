@@ -1,15 +1,15 @@
-import { useState } from "react"
-import { useRouter } from "next/router"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { DownloadCloudIcon, Save } from "lucide-react"
+import { useRouter } from "next/router"
+import { useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { ICertificateDetails } from "@/types/certificate"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import PageHeader from "@/components/ui/page-header"
 import { useToast } from "@/components/ui/use-toast"
+import { ICertificateDetails } from "@/types/certificate"
 
 export default function CertificateInformation() {
   const { t } = useTranslation("settings")
@@ -24,8 +24,7 @@ export default function CertificateInformation() {
   const fetchDetails = async () => {
     setLoading(true)
 
-    apiService
-      .getInstance()
+    http
       .post<ICertificateDetails>(`/settings/advanced/certificates/retrieve`, {
         hostname: ipAddress,
         port: port,
@@ -48,8 +47,7 @@ export default function CertificateInformation() {
   const createCertificate = async () => {
     setLoading(true)
 
-    apiService
-      .getInstance()
+    http
       .post<ICertificateDetails>(`/settings/advanced/certificates`, {
         hostname: ipAddress,
         port: port,

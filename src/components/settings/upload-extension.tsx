@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { Paperclip, UploadCloud } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
@@ -35,8 +35,7 @@ export default function UploadExtension() {
   const upload = async (customRequest: any) => {
     return new Promise<number>((resolve, reject) => {
       setLoading(true)
-      apiService
-        .getInstance()
+      http
         .post(
           `/settings/extensions/upload`,
           {

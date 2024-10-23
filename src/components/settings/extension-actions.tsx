@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { Row } from "@tanstack/react-table"
 import { Download, MoreHorizontal, PlusCircle, Trash } from "lucide-react"
 import { useTranslation } from "react-i18next"
@@ -48,8 +48,7 @@ export function ExtensionRowActions({ row }: { row: Row<IExtension> }) {
 
   const { ref, url, download, name } = useDownloadFile({
     apiDefinition: () => {
-      return apiService
-        .getInstance()
+      return http
         .get(`/settings/extensions/${extension.id}/download`, {
           responseType: "blob",
         })
@@ -137,8 +136,7 @@ function License({
   const handleCreate = () => {
     setLoading(true)
 
-    apiService
-      .getInstance()
+    http
       .post(`/settings/extensions/${extension.id}/license`, {
         license: data,
         server_id: server,
@@ -229,8 +227,7 @@ function DeleteExtension({
   const handleDelete = () => {
     setLoading(true)
 
-    apiService
-      .getInstance()
+    http
       .delete(`/settings/extensions/${extension.id}`)
       .then(() => {
         toast({

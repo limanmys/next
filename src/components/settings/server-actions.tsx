@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useSidebarContext } from "@/providers/sidebar-provider"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { Row } from "@tanstack/react-table"
 import { Edit2, Key, MoreHorizontal, Trash } from "lucide-react"
 import { useTranslation } from "react-i18next"
@@ -104,8 +104,7 @@ function Edit({
   const handleEdit = () => {
     setLoading(true)
 
-    apiService
-      .getInstance()
+    http
       .patch(`/servers/${server.id}`, {
         name: name,
         ip_address: ipAddress,
@@ -221,8 +220,7 @@ function DeleteServer({
   const handleDelete = () => {
     setLoading(true)
 
-    apiService
-      .getInstance()
+    http
       .delete(`/servers/${server.id}`)
       .then(() => {
         toast({

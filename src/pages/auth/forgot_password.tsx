@@ -1,7 +1,7 @@
-import { SyntheticEvent, useState } from "react"
-import Link from "next/link"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { AlertCircle } from "lucide-react"
+import Link from "next/link"
+import { SyntheticEvent, useState } from "react"
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
@@ -18,8 +18,7 @@ export default function ForgotPasswordPage() {
     e.preventDefault()
 
     setLoading(true)
-    apiService
-      .getInstance()
+    http
       .post("/auth/forgot_password", { email })
       .then((res) => {
         setLoading(false)

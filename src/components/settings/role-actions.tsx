@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useRouter } from "next/router"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { Row } from "@tanstack/react-table"
 import { Edit, MoreHorizontal, Trash } from "lucide-react"
 import { useTranslation } from "react-i18next"
@@ -83,8 +83,7 @@ function DeleteRole({
   const handleDelete = () => {
     setLoading(true)
 
-    apiService
-      .getInstance()
+    http
       .delete(`/settings/roles/${role.id}`)
       .then(() => {
         toast({

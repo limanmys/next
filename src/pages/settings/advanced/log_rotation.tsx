@@ -1,5 +1,5 @@
 import { NextPageWithLayout } from "@/pages/_app"
-import { apiService } from "@/services"
+import { http } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Save } from "lucide-react"
 import { ReactElement, useEffect } from "react"
@@ -38,8 +38,7 @@ const AdvancedLogRotationPage: NextPageWithLayout = () => {
   })
 
   useEffect(() => {
-    apiService
-      .getInstance()
+    http
       .get("/settings/advanced/log_rotation")
       .then((res) => {
         form.reset(res.data)
@@ -54,8 +53,7 @@ const AdvancedLogRotationPage: NextPageWithLayout = () => {
   }, [])
 
   const handleSave = (data: z.infer<typeof formSchema>) => {
-    apiService
-      .getInstance()
+    http
       .post("/settings/advanced/log_rotation", data)
       .then(() => {
         toast({
