@@ -79,7 +79,7 @@ export default function CommandMenu() {
         </kbd>
         <Search className="absolute right-5 top-3 size-4" />
       </div>
-      <CommandDialog open={open} onOpenChange={setOpen}>
+      <CommandDialog open={open} onOpenChange={setOpen} shouldFilter={false}>
         <CommandInput
           placeholder={t("command_menu.search_placeholder")}
           value={value}
@@ -111,6 +111,9 @@ export default function CommandMenu() {
                       value={item.name + i}
                       onSelect={() => {
                         router.push(item.url)
+                        window.dispatchEvent(new CustomEvent("liman:extension-reload"))
+                        setValue("")
+                        changeText("")
                         setOpen(false)
                       }}
                     >

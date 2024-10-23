@@ -137,6 +137,13 @@ export default function ExtensionRenderer() {
           }
 
           window.addEventListener("hashchange", onHashChanged)
+
+          window.addEventListener("liman:extension-reload", forceUpdate)
+
+          return () => {
+            window.removeEventListener("hashchange", onHashChanged)
+            window.removeEventListener("liman:extension-reload", forceUpdate)
+          }
         })
         .catch((err) => {
           deleteAllIframes(container.current as HTMLDivElement)
