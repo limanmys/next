@@ -1,11 +1,10 @@
-import { Dispatch, useEffect, useState } from "react"
-import { useRouter } from "next/router"
 import { apiService } from "@/services"
 import { CommandLoading } from "cmdk"
 import { Search } from "lucide-react"
+import { useRouter } from "next/router"
+import { Dispatch, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { useDebounce } from "@/lib/debounce"
 import {
   CommandDialog,
   CommandEmpty,
@@ -14,6 +13,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command"
+import { useDebounce } from "@/lib/debounce"
 
 import { Input } from "../ui/input"
 import Loading from "../ui/loading"
@@ -63,6 +63,11 @@ export default function CommandMenu() {
     search(text, setLoading, setResults)
   }, 500)
 
+  useEffect(() => {
+    setLoading(true)
+    setResults({})
+  }, [value])
+
   return (
     <>
       <div
@@ -93,7 +98,9 @@ export default function CommandMenu() {
             </CommandLoading>
           )}
 
-          <CommandEmpty>{t("command_menu.no_results")}</CommandEmpty>
+          {Object.keys(results).length === 0 && !loading && (
+            <CommandEmpty>{t("command_menu.no_results")}</CommandEmpty>
+          )}
 
           {Object.keys(results).map((key: any, i: number) => {
             return (
