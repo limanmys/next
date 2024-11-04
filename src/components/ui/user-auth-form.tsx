@@ -129,12 +129,14 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [error, setError] = React.useState("")
   const { login } = useLogin()
 
-  const getRedirectUri = () => {
+  const getRedirectUri = (toHome = false) => {
     let redirectUri = (router.query.redirect || "/") as string
     redirectUri = redirectUri
       .replace("http://", "")
       .replace("https://", "")
       .replace("www.", "")
+
+    if (toHome) return "/"
 
     return redirectUri
   }
@@ -143,12 +145,15 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     setIsLoading(true)
 
     try {
-      if (!data.otp) await login(data.name, data.password, "", data.type)
-      else await login(data.name, data.password, data.otp, data.type)
+      let axiosReply
+      if (!data.otp) axiosReply = await login(data.name, data.password, "", data.type)
+      else axiosReply = await login(data.name, data.password, data.otp, data.type)
 
       setError("")
       setTimeout(() => {
-        router.push(getRedirectUri())
+        const user = axiosReply.data.user
+        const isNonRedirectable = !!(user.status === 0 && user.permissions.view.redirect)
+        router.push(getRedirectUri(isNonRedirectable))
       }, 500)
     } catch (e: any) {
       if (!e.response) {

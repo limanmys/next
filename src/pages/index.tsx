@@ -32,7 +32,7 @@ export default function IndexPage() {
     if (viewPermissions.redirect) {
       redirectNow(viewPermissions.redirect)
     }
-  }, [viewPermissions.redirect])
+  }, [viewPermissions])
 
   const dashboardGridItems = useMemo(() => {
     return viewPermissions.dashboard
