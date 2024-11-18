@@ -1,12 +1,12 @@
 import { ToastProvider } from "@radix-ui/react-toast"
 import { useTranslation } from "react-i18next"
 
-import { INotification } from "@/types/notification"
 import {
   Notification,
   NotificationClose,
   NotificationViewport,
 } from "@/components/ui/notification"
+import { INotification } from "@/types/notification"
 
 import StatusBadge, { Status } from "./status-badge"
 import { useNotification } from "./use-notification"
@@ -17,7 +17,7 @@ export function NotificationCreator() {
 
   return (
     <ToastProvider>
-      {toasts.map(function (props: INotification) {
+      {Array.from(new Map(toasts.map(toast => [toast.notification_id, toast])).values()).map(function (props: INotification) {
         return (
           <Notification key={props.notification_id}>
             <div className="relative flex w-full flex-col gap-1">

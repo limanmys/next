@@ -92,7 +92,7 @@ export default function Notifications() {
     })
 
     echo
-      .private(`App.User.${JSON.parse(currentUser).user.id}`)
+      .private(`App.Models.User.${JSON.parse(currentUser).user.id}`)
       .notification((notification: INotification) => {
         setNotifications([notification, ...tempNotifications])
 
@@ -108,7 +108,7 @@ export default function Notifications() {
       })
 
     return () => {
-      echo.leave(`App.User.${JSON.parse(currentUser).user.id}`)
+      echo.leave(`App.Models.User.${JSON.parse(currentUser).user.id}`)
       echo.disconnect()
     }
   }, [])
