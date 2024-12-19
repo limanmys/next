@@ -1,11 +1,9 @@
-import { useState } from "react"
 import { http } from "@/services"
 import { Row } from "@tanstack/react-table"
 import { Edit2, Footprints, MoreHorizontal, Trash } from "lucide-react"
+import { useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { IUser } from "@/types/user"
-import { useEmitter } from "@/hooks/useEmitter"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,6 +22,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useEmitter } from "@/hooks/useEmitter"
+import { IUser } from "@/types/user"
 
 import { Icons } from "../ui/icons"
 import { useToast } from "../ui/use-toast"
@@ -58,7 +58,7 @@ export function UserRowActions({ row }: { row: Row<IUser> }) {
             {t("users.auth_log.title")}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => setDeleteDialog(true)}>
+          <DropdownMenuItem onClick={() => setDeleteDialog(true)} disabled={user.auth_type != 'local'}>
             <Trash className="mr-2 size-3.5" />
             {t("delete")}
           </DropdownMenuItem>
