@@ -55,3 +55,28 @@ export function setFormErrors(e: Error, form: UseFormReturn<any>) {
 
   return false
 }
+
+export function getRelativeTimeString(
+  date: Date | number | string,
+  lang = "tr"
+): string {
+  const now = new Date().getTime()
+  const time = new Date(date).getTime()
+  const diff = now - time
+
+  const seconds = Math.floor(diff / 1000)
+  const minutes = Math.floor(seconds / 60)
+  const hours = Math.floor(minutes / 60)
+  const days = Math.floor(hours / 24)
+  const months = Math.floor(days / 30)
+  const years = Math.floor(days / 365)
+
+  const rtf = new Intl.RelativeTimeFormat(lang, { numeric: "auto" })
+
+  if (seconds < 60) return rtf.format(-seconds, "second")
+  if (minutes < 60) return rtf.format(-minutes, "minute")
+  if (hours < 24) return rtf.format(-hours, "hour")
+  if (days < 30) return rtf.format(-days, "day")
+  if (months < 12) return rtf.format(-months, "month")
+  return rtf.format(-years, "year")
+}

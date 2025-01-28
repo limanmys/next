@@ -1,12 +1,13 @@
+import { useEffect, useState } from "react"
+import { useRouter } from "next/router"
 import { http } from "@/services"
 import { Check, Footprints, User2, UserCog2, X } from "lucide-react"
-import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import CreateUser from "@/components/settings/create-user"
-import EditUser from "@/components/settings/edit-user"
-import { UserRowActions } from "@/components/settings/user-actions"
+import { DivergentColumn } from "@/types/table"
+import { IAuthLog, IUser } from "@/types/user"
+import { getRelativeTimeString } from "@/lib/utils"
+import { useEmitter } from "@/hooks/useEmitter"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/data-table/data-table"
@@ -19,9 +20,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { useEmitter } from "@/hooks/useEmitter"
-import { DivergentColumn } from "@/types/table"
-import { IAuthLog, IUser } from "@/types/user"
+import CreateUser from "@/components/settings/create-user"
+import EditUser from "@/components/settings/edit-user"
+import { UserRowActions } from "@/components/settings/user-actions"
 
 const getType = (type: string) => {
   switch (type) {
@@ -41,7 +42,7 @@ export default function UserSettingsPage() {
   const [data, setData] = useState<IUser[]>([])
   const router = useRouter()
   const emitter = useEmitter()
-  const { t } = useTranslation("settings")
+  const { t, i18n } = useTranslation("settings")
 
   const columns: DivergentColumn<IUser, string>[] = [
     {
@@ -104,6 +105,23 @@ export default function UserSettingsPage() {
               </Badge>
             </div>
           )}
+        </>
+      ),
+    },
+    {
+      accessorKey: "last_login_at",
+      header: ({ column }) => (
+        <DataTableColumnHeader
+          column={column}
+          title={t("users.last_login_at")}
+        />
+      ),
+      title: t("users.last_login_at"),
+      cell: ({ row }) => (
+        <>
+          {row.original.last_login_at
+            ? getRelativeTimeString(row.original.last_login_at, i18n.language)
+            : t("users.never")}
         </>
       ),
     },
@@ -175,6 +193,9 @@ export default function UserSettingsPage() {
           )}
         </>
       ),
+      meta: {
+        hidden: true,
+      },
     },
     {
       id: "actions",
@@ -187,12 +208,10 @@ export default function UserSettingsPage() {
   ]
 
   const fetchData = () => {
-    http
-      .get(`/settings/users`)
-      .then((res) => {
-        setData(res.data)
-        setLoading(false)
-      })
+    http.get(`/settings/users`).then((res) => {
+      setData(res.data)
+      setLoading(false)
+    })
   }
 
   useEffect(() => {
@@ -301,15 +320,15 @@ function AuthLogDialog() {
         <>
           {row.original.created_at
             ? new Date(row.original.created_at).toLocaleDateString(
-              i18n.language,
-              {
-                day: "2-digit",
-                month: "long",
-                year: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-              }
-            )
+                i18n.language,
+                {
+                  day: "2-digit",
+                  month: "long",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                }
+              )
             : t("users.auth_log.unknown")}
         </>
       ),
@@ -320,12 +339,10 @@ function AuthLogDialog() {
     setLoading(true)
     setOpen(true)
 
-    http
-      .get(`/settings/users/auth_logs/${user_id}`)
-      .then((res) => {
-        setData(res.data)
-        setLoading(false)
-      })
+    http.get(`/settings/users/auth_logs/${user_id}`).then((res) => {
+      setData(res.data)
+      setLoading(false)
+    })
   })
 
   return (

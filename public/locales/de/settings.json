@@ -220,6 +220,8 @@
         "otp": "Zwei-Faktor-Authentifizierung",
         "otp_enabled": "Aktiviert",
         "otp_disabled": "Deaktiviert",
+        "last_login_at": "Letzter Login",
+        "never": "Nie",
         "toasts": {
             "edit_success_msg": "Der Benutzer wurde erfolgreich bearbeitet.",
             "edit_error_msg": "Beim Bearbeiten des Benutzers ist ein Fehler aufgetreten.",

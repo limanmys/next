@@ -221,6 +221,8 @@
         "otp": "Two-Factor Authentication",
         "otp_enabled": "Enabled",
         "otp_disabled": "Disabled",
+        "last_login_at": "Last Login",
+        "never": "Never",
         "toasts": {
             "success_msg": "The user has been created successfully.",
             "edit_success_msg": "The user has been edited successfully.",

@@ -97,6 +97,19 @@ const DataTable = <TData, TValue>({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rowSelection])
 
+  React.useEffect(() => {
+    columns.forEach((column: any) => {
+      // Check if meta.hidden exists, if it's set column will be hidden
+      const meta = column.meta
+      if (meta && meta.hidden) {
+        setColumnVisibility((prev) => ({
+          ...prev,
+          [column.accessorKey]: false,
+        }))
+      }
+    })
+  }, [])
+
   return (
     <div className="data-table space-y-4">
       <div className="flex items-center justify-between">
