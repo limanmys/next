@@ -1,12 +1,23 @@
+import { useEffect, useState } from "react"
 import { http } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import md5 from "blueimp-md5"
 import { Save, ShieldCheck } from "lucide-react"
-import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
+import { IUser } from "@/types/user"
+import { setFormErrors } from "@/lib/utils"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
+import { Card, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import Loading from "@/components/ui/loading"
+import PageHeader from "@/components/ui/page-header"
+import { Switch } from "@/components/ui/switch"
+import { useToast } from "@/components/ui/use-toast"
 import {
   Form,
   FormControl,
@@ -17,17 +28,6 @@ import {
   FormMessage,
 } from "@/components/form/form"
 import AuthLog from "@/components/profile/auth_log"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { Card, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import Loading from "@/components/ui/loading"
-import PageHeader from "@/components/ui/page-header"
-import { Switch } from "@/components/ui/switch"
-import { useToast } from "@/components/ui/use-toast"
-import { setFormErrors } from "@/lib/utils"
-import { IUser } from "@/types/user"
 
 export default function ProfilePage() {
   const { t } = useTranslation("settings")
@@ -40,6 +40,7 @@ export default function ProfilePage() {
       old_password: z.string().optional(),
       password: z.string().optional(),
       password_confirmation: z.string().optional(),
+      session_time: z.coerce.number().min(15).max(999999),
     })
     .refine((data) => data.password === data.password_confirmation, {
       message: t("profile.validations.password"),
@@ -60,13 +61,11 @@ export default function ProfilePage() {
   })
 
   useEffect(() => {
-    http
-      .get<{ user: IUser }>("/profile/")
-      .then((res) => {
-        setLoading(false)
-        setUser(res.data.user)
-        form.reset(res.data.user)
-      })
+    http.get<{ user: IUser }>("/profile/").then((res) => {
+      setLoading(false)
+      setUser(res.data.user)
+      form.reset(res.data.user)
+    })
   }, [])
 
   const handleSave = (values: z.infer<typeof formSchema>) => {
@@ -255,6 +254,26 @@ export default function ProfilePage() {
                             <Input
                               id="password_confirmation"
                               type="password"
+                              {...field}
+                            />
+                            <FormMessage className="mt-1" />
+                          </div>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="session_time"
+                        render={({ field }) => (
+                          <div className="flex flex-col gap-2">
+                            <Label htmlFor="session_time">
+                              {t("profile.form.session_time")}
+                            </Label>
+                            <Input
+                              id="session_time"
+                              placeholder={t(
+                                "profile.form.session_time_placeholder"
+                              )}
                               {...field}
                             />
                             <FormMessage className="mt-1" />

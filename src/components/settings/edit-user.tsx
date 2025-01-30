@@ -1,14 +1,12 @@
-import { useEffect, useState } from "react"
 import { http } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Edit2 } from "lucide-react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
-import { IUser } from "@/types/user"
-import { setFormErrors } from "@/lib/utils"
-import { useEmitter } from "@/hooks/useEmitter"
+import { Form, FormField, FormMessage } from "@/components/form/form"
 import {
   Sheet,
   SheetContent,
@@ -17,7 +15,9 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet"
-import { Form, FormField, FormMessage } from "@/components/form/form"
+import { useEmitter } from "@/hooks/useEmitter"
+import { setFormErrors } from "@/lib/utils"
+import { IUser } from "@/types/user"
 
 import { Button } from "../ui/button"
 import { Card } from "../ui/card"
@@ -63,6 +63,7 @@ export default function EditUser() {
     status: z.coerce.number(),
     password: z.string().optional(),
     roles: z.array(z.string()).optional(),
+    session_time: z.coerce.number().min(15).max(999999),
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -75,6 +76,7 @@ export default function EditUser() {
       status: 0,
       password: "",
       roles: [],
+      session_time: 120,
     },
   })
 
@@ -132,24 +134,22 @@ export default function EditUser() {
         status: d.status,
         password: "",
         roles: [],
+        session_time: d.session_time,
       })
 
-      http
-        .get(`/settings/users/${d.id}/roles`)
-        .then((res) => {
-          setRoles(res.data)
-          form.reset({
-            id: d.id,
-            name: d.name,
-            username: d.username,
-            email: d.email,
-            status: d.status,
-            password: "",
-            roles: res.data
-              .filter((r: any) => r.selected)
-              .map((r: any) => r.id),
-          })
+      http.get(`/settings/users/${d.id}/roles`).then((res) => {
+        setRoles(res.data)
+        form.reset({
+          id: d.id,
+          name: d.name,
+          username: d.username,
+          email: d.email,
+          status: d.status,
+          password: "",
+          roles: res.data.filter((r: any) => r.selected).map((r: any) => r.id),
+          session_time: d.session_time,
         })
+      })
     })
 
     return () => emitter.off("EDIT_USER")
@@ -260,6 +260,25 @@ export default function EditUser() {
 
             <FormField
               control={form.control}
+              name="session_time"
+              render={({ field }) => (
+                <div className="flex flex-col gap-2">
+                  <Label htmlFor="session_time">
+                    {t("users.create.session_time")}
+                  </Label>
+                  <Input
+                    type="number"
+                    id="session_time"
+                    placeholder={t("users.create.session_time_placeholder")}
+                    {...field}
+                  />
+                  <FormMessage className="mt-1" />
+                </div>
+              )}
+            />
+
+            <FormField
+              control={form.control}
               name="roles"
               render={({ field }) => (
                 <div className="flex flex-col gap-2">
@@ -282,9 +301,9 @@ export default function EditUser() {
                                     roles.map((r) =>
                                       r.id === role.id
                                         ? {
-                                          ...r,
-                                          selected: e as boolean,
-                                        }
+                                            ...r,
+                                            selected: e as boolean,
+                                          }
                                         : r
                                     )
                                   )
@@ -294,9 +313,9 @@ export default function EditUser() {
                                       .map((r) =>
                                         r.id === role.id
                                           ? {
-                                            ...r,
-                                            selected: e as boolean,
-                                          }
+                                              ...r,
+                                              selected: e as boolean,
+                                            }
                                           : r
                                       )
                                       .filter((r) => r.selected)

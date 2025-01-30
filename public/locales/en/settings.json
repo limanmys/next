@@ -31,6 +31,8 @@
             "old_password": "Your Old Password",
             "password": "Your Password",
             "password_confirmation": "Password Confirmation",
+            "session_time": "Session Time (Minutes)",
+            "session_time_placeholder": "Session time in minutes",
             "save": "Save"
         },
         "auth_log": {
@@ -252,6 +254,8 @@
             "email": "E-mail Address",
             "password": "Your Password",
             "password_confirmation": "Password Confirmation",
+            "session_time": "Session Time (Minutes)",
+            "session_time_placeholder": "Session time in minutes",
             "create": "Create"
         },
         "edit": {

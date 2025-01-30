@@ -31,6 +31,8 @@
             "old_password": "Eski Parolanız",
             "password": "Parolanız",
             "password_confirmation": "Parola Onayı",
+            "session_time": "Oturum Süresi (Dakika)",
+            "session_time_placeholder": "Oturum sürenizi dakika bazında belirleyebilirsiniz.",
             "save": "Kaydet"
         },
         "auth_log": {
@@ -252,6 +254,8 @@
             "email": "E-Posta Adresi",
             "password": "Parolanız",
             "password_confirmation": "Parola Onayı",
+            "session_time": "Oturum Süresi (Dakika)",
+            "session_time_placeholder": "Oturum sürenizi dakika bazında belirleyebilirsiniz.",
             "create": "Oluştur"
         },
         "edit": {

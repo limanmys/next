@@ -31,6 +31,8 @@
             "old_password": "Ihr altes Passwort",
             "password": "Ihr Passwort",
             "password_confirmation": "Bestätigung des Passworts",
+            "session_time": "Sitzungszeit (Minuten)",
+            "session_time_placeholder": "Sitzungszeit in Minuten",
             "save": "Retten"
         },
         "auth_log": {
@@ -251,6 +253,8 @@
             "email": "E-Mail-Adresse",
             "password": "Ihr Passwort",
             "password_confirmation": "Bestätigung des Passworts",
+            "session_time": "Sitzungszeit (Minuten)",
+            "session_time_placeholder": "Sitzungszeit in Minuten",
             "create": "Schaffen"
         },
         "edit": {

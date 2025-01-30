@@ -13,6 +13,7 @@ export interface IUser {
   username: string
   locale: string
   otp_enabled: boolean
+  session_time: number
   permissions: ILimanPermissions
 }
 
