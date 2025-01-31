@@ -1,22 +1,13 @@
+import { ReactElement, useEffect } from "react"
 import { NextPageWithLayout } from "@/pages/_app"
 import { http } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Bug, FolderArchive, Puzzle, Save } from "lucide-react"
-import { ReactElement, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import * as z from "zod"
 
-import AdvancedLayout from "@/components/_layout/advanced_layout"
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/form/form"
+import { setFormErrors } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Icons } from "@/components/ui/icons"
@@ -32,7 +23,16 @@ import {
 } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
 import { useToast } from "@/components/ui/use-toast"
-import { setFormErrors } from "@/lib/utils"
+import AdvancedLayout from "@/components/_layout/advanced_layout"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/form/form"
 
 const AdvancedTweaksPage: NextPageWithLayout = () => {
   const { t } = useTranslation("settings")
@@ -54,6 +54,7 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
     LDAP_IGNORE_CERT: z.boolean(),
     LOGIN_IMAGE: z.string().optional(),
     DEFAULT_AUTH_GATE: z.enum(["ldap", "liman", "keycloak"]),
+    JWT_TTL: z.coerce.number().min(15).max(999999),
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -81,11 +82,9 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
   }
 
   useEffect(() => {
-    http
-      .get("/settings/advanced/tweaks")
-      .then((res) => {
-        form.reset(res.data)
-      })
+    http.get("/settings/advanced/tweaks").then((res) => {
+      form.reset(res.data)
+    })
   }, [])
 
   return (
@@ -177,6 +176,25 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
                   </div>
                   <small className="-mt-2 italic text-muted-foreground">
                     {t("advanced.tweaks.EXTENSION_TIMEOUT.subtext")}
+                  </small>
+                  <FormMessage />
+                </div>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="JWT_TTL"
+              render={({ field }) => (
+                <div className="flex flex-col gap-3">
+                  <Label htmlFor="JWT_TTL">
+                    {t("advanced.tweaks.JWT_TTL.label")}
+                  </Label>
+                  <div className="relative">
+                    <Input id="JWT_TTL" {...field} type="number" />
+                  </div>
+                  <small className="-mt-2 italic text-muted-foreground">
+                    {t("advanced.tweaks.JWT_TTL.subtext")}
                   </small>
                   <FormMessage />
                 </div>

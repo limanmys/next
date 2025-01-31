@@ -841,6 +841,10 @@
                 "label": "LDAP Sertifika Kontrolünü Devre Dışı Bırak",
                 "subtext": "Aktif edildiğinde sisteme sertifika eklenmesine gerek olmadan LDAP sunucularına bağlanılabilirsiniz. Eklenti klasörü içerisinde .ignoreme adında bir dosya oluşturmanız gerekecektir."
             },
+            "JWT_TTL": {
+                "label": "Varsayılan Oturum Süresi (Dakika)",
+                "subtext": "Kullanıcıların oturumlarının ne kadar süreyle açık kalacağını belirler."
+            },
             "save": "Kaydet"
         }
     },

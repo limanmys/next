@@ -840,6 +840,10 @@
                 "label": "LDAP-Zertifikatsprüfung deaktivieren",
                 "subtext": "Wenn diese Option aktiviert ist, können Sie eine Verbindung zu LDAP-Servern herstellen, ohne dem System ein Zertifikat hinzufügen zu müssen. Sie müssen eine Datei mit dem Namen .ignoreme im Erweiterungsordner erstellen."
             },
+            "JWT_TTL": {
+                "label": "JWT-Lebensdauer",
+                "subtext": "Die Lebensdauer des JWT-Tokens, der von Liman an Benutzer gesendet wird."
+            },
             "save": "Retten"
         }
     },

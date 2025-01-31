@@ -841,6 +841,10 @@
                 "label": "Disable LDAP Certificate Check",
                 "subtext": "When activated, you can connect to LDAP servers without the need to add a certificate to the system. You will need to create a file named .ignoreme in the extension folder."
             },
+            "JWT_TTL": {
+                "label": "Default Session Time (Minutes)",
+                "subtext": "The default session time to be used in Liman."
+            },
             "save": "Save"
         }
     },
