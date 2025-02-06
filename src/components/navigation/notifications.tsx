@@ -19,6 +19,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
+import { ScrollArea } from "../ui/scroll-area"
 import StatusBadge, { Status } from "../ui/status-badge"
 import { useNotification } from "../ui/use-notification"
 
@@ -159,7 +160,7 @@ export default function Notifications() {
             {t("notifications.mark_all_as_read")}
           </Button>
         </div>
-        <div className="flex flex-col gap-3 p-2">
+        <ScrollArea type="always" className="flex flex-col gap-3 p-2 h-[350px]">
           {notifications.map((notification) => (
             <Link
               href={`/notifications#notification-${notification.notification_id}`}
@@ -199,7 +200,7 @@ export default function Notifications() {
               </div>
             </Link>
           ))}
-        </div>
+        </ScrollArea>
 
         {notifications.length === 0 && (
           <>
