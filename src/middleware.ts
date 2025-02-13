@@ -3,6 +3,7 @@ import { NextResponse, type NextRequest } from "next/server"
 import { IUser } from "./types/user"
 
 const authRoutes = ["/auth/login"]
+const safeToRedirect = ["/auth", "/notifications", "/servers", "/settings"]
 
 export function middleware(request: NextRequest) {
   let urlBeforeRedirect = request.nextUrl.pathname
@@ -37,6 +38,23 @@ export function middleware(request: NextRequest) {
 
   if (currentUser && authRoutes.includes(request.nextUrl.pathname)) {
     let url = request.nextUrl.searchParams.get("redirect") || "/"
+
+    // Check if url is safe
+    const isSafe =
+      new URL(url, request.url).origin === new URL(request.url).origin &&
+      (() => {
+        for (const safeUrl of safeToRedirect) {
+          if (url.startsWith(safeUrl)) {
+            return true
+          }
+        }
+        return false
+      })()
+
+    if (!isSafe) {
+      url = "/"
+    }
+
     return NextResponse.redirect(new URL(url, request.url))
   }
 
