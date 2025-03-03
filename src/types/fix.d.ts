@@ -12,3 +12,11 @@ declare module "@radix-ui/react-alert-dialog" {
     className?: string
   }
 }
+
+export { }
+
+declare global {
+  interface Window {
+    Pusher: any
+  }
+}

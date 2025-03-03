@@ -51,6 +51,8 @@ export default function Notifications() {
   }
 
   useEffect(() => {
+    window.Pusher = Pusher
+
     const currentUser = Cookies.get("currentUser")
     let tempNotifications: INotification[] = []
 
@@ -72,15 +74,15 @@ export default function Notifications() {
       })
 
     const echo = new Echo({
-      broadcaster: "pusher",
+      broadcaster: "reverb",
       key: "liman-key",
-      cluster: "eu",
       wsHost: window.location.host,
       wssPort: 443,
       disableStats: true,
       encrypted: true,
       enabledTransports: ["ws", "wss"],
       disabledTransports: ["sockjs", "xhr_polling", "xhr_streaming"],
+      forceTLS: true,
 
       authEndpoint: "/api/broadcasting/auth",
 
@@ -160,47 +162,49 @@ export default function Notifications() {
             {t("notifications.mark_all_as_read")}
           </Button>
         </div>
-        <ScrollArea type="always" className="flex flex-col gap-3 p-2 h-[350px]">
-          {notifications.map((notification) => (
-            <Link
-              href={`/notifications#notification-${notification.notification_id}`}
-              key={notification.notification_id}
-            >
-              <div className="relative flex flex-col gap-1 rounded p-2 transition-all hover:bg-accent/50 hover:text-accent-foreground">
-                <h3 className="text-[15px] font-semibold tracking-tight">
-                  {notification.title}
-                </h3>
+        {notifications.length > 0 && (
+          <ScrollArea type="always" className="flex flex-col gap-3 p-2 h-[350px]">
+            {notifications.map((notification) => (
+              <Link
+                href={`/notifications#notification-${notification.notification_id}`}
+                key={notification.notification_id}
+              >
+                <div className="relative flex flex-col gap-1 rounded p-2 transition-all hover:bg-accent/50 hover:text-accent-foreground">
+                  <h3 className="text-[15px] font-semibold tracking-tight">
+                    {notification.title}
+                  </h3>
 
-                <p className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                  {notification.content}
-                </p>
+                  <p className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                    {notification.content}
+                  </p>
 
-                <div className="absolute right-2 top-1">
-                  <StatusBadge status={notification.level as Status} />
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div className="text-xs text-slate-700 dark:text-slate-400">
-                    {new Date(notification.send_at).toLocaleDateString(
-                      i18n.language,
-                      {
-                        day: "2-digit",
-                        month: "long",
-                        year: "numeric",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      }
-                    )}
+                  <div className="absolute right-2 top-1">
+                    <StatusBadge status={notification.level as Status} />
                   </div>
 
-                  <span className="text-xs text-slate-500">
-                    {notification.send_at_humanized}
-                  </span>
+                  <div className="flex items-center justify-between">
+                    <div className="text-xs text-slate-700 dark:text-slate-400">
+                      {new Date(notification.send_at).toLocaleDateString(
+                        i18n.language,
+                        {
+                          day: "2-digit",
+                          month: "long",
+                          year: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        }
+                      )}
+                    </div>
+
+                    <span className="text-xs text-slate-500">
+                      {notification.send_at_humanized}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </Link>
-          ))}
-        </ScrollArea>
+              </Link>
+            ))}
+          </ScrollArea>
+        )}
 
         {notifications.length === 0 && (
           <>
