@@ -274,10 +274,6 @@
   );
 }
 
-[data-sonner-toast] [data-icon] {
-  margin-top: 3px;
-}
-
 .animated-collapsible {
   overflow: hidden;
   transition: all 0.3s ease-out;

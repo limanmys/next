@@ -16,7 +16,6 @@ function useToast() {
     variant?: any
   }) => {
     const settings: ExternalToast = {
-      description,
       duration: 6000,
       dismissible: true,
     }
@@ -38,16 +37,16 @@ function useToast() {
 
     switch (variant_from_title) {
       case "success":
-        return SonnerToast.success(title, settings)
+        return SonnerToast.success(description, settings)
       case "error":
       case "destructive":
-        return SonnerToast.error(title, settings)
+        return SonnerToast.error(description, settings)
       case "warning":
-        return SonnerToast.warning(title, settings)
+        return SonnerToast.warning(description, settings)
       case "info":
-        return SonnerToast.info(title, settings)
+        return SonnerToast.info(description, settings)
       default:
-        return SonnerToast(title, settings)
+        return SonnerToast(description, settings)
     }
   }
 

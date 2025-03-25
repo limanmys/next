@@ -28,7 +28,8 @@
         "name": "next"
       }
     ],
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "target": "ES2017"
   },
   "exclude": [
     "node_modules"
@@ -39,5 +40,5 @@
     "**/*.tsx",
     "**/*.cjs",
     "**/*.mjs"
-  ],
+  ]
 }
