@@ -200,7 +200,7 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
               control={form.control}
               name="active"
               render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4 shadow-sm">
+                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4 shadow-xs">
                   <div className="flex space-x-3 space-y-0.5">
                     <UserCheck2 className="size-6 text-muted-foreground" />
                     <div className="flex flex-col space-y-0.5">

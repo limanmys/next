@@ -41,7 +41,7 @@ export default function ServerStatus() {
         <div className="col-span-4 flex flex-col">
           <ServerSpecs loader />
           <ResourceUsage loader />
-          <div className="flex flex-[2] divide-x border-t">
+          <div className="flex flex-2 divide-x border-t">
             <div className="w-1/3 pb-[24px]">
               <h2 className="p-[24px] text-xl font-bold tracking-tight">
                 {t("system_status.cpu_usage")}
@@ -91,7 +91,7 @@ export default function ServerStatus() {
         <div className="hidden">{JSON.stringify(loading)}</div>
         <ServerSpecs />
         <ResourceUsage />
-        <div className="flex flex-[2] divide-x border-t">
+        <div className="flex flex-2 divide-x border-t">
           <div className="w-1/3 pb-[24px]">
             <h2 className="p-[24px] text-xl font-bold tracking-tight">
               {t("system_status.cpu_usage")}

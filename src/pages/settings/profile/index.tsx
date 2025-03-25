@@ -189,7 +189,7 @@ export default function ProfilePage() {
                         control={form.control}
                         name="otp_enabled"
                         render={({ field }) => (
-                          <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4 shadow-sm">
+                          <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4 shadow-xs">
                             <div className="flex space-x-3 space-y-0.5">
                               <ShieldCheck className="size-6 text-muted-foreground" />
                               <div className="flex flex-col space-y-0.5">

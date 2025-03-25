@@ -71,7 +71,7 @@ function NotificationItem({ notification }: { notification: INotification }) {
           minute: "2-digit",
         })}
       </time>
-      <div className="mt-4 items-end justify-between rounded-lg border bg-background p-4 shadow-sm sm:flex">
+      <div className="mt-4 items-end justify-between rounded-lg border bg-background p-4 shadow-xs sm:flex">
         <time className="mb-1 text-xs font-normal text-gray-400 sm:order-last sm:mb-0">
           <StatusBadge status={notification.level as Status} />{" "}
           {notification.send_at_humanized}

@@ -205,7 +205,7 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
               control={form.control}
               name="APP_DEBUG"
               render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4 shadow-sm">
+                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4 shadow-xs">
                   <div className="flex space-x-3 space-y-0.5">
                     <Bug className="size-6 text-muted-foreground" />
                     <div className="flex flex-col space-y-0.5">
@@ -231,7 +231,7 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
               control={form.control}
               name="EXTENSION_DEVELOPER_MODE"
               render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4 shadow-sm">
+                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4 shadow-xs">
                   <div className="flex space-x-3 space-y-0.5">
                     <Puzzle className="size-6 text-muted-foreground" />
                     <div className="flex flex-col space-y-0.5">
@@ -370,7 +370,7 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
               control={form.control}
               name="LDAP_IGNORE_CERT"
               render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4 shadow-sm">
+                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4 shadow-xs">
                   <div className="flex space-x-3 space-y-0.5">
                     <FolderArchive className="size-6 text-muted-foreground" />
                     <div className="flex flex-col space-y-0.5">

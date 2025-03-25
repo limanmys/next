@@ -71,7 +71,7 @@ export default function IndexPage() {
 
       <DashboardCards />
 
-      <div className="flex w-full flex-[2] flex-col divide-x xl:flex-row">
+      <div className="flex w-full flex-2 flex-col divide-x xl:flex-row">
         {renderDashboardItemsWithPermissions}
       </div>
     </div>

@@ -162,7 +162,7 @@ function Edit({
         </div>
 
         <div className="mt-3 grid w-full items-center gap-1.5">
-          <div className="flex flex-row items-center justify-between rounded-lg border p-4 shadow-sm">
+          <div className="flex flex-row items-center justify-between rounded-lg border p-4 shadow-xs">
             <div className="flex space-x-3 space-y-0.5">
               <Key className="size-6 text-muted-foreground" />
               <div className="flex flex-col space-y-0.5">
