@@ -84,7 +84,7 @@ export default function DashboardCards() {
                     </div>
                     <Link
                       href="/servers"
-                      className="flex items-center gap-1 text-xs text-muted-foreground transition-all hover:gap-3"
+                      className="flex items-center gap-1 mt-1 text-xs text-muted-foreground transition-all hover:gap-3"
                     >
                       {t("cards.show_all_servers")}{" "}
                       <ArrowRight className="inline-block size-4" />
@@ -115,7 +115,7 @@ export default function DashboardCards() {
                       )}
                     </div>
                     <Link
-                      className="flex items-center gap-1 text-xs text-muted-foreground transition-all hover:gap-3"
+                      className="flex items-center gap-1 mt-1 text-xs text-muted-foreground transition-all hover:gap-3"
                       href="/settings/extensions"
                     >
                       {t("cards.show_all_extensions")}{" "}
@@ -144,13 +144,13 @@ export default function DashboardCards() {
                     {user.status === 1 ? (
                       <Link
                         href="/settings/users"
-                        className="flex items-center gap-1 text-xs text-muted-foreground transition-all hover:gap-3"
+                        className="flex items-center gap-1 mt-1 text-xs text-muted-foreground transition-all hover:gap-3"
                       >
                         {t("cards.show_all_users")}{" "}
                         <ArrowRight className="inline-block size-4" />
                       </Link>
                     ) : (
-                      <p className="flex items-center gap-1 text-xs text-muted-foreground transition-all hover:gap-3">
+                      <p className="flex items-center gap-1 mt-1 text-xs text-muted-foreground transition-all hover:gap-3">
                         {t("cards.total_user_count")}
                       </p>
                     )}
@@ -174,7 +174,7 @@ export default function DashboardCards() {
                         data?.version
                       )}
                     </div>
-                    <p className="flex items-center gap-1 text-xs text-muted-foreground transition-all hover:gap-3">
+                    <p className="flex items-center gap-1 mt-1 text-xs text-muted-foreground transition-all hover:gap-3">
                       Build: {data?.version_code}
                     </p>
                   </CardContent>

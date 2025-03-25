@@ -3,18 +3,18 @@ import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/form/form"
 import { Icons } from "@/components/ui/icons"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/form/form"
 
 export default function GeneralSettings({
   formRef,
@@ -107,7 +107,7 @@ export default function GeneralSettings({
                                 className="sr-only"
                               />
                             </FormControl>
-                            <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent">
+                            <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent w-full">
                               <div className="flex flex-col gap-8 p-4">
                                 <span>Microsoft Windows</span>
                                 <div className="details flex justify-between">
@@ -128,7 +128,7 @@ export default function GeneralSettings({
                                 className="sr-only"
                               />
                             </FormControl>
-                            <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent">
+                            <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent w-full">
                               <div className="flex flex-col gap-8 p-4">
                                 <span>GNU/Linux</span>
                                 <div className="details flex justify-between">

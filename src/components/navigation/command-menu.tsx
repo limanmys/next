@@ -74,10 +74,10 @@ export default function CommandMenu() {
         onClick={() => setOpen(true)}
       >
         <Input type="text" placeholder={t("command_menu.search")} />
-        <kbd className="pointer-events-none absolute right-11 top-[11px] inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+        <kbd className="pointer-events-none absolute right-11 top-[0.5rem] inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
           <span className="text-xs">⌘</span>K
         </kbd>
-        <Search className="absolute right-5 top-3 size-4" />
+        <Search className="absolute right-5 top-[0.6rem] size-4 text-muted-foreground" />
       </div>
       <CommandDialog open={open} onOpenChange={setOpen} shouldFilter={false}>
         <CommandInput

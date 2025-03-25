@@ -1,33 +1,33 @@
-import { useState } from "react"
 import { http } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Ban, FileKey2, Key, PlusCircle } from "lucide-react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
-import { setFormErrors } from "@/lib/utils"
-import { useEmitter } from "@/hooks/useEmitter"
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/form/form"
 import { Icons } from "@/components/ui/icons"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
+    Sheet,
+    SheetContent,
+    SheetDescription,
+    SheetFooter,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
 } from "@/components/ui/sheet"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/form/form"
+import { useEmitter } from "@/hooks/useEmitter"
+import { setFormErrors } from "@/lib/utils"
 
 import { SelectServer } from "../selectbox/server-select"
 import { Button } from "../ui/button"
@@ -153,7 +153,7 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
                           <FormControl>
                             <RadioGroupItem value="ssh" className="sr-only" />
                           </FormControl>
-                          <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent">
+                          <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent w-full">
                             <div className="flex flex-col gap-8 p-4">
                               <span>{t("vault.key.form.ssh_pw")}</span>
                               <div className="details flex justify-between">
@@ -178,7 +178,7 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
                               className="sr-only"
                             />
                           </FormControl>
-                          <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent">
+                          <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent w-full">
                             <div className="flex flex-col gap-8 p-4">
                               <span>{t("vault.key.form.ssh_cert")}</span>
                               <div className="details flex justify-between">
@@ -200,7 +200,7 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
                           <FormControl>
                             <RadioGroupItem value="winrm" className="sr-only" />
                           </FormControl>
-                          <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent">
+                          <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent w-full">
                             <div className="flex flex-col gap-8 p-4">
                               <span>WinRM</span>
                               <div className="details flex justify-between">
@@ -224,7 +224,7 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
                               className="sr-only"
                             />
                           </FormControl>
-                          <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent">
+                          <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent w-full">
                             <div className="flex flex-col gap-8 p-4">
                               <span>{t("vault.key.form.winrm_insecure")}</span>
                               <div className="details flex justify-between">
@@ -248,7 +248,7 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
                               className="sr-only"
                             />
                           </FormControl>
-                          <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent">
+                          <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent w-full">
                             <div className="flex flex-col gap-8 p-4">
                               <span>{t("vault.key.form.no_key")}</span>
                               <div className="details flex justify-between">
@@ -327,7 +327,7 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
                           <FormControl>
                             <RadioGroupItem value="22" className="sr-only" />
                           </FormControl>
-                          <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent">
+                          <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent w-full">
                             <div className="flex flex-col gap-8 p-4">
                               <span>SSH</span>
                               <div className="details flex justify-between">
@@ -347,7 +347,7 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
                           <FormControl>
                             <RadioGroupItem value="5986" className="sr-only" />
                           </FormControl>
-                          <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent">
+                          <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent w-full">
                             <div className="flex flex-col gap-8 p-4">
                               <span>WinRM</span>
                               <div className="details flex justify-between">
@@ -366,7 +366,7 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
                           <FormControl>
                             <RadioGroupItem value="636" className="sr-only" />
                           </FormControl>
-                          <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent">
+                          <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent w-full">
                             <div className="flex flex-col gap-8 p-4">
                               <span>AD / Samba</span>
                               <div className="details flex justify-between">

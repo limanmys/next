@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react"
-import { useRouter } from "next/router"
 import { Row, Table } from "@tanstack/react-table"
 import { download, generateCsv, mkConfig } from "export-to-csv"
 import { DownloadCloud, Search, X } from "lucide-react"
+import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { DivergentColumn } from "@/types/table"
 import { Button } from "@/components/ui/button"
 import { DataTableViewOptions } from "@/components/ui/data-table/data-table-view-options"
 import { Input } from "@/components/ui/input"
+import { DivergentColumn } from "@/types/table"
 
 import {
   Tooltip,
@@ -69,7 +69,7 @@ export function DataTableToolbar<TData, TValue>({
                 <Button
                   variant="outline"
                   size="sm"
-                  className="ml-auto h-8 lg:flex"
+                  className="ml-auto h-8 lg:flex cursor-pointer"
                   onClick={() => exportExcel(table.getFilteredRowModel().rows)}
                 >
                   <DownloadCloud className="size-4" />

@@ -235,7 +235,7 @@ const AccessLdapPermissionsPage: NextPageWithLayout = () => {
                             className="pl-10"
                             {...field}
                           />
-                          <User2 className="pointer-events-none absolute left-3 top-3 size-4 text-muted-foreground" />
+                          <User2 className="pointer-events-none absolute left-3 top-[0.6rem] size-4 text-muted-foreground" />
                         </div>
                         <FormMessage />
                       </div>
@@ -257,7 +257,7 @@ const AccessLdapPermissionsPage: NextPageWithLayout = () => {
                             {...field}
                             type="password"
                           />
-                          <KeyRound className="pointer-events-none absolute left-3 top-3 size-4 text-muted-foreground" />
+                          <KeyRound className="pointer-events-none absolute left-3 top-[0.6rem] size-4 text-muted-foreground" />
                         </div>
                         <FormMessage />
                       </div>

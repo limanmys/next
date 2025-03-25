@@ -93,7 +93,7 @@ const AccessLdapPage: NextPageWithLayout = () => {
                       placeholder="ldaps.fabrikam.com"
                       {...field}
                     />
-                    <Server className="pointer-events-none absolute left-3 top-3 size-4 text-muted-foreground" />
+                    <Server className="pointer-events-none absolute left-3 top-[0.6rem] size-4 text-muted-foreground" />
                     <small className="italic text-muted-foreground">
                       {t("access.ldap.forms.server_info")}
                     </small>
@@ -118,7 +118,7 @@ const AccessLdapPage: NextPageWithLayout = () => {
                       placeholder="objectguid"
                       {...field}
                     />
-                    <Fingerprint className="pointer-events-none absolute left-3 top-3 size-4 text-muted-foreground" />
+                    <Fingerprint className="pointer-events-none absolute left-3 top-[0.6rem] size-4 text-muted-foreground" />
                     <small className="italic text-muted-foreground">
                       {t("access.ldap.forms.object_guid_info")}
                     </small>
@@ -142,7 +142,7 @@ const AccessLdapPage: NextPageWithLayout = () => {
                       placeholder="mail"
                       {...field}
                     />
-                    <Mail className="pointer-events-none absolute left-3 top-3 size-4 text-muted-foreground" />
+                    <Mail className="pointer-events-none absolute left-3 top-[0.6rem] size-4 text-muted-foreground" />
                     <small className="italic text-muted-foreground">
                       {t("access.ldap.forms.mail_info")}
                     </small>

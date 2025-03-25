@@ -104,7 +104,7 @@ export default function MailSettingsPage() {
                         {...field}
                         maxLength={255}
                       />
-                      <Server className="pointer-events-none absolute left-3 top-3 size-4 text-muted-foreground" />
+                      <Server className="pointer-events-none absolute left-3 top-[0.6rem] size-4 text-muted-foreground" />
                       <small className="italic text-muted-foreground">
                         {t("email.form.host.subtext")}
                       </small>
@@ -153,7 +153,7 @@ export default function MailSettingsPage() {
                       {...field}
                       maxLength={255}
                     />
-                    <User2 className="pointer-events-none absolute left-3 top-3 size-4 text-muted-foreground" />
+                    <User2 className="pointer-events-none absolute left-3 top-[0.6rem] size-4 text-muted-foreground" />
                     <small className="italic text-muted-foreground">
                       {t("email.form.username.subtext")}
                     </small>
@@ -180,7 +180,7 @@ export default function MailSettingsPage() {
                       {...field}
                       maxLength={255}
                     />
-                    <Key className="pointer-events-none absolute left-3 top-3 size-4 text-muted-foreground" />
+                    <Key className="pointer-events-none absolute left-3 top-[0.6rem] size-4 text-muted-foreground" />
                     <small className="italic text-muted-foreground">
                       {t("email.form.password.subtext")}
                     </small>

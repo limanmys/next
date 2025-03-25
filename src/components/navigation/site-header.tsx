@@ -37,7 +37,7 @@ export function SiteHeader() {
             className="flex items-center space-x-2"
             onClick={() => sidebarCtx.setSelected("")}
           >
-            <Icons.dugumluLogo className="w-18 h-8 dark:fill-white" />
+            <Icons.dugumluLogo className="w-22 h-9 dark:fill-white" />
           </Link>
         </div>
 

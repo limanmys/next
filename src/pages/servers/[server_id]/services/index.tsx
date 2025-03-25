@@ -5,7 +5,7 @@ import {
   PlayCircle,
   ScrollText,
   StopCircle,
-  X,
+  X
 } from "lucide-react"
 import { useRouter } from "next/router"
 import { useEffect, useRef, useState } from "react"
@@ -83,7 +83,7 @@ export default function ServerExtensionPage() {
       title: t("services.name.title"),
       cell: ({ row }) => (
         <div className="flex items-center gap-2">
-          <ServiceStatusWindow name={row.original.name} />
+          <ServiceStatusWindow name={row.original.name} disabled={row.original.status.running !== "running"} />
           {row.original.name}
         </div>
       ),
@@ -322,13 +322,15 @@ function ServiceAlertWindow({
   )
 }
 
-function ServiceStatusWindow({ name }: { name: string }) {
+function ServiceStatusWindow({ name, disabled = false }: { name: string; disabled: boolean }) {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState<string>("")
   const { t } = useTranslation("servers")
 
   const fetchStatus = () => {
+    if (disabled) return
+
     setLoading(true)
     http
       .post(`/servers/${router.query.server_id}/services/status`, {
@@ -338,6 +340,14 @@ function ServiceStatusWindow({ name }: { name: string }) {
         setData(response.data)
         setLoading(false)
       })
+  }
+  
+  if (disabled) {
+    return (
+      <ScrollText
+        className="size-4 text-muted-foreground cursor-not-allowed"
+      />
+    )
   }
 
   return (

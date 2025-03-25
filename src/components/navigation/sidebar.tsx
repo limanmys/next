@@ -150,10 +150,10 @@ export function Sidebar({ className }: { className?: string }) {
     >
       <ScrollArea
         style={{
-          height: "calc(var(--container-height) - 65px)",
+          height: "var(--container-height)",
         }}
       >
-        <div className="space-y-4 py-4">
+        <div className="space-y-4 py-4 pb-[60px]">
           <div className="px-4 py-2" ref={parent}>
             {settingsActive ? (
               <SidebarSettings />
@@ -264,10 +264,12 @@ export function Sidebar({ className }: { className?: string }) {
             )}
           </div>
         </div>
+        <div className="aciklab flex items-center justify-center py-4 absolute bottom-0 w-full">
+          <Icons.aciklab className="h-8 w-48 z-1" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background z-0 w-full"></div>
+        </div>
       </ScrollArea>
-      <div className="aciklab flex items-center justify-center py-4">
-        <Icons.aciklab className="h-8 w-48" />
-      </div>
+      
     </div>
   )
 }
