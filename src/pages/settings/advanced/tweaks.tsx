@@ -405,7 +405,7 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
   )
 }
 
-AdvancedTweaksPage.getLayout = function getLayout(page: ReactElement) {
+AdvancedTweaksPage.getLayout = function getLayout(page: ReactElement<any>) {
   return <AdvancedLayout>{page}</AdvancedLayout>
 }
 

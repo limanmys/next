@@ -328,7 +328,7 @@ const AccessLdapPermissionsPage: NextPageWithLayout = () => {
   )
 }
 
-AccessLdapPermissionsPage.getLayout = function getLayout(page: ReactElement) {
+AccessLdapPermissionsPage.getLayout = function getLayout(page: ReactElement<any>) {
   return <AccessLayout>{page}</AccessLayout>
 }
 

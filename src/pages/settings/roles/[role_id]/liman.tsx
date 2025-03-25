@@ -79,7 +79,7 @@ const RoleLimanList: NextPageWithLayout = () => {
   )
 }
 
-RoleLimanList.getLayout = function getLayout(page: ReactElement) {
+RoleLimanList.getLayout = function getLayout(page: ReactElement<any>) {
   return <RoleLayout>{page}</RoleLayout>
 }
 

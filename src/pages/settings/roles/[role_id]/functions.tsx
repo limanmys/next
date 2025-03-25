@@ -33,7 +33,7 @@ const RoleFunctionsList: NextPageWithLayout = () => {
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IExtension[]>([])
   const [selected, setSelected] = useState<IExtension[]>([])
-  const tableRef = useRef<any>()
+  const tableRef = useRef<any>(undefined)
   const { t } = useTranslation("settings")
   const { toast } = useToast()
 
@@ -210,7 +210,7 @@ const RoleFunctionsList: NextPageWithLayout = () => {
   )
 }
 
-RoleFunctionsList.getLayout = function getLayout(page: ReactElement) {
+RoleFunctionsList.getLayout = function getLayout(page: ReactElement<any>) {
   return <RoleLayout>{page}</RoleLayout>
 }
 

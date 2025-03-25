@@ -127,7 +127,7 @@ const AdvancedDnsSettingsPage: NextPageWithLayout = () => {
   )
 }
 
-AdvancedDnsSettingsPage.getLayout = function getLayout(page: ReactElement) {
+AdvancedDnsSettingsPage.getLayout = function getLayout(page: ReactElement<any>) {
   return <AdvancedLayout>{page}</AdvancedLayout>
 }
 

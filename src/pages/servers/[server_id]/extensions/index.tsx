@@ -33,7 +33,7 @@ export default function ServerExtensionPage() {
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IExtension[]>([])
   const [selected, setSelected] = useState<IExtension[]>([])
-  const tableRef = useRef<any>()
+  const tableRef = useRef<any>(undefined)
   const sidebarCtx = useSidebarContext()
   const { toast } = useToast()
   const { t, i18n } = useTranslation("servers")

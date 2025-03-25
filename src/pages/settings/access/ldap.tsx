@@ -192,7 +192,7 @@ const AccessLdapPage: NextPageWithLayout = () => {
   )
 }
 
-AccessLdapPage.getLayout = function getLayout(page: ReactElement) {
+AccessLdapPage.getLayout = function getLayout(page: ReactElement<any>) {
   return <AccessLayout>{page}</AccessLayout>
 }
 

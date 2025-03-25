@@ -46,7 +46,7 @@ export default function ServerExtensionPage() {
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IService[]>([])
   const [selected, setSelected] = useState<IService[]>([])
-  const tableRef = useRef<any>()
+  const tableRef = useRef<any>(undefined)
   const { toast } = useToast()
   const { t } = useTranslation("servers")
 

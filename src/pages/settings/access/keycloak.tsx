@@ -235,7 +235,7 @@ const AccessKeycloakPage: NextPageWithLayout = () => {
   )
 }
 
-AccessKeycloakPage.getLayout = function getLayout(page: ReactElement) {
+AccessKeycloakPage.getLayout = function getLayout(page: ReactElement<any>) {
   return <AccessLayout>{page}</AccessLayout>
 }
 

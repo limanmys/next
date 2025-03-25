@@ -151,7 +151,7 @@ const AdvancedLogRotationPage: NextPageWithLayout = () => {
   )
 }
 
-AdvancedLogRotationPage.getLayout = function getLayout(page: ReactElement) {
+AdvancedLogRotationPage.getLayout = function getLayout(page: ReactElement<any>) {
   return <AdvancedLayout>{page}</AdvancedLayout>
 }
 

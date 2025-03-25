@@ -134,7 +134,7 @@ const AdvancedCertificateSettingsPage: NextPageWithLayout = () => {
 }
 
 AdvancedCertificateSettingsPage.getLayout = function getLayout(
-  page: ReactElement
+  page: ReactElement<any>
 ) {
   return <AdvancedLayout>{page}</AdvancedLayout>
 }

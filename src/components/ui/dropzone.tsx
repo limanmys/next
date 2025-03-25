@@ -215,7 +215,7 @@ export const FileUploader = forwardRef<
     })
 
     return (
-      <FileUploaderContext.Provider
+      (<FileUploaderContext
         value={{
           dropzoneState,
           isLOF,
@@ -243,8 +243,8 @@ export const FileUploader = forwardRef<
         >
           {children}
         </div>
-      </FileUploaderContext.Provider>
-    )
+      </FileUploaderContext>)
+    );
   }
 )
 

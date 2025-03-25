@@ -46,7 +46,7 @@ export default function Sudoers() {
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<ISudoers[]>([])
   const [selected, setSelected] = useState<ISudoers[]>([])
-  const tableRef = useRef<any>()
+  const tableRef = useRef<any>(undefined)
   const { toast } = useToast()
   const { t } = useTranslation("servers")
 

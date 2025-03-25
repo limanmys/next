@@ -189,10 +189,10 @@ export const SidebarProvider = ({
   )
 
   return (
-    <SidebarContext.Provider value={contextValue}>
+    (<SidebarContext value={contextValue}>
       {children}
-    </SidebarContext.Provider>
-  )
+    </SidebarContext>)
+  );
 }
 
 export const useSidebarContext = () => {

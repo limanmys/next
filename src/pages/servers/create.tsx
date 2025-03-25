@@ -33,7 +33,7 @@ export default function ServerCreatePage() {
     {
       name: t("create.steps.connection_information.name"),
       description: t("create.steps.connection_information.description"),
-      ref: useRef<any>(),
+      ref: useRef<any>(undefined),
       component: ConnectionInformation,
       validation: async (data: any) => {
         try {
@@ -54,7 +54,7 @@ export default function ServerCreatePage() {
     {
       name: t("create.steps.general_settings.name"),
       description: t("create.steps.general_settings.description"),
-      ref: useRef<any>(),
+      ref: useRef<any>(undefined),
       component: GeneralSettings,
       validation: async (data: any) => {
         try {
@@ -75,7 +75,7 @@ export default function ServerCreatePage() {
     {
       name: t("create.steps.key_selection.name"),
       description: t("create.steps.key_selection.description"),
-      ref: useRef<any>(),
+      ref: useRef<any>(undefined),
       component: KeySelection,
       validation: async () => {
         return {
@@ -87,7 +87,7 @@ export default function ServerCreatePage() {
     {
       name: t("create.steps.key_inputs.name"),
       description: t("create.steps.key_inputs.description"),
-      ref: useRef<any>(),
+      ref: useRef<any>(undefined),
       component: KeyInputs,
       validation: async (data: any) => {
         if (data.key_type == "no_key") {
@@ -115,7 +115,7 @@ export default function ServerCreatePage() {
     {
       name: t("create.steps.summary.name"),
       description: t("create.steps.summary.description"),
-      ref: useRef<any>(),
+      ref: useRef<any>(undefined),
       component: Summary,
       validation: async () => {
         return {

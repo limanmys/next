@@ -220,7 +220,7 @@ function AuditLogDetails({ id }: { id: string }) {
   )
 }
 
-AccessAuditLogsPage.getLayout = function getLayout(page: ReactElement) {
+AccessAuditLogsPage.getLayout = function getLayout(page: ReactElement<any>) {
   return <AccessLayout>{page}</AccessLayout>
 }
 

@@ -56,7 +56,7 @@ const RoleVariablesList: NextPageWithLayout = () => {
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState<IFunction[]>([])
   const [selected, setSelected] = useState<IFunction[]>([])
-  const tableRef = useRef<any>()
+  const tableRef = useRef<any>(undefined)
   const { t } = useTranslation("settings")
   const { toast } = useToast()
 
@@ -610,7 +610,7 @@ function CreateVariable() {
   )
 }
 
-RoleVariablesList.getLayout = function getLayout(page: ReactElement) {
+RoleVariablesList.getLayout = function getLayout(page: ReactElement<any>) {
   return <RoleLayout>{page}</RoleLayout>
 }
 

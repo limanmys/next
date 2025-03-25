@@ -80,7 +80,7 @@ const RoleExtensionList: NextPageWithLayout = () => {
   )
 }
 
-RoleExtensionList.getLayout = function getLayout(page: ReactElement) {
+RoleExtensionList.getLayout = function getLayout(page: ReactElement<any>) {
   return <RoleLayout>{page}</RoleLayout>
 }
 
