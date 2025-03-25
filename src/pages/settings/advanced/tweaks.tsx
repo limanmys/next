@@ -1,13 +1,22 @@
-import { ReactElement, useEffect } from "react"
 import { NextPageWithLayout } from "@/pages/_app"
 import { http } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Bug, FolderArchive, Puzzle, Save } from "lucide-react"
+import { ReactElement, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import * as z from "zod"
 
-import { setFormErrors } from "@/lib/utils"
+import AdvancedLayout from "@/components/_layout/advanced_layout"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/form/form"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Icons } from "@/components/ui/icons"
@@ -23,16 +32,7 @@ import {
 } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
 import { useToast } from "@/components/ui/use-toast"
-import AdvancedLayout from "@/components/_layout/advanced_layout"
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/form/form"
+import { setFormErrors } from "@/lib/utils"
 
 const AdvancedTweaksPage: NextPageWithLayout = () => {
   const { t } = useTranslation("settings")
@@ -352,6 +352,7 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
                         <img
                           src={field.value}
                           className="max-h-40 w-auto rounded-lg object-cover"
+                          alt="Logo"
                         />
                       </Card>
                     )}

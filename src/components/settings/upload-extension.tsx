@@ -135,11 +135,11 @@ export default function UploadExtension() {
               maxSize: 100 * 1024 * 1024,
               multiple: false,
             }}
-            className="relative bg-background rounded-lg mt-2"
+            className="relative mt-2 rounded-lg bg-background"
           >
             <FileInput className="border-2 border-dashed border-muted-foreground/10">
-              <div className="flex items-center justify-center flex-col py-10 w-full">
-                <UploadCloud className="h-8 w-8 text-muted-foreground" />
+              <div className="flex w-full flex-col items-center justify-center py-10">
+                <UploadCloud className="size-8 text-muted-foreground" />
                 <p className="mb-1 text-sm text-muted-foreground">
                   <span className="font-semibold">Yüklemek için tıklayın</span>
                   &nbsp; ya da sürükleyip bırakın.
@@ -151,8 +151,8 @@ export default function UploadExtension() {
             </FileInput>
             <FileUploaderContent>
               {file && (
-                <FileUploaderItem index={0} className="py-4 flex items-center">
-                  <Paperclip className="h-4 w-4 stroke-current" />
+                <FileUploaderItem index={0} className="flex items-center py-4">
+                  <Paperclip className="size-4 stroke-current" />
                   <span>{file.name}</span>
                 </FileUploaderItem>
               )}

@@ -163,7 +163,7 @@ export default function Notifications() {
           </Button>
         </div>
         {notifications.length > 0 && (
-          <ScrollArea type="always" className="flex flex-col gap-3 p-2 h-[350px]">
+          <ScrollArea type="always" className="flex h-[350px] flex-col gap-3 p-2">
             {notifications.map((notification) => (
               <Link
                 href={`/notifications#notification-${notification.notification_id}`}
