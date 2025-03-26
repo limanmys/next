@@ -68,7 +68,7 @@
     "sonner": "^2.0.1",
     "tailwind-merge": "^3.0.2",
     "tailwindcss-animate": "^1.0.7",
-    "tus-js-client": "^4.1.0",
+    "tus-js-client": "4.1.0",
     "use-tus": "^0.8.2",
     "vaul": "^1.1.2",
     "zod": "^3.24.2",
