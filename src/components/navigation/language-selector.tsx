@@ -38,7 +38,6 @@ export default function LanguageSelector() {
       <DropdownMenuTrigger asChild>
         <div
           className={buttonVariants({
-            size: "sm",
             variant: "ghost",
           })}
         >

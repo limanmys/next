@@ -40,6 +40,8 @@
 
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-shake: shake 0.82s cubic-bezier(.36, .07, .19, .97) both;
+  --animate-ring: ring 4s .2s ease-in-out infinite;
   --animate-spin-slow: spin 4s linear infinite;
 
   --grid-template-columns-sidebar: 300px auto;
@@ -49,16 +51,141 @@
     from {
       height: 0;
     }
+
     to {
       height: var(--radix-accordion-content-height);
     }
   }
+
   @keyframes accordion-up {
     from {
       height: var(--radix-accordion-content-height);
     }
+
     to {
       height: 0;
+    }
+  }
+
+  @keyframes shake {
+
+    10%,
+    90% {
+      transform: translate3d(-1px, 0, 0);
+    }
+
+    20%,
+    80% {
+      transform: translate3d(2px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+      transform: translate3d(-4px, 0, 0);
+    }
+
+    40%,
+    60% {
+      transform: translate3d(4px, 0, 0);
+    }
+  }
+
+  @keyframes ring {
+    0% {
+      transform: rotate(0);
+    }
+
+    1% {
+      transform: rotate(30deg);
+    }
+
+    3% {
+      transform: rotate(-28deg);
+    }
+
+    5% {
+      transform: rotate(34deg);
+    }
+
+    7% {
+      transform: rotate(-32deg);
+    }
+
+    9% {
+      transform: rotate(30deg);
+    }
+
+    11% {
+      transform: rotate(-28deg);
+    }
+
+    13% {
+      transform: rotate(26deg);
+    }
+
+    15% {
+      transform: rotate(-24deg);
+    }
+
+    17% {
+      transform: rotate(22deg);
+    }
+
+    19% {
+      transform: rotate(-20deg);
+    }
+
+    21% {
+      transform: rotate(18deg);
+    }
+
+    23% {
+      transform: rotate(-16deg);
+    }
+
+    25% {
+      transform: rotate(14deg);
+    }
+
+    27% {
+      transform: rotate(-12deg);
+    }
+
+    29% {
+      transform: rotate(10deg);
+    }
+
+    31% {
+      transform: rotate(-8deg);
+    }
+
+    33% {
+      transform: rotate(6deg);
+    }
+
+    35% {
+      transform: rotate(-4deg);
+    }
+
+    37% {
+      transform: rotate(2deg);
+    }
+
+    39% {
+      transform: rotate(-1deg);
+    }
+
+    41% {
+      transform: rotate(1deg);
+    }
+
+    43% {
+      transform: rotate(0);
+    }
+
+    100% {
+      transform: rotate(0);
     }
   }
 }
@@ -66,10 +193,12 @@
 @utility container {
   margin-inline: auto;
   padding-inline: 2rem;
-  @media (width >= --theme(--breakpoint-sm)) {
+
+  @media (width >=--theme(--breakpoint-sm)) {
     max-width: none;
   }
-  @media (width >= 1400px) {
+
+  @media (width >=1400px) {
     max-width: 1400px;
   }
 }
@@ -83,6 +212,7 @@
   color utility to any element that depends on these defaults.
 */
 @layer base {
+
   *,
   ::after,
   ::before,
@@ -197,6 +327,7 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -265,22 +396,22 @@
 }
 
 .gradient {
-  background-image: linear-gradient(
-    90deg,
-    rgba(56, 189, 248, 0) 0%,
-    #0ea5e9 32.29%,
-    rgba(236, 72, 153, 0.3) 67.19%,
-    rgba(236, 72, 153, 0) 100%
-  );
+  background-image: linear-gradient(90deg,
+      rgba(56, 189, 248, 0) 0%,
+      #0ea5e9 32.29%,
+      rgba(236, 72, 153, 0.3) 67.19%,
+      rgba(236, 72, 153, 0) 100%);
 }
 
 .animated-collapsible {
   overflow: hidden;
   transition: all 0.3s ease-out;
 }
+
 .animated-collapsible[data-state="open"] {
   animation: slideDown 300ms ease-out;
 }
+
 .animated-collapsible[data-state="closed"] {
   animation: slideUp 300ms ease-out;
 }
@@ -289,6 +420,7 @@
   from {
     height: 0;
   }
+
   to {
     height: var(--radix-collapsible-content-height);
   }
@@ -298,6 +430,7 @@
   from {
     height: var(--radix-collapsible-content-height);
   }
+
   to {
     height: 0;
   }

@@ -4,11 +4,12 @@ import { useTranslation } from "react-i18next"
 import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 import { Settings } from "@/lib/settings"
 
+import { opacityAnimation } from "@/lib/anim"
 import SettingsItem from "./settings-item"
 
 export default function SidebarSettings() {
   const user = useCurrentUser()
-  const [parent] = useAutoAnimate()
+  const [parent] = useAutoAnimate(opacityAnimation)
   const { t } = useTranslation("common")
 
   return (

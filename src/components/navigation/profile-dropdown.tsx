@@ -8,6 +8,7 @@ import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 import { useLogout } from "@/hooks/auth/useLogout"
 import { cn } from "@/lib/utils"
 
+import { ThemeToggle } from "../theme-toggle"
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import {
   DropdownMenu,
@@ -16,6 +17,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
+import FullScreenToggle from "./full-screen-toggle"
+import LanguageSelector from "./language-selector"
 
 export default function ProfileDropdown() {
   const router = useRouter()
@@ -103,14 +106,23 @@ export default function ProfileDropdown() {
         )}
 
         <DropdownMenuSeparator />
+
         <div className="flex gap-1">
-          <Button
-            className="w-full"
-            variant="ghost"
-            onClick={() => router.push("/settings/profile")}
-          >
-            <User className="mr-2 size-4" /> {t("profile_dropdown.profile")}
-          </Button>
+          <div className="flex items-center">
+            <Button
+              className="w-full"
+              variant="ghost"
+              onClick={() => router.push("/settings/profile")}
+            >
+              <User className="mr-2 size-4" /> {t("profile_dropdown.profile")}
+            </Button>
+
+            <ThemeToggle />
+
+            <LanguageSelector />
+
+            <FullScreenToggle />
+          </div>
           <Button
             className="w-full"
             variant="secondary"

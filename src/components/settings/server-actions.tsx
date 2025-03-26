@@ -1,13 +1,10 @@
-import { useState } from "react"
 import { useSidebarContext } from "@/providers/sidebar-provider"
 import { http } from "@/services"
 import { Row } from "@tanstack/react-table"
 import { Edit2, Key, MoreHorizontal, Trash } from "lucide-react"
+import { useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { IServer } from "@/types/server"
-import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
-import { useEmitter } from "@/hooks/useEmitter"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -26,6 +23,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
+import { useEmitter } from "@/hooks/useEmitter"
+import { IServer } from "@/types/server"
 
 import {
   Dialog,
@@ -162,7 +162,7 @@ function Edit({
         </div>
 
         <div className="mt-3 grid w-full items-center gap-1.5">
-          <div className="flex flex-row items-center justify-between rounded-lg border p-4 shadow-xs">
+          <div className="flex flex-row items-center justify-between rounded-lg border p-4 shadow-xs space-y-0">
             <div className="flex space-x-3 space-y-0.5">
               <Key className="size-6 text-muted-foreground" />
               <div className="flex flex-col space-y-0.5">

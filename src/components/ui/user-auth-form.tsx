@@ -1,18 +1,18 @@
-import * as React from "react"
-import Link from "next/link"
-import { useRouter } from "next/router"
 import { authService, http } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AlertCircle, CheckIcon, LogIn } from "lucide-react"
+import Link from "next/link"
+import { useRouter } from "next/router"
+import * as React from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
-import { cn } from "@/lib/utils"
-import { useLogin } from "@/hooks/auth/useLogin"
 import { Button } from "@/components/ui/button"
 import { Icons } from "@/components/ui/icons"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useLogin } from "@/hooks/auth/useLogin"
+import { cn } from "@/lib/utils"
 
 import {
   Form,
@@ -38,7 +38,7 @@ import {
   SelectValue,
 } from "./select"
 
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
 
 const safeToRedirect = ["/auth", "/notifications", "/servers", "/settings"]
 
@@ -185,6 +185,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     } catch (e: any) {
       if (!e.response) {
         setError(e.message)
+        setIsLoading(false)
         return
       }
 
@@ -197,8 +198,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       if (e.response.data.new_password) {
         setError(
           e.response.data.new_password[1] ||
-            e.response.data.new_password[0] ||
-            e.response.data.new_password
+          e.response.data.new_password[0] ||
+          e.response.data.new_password
         )
       }
 
@@ -228,7 +229,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         })
         setEnableOtp(true)
       }
-    } finally {
+
       setIsLoading(false)
     }
   }
@@ -259,8 +260,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       if (e.response.data.new_password) {
         setError(
           e.response.data.new_password[1] ||
-            e.response.data.new_password[0] ||
-            e.response.data.new_password
+          e.response.data.new_password[0] ||
+          e.response.data.new_password
         )
       }
     } finally {

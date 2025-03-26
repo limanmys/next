@@ -133,10 +133,10 @@ export default function Notifications() {
               size: "sm",
               variant: "ghost",
             }),
-            "relative"
+            "relative group"
           )}
         >
-          <Bell className="size-5" />
+          <Bell className="size-5 group-hover:animate-ring transition-all" />
           <span className="sr-only">Notifications</span>
           {
             getNotSeenNotificationCount() > 0 &&

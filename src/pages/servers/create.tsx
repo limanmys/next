@@ -18,10 +18,11 @@ import { Icons } from "@/components/ui/icons"
 import PageHeader from "@/components/ui/page-header"
 import Steps from "@/components/ui/steps"
 import { useToast } from "@/components/ui/use-toast"
+import { opacityAnimation } from "@/lib/anim"
 
 export default function ServerCreatePage() {
   const { toast } = useToast()
-  const [parent] = useAutoAnimate()
+  const [parent] = useAutoAnimate(opacityAnimation)
   const router = useRouter()
   const sidebarCtx = useSidebarContext()
   const { t } = useTranslation("servers")

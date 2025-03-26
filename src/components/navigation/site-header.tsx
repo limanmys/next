@@ -4,13 +4,11 @@ import dynamic from "next/dynamic"
 import Link from "next/link"
 import { useRouter } from "next/router"
 
-import { ThemeToggle } from "@/components/theme-toggle"
 import { Button, buttonVariants } from "@/components/ui/button"
 
+import { cn } from "@/lib/utils"
 import { Icons } from "../ui/icons"
 import CommandMenu from "./command-menu"
-import FullScreenToggle from "./full-screen-toggle"
-import LanguageSelector from "./language-selector"
 import ProfileDropdown from "./profile-dropdown"
 
 const Notifications = dynamic(import("./notifications"), { ssr: false })
@@ -47,24 +45,18 @@ export function SiteHeader() {
 
         <div className="flex items-center justify-end space-x-4">
           <nav className="flex items-center gap-1">
-            <FullScreenToggle />
-
-            <ThemeToggle />
-
-            <LanguageSelector />
-
             <Notifications />
 
             <Link href="/settings">
               <div
-                className={buttonVariants({
+                className={cn("group", buttonVariants({
                   size: "sm",
                   variant: router.asPath.includes("/settings")
                     ? "secondary"
                     : "ghost",
-                })}
+                }))}
               >
-                <Settings className="size-5" />
+                <Settings className="size-5 group-hover:rotate-90 transition-all" />
                 <span className="sr-only">Settings</span>
               </div>
             </Link>

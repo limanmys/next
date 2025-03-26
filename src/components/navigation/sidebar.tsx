@@ -20,6 +20,7 @@ import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 import { cn } from "@/lib/utils"
 import { IServer } from "@/types/server"
 
+import { opacityAnimation } from "@/lib/anim"
 import { Icons } from "../ui/icons"
 import { Skeleton } from "../ui/skeleton"
 import ExtensionItem from "./extension-item"
@@ -40,8 +41,8 @@ export function Sidebar({ className }: { className?: string }) {
     refreshExtensions,
   } = useSidebarContext()
 
-  const [parent] = useAutoAnimate()
-  const [sub] = useAutoAnimate()
+  const [parent] = useAutoAnimate(opacityAnimation)
+  const [sub] = useAutoAnimate(opacityAnimation)
   const user = useCurrentUser()
   const { t } = useTranslation("common")
 
@@ -132,8 +133,9 @@ export function Sidebar({ className }: { className?: string }) {
             </div>
           </div>
         </ScrollArea>
-        <div className="aciklab flex items-center justify-center py-4">
-          <Icons.aciklab className="h-8 w-48" />
+        <div className="aciklab flex items-center justify-center py-4 absolute bottom-0 w-full pointer-events-none">
+          <Icons.aciklab className="h-8 w-48 z-1" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background z-0 w-full"></div>
         </div>
       </div>
     )
@@ -264,12 +266,12 @@ export function Sidebar({ className }: { className?: string }) {
             )}
           </div>
         </div>
-        <div className="aciklab flex items-center justify-center py-4 absolute bottom-0 w-full">
+        <div className="aciklab flex items-center justify-center py-4 absolute bottom-0 w-full pointer-events-none">
           <Icons.aciklab className="h-8 w-48 z-1" />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background z-0 w-full"></div>
         </div>
       </ScrollArea>
-      
+
     </div>
   )
 }

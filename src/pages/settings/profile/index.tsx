@@ -1,23 +1,12 @@
-import { useEffect, useState } from "react"
 import { http } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import md5 from "blueimp-md5"
 import { Save, ShieldCheck } from "lucide-react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
-import { IUser } from "@/types/user"
-import { setFormErrors } from "@/lib/utils"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { Card, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import Loading from "@/components/ui/loading"
-import PageHeader from "@/components/ui/page-header"
-import { Switch } from "@/components/ui/switch"
-import { useToast } from "@/components/ui/use-toast"
 import {
   Form,
   FormControl,
@@ -28,6 +17,17 @@ import {
   FormMessage,
 } from "@/components/form/form"
 import AuthLog from "@/components/profile/auth_log"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
+import { Card, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import Loading from "@/components/ui/loading"
+import PageHeader from "@/components/ui/page-header"
+import { Switch } from "@/components/ui/switch"
+import { useToast } from "@/components/ui/use-toast"
+import { setFormErrors } from "@/lib/utils"
+import { IUser } from "@/types/user"
 
 export default function ProfilePage() {
   const { t } = useTranslation("settings")
@@ -189,7 +189,7 @@ export default function ProfilePage() {
                         control={form.control}
                         name="otp_enabled"
                         render={({ field }) => (
-                          <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4 shadow-xs">
+                          <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4 shadow-xs space-y-0">
                             <div className="flex space-x-3 space-y-0.5">
                               <ShieldCheck className="size-6 text-muted-foreground" />
                               <div className="flex flex-col space-y-0.5">

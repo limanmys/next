@@ -30,11 +30,17 @@ export function DataTablePagination<TData>({
   return (
     <div className="flex items-center justify-between px-8 pb-5">
       <div className="flex-1 text-sm text-muted-foreground">
-        {selectable && (
+        {selectable ? (
           <>
             {table.getFilteredSelectedRowModel().rows.length} /{" "}
             {table.getFilteredRowModel().rows.length}{" "}
             {t("table.pagination.selected")}
+          </>
+        ) : (
+          <>
+            {t("table.pagination.total")}{" "}
+            {table.getFilteredRowModel().rows.length}{" "}
+            {t("table.pagination.records")}
           </>
         )}
       </div>
@@ -62,12 +68,10 @@ export function DataTablePagination<TData>({
             </SelectContent>
           </Select>
         </div>
-        <div className="flex w-[220px] items-center justify-center text-sm font-medium">
+        <div className="flex w-[100px] items-center justify-center text-sm font-medium">
           {t("table.pagination.page")}{" "}
           {table.getState().pagination.pageIndex + 1} /{" "}
-          {table.getPageCount() || 1}, {t("table.pagination.total")}{" "}
-          {table.getFilteredRowModel().rows.length}{" "}
-          {t("table.pagination.records")}
+          {table.getPageCount() || 1}
         </div>
         <div className="flex items-center space-x-2">
           <Button

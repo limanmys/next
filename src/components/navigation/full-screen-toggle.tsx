@@ -21,7 +21,6 @@ const FullScreenToggle = () => {
   return (
     <div
       className={buttonVariants({
-        size: "sm",
         variant: "ghost",
       })}
       onClick={toggleFullScreen}

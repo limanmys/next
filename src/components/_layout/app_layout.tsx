@@ -24,6 +24,7 @@ import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 import { useLogout } from "@/hooks/auth/useLogout"
 import { cn } from "@/lib/utils"
 
+import { opacityAnimation } from "@/lib/anim"
 import GradientSvg from "../bg/gradient"
 import {
   ResizableHandle,
@@ -35,10 +36,7 @@ const Layout = ({ Component, pageProps }: any) => {
   const router = useRouter()
   const sidebarCtx = useSidebarContext()
   const { t } = useTranslation("common")
-  const [animated] = useAutoAnimate({
-    duration: 150,
-    easing: "linear",
-  })
+  const [animated] = useAutoAnimate(opacityAnimation)
   const panel = useRef<ImperativePanelHandle>(null)
   const { logout } = useLogout()
   const [open, setOpen] = useState(false)
@@ -133,7 +131,7 @@ const Layout = ({ Component, pageProps }: any) => {
                   <div className="gradient ml-[-100%] w-full flex-none blur-xs"></div>
                   <div className="gradient ml-[-100%] w-full flex-none blur-[1px]"></div>
                 </div>
-                <GradientSvg className="-mt-18 pointer-events-none absolute top-0 z-0 h-auto w-full rotate-180 opacity-30 dark:opacity-60" />
+                <GradientSvg className="pointer-events-none absolute top-0 z-0 h-auto w-full rotate-180 opacity-30 dark:opacity-60" />
               </main>
             </ScrollArea>
           </ResizablePanel>

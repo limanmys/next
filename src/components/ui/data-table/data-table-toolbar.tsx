@@ -51,7 +51,7 @@ export function DataTableToolbar<TData, TValue>({
   useEffect(() => {
     setIsFiltered(
       table.getPreFilteredRowModel().rows.length >
-        table.getFilteredRowModel().rows.length
+      table.getFilteredRowModel().rows.length
     )
   }, [
     table.getPreFilteredRowModel().rows.length,
@@ -65,7 +65,7 @@ export function DataTableToolbar<TData, TValue>({
         <div className="flex flex-1 items-center space-x-2">
           <TooltipProvider>
             <Tooltip delayDuration={200}>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <Button
                   variant="outline"
                   size="sm"

@@ -1,6 +1,5 @@
 "use client"
 
-import * as React from "react"
 import {
   ColumnFiltersState,
   flexRender,
@@ -15,9 +14,9 @@ import {
   VisibilityState,
 } from "@tanstack/react-table"
 import { FolderOpen } from "lucide-react"
+import * as React from "react"
 import { useTranslation } from "react-i18next"
 
-import { DivergentColumn } from "@/types/table"
 import { DataTablePagination } from "@/components/ui/data-table/data-table-pagination"
 import {
   Table,
@@ -27,6 +26,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { DivergentColumn } from "@/types/table"
 
 import { Skeleton } from "../skeleton"
 import { DataTableToolbar } from "./data-table-toolbar"
@@ -98,17 +98,17 @@ const DataTable = <TData, TValue>({
   }, [rowSelection])
 
   React.useEffect(() => {
+    const newColumnVisibility = { ...columnVisibility };
+
     columns.forEach((column: any) => {
-      // Check if meta.hidden exists, if it's set column will be hidden
-      const meta = column.meta
+      const meta = column.meta;
       if (meta && meta.hidden) {
-        setColumnVisibility((prev) => ({
-          ...prev,
-          [column.accessorKey]: false,
-        }))
+        newColumnVisibility[column.accessorKey] = false;
       }
-    })
-  }, [])
+    });
+
+    setColumnVisibility(newColumnVisibility);
+  }, [columns]);
 
   return (
     <div className="data-table space-y-4">
@@ -133,9 +133,9 @@ const DataTable = <TData, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </TableHead>
                   )
                 })}
