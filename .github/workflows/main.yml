@@ -49,6 +49,7 @@ jobs:
       - name: Create zip
         run: |
           cd .next/standalone
+          rm -rf node_modules/@img
           zip -r /tmp/ui-${{ env.UI_BRANCH }}-${{ github.run_number }}.zip .
 
       - name: Release 🚀
