@@ -13,10 +13,11 @@ declare module "@radix-ui/react-alert-dialog" {
   }
 }
 
-export { }
+export {}
 
 declare global {
   interface Window {
     Pusher: any
+    $setAuthDialog: any
   }
 }

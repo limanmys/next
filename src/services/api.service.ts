@@ -31,11 +31,15 @@ export class ApiService {
             return Promise.reject(error)
           }
 
-          const { logout } = useLogout()
-          logout().finally(() => {
-            window.location.href =
-              "/auth/login?redirect=" + window.location.pathname
-          })
+          if (window.$setAuthDialog) {
+            window.$setAuthDialog(true)
+          } else {
+            const { logout } = useLogout()
+            logout().finally(() => {
+              window.location.href =
+                "/auth/login?redirect=" + window.location.pathname
+            })
+          }
         }
         if (error.response && error.response.status === 504) {
           window.location.href = "/504"

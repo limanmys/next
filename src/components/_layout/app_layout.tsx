@@ -63,6 +63,8 @@ const Layout = ({ Component, pageProps }: any) => {
   }, [sidebarCtx])
 
   useEffect(() => {
+    window.$setAuthDialog = setOpen
+
     const checkAuthStatus = () => {
       let currentUser = Cookies.get("currentUser")
       if (currentUser) {
@@ -76,7 +78,10 @@ const Layout = ({ Component, pageProps }: any) => {
 
     const authChecker = setInterval(checkAuthStatus, 30000)
 
-    return () => clearInterval(authChecker)
+    return () => {
+      clearInterval(authChecker)
+      window.$setAuthDialog = null
+    }
   }, [logout])
 
   const getLayout = useCallback(
