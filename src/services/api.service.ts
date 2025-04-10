@@ -31,10 +31,13 @@ export class ApiService {
             return Promise.reject(error)
           }
 
+          const { logout } = useLogout()
+
           if (window.$setAuthDialog) {
-            window.$setAuthDialog(true)
+            logout().finally(() => {
+              window.$setAuthDialog(true)
+            })
           } else {
-            const { logout } = useLogout()
             logout().finally(() => {
               window.location.href =
                 "/auth/login?redirect=" + window.location.pathname
