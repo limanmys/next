@@ -1,0 +1,12 @@
+{
+    "all_severities": "Tüm Seviyeler",
+    "critical": "Kritik",
+    "high": "Çok Önemli",
+    "medium": "Önemli",
+    "low": "Normal",
+    "trivial": "Bilgilendirme",
+    "date_range": "Bildirim Tarih Aralığı",
+    "clear": "Temizle",
+    "today": "Bugün",
+    "last_7_days": "Son 7 Gün"
+}

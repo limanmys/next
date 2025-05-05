@@ -1,0 +1,12 @@
+{
+    "all_severities": "All Severities",
+    "critical": "Critical",
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low",
+    "trivial": "Informational",
+    "date_range": "Notification Date Range",
+    "clear": "Clear",
+    "today": "Today",
+    "last_7_days": "Last 7 Days"
+}

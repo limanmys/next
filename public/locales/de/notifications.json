@@ -1,0 +1,12 @@
+{
+    "all_severities": "Alle Schweregrade",
+    "critical": "Kritisch",
+    "high": "Hoch",
+    "medium": "Mittel",
+    "low": "Niedrig",
+    "trivial": "Trivial",
+    "date_range": "Benachrichtigungszeitraum",
+    "clear": "Löschen",
+    "today": "Heute",
+    "last_7_days": "Letzte 7 Tage"
+}

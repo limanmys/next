@@ -13,25 +13,25 @@ export const ni18nConfig: Ni18nOptions = {
   react: {
     useSuspense: false,
   },
-  ns: ["common", "zod", "components", "dashboard", "settings"],
+  ns: ["common", "zod", "components", "dashboard", "settings", "notifications"],
   use: isBrowser ? [ChainedBackend] : undefined,
   backend: isBrowser
     ? {
-        backends: [LocalStorageBackend, HttpBackend],
-        backendOptions: [
-          {
-            expirationTime: 24 * 60 * 60 * 1000,
-            defaultVersion: "v1",
-            versions: {
-              en: "v2",
-              tr: "v2",
-              de: "v2",
-            },
+      backends: [LocalStorageBackend, HttpBackend],
+      backendOptions: [
+        {
+          expirationTime: 24 * 60 * 60 * 1000,
+          defaultVersion: "v1",
+          versions: {
+            en: "v3",
+            tr: "v3",
+            de: "v3",
           },
-          {
-            loadPath: "/locales/{{lng}}/{{ns}}.json",
-          },
-        ],
-      }
+        },
+        {
+          loadPath: "/locales/{{lng}}/{{ns}}.json",
+        },
+      ],
+    }
     : undefined,
 }
