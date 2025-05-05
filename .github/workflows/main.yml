@@ -34,7 +34,7 @@ jobs:
 
       - name: Build Next application
         run: |
-          npm ci --ignore-scripts
+          npm ci --ignore-scripts --legacy-peer-deps
           npm run build
 
           [ "$GITHUB_REF" == "refs/heads/master" ] && PRERELEASE=false || PRERELEASE=true
