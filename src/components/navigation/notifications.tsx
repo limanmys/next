@@ -4,12 +4,12 @@ import Echo from "laravel-echo"
 import { Bell, BellOff, CheckCheck } from "lucide-react"
 import Link from "next/link"
 import Pusher from "pusher-js"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 
 import { Button, buttonVariants } from "@/components/ui/button"
 import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
-import { cn } from "@/lib/utils"
+import { cn, getRelativeTimeString } from "@/lib/utils"
 import { INotification } from "@/types/notification"
 
 import { Badge } from "../ui/badge"
@@ -34,6 +34,9 @@ export default function Notifications() {
   }
 
   const [notifications, setNotifications] = useState<INotification[]>([])
+  const [, setTimeUpdate] = useState<number>(0)
+  const timerRef = useRef<NodeJS.Timeout | null>(null)
+
   const getNotSeenNotificationCount = () => {
     return notifications.filter((notification) => !notification.seen_at).length
   }
@@ -49,6 +52,21 @@ export default function Notifications() {
       })
     }, 1000)
   }
+
+  // Timer effect to update relative times every minute
+  useEffect(() => {
+    // Set up a timer that triggers every minute to refresh the time display
+    timerRef.current = setInterval(() => {
+      setTimeUpdate(Date.now());
+    }, 5000); // Update every 5 seconds
+
+    return () => {
+      // Clean up timer on component unmount
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     window.Pusher = Pusher
@@ -113,6 +131,11 @@ export default function Notifications() {
     return () => {
       echo.leave(`App.Models.User.${JSON.parse(currentUser).user.id}`)
       echo.disconnect()
+
+      // Clean up timer if it exists
+      if (timerRef.current) {
+        clearInterval(timerRef.current)
+      }
     }
   }, [])
 
@@ -197,7 +220,7 @@ export default function Notifications() {
                     </div>
 
                     <span className="text-xs text-slate-500">
-                      {notification.send_at_humanized}
+                      {getRelativeTimeString(notification.send_at, i18n.language)}
                     </span>
                   </div>
                 </div>
