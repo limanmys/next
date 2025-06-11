@@ -22,6 +22,35 @@
             "extension_count": "Extension Count"
         }
     },
+    "create_type": {
+        "title": "Resource Type Selection",
+        "description": "Select the type of resource you want to add to Liman Center Management System.",
+        "back": "Go Back",
+        "server": {
+            "title": "Server",
+            "description": "Add your traditional physical or virtual servers",
+            "button": "Add Server",
+            "features": {
+                "ssh": "SSH and WinRM support",
+                "winrm": "Windows and Linux compatibility",
+                "traditional": "Traditional server management"
+            }
+        },
+        "kubernetes": {
+            "title": "Kubernetes",
+            "description": "Add your Kubernetes deployment as a managable service to Liman",
+            "button": "Add Kubernetes",
+            "features": {
+                "deployment": "Deployment management",
+                "scaling": "Pod monitoring and management",
+                "monitoring": "Kubernetes resource viewing"
+            }
+        }
+    },
+    "create_server": {
+        "title": "Add Server",
+        "description": "You can add your Windows and Linux servers that you have already installed to Liman Center Management System."
+    },
     "create": {
         "title": "Add Server",
         "description": "You can add your Windows and Linux servers that you have already installed to Liman Center Management System.",
@@ -103,6 +132,57 @@
             "validation": "Please check your input before proceeding.",
             "success": "Server created successfully.",
             "error": "An error occurred while creating the server."
+        }
+    },
+    "create_kubernetes": {
+        "title": "Add Kubernetes Service",
+        "description": "Add and manage your Kubernetes service in Liman.",
+        "back": "Back",
+        "next": "Next",
+        "create": "Add",
+        "steps": {
+            "connection_information": {
+                "name": "Connection Information",
+                "description": "Check the Kubernetes cluster connection."
+            },
+            "namespace_deployment": {
+                "name": "Namespace & Deployment",
+                "description": "Select namespace and deployment for desired service.",
+                "title": "Namespace and Deployment Selection",
+                "namespace": {
+                    "label": "Namespace",
+                    "placeholder": "Select namespace",
+                    "information": "Select the namespace where your Kubernetes deployment is located."
+                },
+                "deployment": {
+                    "label": "Deployment",
+                    "placeholder": "Select deployment",
+                    "information": "Select the deployment you want to manage."
+                }
+            },
+            "summary": {
+                "name": "Summary",
+                "description": "Check and confirm your Kubernetes information."
+            }
+        },
+        "connection": {
+            "kubeconfig": {
+                "title": "Kubeconfig",
+                "label": "Kubeconfig",
+                "description": "Upload kubeconfig file to access your Kubernetes cluster.",
+                "placeholder": "Paste kubeconfig content here...",
+                "file_upload": "Upload File",
+                "manual_input": "Manual Input",
+                "drag_drop_text": "Drag and drop file here or",
+                "click_to_select": "click to select file",
+                "supported_formats": "Supported formats: .yaml, .yml, .txt",
+                "switch_to_manual": "Switch to manual input"
+            }
+        },
+        "errors": {
+            "validation": "Please check your input before proceeding.",
+            "success": "Kubernetes service created successfully.",
+            "error": "An error occurred while creating the Kubernetes service."
         }
     },
     "system_status": {

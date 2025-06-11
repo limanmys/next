@@ -22,6 +22,35 @@
             "extension_count": "Anzahl der Erweiterungen"
         }
     },
+    "create_type": {
+        "title": "Ressourcentyp-Auswahl",
+        "description": "Wählen Sie den Ressourcentyp aus, den Sie zum Liman Center Management System hinzufügen möchten.",
+        "back": "Zurück gehen",
+        "server": {
+            "title": "Server",
+            "description": "Fügen Sie Ihre traditionellen physischen oder virtuellen Server hinzu",
+            "button": "Server hinzufügen",
+            "features": {
+                "ssh": "SSH- und WinRM-Unterstützung",
+                "winrm": "Windows- und Linux-Kompatibilität",
+                "traditional": "Traditionelle Serververwaltung"
+            }
+        },
+        "kubernetes": {
+            "title": "Kubernetes",
+            "description": "Fügen Sie Ihre Kubernetes-Bereitstellung als verwaltbaren Service zu Liman hinzu",
+            "button": "Kubernetes hinzufügen",
+            "features": {
+                "deployment": "Bereitstellungsverwaltung",
+                "scaling": "Pod-Überwachung und -Verwaltung",
+                "monitoring": "Kubernetes-Ressourcen-Anzeige"
+            }
+        }
+    },
+    "create_server": {
+        "title": "Server hinzufügen",
+        "description": "Sie können Ihre Windows- und Linux-Server, die Sie bereits installiert haben, zum Liman Center Management System hinzufügen."
+    },
     "create": {
         "title": "Server hinzufügen",
         "description": "Sie können Ihre Windows- und Linux-Server, die Sie bereits installiert haben, zum Liman Center Management System hinzufügen.",
@@ -103,6 +132,57 @@
             "validation": "Bitte überprüfen Sie Ihre Eingaben, bevor Sie fortfahren.",
             "success": "Der Server wurde erfolgreich erstellt.",
             "error": "Beim Erstellen des Servers ist ein Fehler aufgetreten."
+        }
+    },
+    "create_kubernetes": {
+        "title": "Kubernetes hinzufügen",
+        "description": "Fügen Sie Ihren Kubernetes-Cluster zu Liman hinzu und verwalten Sie ihn.",
+        "back": "Zurück",
+        "next": "Weiter",
+        "create": "Hinzufügen",
+        "steps": {
+            "connection_information": {
+                "name": "Verbindungsinformationen",
+                "description": "Überprüfen Sie die Kubernetes-Cluster-Verbindung."
+            },
+            "namespace_deployment": {
+                "name": "Namespace & Deployment",
+                "description": "Namespace und Deployment auswählen.",
+                "title": "Namespace- und Deployment-Auswahl",
+                "namespace": {
+                    "label": "Namespace",
+                    "placeholder": "Namespace auswählen",
+                    "information": "Wählen Sie den Namespace aus, in dem sich Ihr Kubernetes-Deployment befindet."
+                },
+                "deployment": {
+                    "label": "Deployment",
+                    "placeholder": "Deployment auswählen",
+                    "information": "Wählen Sie das Deployment aus, das Sie verwalten möchten."
+                }
+            },
+            "summary": {
+                "name": "Zusammenfassung",
+                "description": "Überprüfen und bestätigen Sie Ihre Kubernetes-Informationen."
+            }
+        },
+        "connection": {
+            "kubeconfig": {
+                "title": "Kubeconfig",
+                "label": "Kubeconfig",
+                "description": "Laden Sie die Kubeconfig-Datei hoch, um auf Ihren Kubernetes-Cluster zuzugreifen.",
+                "placeholder": "Kubeconfig-Inhalt hier einfügen...",
+                "file_upload": "Datei hochladen",
+                "manual_input": "Manuelle Eingabe",
+                "drag_drop_text": "Datei hier ablegen oder",
+                "click_to_select": "Klicken Sie, um eine Datei auszuwählen",
+                "supported_formats": "Unterstützte Formate: .yaml, .yml, .txt",
+                "switch_to_manual": "Zur manuellen Eingabe wechseln"
+            }
+        },
+        "errors": {
+            "validation": "Bitte überprüfen Sie Ihre Eingaben, bevor Sie fortfahren.",
+            "success": "Kubernetes-Service wurde erfolgreich erstellt.",
+            "error": "Beim Erstellen des Kubernetes-Services ist ein Fehler aufgetreten."
         }
     },
     "system_status": {
@@ -380,6 +460,14 @@
                         "title": "Fehler",
                         "description": "Beim Hinzufügen des autorisierten Benutzers ist ein Fehler aufgetreten."
                     }
+                },
+                "success": {
+                    "title": "Erfolg",
+                    "description": "Der autorisierte Benutzer wurde erfolgreich gelöscht."
+                },
+                "fail": {
+                    "title": "Fehler",
+                    "description": "Beim Löschen des autorisierten Benutzers ist ein Fehler aufgetreten."
                 }
             },
             "page_header": {

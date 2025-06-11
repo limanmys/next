@@ -22,6 +22,35 @@
             "extension_count": "Eklenti Sayısı"
         }
     },
+    "create_type": {
+        "title": "Kaynak Türü Seçimi",
+        "description": "Liman Merkezi Yönetim Sistemine eklemek istediğiniz kaynak türünü seçiniz.",
+        "back": "Geri Dön",
+        "server": {
+            "title": "Sunucu",
+            "description": "Geleneksel fiziksel veya sanal sunucularınızı ekleyin",
+            "button": "Sunucu Ekle",
+            "features": {
+                "ssh": "SSH ve WinRM desteği",
+                "winrm": "Windows ve Linux uyumluluğu",
+                "traditional": "Geleneksel sunucu yönetimi"
+            }
+        },
+        "kubernetes": {
+            "title": "Kubernetes",
+            "description": "Kubernetes servisinizi Liman'a yönetilebilir olarak ekleyin",
+            "button": "Kubernetes Servisi Ekle",
+            "features": {
+                "deployment": "Deployment yönetimi",
+                "scaling": "Pod izleme ve yönetim",
+                "monitoring": "Kubernetes kaynak görüntüleme"
+            }
+        }
+    },
+    "create_server": {
+        "title": "Sunucu Ekle",
+        "description": "Liman Merkezi Yönetim Sistemine halihazırda kurmuş olduğunuz Windows ve Linux sunucularınızı ekleyebilirsiniz."
+    },
     "create": {
         "title": "Sunucu Ekle",
         "description": "Liman Merkezi Yönetim Sistemine halihazırda kurmuş olduğunuz Windows ve Linux sunucularınızı ekleyebilirsiniz.",
@@ -103,6 +132,57 @@
             "validation": "Lütfen devam etmeden önce girdinizi kontrol edin.",
             "success": "Sunucu başarıyla oluşturuldu.",
             "error": "Sunucu oluşturulurken hata oluştu."
+        }
+    },
+    "create_kubernetes": {
+        "title": "Kubernetes Servisi Ekle",
+        "description": "Kubernetes servisinizi Liman'a ekleyin ve yönetin.",
+        "back": "Geri",
+        "next": "İleri",
+        "create": "Ekle",
+        "steps": {
+            "connection_information": {
+                "name": "Bağlantı Bilgileri",
+                "description": "Kubernetes kümesi bağlantısını kontrol edin."
+            },
+            "namespace_deployment": {
+                "name": "Namespace ve Deployment",
+                "description": "Eklenecek servisin namespace ve deployment bilgilerini girin.",
+                "title": "Namespace ve Deployment Seçimi",
+                "namespace": {
+                    "label": "Namespace",
+                    "placeholder": "Namespace seçin",
+                    "information": "Kubernetes servisinizin bulunduğu namespace'i seçin."
+                },
+                "deployment": {
+                    "label": "Deployment",
+                    "placeholder": "Deployment seçin",
+                    "information": "Yönetmek istediğiniz servisin bulunduğu deployment'i seçin."
+                }
+            },
+            "summary": {
+                "name": "Özet",
+                "description": "Girdiğiniz bilgileri kontrol edin ve onaylayın."
+            }
+        },
+        "connection": {
+            "kubeconfig": {
+                "title": "Kubeconfig",
+                "label": "Kubeconfig",
+                "description": "Kubernetes kümenize erişmek için kubeconfig dosyası yükleyin.",
+                "placeholder": "Kubeconfig içeriğini buraya yapıştırın...",
+                "file_upload": "Dosya Yükle",
+                "manual_input": "Manuel Giriş",
+                "drag_drop_text": "Dosyayı buraya sürükleyin veya",
+                "click_to_select": "dosya seçmek için tıklayın",
+                "supported_formats": "Desteklenen formatlar: .yaml, .yml, .txt",
+                "switch_to_manual": "Manuel girişe geç"
+            }
+        },
+        "errors": {
+            "validation": "Lütfen devam etmeden önce girdinizi kontrol edin.",
+            "success": "Kubernetes servisi başarıyla eklendi.",
+            "error": "Kubernetes servisi eklenirken hata oluştu."
         }
     },
     "system_status": {
