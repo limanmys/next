@@ -3,6 +3,7 @@ import {
   LucideIcon,
   LucideProps,
   Moon,
+  ShipWheelIcon,
   SunMedium,
   Twitter,
 } from "lucide-react"
@@ -14,6 +15,7 @@ export const Icons = {
   moon: Moon,
   twitter: Twitter,
   spinner: Loader2,
+  kubernetes: ShipWheelIcon,
   logo: (props: LucideProps) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"

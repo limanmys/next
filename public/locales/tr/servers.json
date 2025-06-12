@@ -149,6 +149,11 @@
                 "name": "Namespace ve Deployment",
                 "description": "Eklenecek servisin namespace ve deployment bilgilerini girin.",
                 "title": "Namespace ve Deployment Seçimi",
+                "service_name": {
+                    "label": "Servis Adı",
+                    "placeholder": "Liman'da görünecek servis adını girin",
+                    "information": "Servisin Liman'da görünecek özel ismi"
+                },
                 "namespace": {
                     "label": "Namespace",
                     "placeholder": "Namespace seçin",
@@ -495,5 +500,49 @@
                 }
             }
         }
+    },
+    "kubernetes": {
+        "deployment_specs": "Deployment Özellikleri",
+        "deployment_details": "Deployment Detayları",
+        "replicas": "Replikalar",
+        "ready_replicas": "Hazır Replikalar",
+        "containers": "Konteynerler",
+        "container_count": "Konteyner Sayısı",
+        "pods": "Podlar",
+        "pods_count": "Pod",
+        "running_pods": "Çalışan Podlar",
+        "status": "Durum",
+        "deployment_status": "Deployment Durumu",
+        "healthy": "Sağlıklı",
+        "degraded": "Sorunlu",
+        "basic_info": "Temel Bilgiler",
+        "name": "İsim",
+        "namespace": "Namespace",
+        "uid": "UID",
+        "created": "Oluşturulma",
+        "strategy": "Strateji",
+        "strategy_type": "Strateji Türü",
+        "desired_replicas": "İstenilen Replikalar",
+        "observed_generation": "Gözlemlenen Nesil",
+        "unavailable_replicas": "Kullanılamayan Replikalar",
+        "labels": "Etiketler",
+        "no_labels": "Etiket bulunamadı",
+        "annotations": "Açıklamalar",
+        "no_annotations": "Açıklama bulunamadı",
+        "no_pods": "Pod bulunamadı",
+        "ready": "Hazır",
+        "not_ready": "Hazır Değil",
+        "container_configuration": "Konteyner Yapılandırması",
+        "ports": "Portlar",
+        "environment_variables": "Ortam Değişkenleri",
+        "command_args": "Komut ve Argümanlar",
+        "no_containers": "Konteyner bulunamadı",
+        "replica_sets": "Replica Setler",
+        "replica_sets_count": "Replica Set",
+        "scaling": "Ölçekleniyor",
+        "owner_references": "Sahip Referansları",
+        "controller": "Kontrolör",
+        "no_replica_sets": "Replica Set bulunamadı",
+        "additional_information": "Ek Bilgiler"
     }
 }

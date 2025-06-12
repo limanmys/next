@@ -41,6 +41,7 @@
         "user_message": "Bitten Sie Ihren Systemadministrator, Ihnen eine Rolle zuzuweisen, um Liman zu verwenden.",
         "extensions": "Erweiterungen",
         "system_status": "Systemstatus",
+        "container_status": "Containerstatus",
         "services": "Dienste",
         "packages": "Pakete",
         "updates": "Updates",

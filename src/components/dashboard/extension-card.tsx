@@ -2,8 +2,8 @@ import { ToyBrick } from "lucide-react"
 
 import { IMostUsedExtension } from "@/types/dashboard"
 
+import TypeIcon from "../type-icon"
 import { Card, CardContent } from "../ui/card"
-import { Icons } from "../ui/icons"
 
 export default function ExtensionCard({ item }: { item: IMostUsedExtension }) {
   return (
@@ -22,11 +22,7 @@ export default function ExtensionCard({ item }: { item: IMostUsedExtension }) {
         </div>
         <h5 className="mt-4 font-medium">{item.extension.display_name}</h5>
         <span className="mt-2 flex items-center gap-1 text-xs text-muted-foreground">
-          {item.server.os === "linux" ? (
-            <Icons.linux className="size-4 text-secondary-foreground/70 dark:text-white/70" />
-          ) : (
-            <Icons.windows className="size-4 text-secondary-foreground/70 dark:text-white/70" />
-          )}{" "}
+          <TypeIcon type={item.server.os} className="size-4 text-secondary-foreground/70 dark:text-white/70" />{" "}
           {item.server.name}
         </span>
       </CardContent>

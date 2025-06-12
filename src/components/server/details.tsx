@@ -1,11 +1,11 @@
-import Head from "next/head"
 import { Clock, Network, User } from "lucide-react"
+import Head from "next/head"
 import { useTranslation } from "react-i18next"
 
-import { IServer, IServerDetails } from "@/types/server"
 import { Skeleton } from "@/components/ui/skeleton"
+import { IServer, IServerDetails } from "@/types/server"
 
-import { Icons } from "../ui/icons"
+import TypeIcon from "../type-icon"
 
 interface IDetails {
   server: IServer
@@ -71,11 +71,7 @@ export default function ServerDetails({
             <Skeleton className="h-[20px] w-full" />
           ) : (
             <div className="flex items-center">
-              {data.server.os === "linux" ? (
-                <Icons.linux className="mr-2 size-4" />
-              ) : (
-                <Icons.windows className="mr-2 size-4" />
-              )}
+              <TypeIcon type={data.server.os} className="mr-2 size-4" />
               <span className="text-sm">{data.details.os}</span>
             </div>
           )}

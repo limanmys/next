@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
 import { ServerRowActions } from "@/components/settings/server-actions"
+import TypeIcon from "@/components/type-icon"
 import { Button } from "@/components/ui/button"
 import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
@@ -31,15 +32,30 @@ export default function Servers() {
       title: t("index.table.name"),
       enableSorting: true,
       enableHiding: true,
-      cell: ({ row }) =>
-        user.permissions.server_details && row.original.type != "none" ? (
-          <Link href={`/servers/${row.original.id}`}>
+      cell: ({ row }) => {
+        const linkUrl = row.original.os === "kubernetes"
+          ? `/servers/${row.original.id}/container`
+          : `/servers/${row.original.id}`
+
+        const nameContent = user.permissions.server_details && (row.original.type != "none" || row.original.os === "kubernetes") ? (
+          <Link href={linkUrl}>
             {row.original.name}
             <Link2 className="ml-2 inline-block size-4" />
           </Link>
         ) : (
           row.original.name
-        ),
+        )
+
+        return (
+          <>
+            <TypeIcon
+              type={row.original.os}
+              className="inline-block mr-2 size-4"
+            />
+            {nameContent}
+          </>
+        )
+      },
     },
     {
       accessorKey: "ip_address",

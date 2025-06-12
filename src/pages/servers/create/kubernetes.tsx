@@ -125,16 +125,6 @@ export default function KubernetesCreatePage() {
                     return
                 }
 
-                if (
-                    formRef.getValues().key_type &&
-                    formRef.getValues().key_type === "no_key"
-                ) {
-                    setStep(step + 3)
-                    setLoading(false)
-
-                    return
-                }
-
                 setStep(step + 1)
             } else {
                 toast({
@@ -150,7 +140,13 @@ export default function KubernetesCreatePage() {
     const createServer = () => {
         setLoading(true)
         http
-            .post("/servers", data)
+            .post("/servers", {
+                ...data,
+                os_type: "kubernetes",
+                key_type: "no_key",
+                ip_address: data.address,
+                control_port: data.port,
+            })
             .then(() => {
                 sidebarCtx.refreshServers()
                 toast({

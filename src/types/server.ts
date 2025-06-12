@@ -22,12 +22,12 @@ export interface IServer {
 
 export interface IMenu {
   name:
-    | string
-    | {
-        tr: string
-        en: string
-        de: string
-      }
+  | string
+  | {
+    tr: string
+    en: string
+    de: string
+  }
   url: string
   icon: string | undefined
   children?: IMenu[]
@@ -74,4 +74,111 @@ export interface IServerSpecs {
   ram: string
   model: string
   manufacturer: string
+}
+
+// Kubernetes deployment details types
+export interface IKubernetesDeploymentDetails {
+  metadata: IKubernetesMetadata
+  spec: IKubernetesSpec
+  status: IKubernetesStatus
+  pods: IKubernetesPod[]
+  replicaSets: IKubernetesReplicaSet[]
+}
+
+export interface IKubernetesMetadata {
+  annotations: { [key: string]: string }
+  creationTimestamp: string
+  labels: { [key: string]: string }
+  name: string
+  namespace: string
+  uid: string
+}
+
+export interface IKubernetesSpec {
+  replicas: number
+  selector: {
+    matchLabels: { [key: string]: string }
+  }
+  strategy: {
+    type: string
+  }
+  template: {
+    metadata: {
+      creationTimestamp: string | null
+      labels: { [key: string]: string }
+    }
+    spec: {
+      containers: IKubernetesContainer[]
+    }
+  }
+}
+
+export interface IKubernetesContainer {
+  name: string
+  image: string
+  ports: IKubernetesPort[]
+  env: IKubernetesEnvVar[]
+  command: string[] | null
+  args: string[] | null
+}
+
+export interface IKubernetesPort {
+  containerPort: number
+  protocol: string
+  name: string
+}
+
+export interface IKubernetesEnvVar {
+  name: string
+  value: string
+}
+
+export interface IKubernetesStatus {
+  availableReplicas: number
+  conditions: IKubernetesCondition[]
+  observedGeneration: number
+  readyReplicas: number
+  replicas: number
+  unavailableReplicas: number
+}
+
+export interface IKubernetesCondition {
+  type: string
+  status: string
+  lastUpdateTime: string
+  lastTransitionTime: string
+  reason: string
+  message: string
+}
+
+export interface IKubernetesPod {
+  name: string
+  status: string
+  creationTime: string
+  node: string
+  containerStatuses: IKubernetesContainerStatus[]
+}
+
+export interface IKubernetesContainerStatus {
+  name: string
+  ready: boolean
+  started: boolean
+  image: string
+}
+
+export interface IKubernetesReplicaSet {
+  name: string
+  replicas: number
+  readyReplicas: number
+  creationTime: string
+  ownerReference: IKubernetesOwnerReference[]
+}
+
+export interface IKubernetesOwnerReference {
+  apiVersion: string
+  kind: string
+  name: string
+  uid: string
+  controller: boolean
+  blockOwnerDeletion: boolean
 }

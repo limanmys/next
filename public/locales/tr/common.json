@@ -41,6 +41,7 @@
         "user_message": "Liman'ı aktif şekilde kullanmaya başlamak için sistem yöneticinizden size rol tanımlamasını talep ediniz.",
         "extensions": "Eklentiler",
         "system_status": "Sistem Durumu",
+        "container_status": "Konteyner Durumu",
         "services": "Servisler",
         "packages": "Paketler",
         "updates": "Güncellemeler",

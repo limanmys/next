@@ -149,6 +149,11 @@
                 "name": "Namespace & Deployment",
                 "description": "Namespace und Deployment auswählen.",
                 "title": "Namespace- und Deployment-Auswahl",
+                "service_name": {
+                    "label": "Service-Name",
+                    "placeholder": "Geben Sie den Service-Namen ein, der in Liman angezeigt wird",
+                    "information": "Benutzerdefinierter Name für den Service, der in Liman angezeigt wird"
+                },
                 "namespace": {
                     "label": "Namespace",
                     "placeholder": "Namespace auswählen",
@@ -495,5 +500,49 @@
                 }
             }
         }
+    },
+    "kubernetes": {
+        "deployment_specs": "Deployment-Spezifikationen",
+        "deployment_details": "Deployment-Details",
+        "replicas": "Replikas",
+        "ready_replicas": "Bereite Replikas",
+        "containers": "Container",
+        "container_count": "Container-Anzahl",
+        "pods": "Pods",
+        "pods_count": "Pods",
+        "running_pods": "Laufende Pods",
+        "status": "Status",
+        "deployment_status": "Deployment-Status",
+        "healthy": "Gesund",
+        "degraded": "Beeinträchtigt",
+        "basic_info": "Grundinformationen",
+        "name": "Name",
+        "namespace": "Namespace",
+        "uid": "UID",
+        "created": "Erstellt",
+        "strategy": "Strategie",
+        "strategy_type": "Strategie-Typ",
+        "desired_replicas": "Gewünschte Replikas",
+        "observed_generation": "Beobachtete Generation",
+        "unavailable_replicas": "Nicht verfügbare Replikas",
+        "labels": "Labels",
+        "no_labels": "Keine Labels gefunden",
+        "annotations": "Anmerkungen",
+        "no_annotations": "Keine Anmerkungen gefunden",
+        "no_pods": "Keine Pods gefunden",
+        "ready": "Bereit",
+        "not_ready": "Nicht bereit",
+        "container_configuration": "Container-Konfiguration",
+        "ports": "Ports",
+        "environment_variables": "Umgebungsvariablen",
+        "command_args": "Befehl & Argumente",
+        "no_containers": "Keine Container gefunden",
+        "replica_sets": "Replica Sets",
+        "replica_sets_count": "Replica Sets",
+        "scaling": "Skalierung",
+        "owner_references": "Besitzer-Referenzen",
+        "controller": "Controller",
+        "no_replica_sets": "Keine Replica Sets gefunden",
+        "additional_information": "Zusätzliche Informationen"
     }
 }

@@ -4,6 +4,7 @@ import axios, { CancelTokenSource } from "axios"
 import {
   ChevronRight,
   CircleDot,
+  ContainerIcon,
   FileClock,
   Network,
   PackageOpen,
@@ -23,13 +24,13 @@ import { cn } from "@/lib/utils"
 import { IExtension } from "@/types/extension"
 import { IServer } from "@/types/server"
 
+import TypeIcon from "../type-icon"
 import { Button } from "../ui/button"
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "../ui/collapsible"
-import { Icons } from "../ui/icons"
 import { Skeleton } from "../ui/skeleton"
 import {
   Tooltip,
@@ -169,11 +170,7 @@ export default function SidebarSelected() {
       ) : (
         <>
           <div className="relative mb-3 flex px-2">
-            {selectedData.os === "linux" ? (
-              <Icons.linux className="size-8" />
-            ) : (
-              <Icons.windows className="size-8" />
-            )}
+            <TypeIcon type={selectedData.os} className="size-8" />
             <div className="pl-3">
               <h2 className="-my-1 text-lg font-semibold tracking-tight">
                 {selectedData.name}
@@ -208,14 +205,24 @@ export default function SidebarSelected() {
           <div>
             {user.permissions.server_details && (
               <>
-                <ServerItem
+                {selectedData.os === "kubernetes" ? (
+                  <ServerItem
+                    link={`/servers/${selected}/container`}
+                    exact={true}
+                    disabled={!selectedData.is_online}
+                  >
+                    <ContainerIcon className="mr-2 size-4" />
+                    {t("sidebar.container_status")}
+                  </ServerItem>
+                ) : <ServerItem
                   link={`/servers/${selected}`}
                   exact={true}
                   disabled={elementIsActive()}
                 >
                   <TrendingUp className="mr-2 size-4" />
                   {t("sidebar.system_status")}
-                </ServerItem>
+                </ServerItem>}
+
                 <ServerItem
                   link={`/servers/${selected}/extensions`}
                   exact={true}
@@ -224,12 +231,21 @@ export default function SidebarSelected() {
                   <ToyBrick className="mr-2 size-4" />
                   {t("sidebar.extensions")}
                 </ServerItem>
+                {user.permissions.view_logs && selectedData.os === "kubernetes" && (
+                  <ServerItem
+                    link={`/servers/${selected}/access_logs`}
+                    disabled={!selectedData.is_online}
+                  >
+                    <FileClock className="mr-2 size-4" />
+                    {t("sidebar.access_logs")}
+                  </ServerItem>
+                )}
               </>
             )}
 
             {(user.permissions.server_services ||
               user.permissions.server_details ||
-              user.permissions.view_logs) && (
+              user.permissions.view_logs) && selectedData.os !== "kubernetes" && (
                 <Collapsible open={!isCollapsed}>
                   <CollapsibleTrigger
                     className="mt-3 w-full px-2 text-left"

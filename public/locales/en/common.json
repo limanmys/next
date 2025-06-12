@@ -41,6 +41,7 @@
         "user_message": "Ask your system administrator to assign you a role to start using Liman.",
         "extensions": "Extensions",
         "system_status": "System Status",
+        "container_status": "Container Status",
         "services": "Services",
         "packages": "Packages",
         "updates": "Updates",

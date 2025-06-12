@@ -26,6 +26,7 @@ import {
     FormField,
     FormMessage
 } from "@/components/form/form"
+import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
     Select,
@@ -36,14 +37,6 @@ import {
 } from "@/components/ui/select"
 import { http } from "@/services"
 
-const formSchema = z.object({
-    namespace: z.string().min(1, "Namespace seçimi zorunludur"),
-    deployment: z.string().min(1, "Deployment seçimi zorunludur"),
-    endpoint: z.string().min(1, "Endpoint seçimi zorunludur"),
-    address: z.string().optional(),
-    port: z.number().optional(),
-})
-
 export default function NamespaceDeploymentSelection({
     formRef,
     data,
@@ -52,6 +45,16 @@ export default function NamespaceDeploymentSelection({
     data: any
 }) {
     const { t } = useTranslation("servers")
+
+    const formSchema = z.object({
+        name: z.string().min(1, t("create_kubernetes.steps.namespace_deployment.service_name.label") + " zorunludur"),
+        namespace: z.string().min(1, "Namespace seçimi zorunludur"),
+        deployment: z.string().min(1, "Deployment seçimi zorunludur"),
+        endpoint: z.string().min(1, "Endpoint seçimi zorunludur"),
+        address: z.string().optional(),
+        port: z.number().optional(),
+    })
+
     const [namespaces, setNamespaces] = useState<any[]>([])
     const [deployments, setDeployments] = useState<any[]>([])
     const [endpoints, setEndpoints] = useState<Endpoint[]>([])
@@ -63,6 +66,7 @@ export default function NamespaceDeploymentSelection({
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
+            name: data.name || "",
             namespace: data.namespace || "",
             deployment: data.deployment || "",
             endpoint: data.endpoint || "",
@@ -220,6 +224,32 @@ export default function NamespaceDeploymentSelection({
                     <form>
                         <FormField
                             control={form.control}
+                            name="name"
+                            render={({ field }) => (
+                                <div className="mt-6 space-y-6 sm:mt-5 sm:space-y-5">
+                                    <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-foreground/10 sm:pt-5">
+                                        <Label htmlFor="name" className="sm:mt-px sm:pt-2">
+                                            {t("create_kubernetes.steps.namespace_deployment.service_name.label")}
+                                        </Label>
+                                        <div className="mt-1 sm:col-span-2 sm:mt-0">
+                                            <FormControl>
+                                                <Input
+                                                    {...field}
+                                                    placeholder={t("create_kubernetes.steps.namespace_deployment.service_name.placeholder")}
+                                                />
+                                            </FormControl>
+                                            <p className="mt-2 text-sm text-foreground/60">
+                                                {t("create_kubernetes.steps.namespace_deployment.service_name.information")}
+                                            </p>
+                                            <FormMessage />
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
                             name="namespace"
                             render={({ field }) => (
                                 <div className="mt-6 space-y-6 sm:mt-5 sm:space-y-5">
@@ -314,7 +344,7 @@ export default function NamespaceDeploymentSelection({
                                                             <div className="mt-2 text-sm text-red-700">
                                                                 <p>
                                                                     Bu deployment için erişilebilir bir servis portu bulunamadı.
-                                                                    Bu servis Liman'a eklenemez. Lütfen başka bir deployment seçin.
+                                                                    Bu servis Liman&apos;a eklenemez. Lütfen başka bir deployment seçin.
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -364,8 +394,8 @@ export default function NamespaceDeploymentSelection({
                                                                     {endpoint.hostname || endpoint.address}:{endpoint.port} ({endpoint.protocol})
                                                                 </span>
                                                                 <span className={`ml-2 text-xs ${endpoint.accessible
-                                                                        ? 'text-green-600'
-                                                                        : 'text-red-600'
+                                                                    ? 'text-green-600'
+                                                                    : 'text-red-600'
                                                                     }`}>
                                                                     {endpoint.accessible ? '✓' : '✗'}
                                                                 </span>

@@ -5,8 +5,8 @@ import { useEffect, useState } from "react"
 import { cn } from "@/lib/utils"
 import { IServer } from "@/types/server"
 
+import TypeIcon from "../type-icon"
 import { Card, CardContent } from "../ui/card"
-import { Icons } from "../ui/icons"
 import { Skeleton } from "../ui/skeleton"
 
 export default function ServerCard({ item }: { item: IServer }) {
@@ -31,11 +31,7 @@ export default function ServerCard({ item }: { item: IServer }) {
       <CardContent className="mt-6">
         <div className="flex">
           <div className="icon self-start rounded-md bg-secondary p-3 dark:bg-secondary/10">
-            {item.os === "linux" ? (
-              <Icons.linux className="size-6 text-secondary-foreground/70 dark:text-white/70" />
-            ) : (
-              <Icons.windows className="size-6 text-secondary-foreground/70 dark:text-white/70" />
-            )}
+            <TypeIcon type={item.os} className="size-6 text-secondary-foreground/70 dark:text-white/70" />
           </div>
         </div>
         <h5 className="mt-4 font-medium">{item.name}</h5>

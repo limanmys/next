@@ -21,6 +21,7 @@ import { cn } from "@/lib/utils"
 import { IServer } from "@/types/server"
 
 import { opacityAnimation } from "@/lib/anim"
+import TypeIcon from "../type-icon"
 import { Icons } from "../ui/icons"
 import { Skeleton } from "../ui/skeleton"
 import ExtensionItem from "./extension-item"
@@ -186,11 +187,7 @@ export function Sidebar({ className }: { className?: string }) {
                               onClick={() => setSelected(server.id)}
                               key={server.id}
                             >
-                              {server.os === "linux" ? (
-                                <Icons.linux className="mr-2 size-4" />
-                              ) : (
-                                <Icons.windows className="mr-2 size-4" />
-                              )}
+                              <TypeIcon type={server.os} className="mr-2 size-4" />
                               {server.name}
                               <div className="ml-auto flex">
                                 {server.is_favorite && (

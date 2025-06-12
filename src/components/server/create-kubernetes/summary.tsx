@@ -17,6 +17,16 @@ export default function Summary({ data }: { data: any }) {
       </div>
 
       <div className="grid gap-6">
+        {/* Service Name */}
+        <div className="grid grid-cols-1 items-start gap-2 sm:grid-cols-3">
+          <Label className="text-sm font-medium text-foreground/80">
+            {t("create_kubernetes.steps.namespace_deployment.service_name.label")}
+          </Label>
+          <div className="sm:col-span-2 sm:text-base text-foreground">
+            {data?.name || '-'}
+          </div>
+        </div>
+
         {/* Namespace */}
         <div className="grid grid-cols-1 items-start gap-2 sm:grid-cols-3">
           <Label className="text-sm font-medium text-foreground/80">

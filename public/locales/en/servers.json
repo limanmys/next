@@ -149,6 +149,11 @@
                 "name": "Namespace & Deployment",
                 "description": "Select namespace and deployment for desired service.",
                 "title": "Namespace and Deployment Selection",
+                "service_name": {
+                    "label": "Service Name",
+                    "placeholder": "Enter the service name to display in Liman",
+                    "information": "Custom name for the service to be displayed in Liman"
+                },
                 "namespace": {
                     "label": "Namespace",
                     "placeholder": "Select namespace",
@@ -487,5 +492,49 @@
                 }
             }
         }
+    },
+    "kubernetes": {
+        "deployment_specs": "Deployment Specs",
+        "deployment_details": "Deployment Details",
+        "replicas": "Replicas",
+        "ready_replicas": "Ready Replicas",
+        "containers": "Containers",
+        "container_count": "Container Count",
+        "pods": "Pods",
+        "pods_count": "Pods",
+        "running_pods": "Running Pods",
+        "status": "Status",
+        "deployment_status": "Deployment Status",
+        "healthy": "Healthy",
+        "degraded": "Degraded",
+        "basic_info": "Basic Information",
+        "name": "Name",
+        "namespace": "Namespace",
+        "uid": "UID",
+        "created": "Created",
+        "strategy": "Strategy",
+        "strategy_type": "Strategy Type",
+        "desired_replicas": "Desired Replicas",
+        "observed_generation": "Observed Generation",
+        "unavailable_replicas": "Unavailable Replicas",
+        "labels": "Labels",
+        "no_labels": "No labels found",
+        "annotations": "Annotations",
+        "no_annotations": "No annotations found",
+        "no_pods": "No pods found",
+        "ready": "Ready",
+        "not_ready": "Not Ready",
+        "container_configuration": "Container Configuration",
+        "ports": "Ports",
+        "environment_variables": "Environment Variables",
+        "command_args": "Command & Arguments",
+        "no_containers": "No containers found",
+        "replica_sets": "Replica Sets",
+        "replica_sets_count": "Replica Sets",
+        "scaling": "Scaling",
+        "owner_references": "Owner References",
+        "controller": "Controller",
+        "no_replica_sets": "No replica sets found",
+        "additional_information": "Additional Information"
     }
 }

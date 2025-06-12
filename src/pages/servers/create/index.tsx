@@ -1,9 +1,10 @@
-import { Container, Server } from "lucide-react"
+import { Server } from "lucide-react"
 import Link from "next/link"
 import { useTranslation } from "react-i18next"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Icons } from "@/components/ui/icons"
 import PageHeader from "@/components/ui/page-header"
 
 export default function CreateTypePage() {
@@ -65,7 +66,7 @@ export default function CreateTypePage() {
                         <Link href="/servers/create/kubernetes">
                             <CardHeader className="text-center pb-4">
                                 <div className="mx-auto w-16 h-16 bg-blue-500/10 rounded-full flex items-center justify-center mb-4">
-                                    <Container className="w-8 h-8 text-primary" />
+                                    <Icons.kubernetes className="w-8 h-8 text-primary" />
                                 </div>
                                 <CardTitle className="text-xl">{t("create_type.kubernetes.title")}</CardTitle>
                                 <CardDescription className="text-sm text-muted-foreground">
