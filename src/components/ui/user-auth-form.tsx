@@ -67,7 +67,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   }, [])
 
   const formSchema = z.object({
-    type: z.enum(["liman", "ldap", "keycloak"]),
+    type: z.enum(["liman", "ldap", "keycloak", "oidc"]),
     name: z.string({
       required_error: "Kullanıcı adı alanı boş olamaz.",
     }),
@@ -234,6 +234,33 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     }
   }
 
+  const onOidcLogin = async () => {
+    setIsLoading(true)
+    setError("")
+
+    try {
+      const response = await http.post("/auth/login", { type: "oidc" })
+      
+      if (response.data.redirect_required && response.data.redirect_url) {
+        window.location.href = response.data.redirect_url
+      }
+    } catch (e: any) {
+      if (!e.response) {
+        setError(e.message)
+        setIsLoading(false)
+        return
+      }
+
+      if (e.response.data.message) {
+        setError(e.response.data.message)
+      } else {
+        setError(e.message)
+      }
+
+      setIsLoading(false)
+    }
+  }
+
   const onForceChange = async (data: z.infer<typeof forceChangeSchema>) => {
     setIsLoading(true)
     const { name, password, newPassword } = data
@@ -335,6 +362,9 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                         {authTypes.includes("keycloak") && (
                           <SelectItem value="keycloak">Keycloak</SelectItem>
                         )}
+                        {authTypes.includes("oidc") && (
+                          <SelectItem value="oidc">OpenID Connect</SelectItem>
+                        )}
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -342,57 +372,75 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 )}
               />
 
-              <FormField
-                control={loginForm.control}
-                name="name"
-                render={({ field }) => (
-                  <div className="flex flex-col gap-3">
-                    <Label htmlFor="name">Kullanıcı Adı</Label>
-                    <Input
-                      id="name"
-                      placeholder="example@liman.dev"
-                      autoComplete="new-password"
-                      {...field}
-                    />
-                    <FormMessage />
-                  </div>
-                )}
-              />
+              {loginForm.watch("type") === "oidc" ? (
+                <Button
+                  disabled={isLoading}
+                  className="mt-4"
+                  type="button"
+                  onClick={onOidcLogin}
+                >
+                  {isLoading ? (
+                    <Icons.spinner className="mr-2 size-4 animate-spin" />
+                  ) : (
+                    <LogIn className="mr-2 size-4" />
+                  )}
+                  OpenID Connect ile Giriş Yap
+                </Button>
+              ) : (
+                <>
+                  <FormField
+                    control={loginForm.control}
+                    name="name"
+                    render={({ field }) => (
+                      <div className="flex flex-col gap-3">
+                        <Label htmlFor="name">Kullanıcı Adı</Label>
+                        <Input
+                          id="name"
+                          placeholder="example@liman.dev"
+                          autoComplete="new-password"
+                          {...field}
+                        />
+                        <FormMessage />
+                      </div>
+                    )}
+                  />
 
-              <FormField
-                control={loginForm.control}
-                name="password"
-                render={({ field }) => (
-                  <div className="flex flex-col gap-3">
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="password">Parola</Label>
+                  <FormField
+                    control={loginForm.control}
+                    name="password"
+                    render={({ field }) => (
+                      <div className="flex flex-col gap-3">
+                        <div className="flex items-center justify-between">
+                          <Label htmlFor="password">Parola</Label>
 
-                      <small className="italic text-muted-foreground">
-                        <Link href="/auth/forgot_password" tabIndex={-1}>
-                          Şifrenizi mi unuttunuz?
-                        </Link>
-                      </small>
-                    </div>
-                    <Input
-                      id="password"
-                      placeholder="••••••••••"
-                      type="password"
-                      autoComplete="new-password"
-                      {...field}
-                    />
-                    <FormMessage />
-                  </div>
-                )}
-              />
+                          <small className="italic text-muted-foreground">
+                            <Link href="/auth/forgot_password" tabIndex={-1}>
+                              Şifrenizi mi unuttunuz?
+                            </Link>
+                          </small>
+                        </div>
+                        <Input
+                          id="password"
+                          placeholder="••••••••••"
+                          type="password"
+                          autoComplete="new-password"
+                          {...field}
+                        />
+                        <FormMessage />
+                      </div>
+                    )}
+                  />
 
-              <Button disabled={isLoading} className="mt-4" type="submit">
-                {isLoading ? (
-                  <Icons.spinner className="mr-2 size-4 animate-spin" />
-                ) : (
-                  <LogIn className="mr-2 size-4" />
-                )}
-                Giriş Yap
-              </Button>
+                  <Button disabled={isLoading} className="mt-4" type="submit">
+                    {isLoading ? (
+                      <Icons.spinner className="mr-2 size-4 animate-spin" />
+                    ) : (
+                      <LogIn className="mr-2 size-4" />
+                    )}
+                    Giriş Yap
+                  </Button>
+                </>
+              )}
             </form>
           </Form>
         )}

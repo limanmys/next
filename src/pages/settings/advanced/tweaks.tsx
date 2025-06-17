@@ -53,7 +53,7 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
     NEW_LOG_LEVEL: z.string(),
     LDAP_IGNORE_CERT: z.boolean(),
     LOGIN_IMAGE: z.string().optional(),
-    DEFAULT_AUTH_GATE: z.enum(["ldap", "liman", "keycloak"]),
+    DEFAULT_AUTH_GATE: z.enum(["ldap", "liman", "keycloak", "oidc"]),
     JWT_TTL: z.coerce.number().min(15).max(999999),
   })
 
@@ -309,6 +309,7 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
                         </SelectItem>
                         <SelectItem value="ldap">LDAP</SelectItem>
                         <SelectItem value="keycloak">Keycloak</SelectItem>
+                        <SelectItem value="oidc">OpenID Connect</SelectItem>
                       </SelectContent>
                     </Select>
                     <small className="italic text-muted-foreground">

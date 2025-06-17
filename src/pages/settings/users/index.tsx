@@ -32,6 +32,8 @@ const getType = (type: string) => {
       return "Keycloak"
     case "ldap":
       return "LDAP"
+    case "oidc":
+      return "OIDC"
     default:
       return "Liman"
   }
@@ -139,6 +141,10 @@ export default function UserSettingsPage() {
             {
               key: "Keycloak",
               value: "keycloak",
+            },
+            {
+              key: "OIDC",
+              value: "oidc",
             },
             {
               key: "LDAP",
