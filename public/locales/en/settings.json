@@ -803,7 +803,8 @@
                 "issuer_dc": "Authority",
                 "subject_key_identifier": "Client Fingerprint",
                 "authority_key_identifier": "Authority Fingerprint",
-                "save": "Save"
+                "save": "Save",
+                "empty_state": "Enter connection details and fetch certificate information"
             },
             "details": {
                 "title": "Certificate Details",

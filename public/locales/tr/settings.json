@@ -803,7 +803,8 @@
                 "issuer_dc": "Otorite",
                 "subject_key_identifier": "İstemci Parmak İzi",
                 "authority_key_identifier": "Otorite Parmak İzi",
-                "save": "Kaydet"
+                "save": "Kaydet",
+                "empty_state": "Bağlantı detaylarını girin ve sertifika bilgilerini getirin"
             },
             "details": {
                 "title": "Sertifika Detayları",

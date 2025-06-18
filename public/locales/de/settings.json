@@ -802,7 +802,8 @@
                 "issuer_dc": "Autorität",
                 "subject_key_identifier": "Client-Fingerabdruck",
                 "authority_key_identifier": "Fingerabdruck der Behörde",
-                "save": "Retten"
+                "save": "Retten",
+                "empty_state": "Geben Sie Verbindungsdetails ein und rufen Sie Zertifikatsinformationen ab"
             },
             "details": {
                 "title": "Details zum Zertifikat",
