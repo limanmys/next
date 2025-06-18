@@ -42,6 +42,14 @@ export default function AccessLayout({ children }: { children: ReactNode }) {
       href: `/settings/access/keycloak`,
       enabled: true,
     },
+    {
+      id: "oidc",
+      icon: BookKey,
+      title: t("access.oidc.page_header.title"),
+      description: t("access.oidc.page_header.description"),
+      href: `/settings/access/oidc`,
+      enabled: true,
+    },
   ]
 
   useEffect(() => {
@@ -56,12 +64,12 @@ export default function AccessLayout({ children }: { children: ReactNode }) {
 
   return (
     <div
-      className="grid grid-cols-5"
+      className="grid grid-cols-7"
       style={{
         height: "var(--container-height)",
       }}
     >
-      <div className="col-span-1 border-r">
+      <div className="col-span-2 border-r">
         <div className="flex items-center border-b p-8 text-2xl font-bold">
           {t("access.title")}
         </div>
@@ -76,7 +84,7 @@ export default function AccessLayout({ children }: { children: ReactNode }) {
           />
         ))}
       </div>
-      <div className="col-span-4">{children}</div>
+      <div className="col-span-5">{children}</div>
     </div>
   )
 }

@@ -67,6 +67,11 @@
             "external_notifications": "Dış Bildirimler",
             "subscriptions": "Abonelikler",
             "access": "Erişim",
+            "audit": "Erişim Kayıtları",
+            "ldap": "LDAP Bağlantısı",
+            "permissions_ldap": "LDAP Erişim İzinleri",
+            "keycloak": "Keycloak",
+            "oidc": "OpenID Connect",
             "health": "Sağlık Durumu",
             "advanced": "Gelişmiş Ayarlar"
         }

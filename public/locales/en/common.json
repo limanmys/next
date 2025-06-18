@@ -67,6 +67,11 @@
             "external_notifications": "External Notifications",
             "subscriptions": "Subscriptions",
             "access": "Access",
+            "audit": "Access Logs",
+            "ldap": "LDAP Connection",
+            "permissions_ldap": "LDAP Access Permissions",
+            "keycloak": "Keycloak",
+            "oidc": "OpenID Connect",
             "health": "Health Status",
             "advanced": "Advanced Settings"
         }

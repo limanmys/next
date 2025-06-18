@@ -1,10 +1,9 @@
 import { NextPageWithLayout } from "@/pages/_app"
 import { http } from "@/services"
 import { ScrollText } from "lucide-react"
-import { ReactElement, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import AccessLayout from "@/components/_layout/access_layout"
 import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
 import {
@@ -218,10 +217,6 @@ function AuditLogDetails({ id }: { id: string }) {
       </DialogContent>
     </Dialog>
   )
-}
-
-AccessAuditLogsPage.getLayout = function getLayout(page: ReactElement<any>) {
-  return <AccessLayout>{page}</AccessLayout>
 }
 
 export default AccessAuditLogsPage

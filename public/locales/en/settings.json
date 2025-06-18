@@ -651,6 +651,51 @@
                 "save": "Save"
             }
         },
+        "oidc": {
+            "formScema": {
+                "issuer_url": "OIDC Issuer URL field cannot be empty.",
+                "client_id": "Client ID field cannot be empty.",
+                "client_secret": "Client Secret field cannot be empty.",
+                "redirect_uri": "Redirect URI field cannot be empty.",
+                "auth_endpoint": "Authorization Endpoint field cannot be empty.",
+                "userinfo_endpoint": "Userinfo Endpoint field cannot be empty.",
+                "token_endpoint": "Token Endpoint field cannot be empty."
+            },
+            "toast": {
+                "success": {
+                    "title": "Success",
+                    "description": "OIDC settings saved successfully."
+                },
+                "fail": {
+                    "title": "Error",
+                    "description": "An error occurred while saving OIDC settings."
+                }
+            },
+            "head_title": "OIDC | Liman",
+            "page_header": {
+                "title": "OIDC",
+                "description": "You can enable user login to Liman using any OIDC provider like Keycloak, Auth0, etc."
+            },
+            "form": {
+                "issuer_url": "Issuer URL",
+                "issuer_url_info": "The URL of your OIDC provider's issuer endpoint (e.g., https://your-oidc-provider.com/realms/your-realm).",
+                "client_id": "Client ID",
+                "client_id_info": "The client ID registered with your OIDC provider.",
+                "client_secret": "Client Secret",
+                "client_secret_info": "The client secret registered with your OIDC provider. Keep this secure and do not expose it publicly.",
+                "redirect_uri": "Redirect URI",
+                "redirect_uri_info": "The redirect URI configured in your OIDC provider. This should match the callback URL set in your OIDC provider's client configuration.",
+                "auth_endpoint": "Authorization Endpoint",
+                "auth_endpoint_info": "The endpoint used for user authentication (e.g., /authorize). This is typically the authorization endpoint of your OIDC provider.",
+                "userinfo_endpoint": "Userinfo Endpoint",
+                "userinfo_endpoint_info": "The endpoint used to retrieve user information after authentication (e.g., /userinfo).",
+                "token_endpoint": "Token Endpoint",
+                "token_endpoint_info": "The endpoint used to exchange authorization codes for access tokens (e.g., /oauth/token).",
+                "integration": "Activate Integration",
+                "integration_info": "When you activate integration, users on your OIDC provider will be able to log in to Liman.",
+                "save": "Save"
+            }
+        },
         "ldap": {
             "formScema": {
                 "address": "LDAP server address cannot be empty.",

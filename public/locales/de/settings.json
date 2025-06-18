@@ -650,6 +650,51 @@
                 "save": "Retten"
             }
         },
+        "oidc": {
+            "formScema": {
+                "issuer_url": "OIDC Issuer URL-Feld darf nicht leer sein.",
+                "client_id": "Client ID-Feld darf nicht leer sein.",
+                "client_secret": "Client Secret-Feld darf nicht leer sein.",
+                "redirect_uri": "Redirect URI-Feld darf nicht leer sein.",
+                "auth_endpoint": "Authorization Endpoint-Feld darf nicht leer sein.",
+                "userinfo_endpoint": "Userinfo Endpoint-Feld darf nicht leer sein.",
+                "token_endpoint": "Token Endpoint-Feld darf nicht leer sein."
+            },
+            "toast": {
+                "success": {
+                    "title": "Erfolg",
+                    "description": "OIDC-Einstellungen erfolgreich gespeichert."
+                },
+                "fail": {
+                    "title": "Fehler",
+                    "description": "Beim Speichern der OIDC-Einstellungen ist ein Fehler aufgetreten."
+                }
+            },
+            "head_title": "OIDC | Liman",
+            "page_header": {
+                "title": "OIDC",
+                "description": "Sie können Benutzeranmeldungen bei Liman über jeden OIDC-Anbieter wie Keycloak, Auth0 usw. aktivieren."
+            },
+            "form": {
+                "issuer_url": "Issuer URL",
+                "issuer_url_info": "Die URL des Issuer-Endpunkts Ihres OIDC-Anbieters (z. B. https://your-oidc-provider.com/realms/your-realm).",
+                "client_id": "Client ID",
+                "client_id_info": "Die bei Ihrem OIDC-Anbieter registrierte Client-ID.",
+                "client_secret": "Client Secret",
+                "client_secret_info": "Das bei Ihrem OIDC-Anbieter registrierte Client Secret. Halten Sie dies sicher und stellen Sie es nicht öffentlich zur Verfügung.",
+                "redirect_uri": "Redirect URI",
+                "redirect_uri_info": "Die in Ihrem OIDC-Anbieter konfigurierte Redirect-URI. Diese sollte mit der in der Client-Konfiguration Ihres OIDC-Anbieters festgelegten Callback-URL übereinstimmen.",
+                "auth_endpoint": "Authorization Endpoint",
+                "auth_endpoint_info": "Der für die Benutzerauthentifizierung verwendete Endpunkt (z. B. /authorize). Dies ist normalerweise der Authorization-Endpunkt Ihres OIDC-Anbieters.",
+                "userinfo_endpoint": "Userinfo Endpoint",
+                "userinfo_endpoint_info": "Der Endpunkt zum Abrufen von Benutzerinformationen nach der Authentifizierung (z. B. /userinfo).",
+                "token_endpoint": "Token Endpoint",
+                "token_endpoint_info": "Der Endpunkt zum Austausch von Autorisierungscodes gegen Access-Token (z. B. /oauth/token).",
+                "integration": "Integration aktivieren",
+                "integration_info": "Wenn Sie die Integration aktivieren, können sich Benutzer von Ihrem OIDC-Anbieter bei Liman anmelden.",
+                "save": "Retten"
+            }
+        },
         "ldap": {
             "formScema": {
                 "address": "Die LDAP-Serveradresse darf nicht leer sein.",

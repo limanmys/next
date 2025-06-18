@@ -651,6 +651,51 @@
                 "save": "Kaydet"
             }
         },
+        "oidc": {
+            "formScema": {
+                "issuer_url": "OIDC Issuer URL alanı boş bırakılamaz.",
+                "client_id": "Client ID alanı boş bırakılamaz.",
+                "client_secret": "Client Secret alanı boş bırakılamaz.",
+                "redirect_uri": "Redirect URI alanı boş bırakılamaz.",
+                "auth_endpoint": "Authorization Endpoint alanı boş bırakılamaz.",
+                "userinfo_endpoint": "Userinfo Endpoint alanı boş bırakılamaz.",
+                "token_endpoint": "Token Endpoint alanı boş bırakılamaz."
+            },
+            "toast": {
+                "success": {
+                    "title": "Başarılı",
+                    "description": "OIDC ayarları başarıyla kaydedildi."
+                },
+                "fail": {
+                    "title": "Hata",
+                    "description": "OIDC ayarları kaydedilirken bir hata oluştu."
+                }
+            },
+            "head_title": "OIDC | Liman",
+            "page_header": {
+                "title": "OIDC",
+                "description": "Keycloak, Auth0 gibi herhangi bir OIDC sağlayıcısı kullanarak kullanıcıların Liman'a giriş yapmasını sağlayabilirsiniz."
+            },
+            "form": {
+                "issuer_url": "Issuer URL",
+                "issuer_url_info": "OIDC sağlayıcınızın issuer endpoint URL'si (örn: https://your-oidc-provider.com/realms/your-realm).",
+                "client_id": "Client ID",
+                "client_id_info": "OIDC sağlayıcınızda kayıtlı olan client ID değeri.",
+                "client_secret": "Client Secret",
+                "client_secret_info": "OIDC sağlayıcınızda kayıtlı olan client secret değeri. Bu değeri güvenli tutun ve herkese açık olarak paylaşmayın.",
+                "redirect_uri": "Redirect URI",
+                "redirect_uri_info": "OIDC sağlayıcınızda yapılandırılmış redirect URI. Bu değer OIDC sağlayıcınızın client yapılandırmasında ayarlanan callback URL ile eşleşmelidir.",
+                "auth_endpoint": "Authorization Endpoint",
+                "auth_endpoint_info": "Kullanıcı kimlik doğrulaması için kullanılan endpoint (örn: /authorize). Bu genellikle OIDC sağlayıcınızın authorization endpoint'idir.",
+                "userinfo_endpoint": "Userinfo Endpoint",
+                "userinfo_endpoint_info": "Kimlik doğrulama sonrası kullanıcı bilgilerini almak için kullanılan endpoint (örn: /userinfo).",
+                "token_endpoint": "Token Endpoint",
+                "token_endpoint_info": "Authorization kodlarını access token ile değiştirmek için kullanılan endpoint (örn: /oauth/token).",
+                "integration": "Entegrasyonu Aktifleştir",
+                "integration_info": "Entegrasyonu aktifleştirdiğinizde OIDC sağlayıcınız üzerindeki kullanıcılar Liman'a giriş yapabilecektir.",
+                "save": "Kaydet"
+            }
+        },
         "ldap": {
             "formScema": {
                 "address": "LDAP sunucu adresi boş bırakılamaz.",
