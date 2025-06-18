@@ -73,7 +73,11 @@
             "keycloak": "Keycloak",
             "oidc": "OpenID Connect",
             "health": "Gesundheitsstatus",
-            "advanced": "Erweiterte Einstellungen"
+            "advanced": "Erweiterte Einstellungen",
+            "certificates": "Zertifikate",
+            "dns": "DNS-Einstellungen",
+            "log_rotation": "Log-Rotation",
+            "tweaks": "Feinabstimmungen"
         }
     }
 }

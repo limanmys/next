@@ -37,7 +37,6 @@ export default function SettingsItem(props: ISettingsItemProps) {
   const { t } = useTranslation("common")
   const [isCollapsed, setIsCollapsed] = useState(true)
   const [ldapEnabled, setLdapEnabled] = useState(false)
-  const [lastRoute, setLastRoute] = useState(router.asPath)
 
   // Check if this item or any of its children is active
   const isActive = () => {
@@ -67,38 +66,19 @@ export default function SettingsItem(props: ISettingsItemProps) {
     }
   }, [props.children])
 
-  // Load collapsed state from localStorage
+  // Auto-expand if any child is active
   useEffect(() => {
     if (props.children) {
-      const storageKey = `${props.id}SettingsCollapsed`
-      setIsCollapsed(localStorage.getItem(storageKey) === "true")
-    }
-  }, [props.children, props.id])
-
-  // Auto-expand if any child is active, auto-collapse if no child is active
-  // Only trigger on route changes, not on manual toggles
-  useEffect(() => {
-    if (props.children && router.asPath !== lastRoute) {
       const hasActiveChild = props.children.some(child => 
         router.asPath === child.href || router.asPath.includes(child.href)
       )
-      if (hasActiveChild && isCollapsed) {
-        setIsCollapsed(false)
-      } else if (!hasActiveChild && !isCollapsed) {
-        setIsCollapsed(true)
-      }
-      setLastRoute(router.asPath)
+      setIsCollapsed(!hasActiveChild)
     }
-  }, [props.children, router.asPath, isCollapsed, lastRoute])
+  }, [props.children, router.asPath])
 
   // Toggle collapsed state
   const toggleCollapsed = () => {
-    if (props.children) {
-      const newCollapsed = !isCollapsed
-      setIsCollapsed(newCollapsed)
-      const storageKey = `${props.id}SettingsCollapsed`
-      localStorage.setItem(storageKey, newCollapsed.toString())
-    }
+    setIsCollapsed(!isCollapsed)
   }
 
   // Filter enabled children
@@ -134,7 +114,6 @@ export default function SettingsItem(props: ISettingsItemProps) {
             variant={isActive() && isCollapsed ? "secondary" : isCollapsed ? "ghost" : "secondary"}
             size="sm"
             className="relative flex w-full justify-between gap-2"
-            onClick={toggleCollapsed}
             as="div"
           >
             <div className="flex items-center gap-2">

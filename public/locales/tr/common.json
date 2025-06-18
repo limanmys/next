@@ -73,7 +73,11 @@
             "keycloak": "Keycloak",
             "oidc": "OpenID Connect",
             "health": "Sağlık Durumu",
-            "advanced": "Gelişmiş Ayarlar"
+            "advanced": "Gelişmiş Ayarlar",
+            "certificates": "Sertifikalar",
+            "dns": "DNS Ayarları",
+            "log_rotation": "Log Yönlendirme",
+            "tweaks": "İnce Ayarlar"
         }
     }
 }
