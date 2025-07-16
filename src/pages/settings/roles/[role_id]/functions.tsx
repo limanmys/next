@@ -1,13 +1,13 @@
+import { ReactElement, useEffect, useRef, useState } from "react"
+import { useRouter } from "next/router"
 import { NextPageWithLayout } from "@/pages/_app"
 import { http } from "@/services"
 import { MinusCircle } from "lucide-react"
-import { useRouter } from "next/router"
-import { ReactElement, useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import RoleLayout from "@/components/_layout/role_layout"
-import AssignFunction from "@/components/settings/assign-function"
-import { FunctionExtensionActions } from "@/components/settings/function-extension-actions"
+import { IExtension } from "@/types/extension"
+import { DivergentColumn } from "@/types/table"
+import { useEmitter } from "@/hooks/useEmitter"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -25,9 +25,8 @@ import DataTable from "@/components/ui/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
 import PageHeader from "@/components/ui/page-header"
 import { useToast } from "@/components/ui/use-toast"
-import { useEmitter } from "@/hooks/useEmitter"
-import { IExtension } from "@/types/extension"
-import { DivergentColumn } from "@/types/table"
+import RoleLayout from "@/components/_layout/role_layout"
+import AssignFunction from "@/components/settings/assign-function"
 
 const RoleFunctionsList: NextPageWithLayout = () => {
   const [loading, setLoading] = useState<boolean>(true)
@@ -77,10 +76,14 @@ const RoleFunctionsList: NextPageWithLayout = () => {
     {
       accessorKey: "display_name",
       header: ({ column }) => (
-        <FunctionExtensionActions
+        <DataTableColumnHeader
           column={column}
           title={t("roles.functions.display_name")}
-          extensions={extensions}
+          filterPresets={extensions.map((ext) => ({
+            key: ext.id,
+            value: ext.display_name,
+          }))}
+          showFilterAsSelect={true}
         />
       ),
       title: t("roles.functions.display_name"),

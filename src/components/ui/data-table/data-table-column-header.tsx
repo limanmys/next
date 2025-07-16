@@ -1,5 +1,11 @@
 import { Column } from "@tanstack/react-table"
-import { ChevronsUpDown, EyeOff, SortAsc, SortDesc } from "lucide-react"
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  ChevronsUpDown,
+  EyeOff,
+  ListFilter,
+} from "lucide-react"
 import { useTranslation } from "react-i18next"
 
 import { cn } from "@/lib/utils"
@@ -47,30 +53,84 @@ export function DataTableColumnHeader<TData, TValue>({
   }
 
   return (
-    <>
-      <div className={cn("mt-1 flex items-center space-x-2", className)}>
+    <div className={cn("flex items-center space-x-2 py-2", className)}>
+      <span>{title}</span>
+
+      {/* Sort Button */}
+      <Button
+        variant="ghost"
+        className="h-4 p-0"
+        onClick={() => column.toggleSorting()}
+      >
+        {column.getIsSorted() === "desc" ? (
+          <ArrowDownIcon className="size-4" />
+        ) : column.getIsSorted() === "asc" ? (
+          <ArrowUpIcon className="size-4" />
+        ) : (
+          <ChevronsUpDown className="size-4" />
+        )}
+      </Button>
+
+      {/* Filter Dropdown */}
+      {column.getCanFilter() && (
         <DropdownMenu>
-          <DropdownMenuTrigger>
-            <div className="flex h-8 items-center justify-center data-[state=open]:bg-accent data-[state=open]:text-white">
-              <span>{title}</span>
-              {column.getIsSorted() === "desc" ? (
-                <SortDesc className="ml-2 size-4" />
-              ) : column.getIsSorted() === "asc" ? (
-                <SortAsc className="ml-2 size-4" />
-              ) : (
-                <ChevronsUpDown className="ml-2 size-4" />
-              )}
-            </div>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-4 p-0">
+              <ListFilter
+                className={cn(
+                  "size-4",
+                  column.getFilterValue() ? "text-cyan-500" : ""
+                )}
+              />
+            </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start">
-            <DropdownMenuItem onClick={() => column.toggleSorting(false)}>
-              <SortAsc className="mr-2 size-3.5" />
-              {t("table.column.asc")}
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => column.toggleSorting(true)}>
-              <SortDesc className="mr-2 size-3.5" />
-              {t("table.column.desc")}
-            </DropdownMenuItem>
+            {!filterPresets && (
+              <Input
+                className="h-8"
+                value={(column.getFilterValue() as string) ?? ""}
+                onChange={(e) => column.setFilterValue(e.target.value)}
+              />
+            )}
+            {filterPresets && (
+              <>
+                {showFilterAsSelect ? (
+                  <Select
+                    defaultValue={(column.getFilterValue() as string) ?? ""}
+                    value={(column.getFilterValue() as string) ?? ""}
+                    onValueChange={(value) => column.setFilterValue(value)}
+                  >
+                    <SelectTrigger className="h-8 min-w-[165px] bg-background">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {filterPresets.map((preset) => (
+                        <SelectItem key={preset.key} value={preset.value}>
+                          {preset.value}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                ) : (
+                  <div className="flex gap-2">
+                    {filterPresets.map((preset) => (
+                      <Button
+                        key={preset.key}
+                        variant={
+                          column.getFilterValue() === preset.value
+                            ? "default"
+                            : "outline"
+                        }
+                        onClick={() => column.setFilterValue(preset.value)}
+                        className="h-8"
+                      >
+                        {preset.key}
+                      </Button>
+                    ))}
+                  </div>
+                )}
+              </>
+            )}
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => column.toggleVisibility(false)}>
               <EyeOff className="mr-2 size-3.5" />
@@ -78,56 +138,7 @@ export function DataTableColumnHeader<TData, TValue>({
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      </div>
-      {!filterPresets && (
-        <Input
-          className="mb-3 h-8"
-          value={(column.getFilterValue() as string) ?? ""}
-          onChange={(e) => column.setFilterValue(e.target.value)}
-        />
       )}
-      {filterPresets && (
-        <div className="mb-3 flex gap-2">
-          {showFilterAsSelect && (
-            <>
-              <Select
-                defaultValue={(column.getFilterValue() as string) ?? ""}
-                value={(column.getFilterValue() as string) ?? ""}
-                onValueChange={(value) => column.setFilterValue(value)}
-              >
-                <SelectTrigger className="h-8 min-w-[165px] bg-background">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {filterPresets.map((preset) => (
-                    <SelectItem key={preset.key} value={preset.value}>
-                      {preset.value}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </>
-          )}
-          {!showFilterAsSelect && (
-            <>
-              {filterPresets.map((preset) => (
-                <Button
-                  key={preset.key}
-                  variant={
-                    column.getFilterValue() === preset.value
-                      ? "default"
-                      : "outline"
-                  }
-                  onClick={() => column.setFilterValue(preset.value)}
-                  className="h-8"
-                >
-                  {preset.key}
-                </Button>
-              ))}
-            </>
-          )}
-        </div>
-      )}
-    </>
+    </div>
   )
 }
