@@ -12,6 +12,7 @@ import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 import { cn, getRelativeTimeString } from "@/lib/utils"
 import { INotification } from "@/types/notification"
 
+import useLocalStorage from "@/hooks/useLocalStorage"
 import { Badge } from "../ui/badge"
 import {
   DropdownMenu,
@@ -30,6 +31,8 @@ export default function Notifications() {
 
   const snd = new Audio("/assets/sound/notification.mp3")
   function beep() {
+    if (snoozed === "true") return
+
     snd.play()
   }
 
@@ -147,6 +150,8 @@ export default function Notifications() {
       })
   }
 
+  const [snoozed, setSnoozed] = useLocalStorage("notifications_snoozed", "false")
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -246,19 +251,35 @@ export default function Notifications() {
         )}
         <DropdownMenuSeparator />
         <div className="flex items-center justify-between p-3">
-          {user.status === 1 ? (
-            <Link href="/settings/external_notifications">
-              <Button
-                size="sm"
-                variant="ghost"
-                className="-ml-1 text-muted-foreground"
-              >
-                {t("notifications.manage")}
-              </Button>
-            </Link>
-          ) : (
-            <div></div>
-          )}
+          <div className="flex items-center gap-2">
+            {user.status === 1 ? (
+              <Link href="/settings/external_notifications">
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="-ml-1 text-muted-foreground"
+                >
+                  {t("notifications.manage")}
+                </Button>
+              </Link>
+            ) : (
+              <div></div>
+            )}
+            {/* Snooze notification toggle button */}
+            <Button
+              size="sm"
+              variant="ghost"
+              className="-ml-1 text-muted-foreground"
+              onClick={() => {
+                setSnoozed((prev) => {
+                  const newSnoozed = prev === "true" ? "false" : "true"
+                  return newSnoozed
+                })
+              }}
+            >
+              {snoozed === "true" ? <BellOff className="size-5" /> : <Bell className="size-5" />}
+            </Button>
+          </div>
 
           <Link href="/notifications">
             <Button size="sm" className="rounded-[8px]">

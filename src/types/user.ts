@@ -15,6 +15,7 @@ export interface IUser {
   otp_enabled: boolean
   session_time: number
   permissions: ILimanPermissions
+  snooze_notifications: boolean
 }
 
 export interface IAccessToken {
