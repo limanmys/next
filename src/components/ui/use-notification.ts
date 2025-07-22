@@ -3,7 +3,6 @@ import * as React from "react"
 
 import { INotification } from "@/types/notification"
 
-import useLocalStorage from "@/hooks/useLocalStorage"
 import { NotificationProps } from "./notification"
 
 const TOAST_LIMIT = 3
@@ -136,7 +135,10 @@ function dispatch(action: Action) {
 type Toast = Omit<ToasterToast, "id">
 
 function sendNotification({ ...props }: Toast) {
-  const [snoozed, _] = useLocalStorage("notifications_snoozed", "false")
+  // Check if notifications are snoozed using regular localStorage API
+  const snoozed = typeof window !== 'undefined'
+    ? window.localStorage.getItem("notifications_snoozed") || "false"
+    : "false"
 
   if (snoozed === "true") {
     return
