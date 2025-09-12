@@ -890,6 +890,11 @@
                 "label": "JWT-Lebensdauer",
                 "subtext": "Die Lebensdauer des JWT-Tokens, der von Liman an Benutzer gesendet wird."
             },
+            "CORS_TRUSTED_ORIGINS": {
+                "label": "CORS Vertrauenswürdige Ursprünge",
+                "placeholder": "Vertrauenswürdige Ursprünge eingeben...",
+                "subtext": "Kommagetrennte Liste vertrauenswürdiger Ursprünge für CORS. Beispiel: https://example.com, https://app.example.com"
+            },
             "save": "Retten"
         }
     },

@@ -891,6 +891,11 @@
                 "label": "Default Session Time (Minutes)",
                 "subtext": "The default session time to be used in Liman."
             },
+            "CORS_TRUSTED_ORIGINS": {
+                "label": "CORS Trusted Origins",
+                "placeholder": "Enter trusted origins...",
+                "subtext": "Comma-separated list of trusted origins for CORS. Example: https://example.com, https://app.example.com"
+            },
             "save": "Save"
         }
     },

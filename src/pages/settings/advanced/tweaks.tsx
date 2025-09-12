@@ -31,6 +31,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
+import { TagInput } from "@/components/ui/tag-input"
 import { useToast } from "@/components/ui/use-toast"
 import { setFormErrors } from "@/lib/utils"
 
@@ -55,6 +56,7 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
     LOGIN_IMAGE: z.string().optional(),
     DEFAULT_AUTH_GATE: z.enum(["ldap", "liman", "keycloak", "oidc"]),
     JWT_TTL: z.coerce.number().min(15).max(999999),
+    CORS_TRUSTED_ORIGINS: z.array(z.string()).optional(),
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -62,8 +64,14 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
   })
 
   const handleSave = (data: z.infer<typeof formSchema>) => {
+    // Convert CORS_TRUSTED_ORIGINS array to comma-separated string for backend
+    const submitData = {
+      ...data,
+      CORS_TRUSTED_ORIGINS: data.CORS_TRUSTED_ORIGINS ? data.CORS_TRUSTED_ORIGINS.join(',') : '',
+    }
+
     http
-      .post("/settings/advanced/tweaks", data)
+      .post("/settings/advanced/tweaks", submitData)
       .then(() => {
         toast({
           title: t("success"),
@@ -83,7 +91,14 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
 
   useEffect(() => {
     http.get("/settings/advanced/tweaks").then((res) => {
-      form.reset(res.data)
+      // Convert CORS_TRUSTED_ORIGINS string to array for form
+      const formData = {
+        ...res.data,
+        CORS_TRUSTED_ORIGINS: res.data.CORS_TRUSTED_ORIGINS
+          ? res.data.CORS_TRUSTED_ORIGINS.split(',').map((s: string) => s.trim()).filter(Boolean)
+          : [],
+      }
+      form.reset(formData)
     })
   }, [])
 
@@ -195,6 +210,31 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
                   </div>
                   <small className="-mt-2 italic text-muted-foreground">
                     {t("advanced.tweaks.JWT_TTL.subtext")}
+                  </small>
+                  <FormMessage />
+                </div>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="CORS_TRUSTED_ORIGINS"
+              render={({ field }) => (
+                <div className="flex flex-col gap-3">
+                  <Label htmlFor="CORS_TRUSTED_ORIGINS">
+                    {t("advanced.tweaks.CORS_TRUSTED_ORIGINS.label")}
+                  </Label>
+                  <div className="relative">
+                    <TagInput
+                      id="CORS_TRUSTED_ORIGINS"
+                      value={field.value ?? []}
+                      onChange={field.onChange}
+                      placeholder={t("advanced.tweaks.CORS_TRUSTED_ORIGINS.placeholder")}
+                      separator=","
+                    />
+                  </div>
+                  <small className="-mt-2 italic text-muted-foreground">
+                    {t("advanced.tweaks.CORS_TRUSTED_ORIGINS.subtext")}
                   </small>
                   <FormMessage />
                 </div>

@@ -891,6 +891,11 @@
                 "label": "Varsayılan Oturum Süresi (Dakika)",
                 "subtext": "Kullanıcıların oturumlarının ne kadar süreyle açık kalacağını belirler."
             },
+            "CORS_TRUSTED_ORIGINS": {
+                "label": "CORS Güvenilir Adresler",
+                "placeholder": "Güvenilir adresleri girin...",
+                "subtext": "CORS için güvenilir adreslerin virgülle ayrılmış listesi. Örnek: https://example.com, https://app.example.com"
+            },
             "save": "Kaydet"
         }
     },
