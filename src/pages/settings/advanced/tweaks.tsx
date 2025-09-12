@@ -43,6 +43,7 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
     APP_LANG: z.string(),
     APP_NOTIFICATION_EMAIL: z.string().max(300).email(),
     APP_URL: z.string().max(300).url(),
+    LOGOUT_REDIRECT_URL: z.string().max(300).url().optional(),
     EXTENSION_TIMEOUT: z
       .string()
       .max(3, { message: t("advanced.tweaks.validation") })
@@ -172,6 +173,25 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
                   </div>
                   <small className="-mt-2 italic text-muted-foreground">
                     {t("advanced.tweaks.APP_URL.subtext")}
+                  </small>
+                  <FormMessage />
+                </div>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="LOGOUT_REDIRECT_URL"
+              render={({ field }) => (
+                <div className="flex flex-col gap-3">
+                  <Label htmlFor="LOGOUT_REDIRECT_URL">
+                    {t("advanced.tweaks.LOGOUT_REDIRECT_URL.label")}
+                  </Label>
+                  <div className="relative">
+                    <Input id="LOGOUT_REDIRECT_URL" {...field} />
+                  </div>
+                  <small className="-mt-2 italic text-muted-foreground">
+                    {t("advanced.tweaks.LOGOUT_REDIRECT_URL.subtext")}
                   </small>
                   <FormMessage />
                 </div>

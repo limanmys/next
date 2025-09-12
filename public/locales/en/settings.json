@@ -863,6 +863,10 @@
                 "label": "Application Address",
                 "subtext": "The address of the Liman system to be added in emails and notifications."
             },
+            "LOGOUT_REDIRECT_URL": {
+                "label": "Logout Redirect URL",
+                "subtext": "The URL where users will be redirected after logging out from the system."
+            },
             "EXTENSION_TIMEOUT": {
                 "label": "Extension Request Timeout",
                 "subtext": "The timeout period to be used in requests sent by Liman to extensions."

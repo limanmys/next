@@ -71,7 +71,11 @@ const Layout = ({ Component, pageProps }: any) => {
         currentUser = JSON.parse(currentUser)
         if (currentUser.expired_at && currentUser.expired_at < Date.now()) {
           setOpen(true)
-          logout()
+          logout().then((res) => {
+            if (res && res.data?.redirect) {
+              window.location.href = res.data.redirect
+            }
+          })
         }
       }
     }

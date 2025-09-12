@@ -127,8 +127,12 @@ export default function ProfileDropdown() {
             className="w-full"
             variant="secondary"
             onClick={() => {
-              logout().then(() => {
-                router.replace("/auth/login?redirect=" + router.asPath)
+              logout().then((res) => {
+                if (res && res.data?.redirect) {
+                  window.location.href = res.data.redirect
+                } else {
+                  router.replace("/auth/login?redirect=" + router.asPath)
+                }
               })
             }}
           >

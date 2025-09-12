@@ -863,6 +863,10 @@
                 "label": "Uygulama Adresi",
                 "subtext": "Maillerde ve bildirimlerde eklenecek Liman sisteminin adresi."
             },
+            "LOGOUT_REDIRECT_URL": {
+                "label": "Çıkış Yönlendirme URL'si",
+                "subtext": "Kullanıcıların sistemden çıkış yaptıktan sonra yönlendirilecekleri URL."
+            },
             "EXTENSION_TIMEOUT": {
                 "label": "Eklenti İstek Zaman Aşımı",
                 "subtext": "Liman'ın eklentilere göndereceği isteklerde kullanılacak zaman aşımı süresi."

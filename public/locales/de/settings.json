@@ -862,6 +862,10 @@
                 "label": "Bewerbungsadresse",
                 "subtext": "Die Adresse des Liman-Systems, die in E-Mails und Benachrichtigungen hinzugefügt werden soll."
             },
+            "LOGOUT_REDIRECT_URL": {
+                "label": "Abmelde-Umleitungs-URL",
+                "subtext": "Die URL, zu der Benutzer nach der Abmeldung vom System weitergeleitet werden."
+            },
             "EXTENSION_TIMEOUT": {
                 "label": "Zeitüberschreitung bei Verlängerungsanforderung",
                 "subtext": "Der Timeout-Zeitraum, der in Anforderungen verwendet werden soll, die von Liman an Erweiterungen gesendet werden."
