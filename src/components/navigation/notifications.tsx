@@ -1,18 +1,18 @@
+import { useCallback, useEffect, useRef, useState } from "react"
+import Link from "next/link"
 import { http } from "@/services"
 import Cookies from "js-cookie"
 import Echo from "laravel-echo"
 import { Bell, BellOff, CheckCheck } from "lucide-react"
-import Link from "next/link"
 import Pusher from "pusher-js"
-import { useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { Button, buttonVariants } from "@/components/ui/button"
-import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
-import { cn, getRelativeTimeString } from "@/lib/utils"
 import { INotification } from "@/types/notification"
-
+import { cn, getRelativeTimeString } from "@/lib/utils"
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 import useLocalStorage from "@/hooks/useLocalStorage"
+import { Button, buttonVariants } from "@/components/ui/button"
+
 import { Badge } from "../ui/badge"
 import {
   DropdownMenu,
@@ -30,11 +30,14 @@ export default function Notifications() {
   const { t, i18n } = useTranslation("common")
 
   const snd = new Audio("/assets/sound/notification.mp3")
-  function beep() {
-    if (snoozed === "true") return
+
+  const [snoozed, setSnoozed] = useLocalStorage("notifications_snoozed", "off")
+
+  const beep = useCallback(() => {
+    if (snoozed === "on") return
 
     snd.play()
-  }
+  }, [snoozed])
 
   const [notifications, setNotifications] = useState<INotification[]>([])
   const [, setTimeUpdate] = useState<number>(0)
@@ -60,16 +63,16 @@ export default function Notifications() {
   useEffect(() => {
     // Set up a timer that triggers every minute to refresh the time display
     timerRef.current = setInterval(() => {
-      setTimeUpdate(Date.now());
-    }, 5000); // Update every 5 seconds
+      setTimeUpdate(Date.now())
+    }, 5000) // Update every 5 seconds
 
     return () => {
       // Clean up timer on component unmount
       if (timerRef.current) {
-        clearInterval(timerRef.current);
+        clearInterval(timerRef.current)
       }
-    };
-  }, []);
+    }
+  }, [])
 
   useEffect(() => {
     window.Pusher = Pusher
@@ -77,22 +80,20 @@ export default function Notifications() {
     const currentUser = Cookies.get("currentUser")
     let tempNotifications: INotification[] = []
 
-    http
-      .get<INotification[]>("/notifications/unread")
-      .then((response) => {
-        tempNotifications = response.data
-        setNotifications(response.data)
+    http.get<INotification[]>("/notifications/unread").then((response) => {
+      tempNotifications = response.data
+      setNotifications(response.data)
 
-        JSON.parse(JSON.stringify(tempNotifications))
-          .reverse()
-          .forEach((notification: INotification) => {
-            if (!notification.seen_at) {
-              sendNotification(notification)
-            }
-          })
+      JSON.parse(JSON.stringify(tempNotifications))
+        .reverse()
+        .forEach((notification: INotification) => {
+          if (!notification.seen_at) {
+            sendNotification(notification)
+          }
+        })
 
-        markAsSeen(tempNotifications)
-      })
+      markAsSeen(tempNotifications)
+    })
 
     const echo = new Echo({
       broadcaster: "reverb",
@@ -126,7 +127,9 @@ export default function Notifications() {
 
         beep()
 
-        sendNotification(notification)
+        if (snoozed !== "on") {
+          sendNotification(notification)
+        }
 
         markAsSeen([notification])
       })
@@ -140,17 +143,13 @@ export default function Notifications() {
         clearInterval(timerRef.current)
       }
     }
-  }, [])
+  }, [snoozed])
 
   const handleMarkAsRead = () => {
-    http
-      .post("/notifications/read")
-      .then(() => {
-        setNotifications([])
-      })
+    http.post("/notifications/read").then(() => {
+      setNotifications([])
+    })
   }
-
-  const [snoozed, setSnoozed] = useLocalStorage("notifications_snoozed", "false")
 
   return (
     <DropdownMenu>
@@ -166,12 +165,11 @@ export default function Notifications() {
         >
           <Bell className="size-5 group-hover:animate-ring transition-all" />
           <span className="sr-only">Notifications</span>
-          {
-            getNotSeenNotificationCount() > 0 &&
-            <Badge className="absolute right-0 top-0 rounded-full px-[4px] py-[2px] text-[11px] leading-[11px]" >
+          {getNotSeenNotificationCount() > 0 && (
+            <Badge className="absolute right-0 top-0 rounded-full px-[4px] py-[2px] text-[11px] leading-[11px]">
               {getNotSeenNotificationCount()}
             </Badge>
-          }
+          )}
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-5 w-[500px]">
@@ -191,7 +189,10 @@ export default function Notifications() {
           </Button>
         </div>
         {notifications.length > 0 && (
-          <ScrollArea type="always" className="flex h-[350px] flex-col gap-3 p-2">
+          <ScrollArea
+            type="always"
+            className="flex h-[350px] flex-col gap-3 p-2"
+          >
             {notifications.map((notification) => (
               <Link
                 href={`/notifications#notification-${notification.notification_id}`}
@@ -225,7 +226,10 @@ export default function Notifications() {
                     </div>
 
                     <span className="text-xs text-slate-500">
-                      {getRelativeTimeString(notification.send_at, i18n.language)}
+                      {getRelativeTimeString(
+                        notification.send_at,
+                        i18n.language
+                      )}
                     </span>
                   </div>
                 </div>
@@ -272,12 +276,16 @@ export default function Notifications() {
               className="-ml-1 text-muted-foreground"
               onClick={() => {
                 setSnoozed((prev) => {
-                  const newSnoozed = prev === "true" ? "false" : "true"
+                  const newSnoozed = prev === "on" ? "off" : "on"
                   return newSnoozed
                 })
               }}
             >
-              {snoozed === "true" ? <BellOff className="size-5" /> : <Bell className="size-5" />}
+              {snoozed === "on" ? (
+                <BellOff className="size-5" />
+              ) : (
+                <Bell className="size-5" />
+              )}
             </Button>
           </div>
 
