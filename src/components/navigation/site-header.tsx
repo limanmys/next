@@ -1,15 +1,16 @@
-import { useSidebarContext } from "@/providers/sidebar-provider"
-import { Menu, Settings } from "lucide-react"
 import dynamic from "next/dynamic"
 import Link from "next/link"
 import { useRouter } from "next/router"
-
-import { Button, buttonVariants } from "@/components/ui/button"
+import { useSidebarContext } from "@/providers/sidebar-provider"
+import { Menu, Settings } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { Button, buttonVariants } from "@/components/ui/button"
+
 import { Icons } from "../ui/icons"
 import CommandMenu from "./command-menu"
 import ProfileDropdown from "./profile-dropdown"
+import SefWidget from "./sef"
 
 const Notifications = dynamic(import("./notifications"), { ssr: false })
 
@@ -45,16 +46,21 @@ export function SiteHeader() {
 
         <div className="flex items-center justify-end space-x-4">
           <nav className="flex items-center gap-1">
+            {process.env.NEXT_PUBLIC_SEF_URL && <SefWidget />}
+
             <Notifications />
 
             <Link href="/settings">
               <div
-                className={cn("group", buttonVariants({
-                  size: "sm",
-                  variant: router.asPath.includes("/settings")
-                    ? "secondary"
-                    : "ghost",
-                }))}
+                className={cn(
+                  "group",
+                  buttonVariants({
+                    size: "sm",
+                    variant: router.asPath.includes("/settings")
+                      ? "secondary"
+                      : "ghost",
+                  })
+                )}
               >
                 <Settings className="size-5 group-hover:rotate-90 transition-all" />
                 <span className="sr-only">Settings</span>
