@@ -29,15 +29,25 @@ export default function Notifications() {
   const user = useCurrentUser()
   const { t, i18n } = useTranslation("common")
 
-  const snd = new Audio("/assets/sound/notification.mp3")
-
   const [snoozed, setSnoozed] = useLocalStorage("notifications_snoozed", "off")
 
-  const beep = useCallback(() => {
-    if (snoozed === "on") return
+  const beep = useCallback(
+    (level?: string) => {
+      if (snoozed === "on") return
 
-    snd.play()
-  }, [snoozed])
+      const notificationLevel = level?.toLowerCase() || "notification"
+      const levelSound = new Audio(
+        `/assets/sound/notification_${notificationLevel}.mp3`
+      )
+      const fallbackSound = new Audio("/assets/sound/notification.mp3")
+
+      // Try to play level-specific sound, fallback to default if it fails
+      levelSound.play().catch(() => {
+        fallbackSound.play()
+      })
+    },
+    [snoozed]
+  )
 
   const [notifications, setNotifications] = useState<INotification[]>([])
   const [, setTimeUpdate] = useState<number>(0)
@@ -125,7 +135,7 @@ export default function Notifications() {
           JSON.stringify([notification, ...tempNotifications])
         )
 
-        beep()
+        beep(notification.level)
 
         if (snoozed !== "on") {
           sendNotification(notification)
