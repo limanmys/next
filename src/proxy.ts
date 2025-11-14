@@ -5,7 +5,7 @@ import { IUser } from "./types/user"
 const authRoutes = ["/auth/login"]
 const safeToRedirect = ["/auth", "/notifications", "/servers", "/settings"]
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   let urlBeforeRedirect = request.nextUrl.pathname
   if (urlBeforeRedirect === "/auth/login") {
     urlBeforeRedirect = "/"

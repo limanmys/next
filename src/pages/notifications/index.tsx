@@ -168,7 +168,6 @@ export default function NotificationsPage() {
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
                 <CalendarComponent
-                  initialFocus
                   mode="range"
                   defaultMonth={date.from}
                   selected={{ from: date.from, to: date.to }}
