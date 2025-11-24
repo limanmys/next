@@ -77,6 +77,8 @@
     "zod-i18n-map": "^2.27.0"
   },
   "devDependencies": {
+    "@babel/plugin-transform-nullish-coalescing-operator": "^7.27.1",
+    "@babel/plugin-transform-optional-chaining": "^7.28.5",
     "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
     "@tailwindcss/postcss": "^4.1.17",
     "@types/blueimp-md5": "^2.18.2",
