@@ -32,7 +32,7 @@ export default function AuthenticationPage() {
           </div>
           <div className="relative z-20 mt-auto">
             {!loginBranding && (
-              <Icons.aciklab className="h-12 w-64 fill-white" />
+              <Icons.aciklab className="aciklab h-12 w-64 fill-white" />
             )}
 
             {loginBranding && (

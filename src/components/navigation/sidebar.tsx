@@ -135,7 +135,7 @@ export function Sidebar({ className }: { className?: string }) {
           </div>
         </ScrollArea>
         <div className="aciklab flex items-center justify-center py-4 absolute bottom-0 w-full pointer-events-none">
-          <Icons.aciklab className="h-8 w-48 z-1" />
+          <Icons.aciklab className="aciklab h-8 w-48 z-1" />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background z-0 w-full"></div>
         </div>
       </div>
@@ -264,7 +264,7 @@ export function Sidebar({ className }: { className?: string }) {
           </div>
         </div>
         <div className="aciklab flex items-center justify-center py-4 absolute bottom-0 w-full pointer-events-none">
-          <Icons.aciklab className="h-8 w-48 z-1" />
+          <Icons.aciklab className="aciklab h-8 w-48 z-1" />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background z-0 w-full"></div>
         </div>
       </ScrollArea>

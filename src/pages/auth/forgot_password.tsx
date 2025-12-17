@@ -46,7 +46,7 @@ export default function ForgotPasswordPage() {
             <Icons.dugumluLogo className="h-10 w-24 fill-white" />
           </div>
           <div className="relative z-20 mt-auto">
-            <Icons.aciklab className="h-12 w-64 fill-white" />
+            <Icons.aciklab className="aciklab h-12 w-64 fill-white" />
           </div>
         </div>
         <div className="lg:p-8">
