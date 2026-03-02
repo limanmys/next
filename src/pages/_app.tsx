@@ -1,3 +1,4 @@
+import { FeatureProvider } from "@/providers/feature-provider"
 import { SidebarProvider } from "@/providers/sidebar-provider"
 import { ThemeProvider } from "@/providers/theme-provider"
 
@@ -58,9 +59,11 @@ const RootLayout: AppType = ({ Component, pageProps }: AppPropsWithLayout) => {
       >
         <div className={cn("font-inter h-screen bg-background antialiased")}>
           {!router.asPath.includes("/auth") ? (
-            <SidebarProvider>
-              {ready && <Layout Component={Component} pageProps={pageProps} />}
-            </SidebarProvider>
+            <FeatureProvider>
+              <SidebarProvider>
+                {ready && <Layout Component={Component} pageProps={pageProps} />}
+              </SidebarProvider>
+            </FeatureProvider>
           ) : (
             <Component {...pageProps} key={router.route} />
           )}

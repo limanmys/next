@@ -34,10 +34,12 @@ import { Switch } from "@/components/ui/switch"
 import { TagInput } from "@/components/ui/tag-input"
 import { useToast } from "@/components/ui/use-toast"
 import { setFormErrors } from "@/lib/utils"
+import { useFeature } from "@/providers/feature-provider"
 
 const AdvancedTweaksPage: NextPageWithLayout = () => {
   const { t } = useTranslation("settings")
   const { toast } = useToast()
+  const { isEnabled } = useFeature()
 
   const formSchema = z.object({
     APP_LANG: z.string(),
@@ -127,9 +129,9 @@ const AdvancedTweaksPage: NextPageWithLayout = () => {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="tr">Türkçe</SelectItem>
-                        <SelectItem value="en">English</SelectItem>
-                        <SelectItem value="de">Deutsch</SelectItem>
+                        {isEnabled("lang_tr") && <SelectItem value="tr">Türkçe</SelectItem>}
+                        {isEnabled("lang_en") && <SelectItem value="en">English</SelectItem>}
+                        {isEnabled("lang_de") && <SelectItem value="de">Deutsch</SelectItem>}
                       </SelectContent>
                     </Select>
                     <small className="italic text-muted-foreground">

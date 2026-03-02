@@ -8,6 +8,7 @@ import LatestLoggedInUsers from "@/components/dashboard/latest-logged-in-users"
 import MostUsedExtensions from "@/components/dashboard/most-used-extensions"
 import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 import { cn } from "@/lib/utils"
+import { useFeature, FeatureFlags } from "@/providers/feature-provider"
 import { useSidebarContext } from "@/providers/sidebar-provider"
 import { DashboardEnum } from "@/types/user"
 
@@ -15,10 +16,17 @@ const DateTimeView = dynamic(() => import("@/components/dashboard/date-time"), {
   ssr: false,
 })
 
+const dashboardFeatureMap: Record<string, keyof FeatureFlags> = {
+  most_used_extensions: "dashboard_most_used_extensions",
+  most_used_servers: "dashboard_favorite_servers",
+  auth_logs: "dashboard_auth_logs",
+}
+
 export default function IndexPage() {
   const { t } = useTranslation("dashboard")
   const user = useCurrentUser()
   const { redirectNow } = useSidebarContext()
+  const { isEnabled } = useFeature()
 
   const viewPermissions = user.permissions.view
 
@@ -37,8 +45,12 @@ export default function IndexPage() {
   const dashboardGridItems = useMemo(() => {
     return viewPermissions.dashboard
       .filter((item) => dashboardItems.includes(item))
+      .filter((item) => {
+        const featureKey = dashboardFeatureMap[item]
+        return !featureKey || isEnabled(featureKey)
+      })
       .sort((a, b) => dashboardItems.indexOf(a) - dashboardItems.indexOf(b))
-  }, [viewPermissions.dashboard, dashboardItems])
+  }, [viewPermissions.dashboard, dashboardItems, isEnabled])
 
   const dashboardGridItemWidthClassName = useMemo(() => {
     const dashboardGridItemsLength = dashboardGridItems.length

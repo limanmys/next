@@ -1,4 +1,4 @@
-import { Award, CloudCog, Cog, ScrollText } from "lucide-react"
+import { Award, CloudCog, Cog, ScrollText, ToggleLeft } from "lucide-react"
 import { ReactNode } from "react"
 import { useTranslation } from "react-i18next"
 
@@ -38,6 +38,14 @@ export default function AdvancedLayout({ children }: { children: ReactNode }) {
       title: t("advanced.tweaks.title"),
       description: t("advanced.tweaks.description"),
       href: `/settings/advanced/tweaks`,
+      enabled: true,
+    },
+    {
+      id: "feature_switcher",
+      icon: ToggleLeft,
+      title: t("advanced.feature_switcher.title"),
+      description: t("advanced.feature_switcher.description"),
+      href: `/settings/advanced/feature_switcher`,
       enabled: true,
     },
   ]

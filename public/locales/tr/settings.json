@@ -901,6 +901,118 @@
                 "subtext": "CORS için güvenilir adreslerin virgülle ayrılmış listesi. Örnek: https://example.com, https://app.example.com"
             },
             "save": "Kaydet"
+        },
+        "feature_switcher": {
+            "title": "Özellik Yönetimi",
+            "description": "Sistem özelliklerini açıp kapatarak arayüzü özelleştirebilirsiniz.",
+            "reset": "Varsayılana Sıfırla",
+            "save": "Kaydet",
+            "save_success": "Özellik bayrakları başarıyla kaydedildi.",
+            "save_error": "Özellik bayrakları kaydedilirken bir hata oluştu.",
+            "groups": {
+                "languages": {
+                    "title": "Dil Seçenekleri",
+                    "description": "Sistemde kullanılabilir dilleri açıp kapatabilirsiniz. En az bir dil aktif olmalıdır."
+                },
+                "settings": {
+                    "title": "Ayar Sayfaları",
+                    "description": "Ayarlar bölümünde görüntülenecek sayfaları yönetebilirsiniz."
+                },
+                "server": {
+                    "title": "Sunucu Özellikleri",
+                    "description": "Sunucu detay sayfasında görüntülenecek yönetim öğelerini kontrol edebilirsiniz."
+                },
+                "dashboard": {
+                    "title": "Pano Bileşenleri",
+                    "description": "Ana panoda görüntülenecek bileşenleri yönetebilirsiniz."
+                }
+            },
+            "features": {
+                "lang_tr": {
+                    "label": "Türkçe",
+                    "description": "Türkçe dil desteğini açar veya kapatır."
+                },
+                "lang_en": {
+                    "label": "İngilizce",
+                    "description": "İngilizce dil desteğini açar veya kapatır."
+                },
+                "lang_de": {
+                    "label": "Almanca",
+                    "description": "Almanca dil desteğini açar veya kapatır."
+                },
+                "settings_vault": {
+                    "label": "Kasa",
+                    "description": "Ayarlarda kasa sayfasını gösterir veya gizler."
+                },
+                "settings_tokens": {
+                    "label": "Kişisel Erişim Anahtarları",
+                    "description": "Kişisel erişim anahtarları sayfasını gösterir veya gizler."
+                },
+                "settings_extensions": {
+                    "label": "Eklentiler",
+                    "description": "Eklenti yönetimi sayfasını gösterir veya gizler."
+                },
+                "settings_users": {
+                    "label": "Kullanıcılar",
+                    "description": "Kullanıcı yönetimi sayfasını gösterir veya gizler."
+                },
+                "settings_roles": {
+                    "label": "Roller",
+                    "description": "Rol yönetimi sayfasını gösterir veya gizler."
+                },
+                "settings_email": {
+                    "label": "E-Posta",
+                    "description": "E-posta ayarları sayfasını gösterir veya gizler."
+                },
+                "settings_external_notifications": {
+                    "label": "Dış Bildirimler",
+                    "description": "Dış bildirimler sayfasını gösterir veya gizler."
+                },
+                "settings_subscriptions": {
+                    "label": "Abonelikler",
+                    "description": "Abonelikler sayfasını gösterir veya gizler."
+                },
+                "settings_health": {
+                    "label": "Sağlık Durumu",
+                    "description": "Sağlık durumu sayfasını gösterir veya gizler."
+                },
+                "server_services": {
+                    "label": "Servisler",
+                    "description": "Sunucu detayında servisler bölümünü gösterir veya gizler."
+                },
+                "server_packages": {
+                    "label": "Paketler",
+                    "description": "Sunucu detayında paketler bölümünü gösterir veya gizler."
+                },
+                "server_updates": {
+                    "label": "Güncellemeler",
+                    "description": "Sunucu detayında güncellemeler bölümünü gösterir veya gizler."
+                },
+                "server_user_management": {
+                    "label": "Kullanıcı Yönetimi",
+                    "description": "Sunucu detayında kullanıcı yönetimi bölümünü gösterir veya gizler."
+                },
+                "server_open_ports": {
+                    "label": "Açık Portlar",
+                    "description": "Sunucu detayında açık portlar bölümünü gösterir veya gizler."
+                },
+                "server_access_logs": {
+                    "label": "Erişim Kayıtları",
+                    "description": "Sunucu detayında erişim kayıtları bölümünü gösterir veya gizler."
+                },
+                "dashboard_most_used_extensions": {
+                    "label": "En Çok Kullanılan Eklentiler",
+                    "description": "Panoda en çok kullanılan eklentiler bileşenini gösterir veya gizler."
+                },
+                "dashboard_favorite_servers": {
+                    "label": "Favori Sunucular",
+                    "description": "Panoda favori sunucular bileşenini gösterir veya gizler."
+                },
+                "dashboard_auth_logs": {
+                    "label": "Son Giriş Yapanlar",
+                    "description": "Panoda son giriş yapan kullanıcılar bileşenini gösterir veya gizler."
+                }
+            }
         }
     },
     "servers": {

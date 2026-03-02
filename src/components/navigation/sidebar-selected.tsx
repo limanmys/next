@@ -21,6 +21,7 @@ import { useTranslation } from "react-i18next"
 
 import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 import { cn } from "@/lib/utils"
+import { useFeature } from "@/providers/feature-provider"
 import { IExtension } from "@/types/extension"
 import { IServer } from "@/types/server"
 
@@ -51,6 +52,7 @@ export default function SidebarSelected() {
   } = useSidebarContext()
   const user = useCurrentUser()
   const { t } = useTranslation("common")
+  const { isEnabled } = useFeature()
 
   const [isCollapsed, setIsCollapsed] = useState(true)
   const [isUserCollapsed, setIsUserCollapsed] = useState(true)
@@ -231,7 +233,7 @@ export default function SidebarSelected() {
                   <ToyBrick className="mr-2 size-4" />
                   {t("sidebar.extensions")}
                 </ServerItem>
-                {user.permissions.view_logs && selectedData.os === "kubernetes" && (
+                {user.permissions.view_logs && selectedData.os === "kubernetes" && isEnabled("server_access_logs") && (
                   <ServerItem
                     link={`/servers/${selected}/access_logs`}
                     disabled={!selectedData.is_online}
@@ -265,7 +267,7 @@ export default function SidebarSelected() {
                   </CollapsibleTrigger>
 
                   <CollapsibleContent className="animated-collapsible mt-3">
-                    {user.permissions.server_services && (
+                    {user.permissions.server_services && isEnabled("server_services") && (
                       <ServerItem
                         link={`/servers/${selected}/services`}
                         disabled={elementIsActive()}
@@ -276,6 +278,7 @@ export default function SidebarSelected() {
                     )}
                     {user.permissions.server_details && (
                       <>
+                        {isEnabled("server_packages") && (
                         <ServerItem
                           link={`/servers/${selected}/packages`}
                           disabled={
@@ -285,6 +288,8 @@ export default function SidebarSelected() {
                           <PackageOpen className="mr-2 size-4" />
                           {t("sidebar.packages")}
                         </ServerItem>
+                        )}
+                        {isEnabled("server_updates") && (
                         <ServerItem
                           link={`/servers/${selected}/updates`}
                           disabled={
@@ -294,6 +299,8 @@ export default function SidebarSelected() {
                           <PackageSearch className="mr-2 size-4" />
                           {t("sidebar.updates")}
                         </ServerItem>
+                        )}
+                        {isEnabled("server_user_management") && (
                         <div className="mb-1">
                           <Collapsible
                             open={!isUserCollapsed}
@@ -349,6 +356,8 @@ export default function SidebarSelected() {
                             </CollapsibleContent>
                           </Collapsible>
                         </div>
+                        )}
+                        {isEnabled("server_open_ports") && (
                         <ServerItem
                           link={`/servers/${selected}/open_ports`}
                           disabled={
@@ -358,10 +367,11 @@ export default function SidebarSelected() {
                           <Network className="mr-2 size-4" />
                           {t("sidebar.open_ports")}
                         </ServerItem>
+                        )}
                       </>
                     )}
 
-                    {user.permissions.view_logs && (
+                    {user.permissions.view_logs && isEnabled("server_access_logs") && (
                       <ServerItem
                         link={`/servers/${selected}/access_logs`}
                         disabled={!selectedData.is_online}

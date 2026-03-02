@@ -4,10 +4,34 @@ import SettingCard from "@/components/settings/setting-card"
 import PageHeader from "@/components/ui/page-header"
 import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 import { Settings } from "@/lib/settings"
+import { FeatureFlags, useFeature } from "@/providers/feature-provider"
+
+const settingsFeatureMap: Record<string, keyof FeatureFlags> = {
+  vault: "settings_vault",
+  tokens: "settings_tokens",
+  extensions: "settings_extensions",
+  users: "settings_users",
+  roles: "settings_roles",
+  email: "settings_email",
+  external_notifications: "settings_external_notifications",
+  subscriptions: "settings_subscriptions",
+  health: "settings_health",
+}
 
 export default function SettingsPage() {
   const user = useCurrentUser()
   const { t } = useTranslation("settings")
+  const { isEnabled } = useFeature()
+
+  const filteredUserSettings = Settings.user.filter((setting) => {
+    const featureKey = settingsFeatureMap[setting.id]
+    return !featureKey || isEnabled(featureKey)
+  })
+
+  const filteredSystemSettings = Settings.system.filter((setting) => {
+    const featureKey = settingsFeatureMap[setting.id]
+    return !featureKey || isEnabled(featureKey)
+  })
 
   return (
     <>
@@ -18,7 +42,7 @@ export default function SettingsPage() {
           {t("user_settings")}
         </h2>
         <div className="mb-8 grid gap-8 lg:grid-cols-2 xl:grid-cols-3">
-          {Settings.user.map((setting) => (
+          {filteredUserSettings.map((setting) => (
             <SettingCard
               href={setting.href}
               icon={setting.icon}
@@ -34,7 +58,7 @@ export default function SettingsPage() {
               {t("system_settings")}
             </h2>
             <div className="grid gap-8 lg:grid-cols-2 xl:grid-cols-3">
-              {Settings.system.map((setting) => (
+              {filteredSystemSettings.map((setting) => (
                 <SettingCard
                   href={setting.href}
                   icon={setting.icon}

@@ -901,6 +901,118 @@
                 "subtext": "Comma-separated list of trusted origins for CORS. Example: https://example.com, https://app.example.com"
             },
             "save": "Save"
+        },
+        "feature_switcher": {
+            "title": "Feature Switcher",
+            "description": "Customize the interface by enabling or disabling system features.",
+            "reset": "Reset to Defaults",
+            "save": "Save",
+            "save_success": "Feature flags saved successfully.",
+            "save_error": "An error occurred while saving feature flags.",
+            "groups": {
+                "languages": {
+                    "title": "Language Options",
+                    "description": "Enable or disable available languages in the system. At least one language must remain active."
+                },
+                "settings": {
+                    "title": "Settings Pages",
+                    "description": "Manage which pages are displayed in the settings section."
+                },
+                "server": {
+                    "title": "Server Features",
+                    "description": "Control which management items are displayed on the server detail page."
+                },
+                "dashboard": {
+                    "title": "Dashboard Components",
+                    "description": "Manage which components are displayed on the main dashboard."
+                }
+            },
+            "features": {
+                "lang_tr": {
+                    "label": "Turkish",
+                    "description": "Enable or disable Turkish language support."
+                },
+                "lang_en": {
+                    "label": "English",
+                    "description": "Enable or disable English language support."
+                },
+                "lang_de": {
+                    "label": "German",
+                    "description": "Enable or disable German language support."
+                },
+                "settings_vault": {
+                    "label": "Vault",
+                    "description": "Show or hide the vault page in settings."
+                },
+                "settings_tokens": {
+                    "label": "Personal Access Keys",
+                    "description": "Show or hide the personal access keys page."
+                },
+                "settings_extensions": {
+                    "label": "Extensions",
+                    "description": "Show or hide the extension management page."
+                },
+                "settings_users": {
+                    "label": "Users",
+                    "description": "Show or hide the user management page."
+                },
+                "settings_roles": {
+                    "label": "Roles",
+                    "description": "Show or hide the role management page."
+                },
+                "settings_email": {
+                    "label": "Email",
+                    "description": "Show or hide the email settings page."
+                },
+                "settings_external_notifications": {
+                    "label": "External Notifications",
+                    "description": "Show or hide the external notifications page."
+                },
+                "settings_subscriptions": {
+                    "label": "Subscriptions",
+                    "description": "Show or hide the subscriptions page."
+                },
+                "settings_health": {
+                    "label": "Health Status",
+                    "description": "Show or hide the health status page."
+                },
+                "server_services": {
+                    "label": "Services",
+                    "description": "Show or hide the services section in server details."
+                },
+                "server_packages": {
+                    "label": "Packages",
+                    "description": "Show or hide the packages section in server details."
+                },
+                "server_updates": {
+                    "label": "Updates",
+                    "description": "Show or hide the updates section in server details."
+                },
+                "server_user_management": {
+                    "label": "User Management",
+                    "description": "Show or hide the user management section in server details."
+                },
+                "server_open_ports": {
+                    "label": "Open Ports",
+                    "description": "Show or hide the open ports section in server details."
+                },
+                "server_access_logs": {
+                    "label": "Access Logs",
+                    "description": "Show or hide the access logs section in server details."
+                },
+                "dashboard_most_used_extensions": {
+                    "label": "Most Used Extensions",
+                    "description": "Show or hide the most used extensions component on the dashboard."
+                },
+                "dashboard_favorite_servers": {
+                    "label": "Favorite Servers",
+                    "description": "Show or hide the favorite servers component on the dashboard."
+                },
+                "dashboard_auth_logs": {
+                    "label": "Latest Logged In Users",
+                    "description": "Show or hide the latest logged in users component on the dashboard."
+                }
+            }
         }
     },
     "servers": {

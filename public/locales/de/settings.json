@@ -900,6 +900,118 @@
                 "subtext": "Kommagetrennte Liste vertrauenswürdiger Ursprünge für CORS. Beispiel: https://example.com, https://app.example.com"
             },
             "save": "Retten"
+        },
+        "feature_switcher": {
+            "title": "Funktionsschalter",
+            "description": "Passen Sie die Oberfläche an, indem Sie Systemfunktionen aktivieren oder deaktivieren.",
+            "reset": "Auf Standard zurücksetzen",
+            "save": "Speichern",
+            "save_success": "Funktionsschalter erfolgreich gespeichert.",
+            "save_error": "Beim Speichern der Funktionsschalter ist ein Fehler aufgetreten.",
+            "groups": {
+                "languages": {
+                    "title": "Sprachoptionen",
+                    "description": "Aktivieren oder deaktivieren Sie verfügbare Sprachen im System. Mindestens eine Sprache muss aktiv bleiben."
+                },
+                "settings": {
+                    "title": "Einstellungsseiten",
+                    "description": "Verwalten Sie, welche Seiten im Einstellungsbereich angezeigt werden."
+                },
+                "server": {
+                    "title": "Server-Funktionen",
+                    "description": "Steuern Sie, welche Verwaltungselemente auf der Server-Detailseite angezeigt werden."
+                },
+                "dashboard": {
+                    "title": "Dashboard-Komponenten",
+                    "description": "Verwalten Sie, welche Komponenten auf dem Haupt-Dashboard angezeigt werden."
+                }
+            },
+            "features": {
+                "lang_tr": {
+                    "label": "Türkisch",
+                    "description": "Türkische Sprachunterstützung aktivieren oder deaktivieren."
+                },
+                "lang_en": {
+                    "label": "Englisch",
+                    "description": "Englische Sprachunterstützung aktivieren oder deaktivieren."
+                },
+                "lang_de": {
+                    "label": "Deutsch",
+                    "description": "Deutsche Sprachunterstützung aktivieren oder deaktivieren."
+                },
+                "settings_vault": {
+                    "label": "Tresor",
+                    "description": "Tresor-Seite in den Einstellungen anzeigen oder ausblenden."
+                },
+                "settings_tokens": {
+                    "label": "Persönliche Zugriffsschlüssel",
+                    "description": "Seite für persönliche Zugriffsschlüssel anzeigen oder ausblenden."
+                },
+                "settings_extensions": {
+                    "label": "Erweiterungen",
+                    "description": "Erweiterungsverwaltungsseite anzeigen oder ausblenden."
+                },
+                "settings_users": {
+                    "label": "Benutzer",
+                    "description": "Benutzerverwaltungsseite anzeigen oder ausblenden."
+                },
+                "settings_roles": {
+                    "label": "Rollen",
+                    "description": "Rollenverwaltungsseite anzeigen oder ausblenden."
+                },
+                "settings_email": {
+                    "label": "E-Mail",
+                    "description": "E-Mail-Einstellungsseite anzeigen oder ausblenden."
+                },
+                "settings_external_notifications": {
+                    "label": "Externe Benachrichtigungen",
+                    "description": "Seite für externe Benachrichtigungen anzeigen oder ausblenden."
+                },
+                "settings_subscriptions": {
+                    "label": "Abonnements",
+                    "description": "Abonnementseite anzeigen oder ausblenden."
+                },
+                "settings_health": {
+                    "label": "Gesundheitsstatus",
+                    "description": "Gesundheitsstatusseite anzeigen oder ausblenden."
+                },
+                "server_services": {
+                    "label": "Dienste",
+                    "description": "Dienste-Abschnitt in den Serverdetails anzeigen oder ausblenden."
+                },
+                "server_packages": {
+                    "label": "Pakete",
+                    "description": "Pakete-Abschnitt in den Serverdetails anzeigen oder ausblenden."
+                },
+                "server_updates": {
+                    "label": "Aktualisierungen",
+                    "description": "Aktualisierungen-Abschnitt in den Serverdetails anzeigen oder ausblenden."
+                },
+                "server_user_management": {
+                    "label": "Benutzerverwaltung",
+                    "description": "Benutzerverwaltung-Abschnitt in den Serverdetails anzeigen oder ausblenden."
+                },
+                "server_open_ports": {
+                    "label": "Offene Ports",
+                    "description": "Offene Ports-Abschnitt in den Serverdetails anzeigen oder ausblenden."
+                },
+                "server_access_logs": {
+                    "label": "Zugriffsprotokolle",
+                    "description": "Zugriffsprotokolle-Abschnitt in den Serverdetails anzeigen oder ausblenden."
+                },
+                "dashboard_most_used_extensions": {
+                    "label": "Meistgenutzte Erweiterungen",
+                    "description": "Meistgenutzte Erweiterungen auf dem Dashboard anzeigen oder ausblenden."
+                },
+                "dashboard_favorite_servers": {
+                    "label": "Favoriten-Server",
+                    "description": "Favoriten-Server auf dem Dashboard anzeigen oder ausblenden."
+                },
+                "dashboard_auth_logs": {
+                    "label": "Zuletzt angemeldete Benutzer",
+                    "description": "Zuletzt angemeldete Benutzer auf dem Dashboard anzeigen oder ausblenden."
+                }
+            }
         }
     },
     "servers": {
