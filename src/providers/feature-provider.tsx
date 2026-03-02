@@ -82,7 +82,12 @@ export function FeatureProvider({ children }: { children: React.ReactNode }) {
     http
       .get("/settings/advanced/feature_flags")
       .then((res) => {
-        setFeaturesState({ ...DEFAULT_FEATURES, ...res.data })
+        const normalized = Object.fromEntries(
+          Object.entries({ ...DEFAULT_FEATURES, ...res.data }).map(
+            ([k, v]) => [k, Boolean(v)]
+          )
+        ) as unknown as FeatureFlags
+        setFeaturesState(normalized)
       })
       .catch(() => {
         setFeaturesState(DEFAULT_FEATURES)
@@ -115,7 +120,10 @@ export function FeatureProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   const saveFeatures = React.useCallback(async () => {
-    await http.post("/settings/advanced/feature_flags", features)
+    const payload = Object.fromEntries(
+      Object.entries(features).map(([k, v]) => [k, Boolean(v)])
+    ) as unknown as FeatureFlags
+    await http.post("/settings/advanced/feature_flags", payload)
   }, [features])
 
   const isEnabled = React.useCallback(
