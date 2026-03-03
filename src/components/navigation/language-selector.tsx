@@ -1,3 +1,4 @@
+import { useFeature } from "@/providers/feature-provider"
 import { http } from "@/services"
 import { Globe2 } from "lucide-react"
 import { useTranslation } from "react-i18next"
@@ -17,21 +18,28 @@ const changeLanguage = (i18n: any, language: any) => {
   window.localStorage.setItem("LANGUAGE", language)
   i18n.changeLanguage(language)
 
-  http
-    .post("/locale", { locale: language })
-    .catch(() => {
-      // Do nothing
-    })
+  http.post("/locale", { locale: language }).catch(() => {
+    // Do nothing
+  })
 }
-
-const languages = [
-  { code: "tr", name: "Türkçe" },
-  { code: "en", name: "English" },
-  { code: "de", name: "Deutsch" },
-]
 
 export default function LanguageSelector() {
   const { t, i18n } = useTranslation("common")
+  const { isEnabled } = useFeature()
+
+  const languages = []
+
+  if (isEnabled("lang_tr")) {
+    languages.push({ code: "tr", name: "Türkçe" })
+  }
+
+  if (isEnabled("lang_en")) {
+    languages.push({ code: "en", name: "English" })
+  }
+
+  if (isEnabled("lang_de")) {
+    languages.push({ code: "de", name: "Deutsch" })
+  }
 
   return (
     <DropdownMenu>
