@@ -77,7 +77,8 @@
             "certificates": "Zertifikate",
             "dns": "DNS-Einstellungen",
             "log_rotation": "Log-Rotation",
-            "tweaks": "Feinabstimmungen"
+            "tweaks": "Feinabstimmungen",
+            "feature_switcher": "Feature Switcher"
         }
     }
 }

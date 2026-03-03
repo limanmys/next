@@ -77,7 +77,8 @@
             "certificates": "Sertifikalar",
             "dns": "DNS Ayarları",
             "log_rotation": "Log Yönlendirme",
-            "tweaks": "İnce Ayarlar"
+            "tweaks": "İnce Ayarlar",
+            "feature_switcher": "Özellik Yönetimi"
         }
     }
 }

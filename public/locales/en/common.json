@@ -77,7 +77,8 @@
             "certificates": "Certificates",
             "dns": "DNS Settings",
             "log_rotation": "Log Rotation",
-            "tweaks": "Tweaks"
+            "tweaks": "Tweaks",
+            "feature_switcher": "Feature Switcher"
         }
     }
 }
