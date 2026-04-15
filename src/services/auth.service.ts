@@ -38,9 +38,9 @@ export class AuthService {
     })
   }
 
-  saveTwoFactorToken = (secret: string, username: string, password: string) => {
+  saveTwoFactorToken = (token: string, username: string, password: string) => {
     return this.instance.post("/setup_mfa", {
-      secret,
+      token,
       email: username,
       password,
     })

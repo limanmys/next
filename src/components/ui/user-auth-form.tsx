@@ -85,10 +85,10 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
   const [otpSetup, setOtpSetup] = React.useState(false)
   const [otpData, setOtpData] = React.useState<{
-    secret: string
     image: string
     message: string
   }>()
+  const [otpSetupToken, setOtpSetupToken] = React.useState("")
   const [otpCredentials, setOtpCredentials] = React.useState<{
     username: string
     password: string
@@ -297,11 +297,11 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   }
 
   const saveTwoFactorToken = async (
-    secret: string,
+    token: string,
     username?: string,
     password?: string
   ) => {
-    if (!secret || !username || !password) {
+    if (!token || !username || !password) {
       setError("Kurulum için gerekli bilgiler eksik.")
       return
     }
@@ -309,7 +309,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     try {
       setIsLoading(true)
       authService
-        .saveTwoFactorToken(secret, username, password)
+        .saveTwoFactorToken(token, username, password)
         .then(() => {
           setError("Kurulum başarılı. Tekrar giriş yapınız.")
         })
@@ -525,16 +525,36 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             ></div>
 
             <p className="mt-5 text-center">
-              Google Authenticator uygulamasına QR kodu tarattıktan sonra kaydet
-              düğmesine basınız.
+              Google Authenticator uygulamasına QR kodu tarattıktan sonra
+              doğrulama kodunu girip kurulumu tamamlayınız.
             </p>
 
+            <div className="mt-5 flex justify-center">
+              <InputOTP
+                maxLength={6}
+                value={otpSetupToken}
+                onChange={(val) => setOtpSetupToken(val)}
+              >
+                <InputOTPGroup>
+                  <InputOTPSlot index={0} />
+                  <InputOTPSlot index={1} />
+                  <InputOTPSlot index={2} />
+                </InputOTPGroup>
+                <InputOTPSeparator />
+                <InputOTPGroup>
+                  <InputOTPSlot index={3} />
+                  <InputOTPSlot index={4} />
+                  <InputOTPSlot index={5} />
+                </InputOTPGroup>
+              </InputOTP>
+            </div>
+
             <Button
-              disabled={isLoading}
+              disabled={isLoading || otpSetupToken.length < 6}
               className="mt-8 w-full"
               onClick={() =>
                 saveTwoFactorToken(
-                  otpData?.secret || "",
+                  otpSetupToken,
                   otpCredentials?.username,
                   otpCredentials?.password
                 )
