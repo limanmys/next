@@ -658,7 +658,8 @@
                 "redirect_uri": "Redirect URI-Feld darf nicht leer sein.",
                 "auth_endpoint": "Authorization Endpoint-Feld darf nicht leer sein.",
                 "userinfo_endpoint": "Userinfo Endpoint-Feld darf nicht leer sein.",
-                "token_endpoint": "Token Endpoint-Feld darf nicht leer sein."
+                "token_endpoint": "Token Endpoint-Feld darf nicht leer sein.",
+                "jwks_uri": "JWKS URI-Feld darf nicht leer sein."
             },
             "toast": {
                 "success": {
@@ -690,6 +691,8 @@
                 "userinfo_endpoint_info": "Der Endpunkt zum Abrufen von Benutzerinformationen nach der Authentifizierung (z. B. /userinfo).",
                 "token_endpoint": "Token Endpoint",
                 "token_endpoint_info": "Der Endpunkt zum Austausch von Autorisierungscodes gegen Access-Token (z. B. /oauth/token).",
+                "jwks_uri": "JWKS URI",
+                "jwks_uri_info": "JSON Web Key Set URI-Wert. Die JWKS-Endpunkt-URL, die die öffentlichen Schlüssel Ihres OIDC-Anbieters enthält (z. B. /protocol/openid-connect/certs).",
                 "integration": "Integration aktivieren",
                 "integration_info": "Wenn Sie die Integration aktivieren, können sich Benutzer von Ihrem OIDC-Anbieter bei Liman anmelden.",
                 "save": "Retten"

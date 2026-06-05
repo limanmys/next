@@ -659,7 +659,8 @@
                 "redirect_uri": "Redirect URI alanı boş bırakılamaz.",
                 "auth_endpoint": "Authorization Endpoint alanı boş bırakılamaz.",
                 "userinfo_endpoint": "Userinfo Endpoint alanı boş bırakılamaz.",
-                "token_endpoint": "Token Endpoint alanı boş bırakılamaz."
+                "token_endpoint": "Token Endpoint alanı boş bırakılamaz.",
+                "jwks_uri": "JWKS URI alanı boş bırakılamaz."
             },
             "toast": {
                 "success": {
@@ -691,6 +692,8 @@
                 "userinfo_endpoint_info": "Kimlik doğrulama sonrası kullanıcı bilgilerini almak için kullanılan endpoint (örn: /userinfo).",
                 "token_endpoint": "Token Endpoint",
                 "token_endpoint_info": "Authorization kodlarını access token ile değiştirmek için kullanılan endpoint (örn: /oauth/token).",
+                "jwks_uri": "JWKS URI",
+                "jwks_uri_info": "JSON Web Key Set URI değeri. OIDC sağlayıcınızın ortak anahtarlarını içeren JWKS endpoint URL'si (örn: /protocol/openid-connect/certs).",
                 "integration": "Entegrasyonu Aktifleştir",
                 "integration_info": "Entegrasyonu aktifleştirdiğinizde OIDC sağlayıcınız üzerindeki kullanıcılar Liman'a giriş yapabilecektir.",
                 "save": "Kaydet"

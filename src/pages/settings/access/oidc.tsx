@@ -47,6 +47,7 @@ const AccessOidcPage: NextPageWithLayout = () => {
     token_endpoint: z
       .string()
       .nonempty(t("access.oidc.formScema.token_endpoint")),
+    jwks_uri: z.string().nonempty(t("access.oidc.formScema.jwks_uri")),
     active: z.boolean(),
   })
 
@@ -247,6 +248,29 @@ const AccessOidcPage: NextPageWithLayout = () => {
                     />
                     <small className="italic text-muted-foreground">
                       {t("access.oidc.form.token_endpoint_info")}
+                    </small>
+                  </div>
+                  <FormMessage />
+                </div>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="jwks_uri"
+              render={({ field }) => (
+                <div className="flex flex-col gap-3">
+                  <Label htmlFor="jwks_uri">
+                    {t("access.oidc.form.jwks_uri")}
+                  </Label>
+                  <div className="relative">
+                    <Input
+                      id="jwks_uri"
+                      placeholder="/protocol/openid-connect/certs"
+                      {...field}
+                    />
+                    <small className="italic text-muted-foreground">
+                      {t("access.oidc.form.jwks_uri_info")}
                     </small>
                   </div>
                   <FormMessage />

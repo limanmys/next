@@ -659,7 +659,8 @@
                 "redirect_uri": "Redirect URI field cannot be empty.",
                 "auth_endpoint": "Authorization Endpoint field cannot be empty.",
                 "userinfo_endpoint": "Userinfo Endpoint field cannot be empty.",
-                "token_endpoint": "Token Endpoint field cannot be empty."
+                "token_endpoint": "Token Endpoint field cannot be empty.",
+                "jwks_uri": "JWKS URI field cannot be empty."
             },
             "toast": {
                 "success": {
@@ -691,6 +692,8 @@
                 "userinfo_endpoint_info": "The endpoint used to retrieve user information after authentication (e.g., /userinfo).",
                 "token_endpoint": "Token Endpoint",
                 "token_endpoint_info": "The endpoint used to exchange authorization codes for access tokens (e.g., /oauth/token).",
+                "jwks_uri": "JWKS URI",
+                "jwks_uri_info": "JSON Web Key Set URI value. The JWKS endpoint URL containing your OIDC provider's public keys (e.g., /protocol/openid-connect/certs).",
                 "integration": "Activate Integration",
                 "integration_info": "When you activate integration, users on your OIDC provider will be able to log in to Liman.",
                 "save": "Save"
