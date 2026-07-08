@@ -20,11 +20,6 @@ export interface FeatureFlags {
   settings_health: boolean
 
   // Server sidebar features
-  server_services: boolean
-  server_packages: boolean
-  server_updates: boolean
-  server_user_management: boolean
-  server_open_ports: boolean
   server_access_logs: boolean
 
   // Dashboard widgets
@@ -46,11 +41,6 @@ export const DEFAULT_FEATURES: FeatureFlags = {
   settings_external_notifications: true,
   settings_subscriptions: true,
   settings_health: true,
-  server_services: true,
-  server_packages: true,
-  server_updates: true,
-  server_user_management: true,
-  server_open_ports: true,
   server_access_logs: true,
   dashboard_most_used_extensions: true,
   dashboard_favorite_servers: true,

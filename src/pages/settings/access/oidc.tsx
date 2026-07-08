@@ -9,13 +9,13 @@ import * as z from "zod"
 
 import AccessLayout from "@/components/_layout/access_layout"
 import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
 } from "@/components/form/form"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -47,7 +47,7 @@ const AccessOidcPage: NextPageWithLayout = () => {
     token_endpoint: z
       .string()
       .nonempty(t("access.oidc.formScema.token_endpoint")),
-    jwks_uri: z.string().nonempty(t("access.oidc.formScema.jwks_uri")),
+    jwks_uri: z.string().optional(),
     active: z.boolean(),
   })
 

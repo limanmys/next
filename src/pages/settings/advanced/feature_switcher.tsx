@@ -1,4 +1,3 @@
-import { ReactElement } from "react"
 import { NextPageWithLayout } from "@/pages/_app"
 import {
   DEFAULT_FEATURES,
@@ -7,34 +6,30 @@ import {
 } from "@/providers/feature-provider"
 import {
   BellRing,
-  Download,
   Globe,
   HeartPulse,
   KeyRound,
   Lock,
   LucideIcon,
   Mail,
-  Network,
-  Package,
   Puzzle,
   RotateCcw,
   Rss,
   Save,
   ScrollText,
-  Server,
   ShieldCheck,
   Star,
   TrendingUp,
-  UserCog,
-  Users,
+  Users
 } from "lucide-react"
+import { ReactElement } from "react"
 import { useTranslation } from "react-i18next"
 
+import AdvancedLayout from "@/components/_layout/advanced_layout"
 import { Button } from "@/components/ui/button"
 import PageHeader from "@/components/ui/page-header"
 import { Switch } from "@/components/ui/switch"
 import { useToast } from "@/components/ui/use-toast"
-import AdvancedLayout from "@/components/_layout/advanced_layout"
 
 interface FeatureGroup {
   titleKey: string
@@ -157,43 +152,6 @@ const FeatureSwitcherPage: NextPageWithLayout = () => {
       titleKey: "advanced.feature_switcher.groups.server.title",
       descriptionKey: "advanced.feature_switcher.groups.server.description",
       features: [
-        {
-          key: "server_services",
-          labelKey: "advanced.feature_switcher.features.server_services.label",
-          descriptionKey:
-            "advanced.feature_switcher.features.server_services.description",
-          icon: Server,
-        },
-        {
-          key: "server_packages",
-          labelKey: "advanced.feature_switcher.features.server_packages.label",
-          descriptionKey:
-            "advanced.feature_switcher.features.server_packages.description",
-          icon: Package,
-        },
-        {
-          key: "server_updates",
-          labelKey: "advanced.feature_switcher.features.server_updates.label",
-          descriptionKey:
-            "advanced.feature_switcher.features.server_updates.description",
-          icon: Download,
-        },
-        {
-          key: "server_user_management",
-          labelKey:
-            "advanced.feature_switcher.features.server_user_management.label",
-          descriptionKey:
-            "advanced.feature_switcher.features.server_user_management.description",
-          icon: UserCog,
-        },
-        {
-          key: "server_open_ports",
-          labelKey:
-            "advanced.feature_switcher.features.server_open_ports.label",
-          descriptionKey:
-            "advanced.feature_switcher.features.server_open_ports.description",
-          icon: Network,
-        },
         {
           key: "server_access_logs",
           labelKey:

@@ -1,5 +1,5 @@
 import { http } from "@/services"
-import { Link2, Server } from "lucide-react"
+import { Server } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
@@ -33,26 +33,13 @@ export default function Servers() {
       enableSorting: true,
       enableHiding: true,
       cell: ({ row }) => {
-        const linkUrl = row.original.os === "kubernetes"
-          ? `/servers/${row.original.id}/container`
-          : `/servers/${row.original.id}`
-
-        const nameContent = user.permissions.server_details && (row.original.type != "none" || row.original.os === "kubernetes") ? (
-          <Link href={linkUrl}>
-            {row.original.name}
-            <Link2 className="ml-2 inline-block size-4" />
-          </Link>
-        ) : (
-          row.original.name
-        )
-
         return (
           <>
             <TypeIcon
               type={row.original.os}
               className="inline-block mr-2 size-4"
             />
-            {nameContent}
+            {row.original.name}
           </>
         )
       },

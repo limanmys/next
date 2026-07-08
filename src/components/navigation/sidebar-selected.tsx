@@ -2,21 +2,17 @@ import { useSidebarContext } from "@/providers/sidebar-provider"
 import { http } from "@/services"
 import axios, { CancelTokenSource } from "axios"
 import {
-  ChevronRight,
   CircleDot,
   ContainerIcon,
   FileClock,
-  Network,
   PackageOpen,
-  PackageSearch,
-  ServerCog,
+  Plus,
   Star,
   ToyBrick,
-  TrendingUp,
-  Users,
 } from "lucide-react"
 import Link from "next/link"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useRouter } from "next/router"
+import { type ReactNode, useCallback, useEffect, useRef } from "react"
 import { useTranslation } from "react-i18next"
 
 import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
@@ -25,13 +21,8 @@ import { useFeature } from "@/providers/feature-provider"
 import { IExtension } from "@/types/extension"
 import { IServer } from "@/types/server"
 
-import TypeIcon from "../type-icon"
 import { Button } from "../ui/button"
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "../ui/collapsible"
+import TypeIcon from "../type-icon"
 import { Skeleton } from "../ui/skeleton"
 import {
   Tooltip,
@@ -40,7 +31,6 @@ import {
   TooltipTrigger,
 } from "../ui/tooltip"
 import ExtensionItem from "./extension-item"
-import ServerItem from "./server-item"
 
 export default function SidebarSelected() {
   const {
@@ -53,9 +43,7 @@ export default function SidebarSelected() {
   const user = useCurrentUser()
   const { t } = useTranslation("common")
   const { isEnabled } = useFeature()
-
-  const [isCollapsed, setIsCollapsed] = useState(true)
-  const [isUserCollapsed, setIsUserCollapsed] = useState(true)
+  const router = useRouter()
 
   const cancelToken = useRef<CancelTokenSource | undefined>(undefined)
 
@@ -102,67 +90,32 @@ export default function SidebarSelected() {
     [setSelectedData]
   )
 
-  const elementIsActive = useCallback((): boolean => {
-    return !(selectedData.is_online && selectedData.can_run_command)
-  }, [selectedData])
+  const hasExtensions =
+    selectedData.extensions && selectedData.extensions.length > 0
+  const showAccessLogs =
+    user.permissions.view_logs && isEnabled("server_access_logs")
+  const showContainerStatus =
+    user.permissions.server_details && selectedData.os === "kubernetes"
 
-  const toggleCollapsed = () => {
-    setIsCollapsed(!isCollapsed)
-    localStorage.setItem("serverSettingsCollapsed", (!isCollapsed).toString())
-  }
-
-  // Toggle user operations
-  const toggleUserCollapsed = () => {
-    setIsUserCollapsed(!isUserCollapsed)
-  }
-
-  useEffect(() => {
-    setIsCollapsed(localStorage.getItem("serverSettingsCollapsed") == "true")
-  }, [])
-
-  const collapsibleUserData = [
-    {
-      link: `/servers/${selected}/users/local`,
-      name: t("sidebar.user_management.local_users"),
-      exact: true,
-    },
-    {
-      link: `/servers/${selected}/users/groups`,
-      name: t("sidebar.user_management.local_groups"),
-      exact: true,
-    },
-    {
-      link: `/servers/${selected}/users/sudoers`,
-      name: t("sidebar.user_management.sudoers"),
-      exact: true,
-      disabled: selectedData.os === "windows",
-    },
-  ]
+  const isActive = (link: string, exact?: boolean) =>
+    exact ? router.asPath === link : router.asPath.includes(link)
 
   return (
     <>
       {selectedLoading ? (
         <div>
-          <div className="relative mb-3 flex px-2">
-            <Skeleton className="size-8 rounded" />
-            <div className="pl-3">
-              <h2 className="text-lg font-semibold tracking-tight">
-                <Skeleton className="h-6 w-36 rounded" />
-              </h2>
-              <span className="text-xs text-slate-500">
-                <Skeleton className="mt-1 h-3 w-24 rounded" />
-              </span>
+          <div className="mb-3 flex items-center px-2">
+            <Skeleton className="size-8 shrink-0 rounded" />
+            <div className="min-w-0 flex-1 pl-3">
+              <Skeleton className="h-5 w-28 rounded" />
+              <Skeleton className="mt-1 h-3 w-20 rounded" />
             </div>
-            <Skeleton className="absolute right-0 top-0 size-4 rounded-full" />
+            <div className="grid shrink-0 grid-cols-2 gap-1 pl-2">
+              {[...Array(4)].map((_, i) => (
+                <Skeleton className="size-4 rounded-full" key={i} />
+              ))}
+            </div>
           </div>
-          <div className="space-y-1 p-2">
-            {[...Array(8)].map((_, i) => (
-              <Skeleton className="h-9 w-full rounded-full" key={i} />
-            ))}
-          </div>
-          <h2 className="mb-2 mt-5 px-2 text-lg font-semibold tracking-tight">
-            {t("sidebar.extensions")}
-          </h2>
           <div className="space-y-1 p-2">
             {[...Array(3)].map((_, i) => (
               <Skeleton className="h-9 w-full rounded-full" key={i} />
@@ -171,239 +124,165 @@ export default function SidebarSelected() {
         </div>
       ) : (
         <>
-          <div className="relative mb-3 flex px-2">
-            <TypeIcon type={selectedData.os} className="size-8" />
-            <div className="pl-3">
-              <h2 className="-my-1 text-lg font-semibold tracking-tight">
+          <div className="mb-3 flex items-center px-2">
+            <TypeIcon
+              type={selectedData.os}
+              className="size-8 shrink-0"
+            />
+            <div className="min-w-0 flex-1 pl-3">
+              <h2 className="truncate text-lg font-semibold tracking-tight">
                 {selectedData.name}
               </h2>
-              <span className="text-xs text-slate-500">
+              <span className="text-xs text-muted-foreground">
                 {selectedData.ip_address}
               </span>
             </div>
-            <CircleDot
-              className={cn(
-                "absolute right-0 top-px size-4",
-                selectedData.is_online ? "text-green-500" : "text-red-500"
-              )}
-            />
-            <TooltipProvider>
-              <Tooltip delayDuration={200}>
-                <TooltipTrigger asChild>
-                  <Star
-                    className={cn(
-                      "absolute right-0 top-6 size-4",
-                      selectedData.is_favorite
-                        ? "text-yellow-500"
-                        : "text-gray-500"
+            <div className="grid shrink-0 grid-cols-[auto_auto] gap-x-1 gap-y-1 pl-2">
+              <div className="flex items-center gap-0.5">
+                {showContainerStatus && (
+                  <HeaderIcon
+                    href={`/servers/${selected}/container`}
+                    label={t("sidebar.container_status")}
+                    active={isActive(
+                      `/servers/${selected}/container`,
+                      true
                     )}
-                    onClick={() => toggleFavorite(selectedData.id)}
-                  />
-                </TooltipTrigger>
-                <TooltipContent>{t("sidebar.favorite")}</TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
-          <div>
-            {user.permissions.server_details && (
-              <>
-                {selectedData.os === "kubernetes" ? (
-                  <ServerItem
-                    link={`/servers/${selected}/container`}
-                    exact={true}
                     disabled={!selectedData.is_online}
                   >
-                    <ContainerIcon className="mr-2 size-4" />
-                    {t("sidebar.container_status")}
-                  </ServerItem>
-                ) : <ServerItem
-                  link={`/servers/${selected}`}
-                  exact={true}
-                  disabled={elementIsActive()}
-                >
-                  <TrendingUp className="mr-2 size-4" />
-                  {t("sidebar.system_status")}
-                </ServerItem>}
-
-                <ServerItem
-                  link={`/servers/${selected}/extensions`}
-                  exact={true}
-                  disabled={!selectedData.is_online}
-                >
-                  <ToyBrick className="mr-2 size-4" />
-                  {t("sidebar.extensions")}
-                </ServerItem>
-                {user.permissions.view_logs && selectedData.os === "kubernetes" && isEnabled("server_access_logs") && (
-                  <ServerItem
-                    link={`/servers/${selected}/access_logs`}
-                    disabled={!selectedData.is_online}
-                  >
-                    <FileClock className="mr-2 size-4" />
-                    {t("sidebar.access_logs")}
-                  </ServerItem>
+                    <ContainerIcon className="size-3.5" />
+                  </HeaderIcon>
                 )}
-              </>
-            )}
-
-            {(user.permissions.server_services ||
-              user.permissions.server_details ||
-              user.permissions.view_logs) && selectedData.os !== "kubernetes" && (
-                <Collapsible open={!isCollapsed}>
-                  <CollapsibleTrigger
-                    className="mt-3 w-full px-2 text-left"
-                    onClick={toggleCollapsed}
+                <div className="flex size-6 items-center justify-center">
+                  <CircleDot
+                    className={cn(
+                      "size-3.5",
+                      selectedData.is_online
+                        ? "text-green-500"
+                        : "text-red-500"
+                    )}
+                  />
+                </div>
+              </div>
+              <div className="flex items-center justify-end">
+                <TooltipProvider>
+                  <Tooltip delayDuration={200}>
+                    <TooltipTrigger asChild>
+                      <button
+                        className="flex size-6 items-center justify-center rounded-md transition-colors hover:bg-accent"
+                        onClick={() => toggleFavorite(selectedData.id)}
+                      >
+                        <Star
+                          className={cn(
+                            "size-3.5",
+                            selectedData.is_favorite
+                              ? "text-yellow-500"
+                              : "text-muted-foreground"
+                          )}
+                        />
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      {t("sidebar.favorite")}
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+              <div className="flex items-center">
+                {user.permissions.server_details && (
+                  <HeaderIcon
+                    href={`/servers/${selected}/extensions`}
+                    label={t("sidebar.manage_extensions")}
+                    active={isActive(
+                      `/servers/${selected}/extensions`,
+                      true
+                    )}
                   >
-                    <div className="flex items-center justify-between">
-                      <h2 className="text-lg font-semibold tracking-tight">
-                        {t("sidebar.management")}
-                      </h2>
-                      <ChevronRight
-                        className={cn(
-                          "size-4 transition-transform",
-                          !isCollapsed && "rotate-90"
-                        )}
-                      />
-                    </div>
-                  </CollapsibleTrigger>
-
-                  <CollapsibleContent className="animated-collapsible mt-3">
-                    {user.permissions.server_services && isEnabled("server_services") && (
-                      <ServerItem
-                        link={`/servers/${selected}/services`}
-                        disabled={elementIsActive()}
-                      >
-                        <ServerCog className="mr-2 size-4" />
-                        {t("sidebar.services")}
-                      </ServerItem>
-                    )}
-                    {user.permissions.server_details && (
-                      <>
-                        {isEnabled("server_packages") && (
-                        <ServerItem
-                          link={`/servers/${selected}/packages`}
-                          disabled={
-                            elementIsActive() || selectedData.os === "windows"
-                          }
-                        >
-                          <PackageOpen className="mr-2 size-4" />
-                          {t("sidebar.packages")}
-                        </ServerItem>
-                        )}
-                        {isEnabled("server_updates") && (
-                        <ServerItem
-                          link={`/servers/${selected}/updates`}
-                          disabled={
-                            elementIsActive() || selectedData.os === "windows"
-                          }
-                        >
-                          <PackageSearch className="mr-2 size-4" />
-                          {t("sidebar.updates")}
-                        </ServerItem>
-                        )}
-                        {isEnabled("server_user_management") && (
-                        <div className="mb-1">
-                          <Collapsible
-                            open={!isUserCollapsed}
-                            onOpenChange={toggleUserCollapsed}
-                            disabled={elementIsActive()}
-                          >
-                            <CollapsibleTrigger className="w-full">
-                              <Button
-                                variant={isUserCollapsed ? "ghost" : "secondary"}
-                                size="sm"
-                                className="relative flex w-full justify-between"
-                                onClick={toggleUserCollapsed}
-                                disabled={elementIsActive()}
-                                as={!elementIsActive() ? "div" : "button"}
-                              >
-                                <div className="flex items-center">
-                                  <Users className="mr-2 size-4" />
-                                  {t("sidebar.user_management.title")}
-                                </div>
-                                <ChevronRight
-                                  className={cn(
-                                    "size-4 transition-transform",
-                                    !isUserCollapsed && "rotate-90"
-                                  )}
-                                />
-                              </Button>
-                            </CollapsibleTrigger>
-                            <CollapsibleContent className="animated-collapsible">
-                              <div className="my-1 flex flex-col gap-y-[3px] rounded-md border p-1">
-                                {collapsibleUserData.map((item) => (
-                                  <Link href={item.link} key={item.link}>
-                                    <Button
-                                      variant={
-                                        item.exact
-                                          ? item.link === window.location.pathname
-                                            ? "secondary"
-                                            : "ghost"
-                                          : window.location.pathname.includes(
-                                            item.link
-                                          )
-                                            ? "secondary"
-                                            : "ghost"
-                                      }
-                                      size="sm"
-                                      className="w-full justify-start"
-                                      disabled={item.disabled}
-                                    >
-                                      {item.name}
-                                    </Button>
-                                  </Link>
-                                ))}
-                              </div>
-                            </CollapsibleContent>
-                          </Collapsible>
-                        </div>
-                        )}
-                        {isEnabled("server_open_ports") && (
-                        <ServerItem
-                          link={`/servers/${selected}/open_ports`}
-                          disabled={
-                            elementIsActive() || selectedData.os === "windows"
-                          }
-                        >
-                          <Network className="mr-2 size-4" />
-                          {t("sidebar.open_ports")}
-                        </ServerItem>
-                        )}
-                      </>
-                    )}
-
-                    {user.permissions.view_logs && isEnabled("server_access_logs") && (
-                      <ServerItem
-                        link={`/servers/${selected}/access_logs`}
-                        disabled={!selectedData.is_online}
-                      >
-                        <FileClock className="mr-2 size-4" />
-                        {t("sidebar.access_logs")}
-                      </ServerItem>
-                    )}
-                  </CollapsibleContent>
-                </Collapsible>
-              )}
+                    <ToyBrick className="size-3.5" />
+                  </HeaderIcon>
+                )}
+              </div>
+              <div className="flex items-center justify-end">
+                {showAccessLogs && (
+                  <HeaderIcon
+                    href={`/servers/${selected}/access_logs`}
+                    label={t("sidebar.access_logs")}
+                    active={isActive(`/servers/${selected}/access_logs`)}
+                    disabled={!selectedData.is_online}
+                  >
+                    <FileClock className="size-3.5" />
+                  </HeaderIcon>
+                )}
+              </div>
+            </div>
           </div>
 
-          {selectedData.extensions && selectedData.extensions.length > 0 && (
-            <>
-              <h2 className="mb-2 mt-5 px-2 text-lg font-semibold tracking-tight">
-                {t("sidebar.extensions")}
-              </h2>
-              <div className="space-y-1">
-                {selectedData.extensions.map((extension: IExtension) => (
-                  <ExtensionItem
-                    key={extension.id}
-                    extension={extension}
-                    server_id={selected}
-                    disabled={!selectedData.is_online}
-                  />
-                ))}
-              </div>
-            </>
-          )}
+          {hasExtensions ? (
+            <div className="space-y-1">
+              {selectedData.extensions.map((extension: IExtension) => (
+                <ExtensionItem
+                  key={extension.id}
+                  extension={extension}
+                  server_id={selected}
+                  disabled={!selectedData.is_online}
+                />
+              ))}
+            </div>
+          ) : user.permissions.server_details ? (
+            <div className="mx-1 flex flex-col items-center gap-2 rounded-lg border border-dashed p-4 text-center">
+              <PackageOpen className="size-6 text-muted-foreground" />
+              <p className="text-xs text-muted-foreground">
+                {t("sidebar.no_extensions")}
+              </p>
+              <Link href={`/servers/${selected}/extensions`}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="h-7 gap-1 text-xs"
+                >
+                  <Plus className="size-3" />
+                  {t("sidebar.add_extension")}
+                </Button>
+              </Link>
+            </div>
+          ) : null}
         </>
       )}
     </>
+  )
+}
+
+function HeaderIcon({
+  href,
+  label,
+  active,
+  disabled,
+  children,
+}: {
+  href: string
+  label: string
+  active: boolean
+  disabled?: boolean
+  children: ReactNode
+}) {
+  return (
+    <TooltipProvider>
+      <Tooltip delayDuration={200}>
+        <TooltipTrigger asChild>
+          <Link
+            href={href}
+            className={cn(
+              "flex size-6 items-center justify-center rounded-md transition-colors",
+              active
+                ? "bg-secondary text-secondary-foreground"
+                : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
+              disabled && "pointer-events-none opacity-50"
+            )}
+          >
+            {children}
+          </Link>
+        </TooltipTrigger>
+        <TooltipContent>{label}</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   )
 }

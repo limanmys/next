@@ -53,6 +53,9 @@
         },
         "open_ports": "Açık Portlar",
         "access_logs": "Erişim Kayıtları",
+        "no_extensions": "Bu sunucuda henüz eklenti bulunmuyor.",
+        "add_extension": "Eklenti Ekle",
+        "manage_extensions": "Eklentileri Yönet",
         "settings": {
             "title": "Ayarlar",
             "user": "Kullanıcı Ayarları",

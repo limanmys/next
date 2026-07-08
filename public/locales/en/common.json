@@ -53,6 +53,9 @@
         },
         "open_ports": "Open Ports",
         "access_logs": "Access Logs",
+        "no_extensions": "No extensions installed on this server yet.",
+        "add_extension": "Add Extension",
+        "manage_extensions": "Manage Extensions",
         "settings": {
             "title": "Settings",
             "user": "User Settings",

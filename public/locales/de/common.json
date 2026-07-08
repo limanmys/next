@@ -53,6 +53,9 @@
         },
         "open_ports": "Offene Ports",
         "access_logs": "Zugriffsprotokolle",
+        "no_extensions": "Noch keine Erweiterungen auf diesem Server installiert.",
+        "add_extension": "Erweiterung hinzufügen",
+        "manage_extensions": "Erweiterungen verwalten",
         "settings": {
             "title": "Einstellungen",
             "user": "Benutzereinstellungen",
