@@ -20,14 +20,25 @@ export interface IServer {
   can_run_command: boolean
 }
 
+export interface ISshHostKeyChallenge {
+  code: "SSH_HOST_KEY_UNKNOWN" | "SSH_HOST_KEY_MISMATCH"
+  host: string
+  port: number
+  key_type: string
+  fingerprint: string
+  trusted_fingerprints: string[]
+  can_approve?: boolean
+  message: string
+}
+
 export interface IMenu {
   name:
-  | string
-  | {
-    tr: string
-    en: string
-    de: string
-  }
+    | string
+    | {
+        tr: string
+        en: string
+        de: string
+      }
   url: string
   icon: string | undefined
   children?: IMenu[]

@@ -501,6 +501,16 @@
             }
         }
     },
+    "ssh_host_key": {
+        "title": "SSH sunucu kimliğini doğrulayın",
+        "description": "Aşağıdaki parmak izini sunucu konsolu veya güvenilir bir envanter kaydıyla karşılaştırın.",
+        "mismatch": "SSH sunucu kimliği daha önce güvenilen anahtardan farklı. Planlı bir anahtar değişimi olduğunu bağımsız olarak doğrulayın.",
+        "warning": "Parmak izi eşleşmiyorsa bağlantıyı onaylamayın.",
+        "cancel": "İptal",
+        "approve": "Doğruladım ve güveniyorum",
+        "replace": "Değişikliği doğruladım",
+        "approval_error": "SSH sunucu anahtarı onaylanamadı. Anahtar değişmiş olabilir."
+    },
     "kubernetes": {
         "deployment_specs": "Deployment Özellikleri",
         "deployment_details": "Deployment Detayları",

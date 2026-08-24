@@ -1,6 +1,7 @@
 import { useSidebarContext } from "@/providers/sidebar-provider"
 import { http } from "@/services"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
+import { isAxiosError } from "axios"
 import { ChevronLeft, ChevronRight, PlusCircle, Server } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/router"
@@ -12,6 +13,16 @@ import GeneralSettings from "@/components/server/create-server/general-settings"
 import KeyInputs from "@/components/server/create-server/key"
 import KeySelection from "@/components/server/create-server/key-selection"
 import Summary from "@/components/server/create-server/summary"
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Icons } from "@/components/ui/icons"
@@ -19,6 +30,20 @@ import PageHeader from "@/components/ui/page-header"
 import Steps from "@/components/ui/steps"
 import { useToast } from "@/components/ui/use-toast"
 import { opacityAnimation } from "@/lib/anim"
+import { ISshHostKeyChallenge } from "@/types/server"
+
+function isSshHostKeyChallenge(value: unknown): value is ISshHostKeyChallenge {
+    if (typeof value !== "object" || value === null) return false
+
+    const challenge = value as Partial<ISshHostKeyChallenge>
+    return (
+        (challenge.code === "SSH_HOST_KEY_UNKNOWN" ||
+            challenge.code === "SSH_HOST_KEY_MISMATCH") &&
+        typeof challenge.host === "string" &&
+        typeof challenge.port === "number" &&
+        typeof challenge.fingerprint === "string"
+    )
+}
 
 export default function ServerCreatePage() {
     const { toast } = useToast()
@@ -30,6 +55,10 @@ export default function ServerCreatePage() {
     const [data, setData] = useState<any>({})
     const [loading, setLoading] = useState<boolean>(false)
     const [step, setStep] = useState<number>(0)
+    const [hostKeyChallenge, setHostKeyChallenge] =
+        useState<ISshHostKeyChallenge | null>(null)
+    const [pendingHostKeyData, setPendingHostKeyData] =
+        useState<Record<string, unknown> | null>(null)
     const steps = [
         {
             name: t("create.steps.connection_information.name"),
@@ -105,10 +134,25 @@ export default function ServerCreatePage() {
                         isValid: res.status === 200,
                         message: res.data,
                     }
-                } catch (e: any) {
+                } catch (e: unknown) {
+                    if (
+                        isAxiosError(e) &&
+                        e.response?.status === 409 &&
+                        isSshHostKeyChallenge(e.response.data)
+                    ) {
+                        return {
+                            isValid: false,
+                            message: {},
+                            hostKeyChallenge: e.response.data,
+                        }
+                    }
+
                     return {
-                        isValid: e.response?.status === 200,
-                        message: e.response?.data,
+                        isValid: false,
+                        message:
+                            isAxiosError(e) && typeof e.response?.data === "object"
+                                ? e.response.data
+                                : {},
                     }
                 }
             },
@@ -138,11 +182,21 @@ export default function ServerCreatePage() {
 
         setTimeout(async () => {
             if (formRef.formState.isValid) {
-                setData({ ...data, ...formRef.getValues() })
-                const validator = await steps[step].validation({
+                const currentData = {
                     ...data,
                     ...formRef.getValues(),
-                })
+                }
+                setData(currentData)
+                const validator = await steps[step].validation(currentData)
+                if (
+                    "hostKeyChallenge" in validator &&
+                    isSshHostKeyChallenge(validator.hostKeyChallenge)
+                ) {
+                    setPendingHostKeyData(currentData)
+                    setHostKeyChallenge(validator.hostKeyChallenge)
+                    setLoading(false)
+                    return
+                }
                 if (!validator.isValid) {
                     Object.keys(validator.message).forEach((key) => {
                         formRef.setError(key, {
@@ -181,6 +235,32 @@ export default function ServerCreatePage() {
             }
             setLoading(false)
         }, 250)
+    }
+
+    const approveHostKey = async () => {
+        if (!hostKeyChallenge || !pendingHostKeyData) return
+
+        setLoading(true)
+        try {
+            await http.post("/servers/check_connection", {
+                ...pendingHostKeyData,
+                approve_host_key: true,
+                replace_host_key:
+                    hostKeyChallenge.code === "SSH_HOST_KEY_MISMATCH",
+                host_key_fingerprint: hostKeyChallenge.fingerprint,
+            })
+            setHostKeyChallenge(null)
+            setPendingHostKeyData(null)
+            setStep(step + 1)
+        } catch {
+            toast({
+                title: t("error"),
+                description: t("ssh_host_key.approval_error"),
+                variant: "destructive",
+            })
+        } finally {
+            setLoading(false)
+        }
     }
 
     const createServer = () => {
@@ -278,6 +358,63 @@ export default function ServerCreatePage() {
                     </div>
                 </div>
             </div>
+            <AlertDialog
+                open={hostKeyChallenge !== null}
+                onOpenChange={(open) => {
+                    if (!open && !loading) {
+                        setHostKeyChallenge(null)
+                        setPendingHostKeyData(null)
+                    }
+                }}
+            >
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>{t("ssh_host_key.title")}</AlertDialogTitle>
+                        <AlertDialogDescription asChild>
+                            <div className="space-y-3">
+                                <p>
+                                    {hostKeyChallenge?.code === "SSH_HOST_KEY_MISMATCH"
+                                        ? t("ssh_host_key.mismatch")
+                                        : t("ssh_host_key.description")}
+                                </p>
+                                <div
+                                    className="rounded-md border bg-muted p-3 font-mono text-xs"
+                                    dir="ltr"
+                                >
+                                    <div>
+                                        {hostKeyChallenge?.host}:{hostKeyChallenge?.port}
+                                    </div>
+                                    <div className="mt-2 break-all">
+                                        {hostKeyChallenge?.fingerprint}
+                                    </div>
+                                </div>
+                                <p className="font-medium text-destructive">
+                                    {t("ssh_host_key.warning")}
+                                </p>
+                            </div>
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel disabled={loading}>
+                            {t("ssh_host_key.cancel")}
+                        </AlertDialogCancel>
+                        <AlertDialogAction
+                            disabled={loading}
+                            onClick={(event) => {
+                                event.preventDefault()
+                                void approveHostKey()
+                            }}
+                        >
+                            {loading && (
+                                <Icons.spinner className="mr-2 size-4 animate-spin" />
+                            )}
+                            {hostKeyChallenge?.code === "SSH_HOST_KEY_MISMATCH"
+                                ? t("ssh_host_key.replace")
+                                : t("ssh_host_key.approve")}
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </>
     )
 }

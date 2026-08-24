@@ -188,6 +188,22 @@
             "add_license": "Lizenz hinzufügen",
             "download": "Herunterladen",
             "delete": "Löschen",
+            "ssh_host_key": {
+                "button": "SSH-Identität prüfen",
+                "title": "SSH-Serveridentität bestätigen",
+                "mismatch_title": "Der SSH-Schlüssel wurde geändert — möchten Sie wirklich fortfahren?",
+                "trusted_title": "SSH-Serveridentität geprüft",
+                "description": "Für diesen Endpunkt ist noch kein vertrauenswürdiger SSH-Hostschlüssel gespeichert.",
+                "trusted_description": "Der vom Server präsentierte SSH-Hostschlüssel stimmt mit dem vertrauenswürdigen Datenbankeintrag überein.",
+                "mismatch": "Der präsentierte SSH-Hostschlüssel unterscheidet sich vom bisher vertrauenswürdigen Schlüssel. Dies kann auf einen Angriff oder einen legitimen Schlüsselwechsel hinweisen.",
+                "warning": "Bestätigen Sie ihn erst nach dem Vergleich mit der Serverkonsole oder einer anderen vertrauenswürdigen Inventarquelle.",
+                "permission": "Diese Änderung betrifft alle Benutzer und HA-Knoten. Ein Benutzer mit der Berechtigung zum Aktualisieren von Servern muss den Schlüssel bestätigen.",
+                "approve": "Geprüft und vertrauenswürdig",
+                "replace": "Geprüft; Schlüssel ersetzen",
+                "cancel": "Schließen",
+                "success": "Der vertrauenswürdige SSH-Hostschlüssel wurde aktualisiert.",
+                "error": "Der SSH-Hostschlüssel konnte nicht geprüft werden."
+            },
             "license": {
                 "title": "Lizenz hinzufügen",
                 "description": "Geben Sie die von HAVELSAN A.Ş. zur Verfügung gestellte Lizenz für Ihre Erweiterung ein.",

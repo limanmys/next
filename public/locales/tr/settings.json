@@ -189,6 +189,22 @@
             "add_license": "Lisans Ekle",
             "download": "İndir",
             "delete": "Sil",
+            "ssh_host_key": {
+                "button": "SSH kimliğini doğrula",
+                "title": "SSH sunucu kimliğini onaylayın",
+                "mismatch_title": "SSH anahtarı değişti — devam etmek istediğinizden emin misiniz?",
+                "trusted_title": "SSH sunucu kimliği doğrulandı",
+                "description": "Bu endpoint için henüz güvenilen bir SSH host key bulunmuyor.",
+                "trusted_description": "Sunucunun sunduğu SSH host key veritabanındaki güvenilen kayıtla eşleşiyor.",
+                "mismatch": "Sunucunun sunduğu SSH host key daha önce güvenilen anahtardan farklı. Bu durum saldırı veya meşru bir anahtar değişimi olabilir.",
+                "warning": "Parmak izini sunucu konsolu ya da güvenilir bir envanter kaydıyla karşılaştırmadan onaylamayın.",
+                "permission": "Bu değişiklik tüm kullanıcıları ve HA düğümlerini etkiler. Devam etmek için sunucu güncelleme yetkisine sahip bir kullanıcı anahtarı onaylamalıdır.",
+                "approve": "Doğruladım ve güveniyorum",
+                "replace": "Doğruladım ve anahtarı değiştir",
+                "cancel": "Kapat",
+                "success": "SSH host key güven kaydı güncellendi.",
+                "error": "SSH host key doğrulanamadı."
+            },
             "license": {
                 "title": "Lisans Ekle",
                 "description": "Eklentiniz için size HAVELSAN A.Ş. tarafından sağlanan lisansı bu kısma giriniz.",

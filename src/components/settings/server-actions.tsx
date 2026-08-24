@@ -1,10 +1,14 @@
+import { useState } from "react"
 import { useSidebarContext } from "@/providers/sidebar-provider"
 import { http } from "@/services"
 import { Row } from "@tanstack/react-table"
-import { Edit2, Key, MoreHorizontal, Trash } from "lucide-react"
-import { useState } from "react"
+import { isAxiosError } from "axios"
+import { Edit2, Key, MoreHorizontal, ShieldCheck, Trash } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
+import { IServer, ISshHostKeyChallenge } from "@/types/server"
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
+import { useEmitter } from "@/hooks/useEmitter"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,9 +27,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
-import { useEmitter } from "@/hooks/useEmitter"
-import { IServer } from "@/types/server"
 
 import {
   Dialog,
@@ -43,9 +44,39 @@ import { useToast } from "../ui/use-toast"
 export function ServerRowActions({ row }: { row: Row<IServer> }) {
   const server = row.original
   const user = useCurrentUser()
+  const { toast } = useToast()
   const [deleteDialog, setDeleteDialog] = useState(false)
   const [editDialog, setEditDialog] = useState(false)
+  const [hostKeyDialog, setHostKeyDialog] = useState(false)
+  const [hostKeyChallenge, setHostKeyChallenge] =
+    useState<ISshHostKeyChallenge | null>(null)
+  const [hostKeyLoading, setHostKeyLoading] = useState(false)
   const { t } = useTranslation("settings")
+
+  const checkHostKey = async () => {
+    setHostKeyLoading(true)
+    try {
+      await http.post(`/servers/${server.id}/ssh_host_key`)
+      setHostKeyChallenge(null)
+      setHostKeyDialog(true)
+    } catch (error: unknown) {
+      if (
+        isAxiosError<ISshHostKeyChallenge>(error) &&
+        error.response?.status === 409
+      ) {
+        setHostKeyChallenge(error.response.data)
+        setHostKeyDialog(true)
+      } else {
+        toast({
+          title: t("error"),
+          description: t("servers.actions.ssh_host_key.error"),
+          variant: "destructive",
+        })
+      }
+    } finally {
+      setHostKeyLoading(false)
+    }
+  }
 
   return (
     user.permissions.update_server && (
@@ -65,6 +96,12 @@ export function ServerRowActions({ row }: { row: Row<IServer> }) {
               <Edit2 className="mr-2 size-3.5" />
               {t("servers.actions.edit_btn")}
             </DropdownMenuItem>
+            {["ssh", "ssh_certificate"].includes(server.type) && (
+              <DropdownMenuItem onClick={() => void checkHostKey()}>
+                <ShieldCheck className="mr-2 size-3.5" />
+                {t("servers.actions.ssh_host_key.button")}
+              </DropdownMenuItem>
+            )}
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => setDeleteDialog(true)}>
               <Trash className="mr-2 size-3.5" />
@@ -78,8 +115,125 @@ export function ServerRowActions({ row }: { row: Row<IServer> }) {
           server={server}
         />
         <Edit open={editDialog} setOpen={setEditDialog} server={server} />
+        <SshHostKeyApproval
+          open={hostKeyDialog}
+          setOpen={setHostKeyDialog}
+          server={server}
+          challenge={hostKeyChallenge}
+          loading={hostKeyLoading}
+        />
       </>
     )
+  )
+}
+
+function SshHostKeyApproval({
+  open,
+  setOpen,
+  server,
+  challenge,
+  loading,
+}: {
+  open: boolean
+  setOpen: (open: boolean) => void
+  server: IServer
+  challenge: ISshHostKeyChallenge | null
+  loading: boolean
+}) {
+  const { toast } = useToast()
+  const { t } = useTranslation("settings")
+  const [approving, setApproving] = useState(false)
+
+  const approve = async () => {
+    if (!challenge) return
+
+    setApproving(true)
+    try {
+      await http.post(`/servers/${server.id}/ssh_host_key`, {
+        approve_host_key: true,
+        replace_host_key: challenge.code === "SSH_HOST_KEY_MISMATCH",
+        host_key_fingerprint: challenge.fingerprint,
+      })
+      toast({
+        title: t("success"),
+        description: t("servers.actions.ssh_host_key.success"),
+      })
+      setOpen(false)
+    } catch {
+      toast({
+        title: t("error"),
+        description: t("servers.actions.ssh_host_key.error"),
+        variant: "destructive",
+      })
+    } finally {
+      setApproving(false)
+    }
+  }
+
+  return (
+    <AlertDialog open={open} onOpenChange={setOpen}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>
+            {challenge?.code === "SSH_HOST_KEY_MISMATCH"
+              ? t("servers.actions.ssh_host_key.mismatch_title")
+              : challenge
+                ? t("servers.actions.ssh_host_key.title")
+                : t("servers.actions.ssh_host_key.trusted_title")}
+          </AlertDialogTitle>
+          <AlertDialogDescription asChild>
+            <div className="space-y-3">
+              {challenge ? (
+                <>
+                  <p>
+                    {challenge.code === "SSH_HOST_KEY_MISMATCH"
+                      ? t("servers.actions.ssh_host_key.mismatch")
+                      : t("servers.actions.ssh_host_key.description")}
+                  </p>
+                  <div
+                    className="rounded-md border bg-muted p-3 font-mono text-xs"
+                    dir="ltr"
+                  >
+                    <div>
+                      {challenge.host}:{challenge.port}
+                    </div>
+                    <div className="mt-2 break-all">
+                      {challenge.fingerprint}
+                    </div>
+                  </div>
+                  <p className="font-medium text-destructive">
+                    {t("servers.actions.ssh_host_key.warning")}
+                  </p>
+                </>
+              ) : (
+                <p>{t("servers.actions.ssh_host_key.trusted_description")}</p>
+              )}
+            </div>
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel disabled={approving || loading}>
+            {t("servers.actions.ssh_host_key.cancel")}
+          </AlertDialogCancel>
+          {challenge && (
+            <AlertDialogAction
+              disabled={approving || loading}
+              onClick={(event) => {
+                event.preventDefault()
+                void approve()
+              }}
+            >
+              {approving && (
+                <Icons.spinner className="mr-2 size-4 animate-spin" />
+              )}
+              {challenge.code === "SSH_HOST_KEY_MISMATCH"
+                ? t("servers.actions.ssh_host_key.replace")
+                : t("servers.actions.ssh_host_key.approve")}
+            </AlertDialogAction>
+          )}
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   )
 }
 

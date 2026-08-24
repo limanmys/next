@@ -501,6 +501,16 @@
             }
         }
     },
+    "ssh_host_key": {
+        "title": "Identität des SSH-Servers prüfen",
+        "description": "Vergleichen Sie diesen Fingerabdruck mit der Serverkonsole oder einer anderen vertrauenswürdigen Inventarquelle.",
+        "mismatch": "Die SSH-Serveridentität weicht vom bisher vertrauenswürdigen Schlüssel ab. Prüfen Sie unabhängig, ob es sich um einen geplanten Schlüsselwechsel handelt.",
+        "warning": "Bestätigen Sie die Verbindung nicht, wenn die Fingerabdrücke nicht übereinstimmen.",
+        "cancel": "Abbrechen",
+        "approve": "Geprüft und vertrauenswürdig",
+        "replace": "Änderung wurde geprüft",
+        "approval_error": "Der SSH-Hostschlüssel konnte nicht bestätigt werden. Der Schlüssel wurde möglicherweise geändert."
+    },
     "kubernetes": {
         "deployment_specs": "Deployment-Spezifikationen",
         "deployment_details": "Deployment-Details",

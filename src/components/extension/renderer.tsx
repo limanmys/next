@@ -1,12 +1,25 @@
-import { http } from "@/services"
-import autoAnimate from "@formkit/auto-animate"
-import { ArrowLeft } from "lucide-react"
-import { useTheme } from "next-themes"
+import { useEffect, useReducer, useRef, useState } from "react"
 import Head from "next/head"
 import { useRouter } from "next/router"
-import { useEffect, useReducer, useRef, useState } from "react"
+import { http } from "@/services"
+import autoAnimate from "@formkit/auto-animate"
+import { isAxiosError } from "axios"
+import { ArrowLeft } from "lucide-react"
+import { useTheme } from "next-themes"
 import { useTranslation } from "react-i18next"
 
+import { ISshHostKeyChallenge } from "@/types/server"
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "../ui/alert-dialog"
 import { Button } from "../ui/button"
 import { Icons } from "../ui/icons"
 import Loading from "../ui/loading"
@@ -16,9 +29,12 @@ export default function ExtensionRenderer() {
   const [key, forceUpdate] = useReducer((x) => x + 1, 0)
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<any>()
+  const [hostKeyChallenge, setHostKeyChallenge] =
+    useState<ISshHostKeyChallenge | null>(null)
+  const [approvingHostKey, setApprovingHostKey] = useState(false)
   const container = useRef<HTMLDivElement>(null)
   const { theme } = useTheme()
-  const { i18n } = useTranslation()
+  const { i18n, t } = useTranslation("settings")
   const [title, setTitle] = useState<string>("")
 
   const deleteAllIframes = (node: HTMLDivElement) => {
@@ -60,10 +76,29 @@ export default function ExtensionRenderer() {
       }
 
       http
-        .post(
-          `/servers/${router.query.server_id}/extensions/${router.query.extension_id}/${slug}`
-        )
+        .post("/servers/" + router.query.server_id + "/ssh_host_key")
+        .catch((err: unknown) => {
+          if (
+            isAxiosError<ISshHostKeyChallenge>(err) &&
+            err.response?.status === 409
+          ) {
+            setHostKeyChallenge(err.response.data)
+            setLoading(false)
+            return null
+          }
+
+          return Promise.reject(err)
+        })
+        .then((hostKeyResponse) => {
+          if (!hostKeyResponse) return null
+
+          return http.post(
+            `/servers/${router.query.server_id}/extensions/${router.query.extension_id}/${slug}`
+          )
+        })
         .then((res) => {
+          if (!res) return
+
           deleteAllIframes(container.current as HTMLDivElement)
 
           if (res.status === 201) {
@@ -220,9 +255,33 @@ export default function ExtensionRenderer() {
     )
 
     return () => {
-      window.removeEventListener("message", () => { }, false)
+      window.removeEventListener("message", () => {}, false)
     }
   }, [])
+
+  const approveHostKeyAndContinue = async () => {
+    if (!hostKeyChallenge || !router.query.server_id) return
+
+    setApprovingHostKey(true)
+    try {
+      await http.post("/servers/" + router.query.server_id + "/ssh_host_key", {
+        approve_host_key: true,
+        replace_host_key: hostKeyChallenge.code === "SSH_HOST_KEY_MISMATCH",
+        host_key_fingerprint: hostKeyChallenge.fingerprint,
+      })
+      setHostKeyChallenge(null)
+      forceUpdate()
+    } catch (err: unknown) {
+      setHostKeyChallenge(null)
+      setError(
+        isAxiosError(err) && err.response?.data
+          ? err.response.data
+          : { message: t("servers.actions.ssh_host_key.error") }
+      )
+    } finally {
+      setApprovingHostKey(false)
+    }
+  }
 
   return (
     <div
@@ -275,6 +334,67 @@ export default function ExtensionRenderer() {
           </div>
         </div>
       )}
+      <AlertDialog open={hostKeyChallenge !== null}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              {hostKeyChallenge?.code === "SSH_HOST_KEY_MISMATCH"
+                ? t("servers.actions.ssh_host_key.mismatch_title")
+                : t("servers.actions.ssh_host_key.title")}
+            </AlertDialogTitle>
+            <AlertDialogDescription asChild>
+              <div className="space-y-3">
+                <p>
+                  {hostKeyChallenge?.code === "SSH_HOST_KEY_MISMATCH"
+                    ? t("servers.actions.ssh_host_key.mismatch")
+                    : t("servers.actions.ssh_host_key.description")}
+                </p>
+                <div
+                  className="rounded-md border bg-muted p-3 font-mono text-xs"
+                  dir="ltr"
+                >
+                  <div>
+                    {hostKeyChallenge?.host}:{hostKeyChallenge?.port}
+                  </div>
+                  <div className="mt-2 break-all">
+                    {hostKeyChallenge?.fingerprint}
+                  </div>
+                </div>
+                <p className="font-medium text-destructive">
+                  {t("servers.actions.ssh_host_key.warning")}
+                </p>
+                {!hostKeyChallenge?.can_approve && (
+                  <p>{t("servers.actions.ssh_host_key.permission")}</p>
+                )}
+              </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel
+              disabled={approvingHostKey}
+              onClick={() => router.back()}
+            >
+              {t("servers.actions.ssh_host_key.cancel")}
+            </AlertDialogCancel>
+            {hostKeyChallenge?.can_approve && (
+              <AlertDialogAction
+                disabled={approvingHostKey}
+                onClick={(event) => {
+                  event.preventDefault()
+                  void approveHostKeyAndContinue()
+                }}
+              >
+                {approvingHostKey && (
+                  <Icons.spinner className="mr-2 size-4 animate-spin" />
+                )}
+                {hostKeyChallenge?.code === "SSH_HOST_KEY_MISMATCH"
+                  ? t("servers.actions.ssh_host_key.replace")
+                  : t("servers.actions.ssh_host_key.approve")}
+              </AlertDialogAction>
+            )}
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   )
 }

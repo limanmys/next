@@ -189,6 +189,22 @@
             "add_license": "Add License",
             "download": "Download",
             "delete": "Delete",
+            "ssh_host_key": {
+                "button": "Verify SSH identity",
+                "title": "Approve the SSH server identity",
+                "mismatch_title": "The SSH key changed — are you sure you want to continue?",
+                "trusted_title": "SSH server identity verified",
+                "description": "No trusted SSH host key exists for this endpoint yet.",
+                "trusted_description": "The SSH host key presented by the server matches the trusted database record.",
+                "mismatch": "The SSH host key presented by the server differs from the previously trusted key. This may indicate an attack or a legitimate key rotation.",
+                "warning": "Do not approve it before comparing the fingerprint with the server console or another trusted inventory source.",
+                "permission": "This change affects all users and HA nodes. A user with permission to update servers must approve the key before continuing.",
+                "approve": "I verified and trust it",
+                "replace": "I verified it; replace the key",
+                "cancel": "Close",
+                "success": "The trusted SSH host key was updated.",
+                "error": "The SSH host key could not be verified."
+            },
             "license": {
                 "title": "Add License",
                 "description": "Enter the licence provided by HAVELSAN A.Ş. for your extension.",

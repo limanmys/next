@@ -493,6 +493,16 @@
             }
         }
     },
+    "ssh_host_key": {
+        "title": "Verify the SSH server identity",
+        "description": "Compare this fingerprint with the server console or another trusted inventory source.",
+        "mismatch": "The SSH server identity differs from the previously trusted key. Independently verify that this is a planned key rotation.",
+        "warning": "Do not approve the connection if the fingerprints do not match.",
+        "cancel": "Cancel",
+        "approve": "I verified and trust it",
+        "replace": "I verified the change",
+        "approval_error": "The SSH host key could not be approved. The key may have changed."
+    },
     "kubernetes": {
         "deployment_specs": "Deployment Specs",
         "deployment_details": "Deployment Details",
