@@ -17,21 +17,21 @@ export const ni18nConfig: Ni18nOptions = {
   use: isBrowser ? [ChainedBackend] : undefined,
   backend: isBrowser
     ? {
-      backends: [LocalStorageBackend, HttpBackend],
-      backendOptions: [
-        {
-          expirationTime: 24 * 60 * 60 * 1000,
-          defaultVersion: "v1",
-          versions: {
-            en: "v5",
-            tr: "v5",
-            de: "v5",
+        backends: [LocalStorageBackend, HttpBackend],
+        backendOptions: [
+          {
+            expirationTime: 24 * 60 * 60 * 1000,
+            defaultVersion: "v1",
+            versions: {
+              en: "v6",
+              tr: "v6",
+              de: "v6",
+            },
           },
-        },
-        {
-          loadPath: "/locales/{{lng}}/{{ns}}.json",
-        },
-      ],
-    }
+          {
+            loadPath: "/locales/{{lng}}/{{ns}}.json",
+          },
+        ],
+      }
     : undefined,
 }
