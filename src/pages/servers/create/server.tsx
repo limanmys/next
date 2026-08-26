@@ -252,7 +252,46 @@ export default function ServerCreatePage() {
             setHostKeyChallenge(null)
             setPendingHostKeyData(null)
             setStep(step + 1)
-        } catch {
+        } catch (error: unknown) {
+            if (
+                isAxiosError(error) &&
+                error.response?.status === 409 &&
+                isSshHostKeyChallenge(error.response.data)
+            ) {
+                setHostKeyChallenge(error.response.data)
+                return
+            }
+
+            if (
+                isAxiosError<Record<string, unknown>>(error) &&
+                error.response?.status === 422
+            ) {
+                const formRef = steps[step].ref.current
+                let hasCredentialError = false
+
+                for (const field of ["username", "password"] as const) {
+                    const message = error.response.data[field]
+                    if (typeof message === "string") {
+                        formRef.setError(field, {
+                            type: "custom",
+                            message,
+                        })
+                        hasCredentialError = true
+                    }
+                }
+
+                if (hasCredentialError) {
+                    setHostKeyChallenge(null)
+                    setPendingHostKeyData(null)
+                    toast({
+                        title: t("error"),
+                        description: t("create.errors.validation"),
+                        variant: "destructive",
+                    })
+                    return
+                }
+            }
+
             toast({
                 title: t("error"),
                 description: t("ssh_host_key.approval_error"),
