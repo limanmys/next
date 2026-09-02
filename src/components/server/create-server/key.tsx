@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -17,6 +18,7 @@ export default function KeyInputs({
   data: any
 }) {
   const { t } = useTranslation("servers")
+  const currentUser = useCurrentUser()
 
   const keySchema = z.object({
     username: z
@@ -26,6 +28,7 @@ export default function KeyInputs({
       .string()
       .min(1, t("create.steps.key_inputs.validation.password")),
     shared: z.string(),
+    sharing_scope: z.literal("key"),
   })
 
   const form = useForm<z.infer<typeof keySchema>>({
@@ -33,8 +36,11 @@ export default function KeyInputs({
     defaultValues: {
       username: "",
       password: "",
-      shared: "true",
       ...data,
+      shared: currentUser.permissions.share_server_key
+        ? (data.shared ?? "false")
+        : "false",
+      sharing_scope: "key",
     },
     mode: "onChange",
   })
@@ -54,6 +60,10 @@ export default function KeyInputs({
 
         <Form {...form}>
           <form>
+            <input type="hidden" {...form.register("sharing_scope")} />
+            {!currentUser.permissions.share_server_key && (
+              <input type="hidden" {...form.register("shared")} />
+            )}
             <FormField
               control={form.control}
               name="username"
@@ -110,35 +120,37 @@ export default function KeyInputs({
               )}
             />
 
-            <FormField
-              control={form.control}
-              name="shared"
-              render={({ field }) => (
-                <div className="mt-6 space-y-6 sm:mt-5 sm:space-y-5">
-                  <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-foreground/10 sm:pt-5">
-                    <Label htmlFor="shared" className="sm:mt-px sm:pt-2">
-                      {t("create.steps.key_inputs.shared.label")}
-                    </Label>
-                    <div className="mt-1 sm:col-span-2 sm:mt-0">
-                      <Checkbox
-                        id="shared"
-                        checked={field.value === "true" ? true : false}
-                        onCheckedChange={(checked) =>
-                          field.onChange(checked ? "true" : "false")
-                        }
-                      />
+            {currentUser.permissions.share_server_key && (
+              <FormField
+                control={form.control}
+                name="shared"
+                render={({ field }) => (
+                  <div className="mt-6 space-y-6 sm:mt-5 sm:space-y-5">
+                    <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-foreground/10 sm:pt-5">
+                      <Label htmlFor="shared" className="sm:mt-px sm:pt-2">
+                        {t("create.steps.key_inputs.shared.label")}
+                      </Label>
+                      <div className="mt-1 sm:col-span-2 sm:mt-0">
+                        <Checkbox
+                          id="shared"
+                          checked={field.value === "true"}
+                          onCheckedChange={(checked) =>
+                            field.onChange(checked ? "true" : "false")
+                          }
+                        />
 
-                      <p className="mt-2 text-sm text-foreground/60">
-                        {t("create.steps.key_inputs.shared.information", {
-                          key_type: t(data.key_type),
-                        })}
-                      </p>
-                      <FormMessage />
+                        <p className="mt-2 text-sm text-foreground/60">
+                          {t("create.steps.key_inputs.shared.information", {
+                            key_type: t(data.key_type),
+                          })}
+                        </p>
+                        <FormMessage />
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
-            />
+                )}
+              />
+            )}
           </form>
         </Form>
       </div>

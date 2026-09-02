@@ -48,6 +48,7 @@
         "description": "Sie können die Erweiterungseinstellungen auf den Servern, Ihre Kennwörter und die von anderen Benutzern eingegebenen Werte ändern.",
         "data_name": "Name der Daten",
         "server_name": "Servername",
+        "shared": "Freigabe",
         "actions": {
             "edit": {
                 "button": "Redigieren",
@@ -71,6 +72,15 @@
                 "confirm_msg": "Die ausgewählten Daten werden vollständig aus dem Liman-System gelöscht. Möchten Sie fortfahren?",
                 "cancel": "Abbrechen",
                 "delete": "Bestätigen"
+            },
+            "sharing": {
+                "share": "Schlüssel freigeben",
+                "unshare": "Freigabe aufheben",
+                "success": "Erfolgreich",
+                "error": "Fehler",
+                "shared_msg": "Der Verbindungsschlüssel wird jetzt mit anderen berechtigten Benutzern des Servers geteilt.",
+                "unshared_msg": "Der Verbindungsschlüssel wird nicht mehr geteilt.",
+                "error_msg": "Die Schlüsselfreigabe konnte nicht aktualisiert werden. Für diesen Server ist möglicherweise bereits ein anderer Schlüssel freigegeben."
             }
         },
         "create": {
@@ -108,6 +118,8 @@
                 "type": "Typ des Schlüssels",
                 "username": "Benutzername",
                 "password": "Passwort",
+                "shared": "Diesen Schlüssel freigeben",
+                "shared_description": "Berechtigte Benutzer ohne eigenen Schlüssel können sich mit diesem Schlüssel verbinden.",
                 "port": "Steuer-Port",
                 "submit": "Schaffen",
                 "ssh_pw": "SSH (verschlüsselt)",

@@ -8,4 +8,5 @@ export interface IVault {
   updated_at: string
   server_name: string
   type: string
+  shared?: boolean
 }

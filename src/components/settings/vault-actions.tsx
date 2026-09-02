@@ -1,10 +1,11 @@
 import { useState } from "react"
 import { http } from "@/services"
 import { Row } from "@tanstack/react-table"
-import { Edit, MoreHorizontal, Trash } from "lucide-react"
+import { Edit, MoreHorizontal, Share2, Trash, Unlink } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
 import { IVault } from "@/types/vault"
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 import { useEmitter } from "@/hooks/useEmitter"
 import {
   AlertDialog,
@@ -41,7 +42,42 @@ export function VaultRowActions({ row }: { row: Row<IVault> }) {
   const vault = row.original
   const [deleteDialog, setDeleteDialog] = useState(false)
   const [editDialog, setEditDialog] = useState(false)
+  const [sharing, setSharing] = useState(false)
   const { t } = useTranslation("settings")
+  const { toast } = useToast()
+  const emitter = useEmitter()
+  const currentUser = useCurrentUser()
+  const isOwner = vault.user_id === currentUser.id
+  const canToggleSharing = vault.shared
+    ? isOwner || currentUser.status === 1
+    : isOwner && currentUser.permissions.share_server_key
+
+  const toggleSharing = () => {
+    setSharing(true)
+    http
+      .patch(`/settings/vault/key/${vault.id}/sharing`, {
+        shared: !vault.shared,
+      })
+      .then(() => {
+        toast({
+          title: t("vault.actions.sharing.success"),
+          description: t(
+            vault.shared
+              ? "vault.actions.sharing.unshared_msg"
+              : "vault.actions.sharing.shared_msg"
+          ),
+        })
+        emitter.emit("REFETCH_VAULT")
+      })
+      .catch(() => {
+        toast({
+          title: t("vault.actions.sharing.error"),
+          description: t("vault.actions.sharing.error_msg"),
+          variant: "destructive",
+        })
+      })
+      .finally(() => setSharing(false))
+  }
 
   return (
     <>
@@ -63,6 +99,23 @@ export function VaultRowActions({ row }: { row: Row<IVault> }) {
             <Edit className="mr-2 size-3.5" />
             {t("vault.actions.edit.button")}
           </DropdownMenuItem>
+          {vault.type === "key" && (
+            <DropdownMenuItem
+              disabled={!canToggleSharing || sharing}
+              onClick={toggleSharing}
+            >
+              {vault.shared ? (
+                <Unlink className="mr-2 size-3.5" />
+              ) : (
+                <Share2 className="mr-2 size-3.5" />
+              )}
+              {t(
+                vault.shared
+                  ? "vault.actions.sharing.unshare"
+                  : "vault.actions.sharing.share"
+              )}
+            </DropdownMenuItem>
+          )}
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setDeleteDialog(true)}>
             <Trash className="mr-2 size-3.5" />

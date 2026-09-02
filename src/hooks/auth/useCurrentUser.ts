@@ -11,6 +11,7 @@ const defaultUserObject: IUser = {
     server_services: true,
     add_server: true,
     update_server: true,
+    share_server_key: false,
     view_logs: true,
     view: {
       sidebar: "servers",

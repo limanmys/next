@@ -48,6 +48,7 @@
         "description": "Sunucular üzerindeki eklenti ayarlarını, şifrelerinizi ve yöneticiyseniz diğer kullanıcıların girdiği değerleri değiştirebilirsiniz.",
         "data_name": "Veri Adı",
         "server_name": "Sunucu Adı",
+        "shared": "Paylaşım",
         "actions": {
             "edit": {
                 "button": "Düzenle",
@@ -71,6 +72,15 @@
                 "confirm_msg": "Seçilen veri Liman sisteminden tamamen silinecektir. Devam etmek istiyor musunuz?",
                 "cancel": "Vazgeç",
                 "delete": "Onayla"
+            },
+            "sharing": {
+                "share": "Anahtarı Paylaş",
+                "unshare": "Paylaşımı Kaldır",
+                "success": "Başarılı",
+                "error": "Hata",
+                "shared_msg": "Bağlantı anahtarı sunucunun diğer kullanıcılarıyla paylaşıldı.",
+                "unshared_msg": "Bağlantı anahtarının paylaşımı kaldırıldı.",
+                "error_msg": "Anahtar paylaşımı güncellenemedi. Bu sunucuda başka bir anahtar paylaşılmış olabilir."
             }
         },
         "create": {
@@ -108,6 +118,8 @@
                 "type": "Anahtar Türü",
                 "username": "Kullanıcı Adı",
                 "password": "Şifre",
+                "shared": "Bu anahtarı paylaş",
+                "shared_description": "Kendi anahtarınız bulunmayan yetkili kullanıcılar bu anahtarla bağlanabilir.",
                 "port": "Kontrol Portu",
                 "submit": "Oluştur",
                 "ssh_pw": "SSH (Şifreli)",

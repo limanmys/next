@@ -1,18 +1,18 @@
-import { http } from "@/services"
 import { useEffect, useState } from "react"
+import { http } from "@/services"
 import { useTranslation } from "react-i18next"
 
+import { DivergentColumn } from "@/types/table"
+import { IVault } from "@/types/vault"
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
+import { useEmitter } from "@/hooks/useEmitter"
+import DataTable from "@/components/ui/data-table/data-table"
+import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
+import PageHeader from "@/components/ui/page-header"
 import { SelectUser } from "@/components/selectbox/user-select"
 import CreateVaultKey from "@/components/settings/create-vault-key"
 import CreateVaultSetting from "@/components/settings/create-vault-setting"
 import { VaultRowActions } from "@/components/settings/vault-actions"
-import DataTable from "@/components/ui/data-table/data-table"
-import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
-import PageHeader from "@/components/ui/page-header"
-import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
-import { useEmitter } from "@/hooks/useEmitter"
-import { DivergentColumn } from "@/types/table"
-import { IVault } from "@/types/vault"
 
 export default function VaultPage() {
   const [loading, setLoading] = useState<boolean>(true)
@@ -38,6 +38,19 @@ export default function VaultPage() {
       title: t("vault.server_name"),
     },
     {
+      accessorKey: "shared",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title={t("vault.shared")} />
+      ),
+      cell: ({ row }) =>
+        row.original.type === "key"
+          ? row.original.shared
+            ? t("yes")
+            : t("no")
+          : "-",
+      title: t("vault.shared"),
+    },
+    {
       id: "actions",
       cell: ({ row }) => (
         <div className="flex justify-center">
@@ -48,12 +61,10 @@ export default function VaultPage() {
   ]
 
   const fetchData = (user: string) => {
-    http
-      .get(`/settings/vault?user_id=${user}`)
-      .then((res) => {
-        setData(res.data)
-        setLoading(false)
-      })
+    http.get(`/settings/vault?user_id=${user}`).then((res) => {
+      setData(res.data)
+      setLoading(false)
+    })
   }
 
   useEffect(() => {

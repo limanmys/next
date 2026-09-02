@@ -119,7 +119,7 @@
                 },
                 "shared": {
                     "label": "Geteilt",
-                    "information": "Wenn Sie möchten, dass der Schlüssel, den Sie für {{key_type}} Verbindungstyp eingegeben haben, von allen Benutzern verwendet wird, aktivieren Sie dieses Kontrollkästchen."
+                    "information": "Ermöglicht berechtigten Benutzern ohne eigenen Schlüssel, diesen {{key_type}} Verbindungsschlüssel zu verwenden."
                 }
             },
             "summary": {

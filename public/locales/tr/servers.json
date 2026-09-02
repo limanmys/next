@@ -119,7 +119,7 @@
                 },
                 "shared": {
                     "label": "Paylaşımlı",
-                    "information": "{{key_type}} bağlantı türü için girdiğiniz anahtarın tüm kullanıcılar tarafından kullanılmasını istiyorsanız işaretleyiniz."
+                    "information": "Kendi anahtarı bulunmayan yetkili kullanıcıların bu {{key_type}} bağlantı anahtarını kullanmasına izin verir."
                 }
             },
             "summary": {

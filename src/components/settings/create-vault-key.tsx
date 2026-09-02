@@ -1,33 +1,35 @@
+import { useEffect, useState } from "react"
 import { http } from "@/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Ban, FileKey2, Key, PlusCircle } from "lucide-react"
-import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/form/form"
+import { setFormErrors } from "@/lib/utils"
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
+import { useEmitter } from "@/hooks/useEmitter"
+import { Checkbox } from "@/components/ui/checkbox"
 import { Icons } from "@/components/ui/icons"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import {
-    Sheet,
-    SheetContent,
-    SheetDescription,
-    SheetFooter,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
 } from "@/components/ui/sheet"
-import { useEmitter } from "@/hooks/useEmitter"
-import { setFormErrors } from "@/lib/utils"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/form/form"
 
 import { SelectServer } from "../selectbox/server-select"
 import { Button } from "../ui/button"
@@ -39,12 +41,17 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
   const { toast } = useToast()
   const emitter = useEmitter()
   const { t } = useTranslation("settings")
+  const currentUser = useCurrentUser()
+  const canShare =
+    currentUser.permissions.share_server_key &&
+    (userId === "" || userId === currentUser.id)
 
   const formSchema = z.object({
     server_id: z.string().min(1, t("vault.key.validation.server")),
     type: z.string().min(1, t("vault.key.validation.type")),
     username: z.string().optional(),
     password: z.string().optional(),
+    shared: z.boolean(),
     key_port: z
       .string()
       .max(5, {
@@ -60,15 +67,24 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
       type: "ssh",
       username: "",
       password: "",
+      shared: false,
       key_port: "22",
     },
   })
 
   const [open, setOpen] = useState<boolean>(false)
+  useEffect(() => {
+    if (!canShare) {
+      form.setValue("shared", false)
+    }
+  }, [canShare, form])
+
   const handleCreate = (values: z.infer<typeof formSchema>) => {
     http
       .post(`/settings/vault/key`, {
         ...values,
+        shared: values.type !== "no_key" && values.shared,
+        sharing_scope: values.shared ? "key" : undefined,
         user_id: userId,
       })
       .then((res) => {
@@ -305,6 +321,32 @@ export default function CreateVaultKey({ userId }: { userId: string }) {
                     </div>
                   )}
                 />
+
+                {canShare && (
+                  <FormField
+                    control={form.control}
+                    name="shared"
+                    render={({ field }) => (
+                      <div className="flex items-start gap-3 rounded-md border p-4">
+                        <Checkbox
+                          id="shared"
+                          checked={field.value}
+                          onCheckedChange={(checked) =>
+                            field.onChange(checked === true)
+                          }
+                        />
+                        <div className="space-y-1">
+                          <Label htmlFor="shared">
+                            {t("vault.key.form.shared")}
+                          </Label>
+                          <p className="text-sm text-muted-foreground">
+                            {t("vault.key.form.shared_description")}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  />
+                )}
               </>
             )}
 

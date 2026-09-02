@@ -48,6 +48,7 @@
         "description": "You can change the extension settings on the servers, your passwords, and the values ​​entered by other users.",
         "data_name": "Data Name",
         "server_name": "Server Name",
+        "shared": "Sharing",
         "actions": {
             "edit": {
                 "button": "Edit",
@@ -71,6 +72,15 @@
                 "confirm_msg": "The selected data will be completely deleted from the Liman system. Do you want to continue?",
                 "cancel": "Cancel",
                 "delete": "Confirm"
+            },
+            "sharing": {
+                "share": "Share Key",
+                "unshare": "Stop Sharing",
+                "success": "Successful",
+                "error": "Error",
+                "shared_msg": "The connection key is now shared with other authorized users of the server.",
+                "unshared_msg": "The connection key is no longer shared.",
+                "error_msg": "Key sharing could not be updated. Another key may already be shared for this server."
             }
         },
         "create": {
@@ -108,6 +118,8 @@
                 "type": "Key Type",
                 "username": "User Name",
                 "password": "Password",
+                "shared": "Share this key",
+                "shared_description": "Authorized users without their own key may connect using this key.",
                 "port": "Control Port",
                 "submit": "Create",
                 "ssh_pw": "SSH (Encrypted)",

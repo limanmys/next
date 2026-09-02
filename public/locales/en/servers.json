@@ -119,7 +119,7 @@
                 },
                 "shared": {
                     "label": "Shared",
-                    "information": "If you want the key you entered for {{key_type}} connection type to be used by all users, check this box."
+                    "information": "Allows authorized users without their own key to use this {{key_type}} connection key."
                 }
             },
             "summary": {

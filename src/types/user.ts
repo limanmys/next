@@ -49,6 +49,7 @@ export interface ILimanPermissions {
   server_services: boolean
   add_server: boolean
   update_server: boolean
+  share_server_key: boolean
   view_logs: boolean
   view: {
     sidebar: "servers" | "extensions"
