@@ -1,6 +1,10 @@
-import axios, { AxiosInstance } from "axios"
+import axios, { AxiosInstance, AxiosRequestConfig } from "axios"
 
 import { useLogout } from "@/hooks/auth/useLogout"
+
+export interface IApiRequestConfig extends AxiosRequestConfig {
+  handleGatewayTimeoutLocally?: boolean
+}
 
 export class ApiService {
   protected readonly instance: AxiosInstance
@@ -44,7 +48,11 @@ export class ApiService {
             })
           }
         }
-        if (error.response && error.response.status === 504) {
+        if (
+          error.response &&
+          error.response.status === 504 &&
+          error.config?.handleGatewayTimeoutLocally !== true
+        ) {
           window.location.href = "/504"
         }
         return Promise.reject(error)
