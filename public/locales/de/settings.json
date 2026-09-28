@@ -118,6 +118,7 @@
                 "type": "Typ des Schlüssels",
                 "username": "Benutzername",
                 "password": "Passwort",
+                "private_key": "Privater Schlüssel",
                 "shared": "Diesen Schlüssel freigeben",
                 "shared_description": "Berechtigte Benutzer ohne eigenen Schlüssel können sich mit diesem Schlüssel verbinden.",
                 "port": "Steuer-Port",
@@ -1030,11 +1031,38 @@
         }
     },
     "servers": {
+        "connection": {
+            "ssh_port": "SSH-Port",
+            "create_forbidden": "Sie dürfen für diesen Server keinen Schlüssel hinzufügen. Bitten Sie Ihre Administration, Ihren Serverzugriff zu prüfen oder den SSH-Verbindungsschlüssel freizugeben.",
+            "title": "Schlüsselzugriff",
+            "sharing_on": "Freigabe aktiv",
+            "sharing_off": "Freigabe inaktiv",
+            "unknown": "Status noch nicht verfügbar",
+            "source": {
+                "personal": "Ihre Verbindung: persönlicher SSH-Schlüssel",
+                "shared": "Ihre Verbindung: freigegebener SSH-Schlüssel",
+                "missing": "Ihre Verbindung: SSH-Schlüssel fehlt",
+                "not_required": "Dieser Server benötigt keinen SSH-Schlüssel"
+            },
+            "required_title": "SSH-Verbindungsschlüssel erforderlich",
+            "error_title": "Erweiterung konnte nicht geöffnet werden",
+            "render_error": "Die Erweiterung konnte nicht geladen werden. Versuchen Sie es erneut. Wenden Sie sich an Ihre Administration, falls das Problem weiterhin besteht.",
+            "reason": {
+                "not_shared": "Dieser Server wurde mit SSH hinzugefügt. Ihr Konto hat keinen persönlichen SSH-Verbindungsschlüssel dafür, und der Verbindungsschlüssel des Servers wurde nicht freigegeben.",
+                "personal_key_incompatible": "Ihr persönlicher Verbindungseintrag für diesen Server ist kein SSH-Eintrag. Persönliche Einträge haben Vorrang; ein vorhandener freigegebener Schlüssel wird daher nicht automatisch verwendet. Aktualisieren Sie Ihren Eintrag mit einem SSH-Passwort oder einem privaten SSH-Schlüssel.",
+                "shared_key_incompatible": "Sie haben keinen persönlichen SSH-Verbindungsschlüssel. Auch der freigegebene Eintrag eignet sich nicht für SSH. Fügen Sie Ihren eigenen SSH-Schlüssel hinzu oder bitten Sie Ihre Administration, die Freigabe zu korrigieren."
+            },
+            "resolution": "Sie können unten Ihren eigenen Verbindungsschlüssel hinzufügen. Für eine gemeinsame Verbindung bitten Sie Ihre Administration oder den Schlüsselinhaber, den SSH-Verbindungsschlüssel dieses Servers freizugeben. Die Zugriffsberechtigung auf den Server bedeutet keine Schlüsselfreigabe.",
+            "add_description": "Fügen Sie Ihren eigenen Verbindungsschlüssel für {{server}} hinzu. Nach dem Speichern wird die Erweiterung erneut geöffnet. Die Freigabe ist standardmäßig deaktiviert.",
+            "retry": "Erneut versuchen",
+            "back": "Zurück zu den Server-Erweiterungen",
+            "list_error": "Die Serverliste konnte nicht aktualisiert werden. Der angezeigte Schlüsselstatus ist möglicherweise veraltet. Versuchen Sie es erneut."
+        },
         "actions": {
             "edit_btn": "Redigieren",
             "delete": "Löschen",
             "ssh_host_key": {
-                "button": "SSH-Identität prüfen",
+                "button": "SSH-Identität erneut prüfen",
                 "title": "SSH-Serveridentität bestätigen",
                 "mismatch_title": "Der SSH-Schlüssel wurde geändert — möchten Sie wirklich fortfahren?",
                 "trusted_title": "SSH-Serveridentität geprüft",
@@ -1047,7 +1075,32 @@
                 "replace": "Geprüft; Schlüssel ersetzen",
                 "cancel": "Schließen",
                 "success": "Der vertrauenswürdige SSH-Hostschlüssel wurde aktualisiert.",
-                "error": "Der SSH-Hostschlüssel konnte nicht geprüft werden."
+                "error": "Der SSH-Hostschlüssel konnte nicht geprüft werden.",
+                "check_description": "Prüfen Sie den SSH-Hostschlüssel von {{server}}. Das Anmeldepasswort und die Zugangsdaten werden dabei nicht geändert.",
+                "checking": "SSH-Serveridentität wird geprüft…",
+                "retry": "Erneut prüfen",
+                "endpoint": "Serveradresse und SSH-Port",
+                "key_type": "Schlüsseltyp",
+                "current_fingerprint": "Vom Server übermittelter Fingerabdruck",
+                "trusted_fingerprints": "Gespeicherte vertrauenswürdige Fingerabdrücke",
+                "verified": "Ich habe den Fingerabdruck über die Serverkonsole oder eine vertrauenswürdige Quelle geprüft.",
+                "scope": "Die Bestätigung gilt für alle Benutzer und HA-Knoten mit dieser Adresse und diesem Port.",
+                "changed_again": "Die Serveridentität hat sich während der Bestätigung erneut geändert. Prüfen Sie den neuen Fingerabdruck erneut.",
+                "not_applicable": "Dieser Server verwendet kein SSH.",
+                "not_found": "Server nicht gefunden. Aktualisieren Sie die Serverliste.",
+                "network_error": "Die Liman-API ist nicht erreichbar. Prüfen Sie die Netzwerkverbindung und versuchen Sie es erneut.",
+                "errors": {
+                    "SSH_CONNECTION_TIMEOUT": "Zeitüberschreitung bei SSH-Verbindung oder Handshake. Prüfen Sie die Erreichbarkeit von Liman aus, den SSH-Port, die Firewall und den SSH-Dienst und versuchen Sie es erneut.",
+                    "SSH_DNS_FAILED": "Der Servername konnte nicht aufgelöst werden. Prüfen Sie die Adresse und die DNS-Einstellungen des Liman-Rechners.",
+                    "SSH_CONNECTION_REFUSED": "Die SSH-Verbindung wurde abgelehnt. Prüfen Sie den SSH-Dienst und den Port.",
+                    "SSH_ALGORITHM_UNSUPPORTED": "Kein gemeinsamer SSH-Algorithmus gefunden. Prüfen Sie die Serveralgorithmen und die gespeicherte SSH-Identität.",
+                    "SSH_HANDSHAKE_FAILED": "Der SSH-Handshake ist fehlgeschlagen. Prüfen Sie, ob am gewählten Port SSH läuft und die Verbindung nicht unterbrochen wird.",
+                    "SSH_HOST_KEY_UNAVAILABLE": "Die SSH-Serveridentität konnte nicht abgerufen werden. Prüfen Sie Adresse, SSH-Port und Netzwerkzugriff und versuchen Sie es erneut.",
+                    "SSH_AUTHENTICATION_FAILED": "Die Serveridentität wurde bestätigt, aber die SSH-Anmeldung ist fehlgeschlagen. Prüfen Sie Benutzername, Passwort oder privaten Schlüssel und die Anmelderichtlinie.",
+                    "SSH_PRIVATE_KEY_INVALID": "Der private SSH-Schlüssel konnte nicht gelesen werden. Prüfen Sie Format und Passphrasenschutz.",
+                    "SSH_HOST_KEY_MISMATCH": "Die SSH-Identität weicht vom gespeicherten Schlüssel ab. Prüfen Sie sie auf der Serverseite erneut und bestätigen Sie erst nach Abgleich über eine vertrauenswürdige Quelle.",
+                    "SSH_HOST_KEY_UNKNOWN": "Die SSH-Serveridentität wurde noch nicht bestätigt. Prüfen Sie sie auf der Serverseite und gleichen Sie den Fingerabdruck ab."
+                }
             },
             "edit": {
                 "title": "Server bearbeiten",
@@ -1068,6 +1121,23 @@
                 "description": "Der ausgewählte Server <b>({{server}})</b> wird vollständig aus dem Liman-System entfernt. Möchten Sie fortfahren?",
                 "cancel": "Abbrechen",
                 "delete": "Bestätigen"
+            },
+            "menu": "Serveraktionen",
+            "sharing": {
+                "title": "Freigegebener Verbindungsschlüssel",
+                "description": "Die Freigabe gilt für einen bestimmten Verbindungsschlüssel und wird getrennt von Servername und Adresse gespeichert. Benutzer mit Serverzugriff ohne eigenen Schlüssel nutzen diesen Schlüssel.",
+                "loading": "Schlüsselfreigabe wird geprüft…",
+                "error": "Der Freigabestatus konnte nicht geladen werden. Versuchen Sie es erneut.",
+                "own_shared": "Ihr Verbindungsschlüssel ist auf diesem Server freigegeben.",
+                "other_shared": "Der Verbindungsschlüssel eines anderen Benutzers ist auf diesem Server freigegeben.",
+                "not_shared": "Dieser Server hat keinen freigegebenen Verbindungsschlüssel.",
+                "no_own_key": "Fügen Sie zuerst im Schlüsseltresor Ihren eigenen Verbindungsschlüssel für diesen Server hinzu.",
+                "permission": "Die Freigabe erfordert den Besitz des Schlüssels und die Berechtigung zur Schlüsselfreigabe. Zum Aufheben einer fremden Freigabe sind die Berechtigungen zur Serveraktualisierung und für Serverdetails erforderlich.",
+                "vault": "Schlüsseltresor öffnen",
+                "share_confirm": "Sie geben Ihren eigenen Verbindungsschlüssel für {{server}} frei. Benutzer mit Serverzugriff ohne eigenen Schlüssel können damit als dessen Konto auf dem entfernten System arbeiten.",
+                "unshare_confirm": "Sie heben die Freigabe des Verbindungsschlüssels für {{server}} auf. Benutzer ohne eigenen Schlüssel können möglicherweise keine neuen Verbindungen öffnen. Der Schlüssel bleibt erhalten; bestehende Sitzungen werden nicht beendet.",
+                "conflict": "Ein anderer Schlüssel ist bereits freigegeben. Prüfen Sie den aktuellen Status und heben Sie zuerst dessen Freigabe auf.",
+                "missing": "Schlüssel oder Server existiert nicht mehr. Prüfen Sie den aktuellen Status erneut."
             }
         }
     }

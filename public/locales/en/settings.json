@@ -118,6 +118,7 @@
                 "type": "Key Type",
                 "username": "User Name",
                 "password": "Password",
+                "private_key": "Private Key",
                 "shared": "Share this key",
                 "shared_description": "Authorized users without their own key may connect using this key.",
                 "port": "Control Port",
@@ -1031,11 +1032,38 @@
         }
     },
     "servers": {
+        "connection": {
+            "ssh_port": "SSH port",
+            "create_forbidden": "You cannot add a key for this server. Ask your administrator to check your server access or share the SSH connection key.",
+            "title": "Key access",
+            "sharing_on": "Sharing enabled",
+            "sharing_off": "Sharing disabled",
+            "unknown": "Status not yet available",
+            "source": {
+                "personal": "Your connection: personal SSH key",
+                "shared": "Your connection: shared SSH key",
+                "missing": "Your connection: SSH key missing",
+                "not_required": "This server does not require an SSH key"
+            },
+            "required_title": "SSH connection key required",
+            "error_title": "Unable to open extension",
+            "render_error": "The extension could not be loaded. Try again; contact your administrator if the problem persists.",
+            "reason": {
+                "not_shared": "This server was added using SSH. Your account has no personal SSH connection key for it, and the server connection key has not been shared.",
+                "personal_key_incompatible": "Your personal connection record for this server is not an SSH record. Personal records take priority, so an existing shared key is not used automatically. Update your record using an SSH password or SSH private key.",
+                "shared_key_incompatible": "You have no personal SSH connection key, and the shared record is not suitable for SSH. Add your own SSH key or ask your administrator to correct the shared record."
+            },
+            "resolution": "You can add your own connection key below. To use a shared connection, ask your administrator or the key owner to share this server’s SSH connection key. Server access permission does not imply connection key sharing.",
+            "add_description": "Add your own connection key for {{server}}. The extension will reopen after saving. Sharing is disabled by default.",
+            "retry": "Try again",
+            "back": "Back to server extensions",
+            "list_error": "The server list could not be refreshed. The displayed key status may be outdated; try again."
+        },
         "actions": {
             "edit_btn": "Edit",
             "delete": "Delete",
             "ssh_host_key": {
-                "button": "Verify SSH identity",
+                "button": "Recheck SSH identity",
                 "title": "Approve the SSH server identity",
                 "mismatch_title": "The SSH key changed — are you sure you want to continue?",
                 "trusted_title": "SSH server identity verified",
@@ -1048,7 +1076,32 @@
                 "replace": "I verified it; replace the key",
                 "cancel": "Close",
                 "success": "The trusted SSH host key was updated.",
-                "error": "The SSH host key could not be verified."
+                "error": "The SSH host key could not be verified.",
+                "check_description": "Check the SSH host key of {{server}}. This does not change the login password or connection credentials.",
+                "checking": "Checking SSH server identity…",
+                "retry": "Check again",
+                "endpoint": "Server address and SSH port",
+                "key_type": "Key type",
+                "current_fingerprint": "Fingerprint presented by the server",
+                "trusted_fingerprints": "Stored trusted fingerprints",
+                "verified": "I verified the fingerprint using the server console or a trusted source.",
+                "scope": "Approval applies to all users and HA nodes using this address and port.",
+                "changed_again": "The server identity changed again during approval. Verify the new fingerprint again.",
+                "not_applicable": "This server does not use SSH.",
+                "not_found": "Server not found. Refresh the server list.",
+                "network_error": "Could not reach the Liman API. Check your network connection and retry.",
+                "errors": {
+                    "SSH_CONNECTION_TIMEOUT": "The SSH connection or handshake timed out. Check access from Liman, the SSH port, firewall and SSH service, then retry.",
+                    "SSH_DNS_FAILED": "The server name could not be resolved. Check the address and DNS settings on the Liman machine.",
+                    "SSH_CONNECTION_REFUSED": "The SSH connection was refused. Check that the SSH service is running and the port is correct.",
+                    "SSH_ALGORITHM_UNSUPPORTED": "No common SSH algorithm was found. Check the server algorithms and stored SSH identity.",
+                    "SSH_HANDSHAKE_FAILED": "The SSH handshake failed. Check that the selected port runs SSH and the connection is not interrupted.",
+                    "SSH_HOST_KEY_UNAVAILABLE": "Could not retrieve the SSH server identity. Check the address, SSH port and network access, then retry.",
+                    "SSH_AUTHENTICATION_FAILED": "The server identity was verified, but SSH login failed. Check the username, password or private key and the server login policy.",
+                    "SSH_PRIVATE_KEY_INVALID": "The SSH private key could not be read. Check its format and passphrase protection.",
+                    "SSH_HOST_KEY_MISMATCH": "The SSH identity differs from the stored key. Recheck it on the Servers page and verify it through a trusted source before approval.",
+                    "SSH_HOST_KEY_UNKNOWN": "The SSH server identity has not been approved. Check it on the Servers page and verify the fingerprint."
+                }
             },
             "edit": {
                 "title": "Edit Server",
@@ -1071,6 +1124,23 @@
                 "description": "The selected server <b>({{server}})</b> will be completely removed from the Liman system. Do you want to continue?",
                 "cancel": "Cancel",
                 "delete": "Confirm"
+            },
+            "menu": "Server actions",
+            "sharing": {
+                "title": "Shared connection key",
+                "description": "Sharing belongs to a specific connection key and is saved separately from the server name and address. Users with server access and no personal key connect using this key.",
+                "loading": "Checking key sharing…",
+                "error": "Could not load key sharing status. Retry.",
+                "own_shared": "Your connection key is shared on this server.",
+                "other_shared": "Another user’s connection key is shared on this server.",
+                "not_shared": "This server has no shared connection key.",
+                "no_own_key": "Add your own connection key for this server in the Key Vault before sharing it.",
+                "permission": "Sharing requires key ownership and the share connection key permission. Removing another user’s sharing requires update server and server details permissions.",
+                "vault": "Open Key Vault",
+                "share_confirm": "You will share your own connection key for {{server}}. Users with server access and no personal key will be able to act as this key’s account on the remote system.",
+                "unshare_confirm": "You will stop sharing the connection key for {{server}}. Users without personal keys may be unable to open new connections. The key is retained and existing sessions are not terminated.",
+                "conflict": "Another key is already shared. Check the current status and remove that sharing first.",
+                "missing": "The key or server no longer exists. Check the current status again."
             }
         }
     }

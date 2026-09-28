@@ -1,14 +1,24 @@
 import { useEffect, useReducer, useRef, useState } from "react"
 import Head from "next/head"
+import Link from "next/link"
 import { useRouter } from "next/router"
 import { http } from "@/services"
 import autoAnimate from "@formkit/auto-animate"
 import { isAxiosError } from "axios"
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft, KeyRound, RotateCw } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useTranslation } from "react-i18next"
 
-import { ISshHostKeyChallenge } from "@/types/server"
+import { IExtensionRenderResponse } from "@/types/extension"
+import {
+  IServerConnectionStatus,
+  IServerKeySharing,
+  ISshHostKeyChallenge,
+} from "@/types/server"
+import { isSshHostKeyChallenge, sshErrorMessage } from "@/lib/ssh-errors"
+import CreateVaultKey from "@/components/settings/create-vault-key"
+import { ServerConnectionStatus } from "@/components/settings/server-connection-status"
+import { SshHostKeyDetails } from "@/components/settings/ssh-host-key-details"
 
 import {
   AlertDialog,
@@ -28,7 +38,13 @@ export default function ExtensionRenderer() {
   const router = useRouter()
   const [key, forceUpdate] = useReducer((x) => x + 1, 0)
   const [loading, setLoading] = useState<boolean>(true)
-  const [error, setError] = useState<any>()
+  const [error, setError] = useState<{
+    message: string
+    code?: string
+    connection_status?: IServerConnectionStatus
+  } | null>(null)
+  const [connection, setConnection] = useState<IServerKeySharing | null>(null)
+  const errorRef = useRef<HTMLDivElement>(null)
   const [hostKeyChallenge, setHostKeyChallenge] =
     useState<ISshHostKeyChallenge | null>(null)
   const [approvingHostKey, setApprovingHostKey] = useState(false)
@@ -43,165 +59,194 @@ export default function ExtensionRenderer() {
   }
 
   useEffect(() => {
-    if (
-      !container.current ||
-      !router.query.server_id ||
-      !router.query.extension_id
-    ) {
-      return
-    }
-    autoAnimate(container.current)
-
+    const node = container.current
+    if (!node || !router.query.server_id || !router.query.extension_id) return
+    const controller = new AbortController()
+    let cleanupIframe: (() => void) | undefined
+    const requestOptions = { signal: controller.signal }
+    autoAnimate(node)
     setLoading(true)
-    deleteAllIframes(container.current)
+    setError(null)
+    setConnection(null)
+    setHostKeyChallenge(null)
+    deleteAllIframes(node)
 
-    if (
-      container.current &&
-      container.current.querySelectorAll("iframe").length === 0
-    ) {
-      let slug = ""
-      if (router.query.slug) {
-        // check if router.query.slug is array
-        if (Array.isArray(router.query.slug)) {
-          slug = router.query.slug.join("/")
-        } else {
-          slug = router.query.slug
-        }
-      }
+    let slug = Array.isArray(router.query.slug)
+      ? router.query.slug.join("/")
+      : router.query.slug || ""
+    const searchParams = new URLSearchParams(window.location.search)
+    if (searchParams.toString()) slug += `?${searchParams.toString()}`
 
-      // Add browser search queries to the slug
-      const searchParams = new URLSearchParams(window.location.search)
-      if (searchParams.toString()) {
-        slug += `?${searchParams.toString()}`
-      }
-
-      http
-        .post("/servers/" + router.query.server_id + "/ssh_host_key")
-        .catch((err: unknown) => {
-          if (
-            isAxiosError<ISshHostKeyChallenge>(err) &&
-            err.response?.status === 409
-          ) {
-            setHostKeyChallenge(err.response.data)
-            setLoading(false)
-            return null
-          }
-
-          return Promise.reject(err)
-        })
-        .then((hostKeyResponse) => {
-          if (!hostKeyResponse) return null
-
-          return http.post(
-            `/servers/${router.query.server_id}/extensions/${router.query.extension_id}/${slug}`
-          )
-        })
-        .then((res) => {
-          if (!res) return
-
-          deleteAllIframes(container.current as HTMLDivElement)
-
-          if (res.status === 201) {
-            setError(res.data)
-            setLoading(false)
-          }
-
-          const iframeElement = document.createElement("iframe")
-          container.current!.appendChild(iframeElement)
-          iframeElement.style.width = "0px"
-          iframeElement.style.height = "0px"
-          iframeElement.setAttribute("allowtransparency", "true")
-          iframeElement.setAttribute("allowTransparency", "true")
-          iframeElement.style.backgroundColor = "transparent"
-          const iframeDoc = iframeElement.contentDocument
-          if (iframeDoc) {
-            iframeDoc.open()
-            iframeDoc.write(res.data.html)
-            setTitle(
-              `${res.data.extension_name} - ${res.data.server_name} | Liman`
-            )
-            iframeDoc.close()
-
-            const colorSchemeMeta = document.createElement("meta")
-            colorSchemeMeta.setAttribute("name", "color-scheme")
-            colorSchemeMeta.setAttribute("content", theme ? theme : "light")
-
-            iframeDoc.head.appendChild(colorSchemeMeta)
-
-            const themeColor = document.createElement("meta")
-            themeColor.setAttribute("name", "theme-color")
-            themeColor.setAttribute(
-              "content",
-              theme ? (theme === "dark" ? "#030711" : "#ffffff") : "#ffffff"
-            )
-
-            iframeDoc.head.appendChild(themeColor)
-          }
-
-          iframeElement.onload = () => {
-            if (iframeElement.contentWindow) {
-              iframeElement.contentWindow.window.location.hash =
-                window.location.hash.split("#/")[1] || "#/"
-              iframeElement.style.width = "100%"
-              iframeElement.style.height = "var(--container-height)"
-
-              setError(false)
-              setLoading(false)
-            }
-          }
-
-          if (iframeElement.contentWindow) {
-            iframeElement.contentWindow.addEventListener("beforeunload", () => {
-              forceUpdate()
-            })
-
-            iframeElement.contentWindow.addEventListener(
-              "limanHashChange",
-              function (e: any) {
-                // Change the hash of the parent window with e.detail data
-                window.location.hash = e.detail
-              }
-            )
-          }
-
-          const onHashChanged = () => {
-            iframeElement &&
-              iframeElement.contentWindow &&
-              (iframeElement.contentWindow.window.location.hash =
-                window.location.hash.split("#/")[1] || "#/")
-          }
-
-          window.addEventListener("hashchange", onHashChanged)
-
-          window.addEventListener("liman:extension-reload", forceUpdate)
-
-          return () => {
-            window.removeEventListener("hashchange", onHashChanged)
-            window.removeEventListener("liman:extension-reload", forceUpdate)
-          }
-        })
-        .catch((err) => {
-          deleteAllIframes(container.current as HTMLDivElement)
-
-          if (err.response && err.response.status === 406) {
-            router.push(
-              `/servers/${router.query.server_id}/settings/${router.query.extension_id}`
-            )
-            return
-          }
-
-          setError(err.response.data || err.response)
+    const load = async () => {
+      try {
+        const { data: metadata } = await http.get<IServerKeySharing>(
+          `/servers/${router.query.server_id}/key_sharing`,
+          requestOptions
+        )
+        if (controller.signal.aborted) return
+        setConnection(metadata)
+        if (metadata.connection_status?.source === "missing") {
+          setError({
+            code: "SERVER_CONNECTION_KEY_REQUIRED",
+            message: "",
+            connection_status: metadata.connection_status,
+          })
           setLoading(false)
-        })
+          return
+        }
+        if (metadata.connection_status?.requires_key !== false) {
+          await http.post(
+            `/servers/${router.query.server_id}/ssh_host_key`,
+            {},
+            requestOptions
+          )
+        }
+        const res = await http.post<IExtensionRenderResponse>(
+          `/servers/${router.query.server_id}/extensions/${router.query.extension_id}/${slug}`,
+          {},
+          requestOptions
+        )
+        if (controller.signal.aborted) return
+        deleteAllIframes(node)
+        if (res.status === 201 || typeof res.data.html !== "string") {
+          setError({
+            message: res.data.message || t("servers.connection.render_error"),
+          })
+          setLoading(false)
+          return
+        }
+        const iframeElement = document.createElement("iframe")
+        node.appendChild(iframeElement)
+        iframeElement.style.width = "0px"
+        iframeElement.style.height = "0px"
+        iframeElement.setAttribute("allowtransparency", "true")
+        iframeElement.setAttribute("allowTransparency", "true")
+        iframeElement.style.backgroundColor = "transparent"
+        const iframeDoc = iframeElement.contentDocument
+        if (iframeDoc) {
+          iframeDoc.open()
+          iframeDoc.write(res.data.html)
+          setTitle(
+            `${res.data.extension_name} - ${res.data.server_name} | Liman`
+          )
+          iframeDoc.close()
+
+          const colorSchemeMeta = document.createElement("meta")
+          colorSchemeMeta.setAttribute("name", "color-scheme")
+          colorSchemeMeta.setAttribute("content", theme ? theme : "light")
+
+          iframeDoc.head.appendChild(colorSchemeMeta)
+
+          const themeColor = document.createElement("meta")
+          themeColor.setAttribute("name", "theme-color")
+          themeColor.setAttribute(
+            "content",
+            theme ? (theme === "dark" ? "#030711" : "#ffffff") : "#ffffff"
+          )
+
+          iframeDoc.head.appendChild(themeColor)
+        }
+
+        iframeElement.onload = () => {
+          if (controller.signal.aborted) return
+          if (iframeElement.contentWindow) {
+            iframeElement.contentWindow.window.location.hash =
+              window.location.hash.split("#/")[1] || "#/"
+            iframeElement.style.width = "100%"
+            iframeElement.style.height = "var(--container-height)"
+
+            setError(null)
+            setLoading(false)
+          }
+        }
+
+        if (iframeElement.contentWindow) {
+          iframeElement.contentWindow.addEventListener("beforeunload", () => {
+            forceUpdate()
+          })
+
+          iframeElement.contentWindow.addEventListener(
+            "limanHashChange",
+            function (e: Event) {
+              // Change the hash of the parent window with e.detail data
+              window.location.hash = (e as CustomEvent<string>).detail
+            }
+          )
+        }
+
+        const onHashChanged = () => {
+          iframeElement &&
+            iframeElement.contentWindow &&
+            (iframeElement.contentWindow.window.location.hash =
+              window.location.hash.split("#/")[1] || "#/")
+        }
+
+        window.addEventListener("hashchange", onHashChanged)
+
+        window.addEventListener("liman:extension-reload", forceUpdate)
+
+        cleanupIframe = () => {
+          window.removeEventListener("hashchange", onHashChanged)
+          window.removeEventListener("liman:extension-reload", forceUpdate)
+        }
+      } catch (err: unknown) {
+        if (controller.signal.aborted) return
+        deleteAllIframes(node)
+        if (isAxiosError(err) && err.response?.status === 406) {
+          void router.push(
+            `/servers/${router.query.server_id}/settings/${router.query.extension_id}`
+          )
+          return
+        }
+        if (
+          isAxiosError(err) &&
+          err.response?.status === 409 &&
+          isSshHostKeyChallenge(err.response.data)
+        ) {
+          setHostKeyChallenge(err.response.data)
+        } else if (
+          isAxiosError<{
+            code?: string
+            connection_status?: IServerConnectionStatus
+          }>(err) &&
+          err.response?.data?.code === "SERVER_CONNECTION_KEY_REQUIRED"
+        ) {
+          setError({
+            code: "SERVER_CONNECTION_KEY_REQUIRED",
+            message: "",
+            connection_status: err.response.data.connection_status,
+          })
+        } else {
+          const data = isAxiosError<{ code?: string; message?: string }>(err)
+            ? err.response?.data
+            : undefined
+          setError({
+            message:
+              data?.code?.startsWith("SSH_") || !data
+                ? sshErrorMessage(err, t)
+                : data.message || t("servers.connection.render_error"),
+          })
+        }
+        setLoading(false)
+      }
+    }
+    void load()
+    return () => {
+      controller.abort()
+      cleanupIframe?.()
+      deleteAllIframes(node)
     }
   }, [
     router.query.server_id,
     router.query.extension_id,
     router.query.slug,
-    container.current,
     i18n.language,
     key,
   ])
+
+  useEffect(() => {
+    if (error) errorRef.current?.focus()
+  }, [error])
 
   useEffect(() => {
     if (container.current) {
@@ -272,12 +317,16 @@ export default function ExtensionRenderer() {
       setHostKeyChallenge(null)
       forceUpdate()
     } catch (err: unknown) {
-      setHostKeyChallenge(null)
-      setError(
-        isAxiosError(err) && err.response?.data
-          ? err.response.data
-          : { message: t("servers.actions.ssh_host_key.error") }
-      )
+      if (
+        isAxiosError(err) &&
+        err.response?.status === 409 &&
+        isSshHostKeyChallenge(err.response.data)
+      ) {
+        setHostKeyChallenge(err.response.data)
+      } else {
+        setHostKeyChallenge(null)
+        setError({ message: sshErrorMessage(err, t) })
+      }
     } finally {
       setApprovingHostKey(false)
     }
@@ -303,39 +352,72 @@ export default function ExtensionRenderer() {
         </div>
       )}
       {error && (
-        <div>
-          <div
-            className="container mx-auto flex items-center px-6 py-12"
-            style={{ height: "calc(var(--container-height) - 30vh)" }}
-          >
-            <div className="mx-auto flex max-w-sm flex-col items-center text-center">
-              <Icons.dugumluLogo className="w-18 mb-10 h-12" />
-              <h1 className="mt-3 text-2xl font-semibold text-gray-800 dark:text-white md:text-3xl">
-                Bir hata oluştu
-              </h1>
-              <p className="mt-4 text-gray-500 dark:text-gray-400">
-                {error.message}
+        <div
+          ref={errorRef}
+          tabIndex={-1}
+          role="alert"
+          className="mx-auto my-10 max-w-xl rounded-lg border bg-card p-6 outline-none sm:p-8"
+        >
+          <div className="mb-5 flex size-11 items-center justify-center rounded-full bg-muted">
+            {error.code === "SERVER_CONNECTION_KEY_REQUIRED" ? (
+              <KeyRound className="size-5" />
+            ) : (
+              <Icons.dugumluLogo className="h-6 w-8" />
+            )}
+          </div>
+          <h1 className="text-xl font-semibold">
+            {t(
+              error.code === "SERVER_CONNECTION_KEY_REQUIRED"
+                ? "servers.connection.required_title"
+                : "servers.connection.error_title"
+            )}
+          </h1>
+          {connection?.server && (
+            <p className="mt-1 text-sm font-medium">{connection.server.name}</p>
+          )}
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+            {error.code === "SERVER_CONNECTION_KEY_REQUIRED"
+              ? t(
+                  `servers.connection.reason.${error.connection_status?.reason || "not_shared"}`
+                )
+              : error.message}
+          </p>
+          {error.code === "SERVER_CONNECTION_KEY_REQUIRED" && (
+            <>
+              {error.connection_status && (
+                <div className="mt-4">
+                  <ServerConnectionStatus status={error.connection_status} />
+                </div>
+              )}
+              <p className="mt-4 text-sm text-muted-foreground">
+                {t("servers.connection.resolution")}
               </p>
-              <div className="mt-6 flex w-full shrink-0 items-center gap-x-3 sm:w-auto">
-                <Button onClick={() => router.back()} size="sm">
-                  <ArrowLeft className="mr-2 size-4" />
-                  Geri dön
-                </Button>
-                <Button
-                  onClick={() => router.push("/")}
-                  size="sm"
-                  className="px-4"
-                  variant="secondary"
-                >
-                  Panoya git
-                </Button>
-              </div>
-            </div>
+            </>
+          )}
+          <div className="mt-6 flex flex-wrap gap-3">
+            {error.code === "SERVER_CONNECTION_KEY_REQUIRED" &&
+              connection?.server && (
+                <CreateVaultKey
+                  userId=""
+                  server={connection.server}
+                  onCreated={() => forceUpdate()}
+                />
+              )}
+            <Button onClick={() => forceUpdate()} size="sm" variant="outline">
+              <RotateCw className="mr-2 size-4" />
+              {t("servers.connection.retry")}
+            </Button>
+            <Button asChild size="sm" variant="ghost">
+              <Link href={`/servers/${router.query.server_id}/extensions`}>
+                <ArrowLeft className="mr-2 size-4" />
+                {t("servers.connection.back")}
+              </Link>
+            </Button>
           </div>
         </div>
       )}
       <AlertDialog open={hostKeyChallenge !== null}>
-        <AlertDialogContent>
+        <AlertDialogContent className="max-h-[85dvh] overflow-y-auto">
           <AlertDialogHeader>
             <AlertDialogTitle>
               {hostKeyChallenge?.code === "SSH_HOST_KEY_MISMATCH"
@@ -349,17 +431,9 @@ export default function ExtensionRenderer() {
                     ? t("servers.actions.ssh_host_key.mismatch")
                     : t("servers.actions.ssh_host_key.description")}
                 </p>
-                <div
-                  className="rounded-md border bg-muted p-3 font-mono text-xs"
-                  dir="ltr"
-                >
-                  <div>
-                    {hostKeyChallenge?.host}:{hostKeyChallenge?.port}
-                  </div>
-                  <div className="mt-2 break-all">
-                    {hostKeyChallenge?.fingerprint}
-                  </div>
-                </div>
+                {hostKeyChallenge && (
+                  <SshHostKeyDetails hostKey={hostKeyChallenge} />
+                )}
                 <p className="font-medium text-destructive">
                   {t("servers.actions.ssh_host_key.warning")}
                 </p>

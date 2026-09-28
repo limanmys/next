@@ -23,9 +23,9 @@ export const ni18nConfig: Ni18nOptions = {
             expirationTime: 24 * 60 * 60 * 1000,
             defaultVersion: "v1",
             versions: {
-              en: "v6",
-              tr: "v6",
-              de: "v6",
+              en: "v10",
+              tr: "v10",
+              de: "v10",
             },
           },
           {

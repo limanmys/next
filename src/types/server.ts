@@ -18,6 +18,7 @@ export interface IServer {
   extensions: IExtension[]
   is_favorite: boolean
   can_run_command: boolean
+  connection_status?: IServerConnectionStatus
 }
 
 export interface ISshHostKeyChallenge {
@@ -29,6 +30,34 @@ export interface ISshHostKeyChallenge {
   trusted_fingerprints: string[]
   can_approve?: boolean
   message: string
+}
+
+export interface ISshHostKeyStatus {
+  status: "trusted" | "not_applicable"
+  host?: string
+  port?: number
+  key_type?: string
+  fingerprint?: string
+}
+
+export interface IServerKeySharing {
+  server: Pick<IServer, "id" | "name" | "type" | "key_port">
+  connection_status: IServerConnectionStatus
+  own_key: { id: string; shared: boolean } | null
+  shared_key: { id: string; is_owner: boolean } | null
+  can_share: boolean
+  can_unshare: boolean
+}
+
+export interface IServerConnectionStatus {
+  requires_key: boolean
+  shared_enabled: boolean
+  source: "personal" | "shared" | "missing" | "not_required"
+  reason:
+    | "personal_key_incompatible"
+    | "shared_key_incompatible"
+    | "not_shared"
+    | null
 }
 
 export interface IMenu {

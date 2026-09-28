@@ -4,7 +4,7 @@
     "information": "Bilgilendirme",
     "warning": "Uyarı",
     "not_supported": "Windows sunucuların detayları henüz desteklenmemektedir.",
-    "ssh": "SSH (Şifreli)",
+    "ssh": "SSH (Parola)",
     "ssh_certificate": "SSH (Sertifikalı)",
     "winrm": "WinRM",
     "winrm_insecure": "WinRM (Güvensiz)",

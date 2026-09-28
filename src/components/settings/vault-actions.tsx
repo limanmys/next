@@ -25,6 +25,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { KeySharingDialog } from "@/components/settings/key-sharing-dialog"
 
 import {
   Dialog,
@@ -44,40 +45,11 @@ export function VaultRowActions({ row }: { row: Row<IVault> }) {
   const [editDialog, setEditDialog] = useState(false)
   const [sharing, setSharing] = useState(false)
   const { t } = useTranslation("settings")
-  const { toast } = useToast()
-  const emitter = useEmitter()
   const currentUser = useCurrentUser()
   const isOwner = vault.user_id === currentUser.id
   const canToggleSharing = vault.shared
     ? isOwner || currentUser.status === 1
     : isOwner && currentUser.permissions.share_server_key
-
-  const toggleSharing = () => {
-    setSharing(true)
-    http
-      .patch(`/settings/vault/key/${vault.id}/sharing`, {
-        shared: !vault.shared,
-      })
-      .then(() => {
-        toast({
-          title: t("vault.actions.sharing.success"),
-          description: t(
-            vault.shared
-              ? "vault.actions.sharing.unshared_msg"
-              : "vault.actions.sharing.shared_msg"
-          ),
-        })
-        emitter.emit("REFETCH_VAULT")
-      })
-      .catch(() => {
-        toast({
-          title: t("vault.actions.sharing.error"),
-          description: t("vault.actions.sharing.error_msg"),
-          variant: "destructive",
-        })
-      })
-      .finally(() => setSharing(false))
-  }
 
   return (
     <>
@@ -101,8 +73,8 @@ export function VaultRowActions({ row }: { row: Row<IVault> }) {
           </DropdownMenuItem>
           {vault.type === "key" && (
             <DropdownMenuItem
-              disabled={!canToggleSharing || sharing}
-              onClick={toggleSharing}
+              disabled={!canToggleSharing}
+              onClick={() => setSharing(true)}
             >
               {vault.shared ? (
                 <Unlink className="mr-2 size-3.5" />
@@ -129,6 +101,13 @@ export function VaultRowActions({ row }: { row: Row<IVault> }) {
         vault={vault}
       />
       <EditVaultKey open={editDialog} setOpen={setEditDialog} vault={vault} />
+      <KeySharingDialog
+        open={sharing}
+        setOpen={setSharing}
+        keyId={vault.id}
+        shared={Boolean(vault.shared)}
+        serverName={vault.server_name}
+      />
     </>
   )
 }
@@ -256,6 +235,7 @@ function EditVaultKey({
           <Label htmlFor="license">{t("vault.actions.edit.data")}</Label>
           <Textarea
             id="license"
+            className="resize-none"
             onChange={(e) => setData(e.target.value)}
             maxLength={750}
           />

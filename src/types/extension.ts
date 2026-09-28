@@ -33,11 +33,7 @@ export interface IExtensionSetting {
 }
 
 type IExtensionVariableTypes =
-  | "text"
-  | "password"
-  | "server"
-  | "extension"
-  | "number"
+  "text" | "password" | "server" | "extension" | "number"
 
 export interface IExtensionVariable {
   variable: string
@@ -47,4 +43,11 @@ export interface IExtensionVariable {
   global: boolean
   writable: boolean
   value: string
+}
+
+export interface IExtensionRenderResponse {
+  extension_name?: string
+  server_name?: string
+  html?: string
+  message?: string
 }

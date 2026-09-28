@@ -23,6 +23,7 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Icons } from "@/components/ui/icons"
@@ -30,20 +31,9 @@ import PageHeader from "@/components/ui/page-header"
 import Steps from "@/components/ui/steps"
 import { useToast } from "@/components/ui/use-toast"
 import { opacityAnimation } from "@/lib/anim"
+import { SshHostKeyDetails } from "@/components/settings/ssh-host-key-details"
+import { isSshHostKeyChallenge, sshErrorMessage } from "@/lib/ssh-errors"
 import { ISshHostKeyChallenge } from "@/types/server"
-
-function isSshHostKeyChallenge(value: unknown): value is ISshHostKeyChallenge {
-    if (typeof value !== "object" || value === null) return false
-
-    const challenge = value as Partial<ISshHostKeyChallenge>
-    return (
-        (challenge.code === "SSH_HOST_KEY_UNKNOWN" ||
-            challenge.code === "SSH_HOST_KEY_MISMATCH") &&
-        typeof challenge.host === "string" &&
-        typeof challenge.port === "number" &&
-        typeof challenge.fingerprint === "string"
-    )
-}
 
 export default function ServerCreatePage() {
     const { toast } = useToast()
@@ -51,9 +41,11 @@ export default function ServerCreatePage() {
     const router = useRouter()
     const sidebarCtx = useSidebarContext()
     const { t } = useTranslation("servers")
+    const { t: settingsT } = useTranslation("settings")
 
     const [data, setData] = useState<any>({})
     const [loading, setLoading] = useState<boolean>(false)
+    const [connectionError, setConnectionError] = useState<string | null>(null)
     const [step, setStep] = useState<number>(0)
     const [hostKeyChallenge, setHostKeyChallenge] =
         useState<ISshHostKeyChallenge | null>(null)
@@ -150,9 +142,9 @@ export default function ServerCreatePage() {
                     return {
                         isValid: false,
                         message:
-                            isAxiosError(e) && typeof e.response?.data === "object"
+                            isAxiosError(e) && e.response?.data && !e.response.data.code?.startsWith("SSH_")
                                 ? e.response.data
-                                : {},
+                                : { message: sshErrorMessage(e, settingsT) },
                     }
                 }
             },
@@ -172,6 +164,7 @@ export default function ServerCreatePage() {
     ]
 
     const nextStep = () => {
+        setConnectionError(null)
         setLoading(true)
 
         if (!steps[step].ref?.current) {
@@ -198,7 +191,12 @@ export default function ServerCreatePage() {
                     return
                 }
                 if (!validator.isValid) {
+                    const diagnostic = typeof validator.message?.message === "string"
+                        ? validator.message.message
+                        : null
+                    setConnectionError(diagnostic)
                     Object.keys(validator.message).forEach((key) => {
+                        if (key === "message" || key === "code") return
                         formRef.setError(key, {
                             type: "custom",
                             message: validator.message[key],
@@ -207,7 +205,7 @@ export default function ServerCreatePage() {
 
                     toast({
                         title: t("error"),
-                        description: t("create.errors.validation"),
+                        description: diagnostic || t("create.errors.validation"),
                         variant: "destructive",
                     })
                     setLoading(false)
@@ -241,6 +239,7 @@ export default function ServerCreatePage() {
         if (!hostKeyChallenge || !pendingHostKeyData) return
 
         setLoading(true)
+        setConnectionError(null)
         try {
             await http.post("/servers/check_connection", {
                 ...pendingHostKeyData,
@@ -266,6 +265,12 @@ export default function ServerCreatePage() {
                 isAxiosError<Record<string, unknown>>(error) &&
                 error.response?.status === 422
             ) {
+                if (typeof error.response.data.code === "string" && error.response.data.code.startsWith("SSH_")) {
+                    setHostKeyChallenge(null)
+                    setPendingHostKeyData(null)
+                    setConnectionError(sshErrorMessage(error, settingsT))
+                    return
+                }
                 const formRef = steps[step].ref.current
                 let hasCredentialError = false
 
@@ -294,7 +299,7 @@ export default function ServerCreatePage() {
 
             toast({
                 title: t("error"),
-                description: t("ssh_host_key.approval_error"),
+                description: sshErrorMessage(error, settingsT),
                 variant: "destructive",
             })
         } finally {
@@ -353,6 +358,7 @@ export default function ServerCreatePage() {
                 <div className="col-span-3 space-y-8">
                     <Card>
                         <CardContent className="mt-6" ref={parent}>
+                            {connectionError && step === 3 && <Alert variant="destructive" className="mb-4"><AlertDescription>{connectionError}</AlertDescription></Alert>}
                             {steps.map((s, index) => {
                                 if (index !== step) return null
                                 return <s.component formRef={s.ref} key={s.name} data={data} />
@@ -406,7 +412,7 @@ export default function ServerCreatePage() {
                     }
                 }}
             >
-                <AlertDialogContent>
+                <AlertDialogContent className="max-h-[85dvh] overflow-y-auto">
                     <AlertDialogHeader>
                         <AlertDialogTitle>{t("ssh_host_key.title")}</AlertDialogTitle>
                         <AlertDialogDescription asChild>
@@ -416,17 +422,7 @@ export default function ServerCreatePage() {
                                         ? t("ssh_host_key.mismatch")
                                         : t("ssh_host_key.description")}
                                 </p>
-                                <div
-                                    className="rounded-md border bg-muted p-3 font-mono text-xs"
-                                    dir="ltr"
-                                >
-                                    <div>
-                                        {hostKeyChallenge?.host}:{hostKeyChallenge?.port}
-                                    </div>
-                                    <div className="mt-2 break-all">
-                                        {hostKeyChallenge?.fingerprint}
-                                    </div>
-                                </div>
+                                {hostKeyChallenge && <SshHostKeyDetails hostKey={hostKeyChallenge} />}
                                 <p className="font-medium text-destructive">
                                     {t("ssh_host_key.warning")}
                                 </p>

@@ -117,15 +117,16 @@
                 "server": "Sunucu",
                 "type": "Anahtar Türü",
                 "username": "Kullanıcı Adı",
-                "password": "Şifre",
+                "password": "Parola",
+                "private_key": "Özel Anahtar",
                 "shared": "Bu anahtarı paylaş",
-                "shared_description": "Kendi anahtarınız bulunmayan yetkili kullanıcılar bu anahtarla bağlanabilir.",
-                "port": "Kontrol Portu",
+                "shared_description": "Bu sunucuya erişim izni olan ve kişisel anahtarı bulunmayan kullanıcılar bu anahtarla bağlanabilir.",
+                "port": "Bağlantı Portu",
                 "submit": "Oluştur",
-                "ssh_pw": "SSH (Şifreli)",
-                "ssh_cert": "SSH (Sertifika)",
+                "ssh_pw": "SSH (Parola)",
+                "ssh_cert": "SSH (Özel Anahtar)",
                 "winrm_insecure": "WinRM (Güvensiz)",
-                "no_key": "Anahtarsız Giriş"
+                "no_key": "Anahtarsız"
             },
             "validation": {
                 "server": "Sunucu seçimi yapmalısınız.",
@@ -1031,24 +1032,76 @@
         }
     },
     "servers": {
+        "connection": {
+            "ssh_port": "SSH portu",
+            "create_forbidden": "Bu sunucu için anahtar ekleme izniniz yok. Yöneticinizden sunucu erişiminizi kontrol etmesini veya SSH bağlantı anahtarını paylaşmasını isteyin.",
+            "title": "Bağlantı anahtarı",
+            "sharing_on": "Paylaşım açık",
+            "sharing_off": "Paylaşım kapalı",
+            "unknown": "Durum bilgisi alınamadı",
+            "source": {
+                "personal": "Kullanılacak anahtar: kişisel",
+                "shared": "Kullanılacak anahtar: paylaşılan",
+                "missing": "Kullanılabilir SSH anahtarı yok",
+                "not_required": "SSH anahtarı gerekmiyor"
+            },
+            "required_title": "SSH bağlantı anahtarınız eksik",
+            "error_title": "Eklenti açılamadı",
+            "render_error": "Eklenti yüklenemedi. Yeniden deneyin; sorun sürerse yöneticinizle iletişime geçin.",
+            "reason": {
+                "not_shared": "Bu sunucuya SSH ile bağlanılıyor. Sunucu için kişisel bağlantı anahtarınız yok ve sizinle kullanılabilir bir anahtar paylaşılmamış.",
+                "personal_key_incompatible": "Bu sunucu için kayıtlı kişisel anahtarınız SSH bağlantısına uygun değil. Kişisel anahtarınız öncelikli olduğundan paylaşılan anahtar kullanılmaz. Aşağıdan SSH parolası veya özel anahtar ile kişisel kaydınızı güncelleyin.",
+                "shared_key_incompatible": "Bu sunucu için kişisel SSH anahtarınız yok. Paylaşılan anahtar da SSH bağlantısına uygun değil. Kendi SSH anahtarınızı ekleyin veya yöneticinizden paylaşılan kaydı düzeltmesini isteyin."
+            },
+            "resolution": "Kendi bağlantı anahtarınızı ekleyin veya yöneticinizden bu sunucu için bir SSH anahtarı paylaşmasını isteyin. Sunucuya erişim izni verilmesi, bağlantı anahtarının da paylaşıldığı anlamına gelmez.",
+            "add_description": "{{server}} için SSH bağlantı bilgilerinizi kaydedin. Kayıttan sonra eklenti yeniden açılacak. Anahtarınız, paylaşımı açmadığınız sürece kişisel kalır.",
+            "retry": "Yeniden dene",
+            "back": "Eklenti listesine dön",
+            "list_error": "Sunucu listesi yenilenemedi. Görünen anahtar durumları güncel olmayabilir; yeniden deneyin."
+        },
         "actions": {
             "edit_btn": "Düzenle",
             "delete": "Sil",
             "ssh_host_key": {
-                "button": "SSH kimliğini doğrula",
-                "title": "SSH sunucu kimliğini onaylayın",
-                "mismatch_title": "SSH anahtarı değişti — devam etmek istediğinizden emin misiniz?",
+                "button": "SSH kimliğini yeniden kontrol et",
+                "title": "SSH sunucu kimliğini doğrulayın",
+                "mismatch_title": "SSH sunucu kimliği eşleşmiyor",
                 "trusted_title": "SSH sunucu kimliği doğrulandı",
-                "description": "Bu endpoint için henüz güvenilen bir SSH host key bulunmuyor.",
-                "trusted_description": "Sunucunun sunduğu SSH host key veritabanındaki güvenilen kayıtla eşleşiyor.",
-                "mismatch": "Sunucunun sunduğu SSH host key daha önce güvenilen anahtardan farklı. Bu durum saldırı veya meşru bir anahtar değişimi olabilir.",
+                "description": "Bu sunucu adresi ve SSH portu için henüz onaylanmış bir kimlik anahtarı yok.",
+                "trusted_description": "Sunucunun SSH kimlik anahtarı kayıtlı güvenilir anahtarla eşleşiyor.",
+                "mismatch": "Sunucunun SSH kimlik anahtarı kayıtlı anahtarla eşleşmiyor. Sunucu yeniden kurulmuş veya anahtarı değiştirilmiş olabilir. Yanlış sunucuya bağlanma ya da saldırı olasılığı da vardır.",
                 "warning": "Parmak izini sunucu konsolu ya da güvenilir bir envanter kaydıyla karşılaştırmadan onaylamayın.",
-                "permission": "Bu değişiklik tüm kullanıcıları ve HA düğümlerini etkiler. Devam etmek için sunucu güncelleme yetkisine sahip bir kullanıcı anahtarı onaylamalıdır.",
+                "permission": "Yeni anahtarı onaylamak için sunucu güncelleme yetkisi gerekir. Yöneticinizden parmak izini doğrulayıp onaylamasını isteyin.",
                 "approve": "Doğruladım ve güveniyorum",
-                "replace": "Doğruladım ve anahtarı değiştir",
+                "replace": "Doğruladım, kaydı güncelle",
                 "cancel": "Kapat",
-                "success": "SSH host key güven kaydı güncellendi.",
-                "error": "SSH host key doğrulanamadı."
+                "success": "SSH kimlik anahtarı kaydı güncellendi.",
+                "error": "SSH sunucu kimliği doğrulanamadı.",
+                "check_description": "{{server}} sunucusunun SSH kimlik anahtarını kontrol edin. Bu işlem giriş parolasını veya bağlantı anahtarını değiştirmez.",
+                "checking": "SSH sunucu kimliği kontrol ediliyor…",
+                "retry": "Yeniden kontrol et",
+                "endpoint": "Sunucu adresi ve SSH portu",
+                "key_type": "Anahtar türü",
+                "current_fingerprint": "Sunucunun sunduğu parmak izi",
+                "trusted_fingerprints": "Kayıtlı güvenilir parmak izleri",
+                "verified": "Parmak izini sunucu konsolundan veya güvenilir bir kaynaktan doğruladım.",
+                "scope": "Bu onay, aynı sunucu adresine ve SSH portuna bağlanan tüm kullanıcılar için geçerlidir.",
+                "changed_again": "Sunucu kimliği onay sırasında tekrar değişti. Yeni parmak izini yeniden doğrulayın.",
+                "not_applicable": "Bu sunucu SSH bağlantısı kullanmıyor.",
+                "not_found": "Sunucu bulunamadı. Sunucu listesini yenileyin.",
+                "network_error": "Liman API bağlantısı kurulamadı. Ağ bağlantınızı kontrol edin ve yeniden deneyin.",
+                "errors": {
+                    "SSH_CONNECTION_TIMEOUT": "Sunucu, SSH bağlantısı kurulurken zamanında yanıt vermedi. Sunucu adresini, SSH portunu, ağ erişimini ve güvenlik duvarını kontrol edip yeniden deneyin.",
+                    "SSH_DNS_FAILED": "Sunucu adı DNS üzerinden çözümlenemedi. Sunucu adresini ve Liman makinesinin DNS ayarlarını kontrol edin.",
+                    "SSH_CONNECTION_REFUSED": "SSH bağlantısı reddedildi. SSH servisinin çalıştığını ve doğru portun kullanıldığını kontrol edin.",
+                    "SSH_ALGORITHM_UNSUPPORTED": "Ortak bir SSH algoritması bulunamadı. Sunucunun desteklediği algoritmaları ve kayıtlı SSH kimliğini kontrol edin.",
+                    "SSH_HANDSHAKE_FAILED": "SSH bağlantısı kurulamadı. Belirtilen portta SSH servisinin çalıştığını ve ağ bağlantısının kesilmediğini kontrol edin.",
+                    "SSH_HOST_KEY_UNAVAILABLE": "SSH sunucu kimliği alınamadı. Adres, SSH portu ve ağ erişimini kontrol edip yeniden deneyin.",
+                    "SSH_AUTHENTICATION_FAILED": "Sunucu kimliği doğrulandı ancak SSH oturumu açılamadı. Kullanıcı adı, parola veya özel anahtar ile sunucunun giriş politikasını kontrol edin.",
+                    "SSH_PRIVATE_KEY_INVALID": "SSH özel anahtarı okunamadı. Anahtarın biçimini ve parola korumasını kontrol edin.",
+                    "SSH_HOST_KEY_MISMATCH": "SSH kimliği kayıtlı anahtarla eşleşmiyor. Sunucular sayfasından yeniden kontrol edin; güvenilir bir kaynaktan doğrulamadan yeni anahtarı onaylamayın.",
+                    "SSH_HOST_KEY_UNKNOWN": "SSH sunucu kimliği henüz onaylanmadı. Sunucular sayfasından SSH kimliğini kontrol edip parmak izini doğrulayın."
+                }
             },
             "edit": {
                 "title": "Sunucu Düzenle",
@@ -1071,6 +1124,23 @@
                 "description": "Seçilen sunucu <b>({{server}})</b> Liman sisteminden tamamen kaldırılacaktır. Devam etmek istiyor musunuz?",
                 "cancel": "Vazgeç",
                 "delete": "Onayla"
+            },
+            "menu": "Sunucu işlemleri",
+            "sharing": {
+                "title": "Bağlantı anahtarı paylaşımı",
+                "description": "Paylaşım açıkken sunucuya erişim izni olan ve kişisel anahtarı bulunmayan kullanıcılar, paylaşılan anahtarla bağlanabilir. Paylaşım değişiklikleri hemen kaydedilir.",
+                "loading": "Anahtar paylaşımı kontrol ediliyor…",
+                "error": "Anahtar paylaşım durumu alınamadı. Yeniden deneyin.",
+                "own_shared": "Bu sunucuda sizin bağlantı anahtarınız paylaşılıyor.",
+                "other_shared": "Bu sunucuda başka bir kullanıcının anahtarı paylaşıma açık.",
+                "not_shared": "Bu sunucuda paylaşılan bağlantı anahtarı yok.",
+                "no_own_key": "Anahtarınızı paylaşabilmek için önce Anahtar Kasasından bu sunucu için bir bağlantı anahtarı ekleyin.",
+                "permission": "Anahtar paylaşımı için gerekli yetkiniz yok. Kendi anahtarınızı paylaşmak için anahtar paylaşma izni; başkasının paylaşımını kaldırmak için sunucu güncelleme ve sunucu detaylarını görme izinleri gerekir.",
+                "vault": "Anahtar Kasasını aç",
+                "share_confirm": "{{server}} sunucusu için kendi bağlantı anahtarınızı paylaşacaksınız. Sunucuya erişim izni olan ve kişisel anahtarı bulunmayan kullanıcılar, bu anahtarın uzak sistemdeki hesabıyla işlem yapabilecek.",
+                "unshare_confirm": "{{server}} sunucusunun bağlantı anahtarı paylaşımını kaldıracaksınız. Kişisel bağlantı anahtarı olmayan kullanıcılar yeni bağlantı kuramayabilir. Anahtar silinmez; mevcut açık oturumlar sonlandırılmaz.",
+                "conflict": "Başka bir anahtar zaten paylaşılıyor. Güncel durumu kontrol edin ve önce mevcut paylaşımı kaldırın.",
+                "missing": "Anahtar veya sunucu artık mevcut değil. Güncel durumu yeniden kontrol edin."
             }
         }
     }

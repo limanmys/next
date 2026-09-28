@@ -1,12 +1,11 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { useSidebarContext } from "@/providers/sidebar-provider"
 import { http } from "@/services"
 import { Row } from "@tanstack/react-table"
-import { isAxiosError } from "axios"
 import { Edit2, MoreHorizontal, ShieldCheck, Trash } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
-import { IServer, ISshHostKeyChallenge } from "@/types/server"
+import { IServer } from "@/types/server"
 import { useCurrentUser } from "@/hooks/auth/useCurrentUser"
 import { useEmitter } from "@/hooks/useEmitter"
 import {
@@ -27,6 +26,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { ServerKeySharing } from "@/components/settings/server-key-sharing"
+import { SshHostKeyDialog } from "@/components/settings/ssh-host-key-dialog"
 
 import {
   Dialog,
@@ -43,39 +44,11 @@ import { useToast } from "../ui/use-toast"
 export function ServerRowActions({ row }: { row: Row<IServer> }) {
   const server = row.original
   const user = useCurrentUser()
-  const { toast } = useToast()
   const [deleteDialog, setDeleteDialog] = useState(false)
   const [editDialog, setEditDialog] = useState(false)
   const [hostKeyDialog, setHostKeyDialog] = useState(false)
-  const [hostKeyChallenge, setHostKeyChallenge] =
-    useState<ISshHostKeyChallenge | null>(null)
-  const [hostKeyLoading, setHostKeyLoading] = useState(false)
+  const menuTrigger = useRef<HTMLButtonElement>(null)
   const { t } = useTranslation("settings")
-
-  const checkHostKey = async () => {
-    setHostKeyLoading(true)
-    try {
-      await http.post(`/servers/${server.id}/ssh_host_key`)
-      setHostKeyChallenge(null)
-      setHostKeyDialog(true)
-    } catch (error: unknown) {
-      if (
-        isAxiosError<ISshHostKeyChallenge>(error) &&
-        error.response?.status === 409
-      ) {
-        setHostKeyChallenge(error.response.data)
-        setHostKeyDialog(true)
-      } else {
-        toast({
-          title: t("error"),
-          description: t("servers.actions.ssh_host_key.error"),
-          variant: "destructive",
-        })
-      }
-    } finally {
-      setHostKeyLoading(false)
-    }
-  }
 
   return (
     user.permissions.update_server && (
@@ -83,20 +56,21 @@ export function ServerRowActions({ row }: { row: Row<IServer> }) {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
+              ref={menuTrigger}
               variant="ghost"
               className="flex size-5 p-0 data-[state=open]:bg-muted"
             >
               <MoreHorizontal className="size-4" />
-              <span className="sr-only">Open menu</span>
+              <span className="sr-only">{t("servers.actions.menu")}</span>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-[160px]">
+          <DropdownMenuContent align="end" className="max-w-[calc(100vw-2rem)]">
             <DropdownMenuItem onClick={() => setEditDialog(true)}>
               <Edit2 className="mr-2 size-3.5" />
               {t("servers.actions.edit_btn")}
             </DropdownMenuItem>
             {["ssh", "ssh_certificate"].includes(server.type) && (
-              <DropdownMenuItem onClick={() => void checkHostKey()}>
+              <DropdownMenuItem onClick={() => setHostKeyDialog(true)}>
                 <ShieldCheck className="mr-2 size-3.5" />
                 {t("servers.actions.ssh_host_key.button")}
               </DropdownMenuItem>
@@ -114,125 +88,14 @@ export function ServerRowActions({ row }: { row: Row<IServer> }) {
           server={server}
         />
         <Edit open={editDialog} setOpen={setEditDialog} server={server} />
-        <SshHostKeyApproval
+        <SshHostKeyDialog
           open={hostKeyDialog}
           setOpen={setHostKeyDialog}
           server={server}
-          challenge={hostKeyChallenge}
-          loading={hostKeyLoading}
+          restoreFocus={() => menuTrigger.current?.focus()}
         />
       </>
     )
-  )
-}
-
-function SshHostKeyApproval({
-  open,
-  setOpen,
-  server,
-  challenge,
-  loading,
-}: {
-  open: boolean
-  setOpen: (open: boolean) => void
-  server: IServer
-  challenge: ISshHostKeyChallenge | null
-  loading: boolean
-}) {
-  const { toast } = useToast()
-  const { t } = useTranslation("settings")
-  const [approving, setApproving] = useState(false)
-
-  const approve = async () => {
-    if (!challenge) return
-
-    setApproving(true)
-    try {
-      await http.post(`/servers/${server.id}/ssh_host_key`, {
-        approve_host_key: true,
-        replace_host_key: challenge.code === "SSH_HOST_KEY_MISMATCH",
-        host_key_fingerprint: challenge.fingerprint,
-      })
-      toast({
-        title: t("success"),
-        description: t("servers.actions.ssh_host_key.success"),
-      })
-      setOpen(false)
-    } catch {
-      toast({
-        title: t("error"),
-        description: t("servers.actions.ssh_host_key.error"),
-        variant: "destructive",
-      })
-    } finally {
-      setApproving(false)
-    }
-  }
-
-  return (
-    <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>
-            {challenge?.code === "SSH_HOST_KEY_MISMATCH"
-              ? t("servers.actions.ssh_host_key.mismatch_title")
-              : challenge
-                ? t("servers.actions.ssh_host_key.title")
-                : t("servers.actions.ssh_host_key.trusted_title")}
-          </AlertDialogTitle>
-          <AlertDialogDescription asChild>
-            <div className="space-y-3">
-              {challenge ? (
-                <>
-                  <p>
-                    {challenge.code === "SSH_HOST_KEY_MISMATCH"
-                      ? t("servers.actions.ssh_host_key.mismatch")
-                      : t("servers.actions.ssh_host_key.description")}
-                  </p>
-                  <div
-                    className="rounded-md border bg-muted p-3 font-mono text-xs"
-                    dir="ltr"
-                  >
-                    <div>
-                      {challenge.host}:{challenge.port}
-                    </div>
-                    <div className="mt-2 break-all">
-                      {challenge.fingerprint}
-                    </div>
-                  </div>
-                  <p className="font-medium text-destructive">
-                    {t("servers.actions.ssh_host_key.warning")}
-                  </p>
-                </>
-              ) : (
-                <p>{t("servers.actions.ssh_host_key.trusted_description")}</p>
-              )}
-            </div>
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel disabled={approving || loading}>
-            {t("servers.actions.ssh_host_key.cancel")}
-          </AlertDialogCancel>
-          {challenge && (
-            <AlertDialogAction
-              disabled={approving || loading}
-              onClick={(event) => {
-                event.preventDefault()
-                void approve()
-              }}
-            >
-              {approving && (
-                <Icons.spinner className="mr-2 size-4 animate-spin" />
-              )}
-              {challenge.code === "SSH_HOST_KEY_MISMATCH"
-                ? t("servers.actions.ssh_host_key.replace")
-                : t("servers.actions.ssh_host_key.approve")}
-            </AlertDialogAction>
-          )}
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
   )
 }
 
@@ -284,7 +147,10 @@ function Edit({
 
   return (
     <Dialog onOpenChange={(open) => setOpen(open)} open={open}>
-      <DialogContent className="sm:max-w-[525px]">
+      <DialogContent
+        className="max-h-[85dvh] overflow-y-auto sm:max-w-[525px]"
+        closeLabel={t("servers.actions.edit.form.cancel")}
+      >
         <DialogHeader>
           <DialogTitle>{t("servers.actions.edit.title")}</DialogTitle>
           <DialogDescription>
@@ -293,24 +159,28 @@ function Edit({
         </DialogHeader>
 
         <div className="mt-3 grid w-full items-center gap-1.5">
-          <Label htmlFor="edit">{t("servers.actions.edit.form.name")}</Label>
+          <Label htmlFor={`server-name-${server.id}`}>
+            {t("servers.actions.edit.form.name")}
+          </Label>
           <Input
-            id="name"
+            id={`server-name-${server.id}`}
             onChange={(e) => setName(e.target.value)}
             value={name}
           />
         </div>
 
         <div className="mt-3 grid w-full items-center gap-1.5">
-          <Label htmlFor="edit">
+          <Label htmlFor={`server-address-${server.id}`}>
             {t("servers.actions.edit.form.ip_address")}
           </Label>
           <Input
-            id="ip_address"
+            id={`server-address-${server.id}`}
             onChange={(e) => setIpAddress(e.target.value)}
             value={ipAddress}
           />
         </div>
+
+        {open && <ServerKeySharing server={server} />}
 
         <div className="mt-6 flex justify-end">
           <Button
